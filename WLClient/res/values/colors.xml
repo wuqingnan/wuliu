@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#ffeef0f0</color>
+    <color name="text_color_yellow">#ffff8b01</color>
+    <color name="text_color_orange">#ffff7000</color>
+    <color name="text_color_white">#ffffffff</color>
+    <color name="text_color_lighter_gray">#ffababab</color>
+    <color name="text_color_light_gray">#ff888888</color>
+    <color name="text_color_dark_gray">#ff333333</color>
+    
+    <color name="text_color_hint">#ffd3d3d3</color>
+    <color name="text_color_login_btn">#ffd3d3d3</color>
+    
+    
+    
+    <color name="white">#ffffffff</color>
+    <color name="green">#ff00ff00</color>
+
+    <color name="shadow_color_yellow">#ffd1761a</color>
+    <color name="shadow_color_white">#ffffffff</color>
+    <color name="line_color_gray">#ffcbcbcb</color>
+    <color name="bg_color_gray">#ffe3e3e3</color>
+    <color name="bg_color_tip">#ffcbc7c1</color>
+    
+    <color name="black">#ff000000</color>
+    <color name="red">#ffff0000</color>
+    <color name="red_txt">#ffdd170c</color>
+    <color name="blue">#ff0000ff</color>
+    <color name="transparent">#00000000</color>
+    <color name="share_bg">#00000000</color>
+    <color name="text_color_light_black">#ff888888</color>
+    <color name="menu_background_color">#ff434547</color>
+    <color name="menu_item_pressed_color">#ff333436</color>
+    <color name="order_state_text_color">#ffff7f01</color>
+    <color name="order_text_gray">#ffb3b3b3</color>
+    <color name="cpn_color_red">#ffe37378</color>
+    <color name="cpn_color_green">#ff7dc9a5</color>
+    <color name="gray_line">#ffe2e2e2</color>
+    <color name="search_text_color">#ffd3d3d3</color>
+    <color name="dialog_text_color">#ff8b8b8b</color>
+    <color name="search_group_title">#ffeef2f3</color>
+    <color name="cancel_btn">#ff8a8a8a</color>
+    <color name="menu_font">#ffa6a6a6</color>
+    <color name="list_divider">#4cffffff</color>
+    <color name="list_selector">#4cffffff</color>
+    <color name="list_selector_account">#ffd7d7d7</color>
+    <color name="umeng_socialize_comments_bg">#ff383d46</color>
+    <color name="umeng_socialize_color_group">#ff2c3035</color>
+</resources>

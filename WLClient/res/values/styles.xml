@@ -1,0 +1,57 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="WuLiu" />
+
+    <style name="WuLiu.Title">
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textColor">@color/text_color_yellow</item>
+    </style>
+
+    <style name="WuLiu.Login" />
+
+    <style name="WuLiu.Login.Tips">
+        <item name="android:textSize">@dimen/text_size_login_tips</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="WuLiu.Login.Number">
+        <item name="android:background">@drawable/edittext</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textColorHint">@color/text_color_hint</item>
+        <item name="android:textSize">@dimen/text_size_login_number</item>
+    </style>
+
+    <style name="WuLiu.Login.Number.Phone">
+        <item name="android:hint">@string/phone_number</item>
+        <item name="android:maxLength">11</item>
+        <item name="android:inputType">phone</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="WuLiu.Login.Number.Code">
+        <item name="android:hint">@string/verify_code</item>
+        <item name="android:maxLength">4</item>
+        <item name="android:inputType">number</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+
+    <style name="WuLiu.Login.Check">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_color_login_btn</item>
+        <item name="android:textSize">@dimen/text_size_login_btn</item>
+        <item name="android:text">@string/check</item>
+        <item name="android:background">@drawable/check_selector</item>
+    </style>
+
+    <style name="WuLiu.Login.Submit">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_color_login_btn</item>
+        <item name="android:textSize">@dimen/text_size_login_btn</item>
+        <item name="android:text">@string/start</item>
+        <item name="android:background">@drawable/check_selector</item>
+    </style>
+
+</resources>

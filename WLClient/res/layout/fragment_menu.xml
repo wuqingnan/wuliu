@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/mlist"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/menu_shadow"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@id/phone_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30.0dip"
+        android:layout_marginTop="30.0dip"
+        android:background="@drawable/phone_background"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@id/phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/defualt_icon"
+            android:gravity="center"
+            android:textColor="#ffa6a6a6"
+            android:textSize="18.0dip" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@id/phone_line"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phone_layout"
+        android:scaleType="fitXY"
+        android:src="@drawable/menu_line" />
+
+    <LinearLayout
+        android:id="@id/my_order_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phone_line"
+        android:background="@drawable/menu_bg_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="20.0dip" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:src="@drawable/order_icon" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_weight="1.0" >
+
+            <TextView
+                android:id="@id/my_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_order"
+                android:textColor="#ffa6a6a6"
+                android:textSize="18.0dip" />
+
+            <ImageView
+                android:id="@id/unfinishSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-2.0dip"
+                android:layout_toRightOf="@id/my_order"
+                android:src="@drawable/unfinish_logo"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip"
+            android:src="@drawable/arrow_lable" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@id/my_order_line"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_order_layout"
+        android:scaleType="fitXY"
+        android:src="@drawable/menu_line" />
+
+    <LinearLayout
+        android:id="@id/account_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_order_line"
+        android:background="@drawable/menu_bg_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="20.0dip"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@id/account_title_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:src="@drawable/icon_account" />
+
+        <TextView
+            android:id="@id/account_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_weight="1.0"
+            android:text="@string/account_title"
+            android:textColor="#ffa6a6a6"
+            android:textSize="18.0dip" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip"
+            android:src="@drawable/arrow_lable" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@id/account_line"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account_layout"
+        android:scaleType="fitXY"
+        android:src="@drawable/menu_line" />
+
+    <LinearLayout
+        android:id="@id/share_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account_line"
+        android:background="@drawable/menu_bg_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="20.0dip" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:src="@drawable/share_icon" />
+
+        <TextView
+            android:id="@id/share_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_weight="1.0"
+            android:text="@string/share_to_friends"
+            android:textColor="#ffa6a6a6"
+            android:textSize="18.0dip" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip"
+            android:src="@drawable/arrow_lable" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@id/share_line"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/share_layout"
+        android:scaleType="fitXY"
+        android:src="@drawable/menu_line" />
+
+    <LinearLayout
+        android:id="@id/setting_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/share_line"
+        android:background="@drawable/menu_bg_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="20.0dip" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:src="@drawable/setting_icon" />
+
+        <TextView
+            android:id="@id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_weight="1.0"
+            android:text="@string/setting"
+            android:textColor="#ffa6a6a6"
+            android:textSize="18.0dip" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip"
+            android:src="@drawable/arrow_lable" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@id/setting_line"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/menu_line" />
+
+    <ImageView
+        android:id="@id/imgview"
+        style="@style/ImageView"
+        android:layout_width="@dimen/menu_image_width"
+        android:layout_height="@dimen/menu_image_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10.0dip" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20.0dip"
+            android:src="@drawable/menu_didi_logo" />
+    </RelativeLayout>
+
+</LinearLayout>
