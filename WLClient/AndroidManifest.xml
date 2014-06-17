@@ -43,7 +43,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
-            android:name="com.wuliu.client.activity.SlidingActivity"
+            android:name="com.wuliu.client.activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>

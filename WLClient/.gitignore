@@ -4,4 +4,6 @@ bin/
 gen/
 ######忽略.settings目录
 .settings/
+.apt_generated/
+.factorypath
 

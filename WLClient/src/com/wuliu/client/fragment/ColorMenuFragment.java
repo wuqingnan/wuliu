@@ -1,7 +1,7 @@
 package com.wuliu.client.fragment;
 
 import com.wuliu.client.R;
-import com.wuliu.client.activity.SlidingActivity;
+import com.wuliu.client.activity.MainActivity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -58,8 +58,8 @@ public class ColorMenuFragment extends ListFragment {
 		if (getActivity() == null)
 			return;
 		
-		if (getActivity() instanceof SlidingActivity) {
-			SlidingActivity fca = (SlidingActivity) getActivity();
+		if (getActivity() instanceof MainActivity) {
+			MainActivity fca = (MainActivity) getActivity();
 			fca.switchContent(fragment);
 		} 
 //		else if (getActivity() instanceof ResponsiveUIActivity) {
