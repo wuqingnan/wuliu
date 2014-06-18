@@ -20,12 +20,11 @@ import com.baidu.mapapi.model.LatLng;
 import com.wuliu.client.R;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MapFragment extends Fragment {
+public class MapFragment extends BaseFragment {
 	
 	private static final String TAG = MapFragment.class.getSimpleName();
 	

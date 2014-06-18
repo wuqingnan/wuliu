@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/login_titlebar"
-        layout="@layout/titlebar" />
+    <include layout="@layout/titlebar" />
+
+    <include layout="@layout/main_bottom" />
 
 </RelativeLayout>

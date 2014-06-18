@@ -3,45 +3,82 @@ package com.wuliu.client.activity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.wuliu.client.R;
+import com.wuliu.client.fragment.BaseFragment;
+import com.wuliu.client.fragment.LoginFragment;
 import com.wuliu.client.fragment.MainFragment;
 import com.wuliu.client.fragment.MapFragment;
 import com.wuliu.client.fragment.MenuFragment;
+import com.wuliu.client.fragment.SetFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends SlidingFragmentActivity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
-
-	private Fragment mContent;
-	private FragmentManager mFragmentManager;
 	
+	private static final int EXIT_TIME = 2000;
+
+	private MapFragment mMapFragment;
+	private BaseFragment mTopFragment;
+	private MenuFragment mMenuFragment;
+	private FragmentManager mFragmentManager;
+
 	private SlidingMenu mSlidingMenu;
+
+	private long mExitTime;
+	private boolean mHasLogin;
+	private String mPhoneNumber;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_main);
+		initFragment();
+		initSlidingMenu();
+		mHasLogin = false;
+	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mSlidingMenu.isMenuShowing()) {
+				mSlidingMenu.showContent();
+				return true;
+			}
+			if (mFragmentManager.getBackStackEntryCount() == 0) {
+				if (System.currentTimeMillis() - mExitTime > EXIT_TIME) {
+					Toast.makeText(this, R.string.quit_next_time, Toast.LENGTH_SHORT).show();
+					mExitTime = System.currentTimeMillis();
+				}
+				else {
+					finish();
+					System.exit(0);
+				}
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	private void initFragment() {
 		mFragmentManager = getSupportFragmentManager();
-
-		mContent = new MapFragment();
-
-		mFragmentManager.beginTransaction().replace(R.id.mapLayout, mContent)
-				.commit();
-
+		mMapFragment = new MapFragment();
+		mTopFragment = new MainFragment();
+		mMenuFragment = new MenuFragment();
 		mFragmentManager.beginTransaction()
-				.replace(R.id.topLayout, new MainFragment()).commit();
-
+				.replace(R.id.mapLayout, mMapFragment).commit();
+		mFragmentManager.beginTransaction()
+				.replace(R.id.topLayout, mTopFragment).commit();
 		setBehindContentView(R.layout.menu_frame);
 		mFragmentManager.beginTransaction()
-				.replace(R.id.menu_frame, new MenuFragment()).commit();
-
-		initSlidingMenu();
+				.replace(R.id.menu_frame, mMenuFragment).commit();
 	}
 
 	private void initSlidingMenu() {
@@ -53,15 +90,38 @@ public class MainActivity extends SlidingFragmentActivity {
 		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 	}
 
-	public void onTitleClick(View view) {
-		mSlidingMenu.showMenu();
+	public void onClickTitle(BaseFragment fragment) {
+		if (fragment instanceof MainFragment) {
+			if (mHasLogin) {
+				mSlidingMenu.showMenu();
+			} else {
+				switchContent(new LoginFragment());
+			}
+		}
+		else if (fragment instanceof LoginFragment) {
+			mFragmentManager.popBackStack();
+		}
+		else if (fragment instanceof SetFragment) {
+			mFragmentManager.popBackStack();
+		}
 	}
 	
-	public void switchContent(Fragment fragment) {
-		mContent = fragment;
-		// getSupportFragmentManager().beginTransaction()
-		// .replace(R.id.content_frame, fragment).commit();
-		// getSlidingMenu().showContent();
+	public void loginSuccess(String number) {
+		mHasLogin = true;
+		mPhoneNumber = number;
+		mMenuFragment.updateInfo(number);
+		mFragmentManager.popBackStack();
+		Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show();
+	}
+
+	public void switchContent(BaseFragment fragment) {
+		mTopFragment = fragment;
+		FragmentTransaction trans = mFragmentManager.beginTransaction();
+		trans.setCustomAnimations(R.anim.push_in, R.anim.push_out, R.anim.pop_in, R.anim.pop_out);
+		trans.replace(R.id.topLayout, fragment);
+		trans.addToBackStack(null);
+		trans.commit();
+		mSlidingMenu.showContent();
 	}
 
 }

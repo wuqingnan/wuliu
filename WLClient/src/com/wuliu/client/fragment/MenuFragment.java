@@ -25,7 +25,7 @@ public class MenuFragment extends ListFragment {
 			R.drawable.icon_setting };
 
 	private MenuAdapter mMenuAdapter;
-	
+
 	private TextView mMenuPhone;
 
 	@Override
@@ -44,30 +44,38 @@ public class MenuFragment extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
+		switchFragment((int)id);
 	}
-	
+
 	private void initHeader() {
-		View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_menu_header, null);
+		View view = getActivity().getLayoutInflater().inflate(
+				R.layout.fragment_menu_header, null);
 		mMenuPhone = (TextView) view.findViewById(R.id.menu_phone);
 		getListView().addHeaderView(view);
-		mMenuPhone.setText("15810759237");
 	}
-	
+
 	private void initAdapter() {
 		mMenuAdapter = new MenuAdapter(getActivity(), ICONS, getResources()
 				.getStringArray(R.array.menu_names));
 		setListAdapter(mMenuAdapter);
 	}
 
-	private void switchFragment(Fragment fragment) {
-		if (getActivity() == null)
-			return;
+	public void updateInfo(String number) {
+		mMenuPhone.setText(number);
+	}
 
-		// if (getActivity() instanceof SlidingActivity) {
-		// SlidingActivity fca = (SlidingActivity) getActivity();
-		// fca.switchContent(fragment);
-		// }
+	private void switchFragment(int position) {
+		if (getActivity() == null) {
+			return;
+		}
+		switch (position) {
+		case 3:
+			SetFragment fragment = new SetFragment();
+			((MainActivity) getActivity()).switchContent(fragment);
+			break;
+		default:
+			break;
+		}
 	}
 
 }

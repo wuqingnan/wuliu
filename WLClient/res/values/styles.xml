@@ -53,9 +53,10 @@
         <item name="android:text">@string/start</item>
         <item name="android:background">@drawable/check_selector</item>
     </style>
-    
-    <style name="WuLiu.Menu"/>
-    <style name="WuLiu.Menu.Item"/>
+
+    <style name="WuLiu.Menu" />
+
+    <style name="WuLiu.Menu.Item" />
 
     <style name="WuLiu.Menu.Phone">
         <item name="android:drawableLeft">@drawable/people</item>
@@ -63,9 +64,21 @@
         <item name="android:textSize">@dimen/text_size_menu</item>
         <item name="android:gravity">center</item>
     </style>
-    
+
     <style name="WuLiu.Menu.Item.Title">
         <item name="android:textColor">@color/text_color_menu</item>
         <item name="android:textSize">@dimen/text_size_menu</item>
     </style>
+
+    <style name="WuLiu.Main" />
+
+    <style name="WuLiu.Main.Input">
+        <item name="android:background">@drawable/book_input</item>
+        <item name="android:hint">@string/send_where</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_main_input</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

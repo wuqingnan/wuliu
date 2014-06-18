@@ -7,9 +7,9 @@
     <dimen name="text_size_login_btn">16sp</dimen>
     
     <dimen name="text_size_menu">18sp</dimen>
+    
+    <dimen name="text_size_main_input">16sp</dimen>
 
-    
-    
     <dimen name="login_marginLeft">40dp</dimen>
     <dimen name="login_marginRight">40dp</dimen>
     <dimen name="login_marginTop">15dp</dimen>
@@ -18,5 +18,10 @@
     
     <dimen name="slidingmenu_offset">60dp</dimen>
     <dimen name="list_padding">10dp</dimen>
-    <dimen name="shadow_width">15dp</dimen>
+    <dimen name="shadow_width">0dp</dimen>
+    
+    <dimen name="main_bottom_height">51.333dp</dimen>
+    <dimen name="main_left_layout_width">40dp</dimen>
+    <dimen name="main_left_layout_height">40.666dp</dimen>
+    
 </resources>
