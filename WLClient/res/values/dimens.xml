@@ -9,6 +9,9 @@
     <dimen name="text_size_menu">18sp</dimen>
     
     <dimen name="text_size_main_input">16sp</dimen>
+    
+    <dimen name="text_size_popup_my_title">16sp</dimen>
+    <dimen name="text_size_popup_my_info">14sp</dimen>
 
     <dimen name="login_marginLeft">40dp</dimen>
     <dimen name="login_marginRight">40dp</dimen>

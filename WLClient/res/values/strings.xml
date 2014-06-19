@@ -23,6 +23,8 @@
     
     <string name="quit_next_time">再按一次退出</string>
     
+    <string name="myloc">我在 %1$s 附近</string>
+    
     <string name="confirm">确 定</string>
     <string name="pull_to_refresh_pull">上拉加载…</string>
     <string name="pull_to_refresh_release">放开以加载…</string>
@@ -41,8 +43,6 @@
     <string name="call_confirm_to">到</string>
     <string name="loading_address">位置获取中...</string>
     <string name="toast_has_no_gps_loc">尚未获取到您的地理位置！</string>
-    <string name="pop_my_loc_name">我在 %s</string>
-    <string name="pop_my_loc_name_around">附近</string>
     <string name="pop_start_time">%s 出发</string>
     <string name="call_confirm_btn">确认发送</string>
     <string name="async_call_title">预约用车</string>
