@@ -53,10 +53,12 @@
             </intent-filter>
         </activity>
 
+        <!-- 公司：WxmfAt89Ine2KwXYEF0yizhU -->
+		<!-- 家里：G0F0BDRhBrq2GU2jOREkXNMU -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="WxmfAt89Ine2KwXYEF0yizhU" />
-
+            android:value="G0F0BDRhBrq2GU2jOREkXNMU" />
+		
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

@@ -5,6 +5,7 @@
     <string name="title_main">慧慧物流</string>
     <string name="title_login">验证手机</string>
     <string name="title_set">设置</string>
+    <string name="title_send">我要发货</string>
     
     <string name="login_tips">为方便司机接您时联系您，请验证手机~</string>
     <string name="phone_number">手机号</string>
@@ -24,6 +25,15 @@
     <string name="quit_next_time">再按一次退出</string>
     
     <string name="myloc">我在 %1$s 附近</string>
+    
+    <string name="asterisk">*</string>
+    
+    <string name="goods_name">物品名称：</string>
+    <string name="goods_type">物品类型：</string>
+    <string name="goods_value">物品价值：</string>
+    <string name="goods_weight">物品重量：</string>
+    <string name="goods_traffic">交通工具：</string>
+    
     
     <string name="confirm">确 定</string>
     <string name="pull_to_refresh_pull">上拉加载…</string>

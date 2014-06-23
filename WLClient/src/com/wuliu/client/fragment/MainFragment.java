@@ -29,7 +29,8 @@ public class MainFragment extends BaseFragment {
 				}
 			}
 			else if (view == mMainIcon) {
-				changeMode();
+//				changeMode();
+				((MainActivity) getActivity()).switchContent(new SendFragment());
 			}
 			else if (view == mMainInput) {
 				Toast.makeText(getActivity(), "跳转到搜索界面", Toast.LENGTH_SHORT).show();
