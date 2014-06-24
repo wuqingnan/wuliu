@@ -34,6 +34,12 @@
     <string name="goods_weight">物品重量：</string>
     <string name="goods_traffic">交通工具：</string>
     
+    <string name="kg">千克</string>
+    <string name="yuan">元</string>
+    
+    <string name="address_from">发货地：*</string>
+    <string name="address_to">收货地：*</string>
+    <string name="cost">算算费用</string>
     
     <string name="confirm">确 定</string>
     <string name="pull_to_refresh_pull">上拉加载…</string>

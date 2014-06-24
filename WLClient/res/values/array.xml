@@ -7,6 +7,26 @@
         <item>告诉好友</item>
         <item>设置</item>
     </string-array>
+    
+    <string-array name="goods_type_list">
+        <item>鲜花</item>
+        <item>蛋糕</item>
+        <item>生鲜果蔬</item>
+        <item>办公用品</item>
+        <item>电子数码</item>
+        <item>食品酒水</item>
+        <item>家居生活</item>
+    </string-array>
+    
+    <string-array name="goods_traffic_list">
+        <item>自行车</item>
+        <item>电动车</item>
+        <item>摩托车</item>
+        <item>汽车</item>
+        <item>地铁</item>
+        <item>公交</item>
+        <item>不限</item>
+    </string-array>
 
     <string-array name="color_names">
         <item>Red</item>

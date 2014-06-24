@@ -11,6 +11,7 @@ import com.wuliu.client.fragment.MenuFragment;
 import com.wuliu.client.fragment.SendFragment;
 import com.wuliu.client.fragment.SetFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -128,4 +129,8 @@ public class MainActivity extends SlidingFragmentActivity {
 		mSlidingMenu.showContent();
 	}
 
+	public void gotoSend() {
+		startActivity(new Intent(this, SendActivity.class));
+	}
+	
 }

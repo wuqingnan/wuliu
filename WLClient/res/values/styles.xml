@@ -100,4 +100,24 @@
         <item name="android:textColor">@color/text_color_light_gray</item>
         <item name="android:textSize">@dimen/text_size_popup_my_info</item>
     </style>
+    
+    <style name="Send_Item_Name">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_popup_my_info</item>
+    </style>
+    
+    <style name="Send_Item_Value">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_popup_my_info</item>
+    </style>
+    
+    <style name="Send_Item_Unit">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_popup_my_info</item>
+    </style>
+    
+    <style name="Send_Item_Asterisk">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_popup_my_info</item>
+    </style>
 </resources>

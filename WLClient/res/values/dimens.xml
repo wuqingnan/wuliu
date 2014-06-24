@@ -18,7 +18,6 @@
     <dimen name="login_marginTop">15dp</dimen>
     <dimen name="login_itemHeight">40dp</dimen>
     
-    
     <dimen name="slidingmenu_offset">60dp</dimen>
     <dimen name="list_padding">10dp</dimen>
     <dimen name="shadow_width">0dp</dimen>
@@ -26,5 +25,7 @@
     <dimen name="main_bottom_height">51.333dp</dimen>
     <dimen name="main_left_layout_width">40dp</dimen>
     <dimen name="main_left_layout_height">40.666dp</dimen>
+    
+    <dimen name="line_height">1dp</dimen>
     
 </resources>

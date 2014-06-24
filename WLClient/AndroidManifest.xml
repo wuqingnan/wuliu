@@ -52,12 +52,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.wuliu.client.activity.SendActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
+        </activity>
 
         <!-- 公司：WxmfAt89Ine2KwXYEF0yizhU -->
 		<!-- 家里：G0F0BDRhBrq2GU2jOREkXNMU -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="G0F0BDRhBrq2GU2jOREkXNMU" />
+            android:value="WxmfAt89Ine2KwXYEF0yizhU" />
 		
         <service
             android:name="com.baidu.location.f"
