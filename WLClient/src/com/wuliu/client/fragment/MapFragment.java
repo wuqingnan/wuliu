@@ -21,6 +21,7 @@ import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.model.LatLng;
 import com.wuliu.client.R;
+import com.wuliu.client.WLApplication;
 
 import android.graphics.Point;
 import android.os.Bundle;
@@ -175,6 +176,7 @@ public class MapFragment extends BaseFragment {
 		// mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
 		// LocationMode.NORMAL, true, null));
 		mLocClient = new LocationClient(getActivity());
+		WLApplication.setLocationClient(mLocClient);
 		mLocClient.registerLocationListener(mLocListener);
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true);
@@ -246,4 +248,5 @@ public class MapFragment extends BaseFragment {
 				});
 		mBaiduMap.showInfoWindow(infoWindow);
 	}
+	
 }

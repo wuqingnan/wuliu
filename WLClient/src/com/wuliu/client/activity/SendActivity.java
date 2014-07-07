@@ -3,20 +3,23 @@ package com.wuliu.client.activity;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
 import com.wuliu.client.R;
+import com.wuliu.client.WLApplication;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SendActivity extends Activity {
-
-	private static final String TAG = SendActivity.class.getSimpleName();
 
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
@@ -27,6 +30,10 @@ public class SendActivity extends Activity {
 				showTypeChooseDialog();
 			} else if (view == mGoodsTraffic) {
 				showTrafficChooseDialog();
+			} else if (view == mSwapAddress) {
+				swapAddress();
+			} else if (view == mCost) {
+				sendDetail();
 			}
 		}
 	};
@@ -45,6 +52,14 @@ public class SendActivity extends Activity {
 	EditText mGoodsValue;
 	@InjectView(R.id.goods_traffic)
 	TextView mGoodsTraffic;
+	@InjectView(R.id.address_from)
+	TextView mAddressFrom;
+	@InjectView(R.id.address_to)
+	TextView mAddressTo;
+	@InjectView(R.id.swap_address)
+	ImageView mSwapAddress;
+	@InjectView(R.id.cost)
+	Button mCost;
 
 	private String[] mTypeList;
 	private String[] mTrafficList;
@@ -57,12 +72,15 @@ public class SendActivity extends Activity {
 		setContentView(R.layout.fragment_send);
 		initView();
 		initData();
+		initAddress();
 	}
 
 	private void initView() {
 		ButterKnife.inject(this);
 		mGoodsType.setOnClickListener(mOnClickListener);
 		mGoodsTraffic.setOnClickListener(mOnClickListener);
+		mSwapAddress.setOnClickListener(mOnClickListener);
+		mCost.setOnClickListener(mOnClickListener);
 		mTitle.setText(R.string.title_send);
 		mMenuBtn.setImageResource(R.drawable.btn_title_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
@@ -77,6 +95,17 @@ public class SendActivity extends Activity {
 		updateType();
 		updateTraffic();
 	}
+	
+	private void initAddress() {
+		LocationClient client = WLApplication.getLocationClient();
+		if (client != null) {
+			BDLocation location = client.getLastKnownLocation();
+			if (location != null && location.hasAddr()) {
+				mAddressFrom.setText(location.getAddrStr());
+				mAddressTo.setText(location.getAddrStr());
+			}
+		}
+	}
 
 	private void updateType() {
 		mGoodsType.setText(mTypeList[mTypeIndex]);
@@ -85,7 +114,18 @@ public class SendActivity extends Activity {
 	private void updateTraffic() {
 		mGoodsTraffic.setText(mTrafficList[mTrafficIndex]);
 	}
+	
+	private void sendDetail() {
+		Intent intent = new Intent(this, SendDetailActivity.class);
+		startActivity(intent);
+	}
 
+	private void swapAddress() {
+		CharSequence temp = mAddressFrom.getText();
+		mAddressFrom.setText(mAddressTo.getText());
+		mAddressTo.setText(temp);
+	}
+	
 	private void showTypeChooseDialog() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
 				.setSingleChoiceItems(mTypeList, mTypeIndex,

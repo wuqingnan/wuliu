@@ -28,8 +28,7 @@ public class MainFragment extends BaseFragment {
 					((MainActivity)getActivity()).onClickTitle(MainFragment.this);
 				}
 			}
-			else if (view == mMainIcon) {
-//				changeMode();
+			else if (view == mMainSend) {
 				((MainActivity) getActivity()).gotoSend();
 			}
 			else if (view == mMainInput) {
@@ -63,8 +62,8 @@ public class MainFragment extends BaseFragment {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
-	@InjectView(R.id.main_icon)
-	ImageView mMainIcon;
+	@InjectView(R.id.main_send)
+	Button mMainSend;
 	@InjectView(R.id.main_input)
 	TextView mMainInput;
 	@InjectView(R.id.main_speak)
@@ -101,23 +100,10 @@ public class MainFragment extends BaseFragment {
 	}
 	
 	private void initBottom() {
-		mMainIcon.setOnClickListener(mOnClickListener);
+		mMainSend.setOnClickListener(mOnClickListener);
 		mMainInput.setOnClickListener(mOnClickListener);
 		mMainBook.setOnClickListener(mOnClickListener);
 		mMainSpeak.setOnTouchListener(mOnTouchListener);
-	}
-	
-	private void changeMode() {
-		mSpeakMode = !mSpeakMode;
-		if (mSpeakMode) {
-			mMainIcon.setImageResource(R.drawable.icon_keyboard);
-			mMainSpeak.setImageResource(R.drawable.book_speak_normal);
-			mMainSpeak.setVisibility(View.VISIBLE);
-		}
-		else {
-			mMainIcon.setImageResource(R.drawable.icon_speak);
-			mMainSpeak.setVisibility(View.GONE);
-		}
 	}
 	
 }

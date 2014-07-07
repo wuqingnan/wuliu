@@ -1,45 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">AppClient</string>
-    
     <string name="title_main">慧慧物流</string>
     <string name="title_login">验证手机</string>
     <string name="title_set">设置</string>
     <string name="title_send">我要发货</string>
     
+    <string name="title_rule">平台服务使用规则</string>
     <string name="login_tips">为方便司机接您时联系您，请验证手机~</string>
     <string name="phone_number">手机号</string>
     <string name="verify_code">验证码</string>
     <string name="check">验证</string>
     <string name="start">开始</string>
-    
-    
     <string name="send_where">发送货物到哪儿?</string>
     <string name="phone_format_error">手机号码格式错误</string>
     <string name="verify_code_error">验证码错误</string>
     <string name="phone_verify_code">请输入验证码:1234</string>
+    
     <string name="login_success">登录成功</string>
     <string name="login_failed">登录失败</string>
     <string name="get_code_failed">获取验证码失败</string>
-    
     <string name="quit_next_time">再按一次退出</string>
-    
     <string name="myloc">我在 %1$s 附近</string>
-    
     <string name="asterisk">*</string>
-    
     <string name="goods_name">物品名称：</string>
     <string name="goods_type">物品类型：</string>
     <string name="goods_value">物品价值：</string>
     <string name="goods_weight">物品重量：</string>
     <string name="goods_traffic">交通工具：</string>
-    
+    <string name="send_from">发货人：</string>
+    <string name="send_to">收货人：</string>
+    <string name="send_phone">手机号码：</string>
+    <string name="send_pay">付款方式：</string>
+    <string name="send_comment">重要说明：</string>
+    <string name="my_id_number">我的身份证：</string>
     <string name="kg">千克</string>
     <string name="yuan">元</string>
     
     <string name="address_from">发货地：*</string>
     <string name="address_to">收货地：*</string>
     <string name="cost">算算费用</string>
+    <string name="publish">立即发布</string>
+    
+    <string name="agree_and_accept">同意并接受</string>
+    <string name="platform_rule">《平台服务使用规则》</string>
+    <string name="rules">平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则</string>
+    <string name="send">发货</string>
+    
     
     <string name="confirm">确 定</string>
     <string name="pull_to_refresh_pull">上拉加载…</string>
@@ -121,8 +129,6 @@
     <string name="setting">设置</string>
     <string name="login_string">登录</string>
     <string name="login_title">验证手机</string>
-    
-    
     <string name="correct_code">请输入正确的验证码</string>
     <string name="phone_number_count">请输入11位手机号码</string>
     <string name="phone_type_error">手机格式不正确</string>
@@ -130,7 +136,6 @@
     <string name="second">秒</string>
     <string name="net_failed">网络异常，请检查网络~</string>
     <string name="login_timeout">您可能在其他设备上登录或登录过期了，重新登录一下吧：）</string>
-    
     <string name="time_to_go">距离出发还有</string>
     <string name="orders">我的订单</string>
     <string name="finish_text">已完成订单</string>
@@ -275,7 +280,6 @@ QQ:400-000-1999
 邮箱:kefu@diditaxi.com.cn
 网址:www.xiaojukeji.com
 地址:北京市海淀区中关村11号e世界A座937"</string>
-    
     <string name="code_chk_tip">验证码已发送，请耐心等待</string>
     <string name="sounds_switch">音效开关</string>
     <string name="share_redirecting">正在跳转分享页面...</string>
@@ -392,4 +396,5 @@ QQ:400-000-1999
     <string name="umeng_socialize_loading_more">正在加载更多</string>
     <string name="umeng_socialize_say_what">在这说点什么....</string>
     <string name="umeng_socialize_net_failed">网络加载失败，请点击重试。</string>
+
 </resources>

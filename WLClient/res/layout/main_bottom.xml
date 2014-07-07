@@ -8,20 +8,12 @@
     android:gravity="center"
     android:orientation="horizontal" >
 
-    <RelativeLayout
-        android:id="@+id/main_left_layout"
-        android:layout_width="@dimen/main_left_layout_width"
-        android:layout_height="@dimen/main_left_layout_height"
-        android:layout_marginLeft="6.666dp"
-        android:background="@drawable/btn_call_left" >
-
-        <ImageView
-            android:id="@+id/main_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/icon_keyboard" />
-    </RelativeLayout>
+    <Button
+        android:id="@+id/main_send"
+        style="@style/WuLiu.Main.Send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6.666dp" />
 
     <RelativeLayout
         android:id="@+id/main_right_layout"

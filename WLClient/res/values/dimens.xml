@@ -8,6 +8,7 @@
     
     <dimen name="text_size_menu">18sp</dimen>
     
+    <dimen name="text_size_main_send">18sp</dimen>
     <dimen name="text_size_main_input">16sp</dimen>
     
     <dimen name="text_size_popup_my_title">16sp</dimen>
@@ -23,8 +24,6 @@
     <dimen name="shadow_width">0dp</dimen>
     
     <dimen name="main_bottom_height">51.333dp</dimen>
-    <dimen name="main_left_layout_width">40dp</dimen>
-    <dimen name="main_left_layout_height">40.666dp</dimen>
     
     <dimen name="line_height">1dp</dimen>
     

@@ -27,6 +27,12 @@
         <item>公交</item>
         <item>不限</item>
     </string-array>
+    
+    <string-array name="pay_type_list">
+        <item>现付（发货时现金支付）</item>
+        <item>到付（收货时现金支付）</item>
+        <item>账户余额支付</item>
+    </string-array>
 
     <string-array name="color_names">
         <item>Red</item>
