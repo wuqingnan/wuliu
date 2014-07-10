@@ -5,6 +5,7 @@ import butterknife.InjectView;
 
 import com.wuliu.client.R;
 import com.wuliu.client.activity.MainActivity;
+import com.wuliu.client.activity.SendActivity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,13 +30,13 @@ public class MainFragment extends BaseFragment {
 				}
 			}
 			else if (view == mMainSend) {
-				((MainActivity) getActivity()).gotoSend();
+				SendActivity.startSendActivity(getActivity(), false);
 			}
 			else if (view == mMainInput) {
 				Toast.makeText(getActivity(), "跳转到搜索界面", Toast.LENGTH_SHORT).show();
 			}
 			else if (view == mMainBook) {
-				Toast.makeText(getActivity(), "跳转到预约界面", Toast.LENGTH_SHORT).show();
+				SendActivity.startSendActivity(getActivity(), true);
 			}
 		}
 	};

@@ -128,9 +128,5 @@ public class MainActivity extends SlidingFragmentActivity {
 		trans.commit();
 		mSlidingMenu.showContent();
 	}
-
-	public void gotoSend() {
-		startActivity(new Intent(this, SendActivity.class));
-	}
 	
 }

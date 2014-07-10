@@ -10,6 +10,7 @@ import com.wuliu.client.WLApplication;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,10 +18,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class SendActivity extends Activity {
 
+	private static final String TAG = SendActivity.class.getSimpleName();
+	
+	private static final String KEY_BESPEAK = "bespeak";
+	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -32,8 +38,13 @@ public class SendActivity extends Activity {
 				showTrafficChooseDialog();
 			} else if (view == mSwapAddress) {
 				swapAddress();
-			} else if (view == mCost) {
+			} else if (view == mNextStep) {
 				sendDetail();
+			} else if (view == mClearTime) {
+				mClearTime.setVisibility(View.GONE);
+				mTakeTime.setText(null);
+			} else if (view == mTakeTime) {
+				showTimePicker();
 			}
 		}
 	};
@@ -42,6 +53,12 @@ public class SendActivity extends Activity {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
+	@InjectView(R.id.take_time_layout)
+	LinearLayout mTakeTimeLayout;
+	@InjectView(R.id.take_time)
+	TextView mTakeTime;
+	@InjectView(R.id.clear_time)
+	ImageView mClearTime;
 	@InjectView(R.id.goods_type)
 	TextView mGoodsType;
 	@InjectView(R.id.goods_name)
@@ -58,32 +75,43 @@ public class SendActivity extends Activity {
 	TextView mAddressTo;
 	@InjectView(R.id.swap_address)
 	ImageView mSwapAddress;
-	@InjectView(R.id.cost)
-	Button mCost;
+	@InjectView(R.id.next_step)
+	Button mNextStep;
 
 	private String[] mTypeList;
 	private String[] mTrafficList;
 	private int mTypeIndex;
 	private int mTrafficIndex;
+	private boolean mBespeak;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_send);
+		handleIntent();
 		initView();
 		initData();
 		initAddress();
 	}
 
+	private void handleIntent() {
+		mBespeak = getIntent().getBooleanExtra(KEY_BESPEAK, false);
+	}
+	
 	private void initView() {
 		ButterKnife.inject(this);
 		mGoodsType.setOnClickListener(mOnClickListener);
 		mGoodsTraffic.setOnClickListener(mOnClickListener);
 		mSwapAddress.setOnClickListener(mOnClickListener);
-		mCost.setOnClickListener(mOnClickListener);
-		mTitle.setText(R.string.title_send);
+		mNextStep.setOnClickListener(mOnClickListener);
 		mMenuBtn.setImageResource(R.drawable.btn_title_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
+		if (mBespeak) {
+			mTakeTimeLayout.setVisibility(View.VISIBLE);
+			mTakeTime.setOnClickListener(mOnClickListener);
+			mClearTime.setOnClickListener(mOnClickListener);
+		}
+		mTitle.setText(mBespeak ? R.string.title_bespeak : R.string.title_send);
 	}
 
 	private void initData() {
@@ -157,5 +185,19 @@ public class SendActivity extends Activity {
 		}).setTitle("交通工具").create();
 		dialog.show();
 	}
+	
+	private void showTimePicker() {
+		
+	}
 
+	/**
+	 * 打开发货页面
+	 * @param context
+	 * @param bespeak
+	 */
+	public static void startSendActivity(Context context, boolean bespeak) {
+		Intent intent = new Intent(context, SendActivity.class);
+		intent.putExtra(KEY_BESPEAK, bespeak);
+		context.startActivity(intent);
+	}
 }
