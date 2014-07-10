@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/bg_popup_wheel"
+    android:paddingLeft="16dp"
+    android:paddingRight="15dp" >
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/wheel_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0" />
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/wheel_middle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/wheel_right"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0" />
+
+</LinearLayout>

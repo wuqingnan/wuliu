@@ -7,6 +7,8 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.wuliu.client.R;
 import com.wuliu.client.WLApplication;
+import com.wuliu.client.window.TimeWindow;
+import com.wuliu.client.window.WheelWindow;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,11 +16,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 public class SendActivity extends Activity {
@@ -78,6 +84,8 @@ public class SendActivity extends Activity {
 	@InjectView(R.id.next_step)
 	Button mNextStep;
 
+	private WheelWindow mWheelWindow;
+	
 	private String[] mTypeList;
 	private String[] mTrafficList;
 	private int mTypeIndex;
@@ -187,7 +195,22 @@ public class SendActivity extends Activity {
 	}
 	
 	private void showTimePicker() {
-		
+		if (mWheelWindow == null) {
+			mWheelWindow = new TimeWindow(getWindow().getDecorView());
+		}
+		mWheelWindow.show();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mWheelWindow != null && mWheelWindow.isShowing()) {
+				mWheelWindow.dismiss();
+				mWheelWindow = null;
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	/**
