@@ -27,6 +27,8 @@ public class SendActivity extends Activity {
 	
 	private static final String KEY_BESPEAK = "bespeak";
 	
+	private static final int REQUEST_CODE_SEARCH = 0x010;
+	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -45,6 +47,10 @@ public class SendActivity extends Activity {
 				mTakeTime.setText(null);
 			} else if (view == mTakeTime) {
 				showTimePicker();
+			} else if (view == mAddressFrom) {
+				searchAddress(true);
+			} else if (view == mAddressTo) {
+				searchAddress(false);
 			}
 		}
 	};
@@ -83,7 +89,8 @@ public class SendActivity extends Activity {
 	private int mTypeIndex;
 	private int mTrafficIndex;
 	private boolean mBespeak;
-
+	private boolean mIsFrom;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,6 +113,8 @@ public class SendActivity extends Activity {
 		mNextStep.setOnClickListener(mOnClickListener);
 		mMenuBtn.setImageResource(R.drawable.btn_title_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
+		mAddressFrom.setOnClickListener(mOnClickListener);
+		mAddressTo.setOnClickListener(mOnClickListener);
 		if (mBespeak) {
 			mTakeTimeLayout.setVisibility(View.VISIBLE);
 			mTakeTime.setOnClickListener(mOnClickListener);
@@ -146,6 +155,11 @@ public class SendActivity extends Activity {
 	private void sendDetail() {
 		Intent intent = new Intent(this, SendDetailActivity.class);
 		startActivity(intent);
+	}
+	
+	private void searchAddress(boolean isFrom) {
+		mIsFrom = isFrom;
+		SearchActivity.startSearchActivity(SendActivity.this, isFrom, REQUEST_CODE_SEARCH);
 	}
 
 	private void swapAddress() {
