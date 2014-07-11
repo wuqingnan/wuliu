@@ -182,6 +182,7 @@ public class MapFragment extends BaseFragment {
 		option.setOpenGps(true);
 		option.setCoorType("bd09ll");
 		option.setScanSpan(1000);
+		option.disableCache(true);
 		option.setIsNeedAddress(true);
 		mLocClient.setLocOption(option);
 		mLocClient.start();
@@ -219,6 +220,9 @@ public class MapFragment extends BaseFragment {
 
 	private void showMyLocInfo() {
 		BDLocation loc = mLocClient.getLastKnownLocation();
+		if (loc == null || loc.getAddrStr() == null) {
+			return;
+		}
 		mMyLocTitle.setText(String.format(
 				getResources().getString(R.string.myloc), loc.getStreet()));
 		mMyLocInfo.setText(loc.getCity() + " " + loc.getDistrict());

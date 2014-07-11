@@ -7,6 +7,7 @@
     <string name="title_set">设置</string>
     <string name="title_send">我要发货</string>
     <string name="title_bespeak">预约发货</string>
+    <string name="title_search">输入详细地址</string>
     
     <string name="title_rule">平台服务使用规则</string>
     <string name="login_tips">为方便司机接您时联系您，请验证手机~</string>
@@ -52,8 +53,12 @@
     <string name="rules">平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则平台服务使用规则</string>
     <string name="send">发货</string>
     
+    <string name="area_hint">地区</string>
+    <string name="search_hint">街道 门牌号</string>
     
     <string name="confirm">确 定</string>
+    <string name="confirm_txt">确认</string>
+    
     <string name="pull_to_refresh_pull">上拉加载…</string>
     <string name="pull_to_refresh_release">放开以加载…</string>
     <string name="pull_to_refresh_refreshing">正在加载…</string>
@@ -320,7 +325,6 @@ QQ:400-000-1999
     <string name="comment_all_loaded">所有评价已加载完毕</string>
     <string name="driver_main_page_title">师傅主页</string>
     <string name="not_on_car">我未上车</string>
-    <string name="confirm_btn">确认</string>
     <string name="search_empty">请输入要搜索的地点</string>
     <string name="loading_current_address">正在加载当前位置，请稍候~</string>
     <string name="search_fail_network_fail">网络不给力，点击右上角”确定”可使用您输入的地址~</string>
