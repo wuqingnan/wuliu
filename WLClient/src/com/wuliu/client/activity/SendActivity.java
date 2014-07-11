@@ -1,5 +1,9 @@
 package com.wuliu.client.activity;
 
+import java.io.StringReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -16,6 +20,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +55,8 @@ public class SendActivity extends Activity {
 			} else if (view == mNextStep) {
 				sendDetail();
 			} else if (view == mClearTime) {
-				mClearTime.setVisibility(View.GONE);
 				mTakeTime.setText(null);
+				updateClearState();
 			} else if (view == mTakeTime) {
 				showTimePicker();
 			} else if (view == mAddressFrom) {
@@ -59,6 +65,19 @@ public class SendActivity extends Activity {
 				searchAddress(false);
 			}
 		}
+	};
+	
+	private WheelWindow.OnConfirmListener mConfirmListener = new WheelWindow.OnConfirmListener() {
+
+		@Override
+		public void onConfirm(String result) {
+			mBespeakTime = Long.parseLong(result);
+			SimpleDateFormat format = new SimpleDateFormat(getString(R.string.bespeak_time_format));
+			mTakeTime.setText(format.format(new Date(mBespeakTime)));
+			updateClearState();
+			mWheelWindow = null;
+		}
+		
 	};
 
 	@InjectView(R.id.titlebar_leftBtn)
@@ -96,6 +115,7 @@ public class SendActivity extends Activity {
 	private String[] mTrafficList;
 	private int mTypeIndex;
 	private int mTrafficIndex;
+	private long mBespeakTime;
 	private boolean mBespeak;
 	private boolean mIsFrom;
 	
@@ -210,9 +230,13 @@ public class SendActivity extends Activity {
 	
 	private void showTimePicker() {
 		if (mWheelWindow == null) {
-			mWheelWindow = new TimeWindow(getWindow().getDecorView());
+			mWheelWindow = new TimeWindow(getWindow().getDecorView(), mConfirmListener);
 		}
 		mWheelWindow.show();
+	}
+	
+	private void updateClearState() {
+		mClearTime.setVisibility(TextUtils.isEmpty(mTakeTime.getText()) ? View.GONE : View.VISIBLE);
 	}
 	
 	@Override

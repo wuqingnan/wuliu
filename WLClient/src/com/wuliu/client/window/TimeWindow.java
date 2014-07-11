@@ -19,8 +19,8 @@ public class TimeWindow extends WheelWindow {
 	private boolean mToday;
 	private boolean mNextHour;
 	
-	public TimeWindow(View anchor) {
-		super(anchor);
+	public TimeWindow(View anchor, OnConfirmListener listener) {
+		super(anchor, listener);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class TimeWindow extends WheelWindow {
 		}
 		mHoursForToday = new String[24 - hour - (mNextHour ? 1 : 2)];
 		if (mHoursForToday.length > 0) {
-			System.arraycopy(mAllHours, mAllHours.length - mHoursForToday.length, mHoursForToday, 0, mHoursForToday.length);
+			System.arraycopy(mAllHours, 24 - mHoursForToday.length, mHoursForToday, 0, mHoursForToday.length);
 		}
 		
 		mAllMinutes = new String[6];
@@ -58,7 +58,7 @@ public class TimeWindow extends WheelWindow {
 		boolean flag = minute % 10 == 0;
 		mMinutesForNow = new String[6 - minute / 10 - (minute % 10 == 0 ? 0 : 1)];
 		if (mMinutesForNow.length > 0) {
-			System.arraycopy(mAllMinutes, mAllMinutes.length - mMinutesForNow.length, mMinutesForNow, 0, mMinutesForNow.length);
+			System.arraycopy(mAllMinutes, 6 - mMinutesForNow.length, mMinutesForNow, 0, mMinutesForNow.length);
 		}
 	}
 
@@ -81,6 +81,19 @@ public class TimeWindow extends WheelWindow {
 			return mMinutesForNow;
 		}
 		return mAllMinutes;
+	}
+
+	@Override
+	protected String getResult(int left, int middle, int right) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(mCalendar.getTimeInMillis());
+		cal.add(Calendar.DATE, left + (mToday ? 0 : 1));
+		String[] hours = getMiddleData(left);
+		cal.set(Calendar.HOUR, middle + (hours.length == 24 ? 0 : 24 - hours.length));
+
+		String[] minutes = getRightData(left, middle);
+		cal.set(Calendar.MINUTE, (right + (hours.length == 6 ? 0 : 6 - minutes.length)) * 10);
+		return "" + cal.getTimeInMillis();
 	}
 
 }
