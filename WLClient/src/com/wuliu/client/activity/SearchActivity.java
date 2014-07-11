@@ -1,5 +1,7 @@
 package com.wuliu.client.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -12,6 +14,9 @@ import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.wuliu.client.R;
+import com.wuliu.client.window.CityWindow;
+import com.wuliu.client.window.TimeWindow;
+import com.wuliu.client.window.WheelWindow;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +25,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -82,6 +88,15 @@ public class SearchActivity extends Activity {
 		}
 	};
 	
+	private WheelWindow.OnConfirmListener mConfirmListener = new WheelWindow.OnConfirmListener() {
+
+		@Override
+		public void onConfirm(String result) {
+			mWheelWindow = null;
+		}
+		
+	};
+	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
@@ -96,6 +111,8 @@ public class SearchActivity extends Activity {
 	Button mSearchConfirm;
 	@InjectView(R.id.search_list)
 	ListView mSearchList;
+	
+	private WheelWindow mWheelWindow;
 	
 	private SearchListAdapter mAdapter;
 	
@@ -118,6 +135,18 @@ public class SearchActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		mPoiSearch.destroy();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mWheelWindow != null && mWheelWindow.isShowing()) {
+				mWheelWindow.dismiss();
+				mWheelWindow = null;
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 	
 	private void handleIntent() {
@@ -154,7 +183,10 @@ public class SearchActivity extends Activity {
 	}
 	
 	private void showAreaPicker() {
-		
+		if (mWheelWindow == null) {
+			mWheelWindow = new CityWindow(getWindow().getDecorView(), mConfirmListener);
+		}
+		mWheelWindow.show();
 	}
 	
 	private void search() {

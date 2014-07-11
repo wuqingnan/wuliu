@@ -4,6 +4,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 
 import android.app.Application;
+import android.content.Context;
 
 public class WLApplication extends Application {
 	
@@ -23,5 +24,5 @@ public class WLApplication extends Application {
 	public static LocationClient getLocationClient() {
 		return mLocClient;
 	}
-
+	
 }
