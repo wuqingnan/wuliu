@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.wuliu.client.WLApplication;
+
 public class CityManager {
 
 	private static CityManager mInstance;
@@ -23,7 +25,7 @@ public class CityManager {
 	private CityManager() {
 		String json = null;
 		try {
-			InputStream is = new FileInputStream(new File("file:///android_asset/city.json"));
+			InputStream is = WLApplication.getContext().getResources().getAssets().open("city.json");
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			int len = 0;
 			byte[] buffer = new byte[1024];
@@ -92,4 +94,28 @@ public class CityManager {
     	return set.toArray(result);
     }
 	
+    public String[] getSecondLevel(String key) {
+    	if (key == null) {
+    		return new String[0];
+    	}
+    	HashMap<String, List<String>> map = mCities.get(key);
+    	if (map == null) {
+    		return new String[0];
+    	}
+    	Set<String> set = map.keySet();
+    	String[] result = new String[set.size()];
+    	return set.toArray(result);
+    }
+    
+    public String[] getThirdLevel(String firstKey, String secondKey) {
+    	HashMap<String, List<String>> map = mCities.get(firstKey);
+    	if (map == null) {
+    		return new String[0];
+    	}
+    	List<String> list = map.get(secondKey);
+    	if (list == null) {
+    		return new String[0];
+    	}
+    	return list.toArray(new String[list.size()]);
+    }
 }

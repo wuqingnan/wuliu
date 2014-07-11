@@ -9,10 +9,13 @@ import butterknife.InjectView;
 import com.wuliu.client.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -105,6 +108,8 @@ public abstract class WheelWindow {
 		ButterKnife.inject(this, view);
 		mWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
+//		mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//		mWindow.setOutsideTouchable(true);
 	}
 
 	private void initWheelView() {

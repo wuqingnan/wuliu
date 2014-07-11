@@ -111,6 +111,10 @@ public class SendActivity extends Activity {
 
 	private WheelWindow mWheelWindow;
 	
+	//0:省、1:市、2:区县、3:街道
+	private String[] mFromInfos = new String[4];
+	private String[] mToInfos = new String[4];
+	
 	private String[] mTypeList;
 	private String[] mTrafficList;
 	private int mTypeIndex;
@@ -168,6 +172,10 @@ public class SendActivity extends Activity {
 			if (location != null && location.hasAddr()) {
 				mAddressFrom.setText(location.getAddrStr());
 				mAddressTo.setText(location.getAddrStr());
+				mFromInfos[0] = mToInfos[0] = location.getProvince();
+				mFromInfos[1] = mToInfos[1] = location.getCity();
+				mFromInfos[2] = mToInfos[2] = location.getDistrict();
+				mFromInfos[3] = mToInfos[3] = location.getStreet();
 			}
 		}
 	}
@@ -187,7 +195,7 @@ public class SendActivity extends Activity {
 	
 	private void searchAddress(boolean isFrom) {
 		mIsFrom = isFrom;
-		SearchActivity.startSearchActivity(SendActivity.this, isFrom, REQUEST_CODE_SEARCH);
+		SearchActivity.startSearchActivity(SendActivity.this, isFrom, REQUEST_CODE_SEARCH, isFrom ? mFromInfos : mToInfos);
 	}
 
 	private void swapAddress() {

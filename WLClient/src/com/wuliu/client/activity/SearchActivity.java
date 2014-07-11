@@ -1,7 +1,5 @@
 package com.wuliu.client.activity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -15,7 +13,6 @@ import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.wuliu.client.R;
 import com.wuliu.client.window.CityWindow;
-import com.wuliu.client.window.TimeWindow;
 import com.wuliu.client.window.WheelWindow;
 
 import android.app.Activity;
@@ -40,6 +37,8 @@ public class SearchActivity extends Activity {
 	private static final String TAG = SearchActivity.class.getSimpleName();
 	
 	private static final String KEY_IS_FROM = "is_from";
+	private static final String KEY_SEARCH_INFOS = "search_infos";
+	
 	public static final String KEY_RESULT = "result";
 	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -66,6 +65,7 @@ public class SearchActivity extends Activity {
 		public void onGetPoiResult(PoiResult result) {
 			if (result != null) {
 				mPoiList = result.getAllPoi();
+				mAdapter.notifyDataSetChanged();
 			}
 		}  
 	};
@@ -84,6 +84,7 @@ public class SearchActivity extends Activity {
 		
 		@Override
 		public void afterTextChanged(Editable arg0) {
+			updateClearState();
 			search();
 		}
 	};
@@ -120,6 +121,9 @@ public class SearchActivity extends Activity {
 	
 	private List<PoiInfo> mPoiList;
 	
+	//0:省、1:市、2:区县、3:街道
+	private String[] mSearchInfos;
+	
 	private boolean mIsFrom;
 	
 	@Override
@@ -129,6 +133,7 @@ public class SearchActivity extends Activity {
 		handleIntent();
 		initView();
 		initSearch();
+		initData();
 	}
 	
 	@Override
@@ -150,7 +155,9 @@ public class SearchActivity extends Activity {
 	}
 	
 	private void handleIntent() {
-		mIsFrom = getIntent().getBooleanExtra(KEY_IS_FROM, false);
+		Intent intent = getIntent();
+		mIsFrom = intent.getBooleanExtra(KEY_IS_FROM, false);
+		mSearchInfos = intent.getStringArrayExtra(KEY_SEARCH_INFOS);
 	}
 	
 	private void initView() {
@@ -169,6 +176,14 @@ public class SearchActivity extends Activity {
 	private void initSearch() {
 		mPoiSearch = PoiSearch.newInstance();
 		mPoiSearch.setOnGetPoiSearchResultListener(mPoiListener);
+	}
+	
+	private void initData() {
+		if (mSearchInfos != null) {
+			mSearchArea.setText(mSearchInfos[2]);
+			mSearchInput.setText(mSearchInfos[3]);
+		}
+		updateClearState();
 	}
 	
 	private void clearInput() {
@@ -195,16 +210,22 @@ public class SearchActivity extends Activity {
 			
 		}
 		else {
+			Log.d(TAG, "shizy---keyword: " + keyword);
 			mPoiSearch.searchInCity((new PoiCitySearchOption())
 					.city("北京")  
-					.keyword(mSearchInput.getText().toString())  
-					.pageNum(10));
+					.keyword(keyword)  
+					.pageNum(0));
 		}
 	}
 	
-	public static void startSearchActivity(Activity activity, boolean isFrom, int requestCode) {
+	private void updateClearState() {
+		mSearchClear.setVisibility(TextUtils.isEmpty(mSearchInput.getText()) ? View.GONE : View.VISIBLE);
+	}
+	
+	public static void startSearchActivity(Activity activity, boolean isFrom, int requestCode, String[] infos) {
 		Intent intent = new Intent(activity, SearchActivity.class);
 		intent.putExtra(KEY_IS_FROM, isFrom);
+		intent.putExtra(KEY_SEARCH_INFOS, infos);
 		activity.startActivityForResult(intent, requestCode);
 	}
 	
