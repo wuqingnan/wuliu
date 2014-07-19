@@ -66,24 +66,24 @@ public class MapFragment extends BaseFragment {
 
 		@Override
 		public void onReceiveLocation(BDLocation location) {
-			Log.d(TAG, "shizy---onReceiveLocation");
-			if (location == null || mMapView == null) {
-				return;
-			}
-			MyLocationData locData = new MyLocationData.Builder()
-					.accuracy(location.getRadius())
-					.direction(location.getDirection())
-					.latitude(location.getLatitude())
-					.longitude(location.getLongitude()).build();
-			mBaiduMap.setMyLocationData(locData);
-			if (mIsFirstLoc) {
-				mIsFirstLoc = false;
-				LatLng ll = new LatLng(location.getLatitude(),
-						location.getLongitude());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				mBaiduMap.animateMapStatus(u);
-				showMyLocInfo();
-			}
+//			Log.d(TAG, "shizy---onReceiveLocation");
+//			if (location == null || mMapView == null) {
+//				return;
+//			}
+//			MyLocationData locData = new MyLocationData.Builder()
+//					.accuracy(location.getRadius())
+//					.direction(location.getDirection())
+//					.latitude(location.getLatitude())
+//					.longitude(location.getLongitude()).build();
+//			mBaiduMap.setMyLocationData(locData);
+//			if (mIsFirstLoc) {
+//				mIsFirstLoc = false;
+//				LatLng ll = new LatLng(location.getLatitude(),
+//						location.getLongitude());
+//				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+//				mBaiduMap.animateMapStatus(u);
+//				showMyLocInfo();
+//			}
 		}
 	};
 

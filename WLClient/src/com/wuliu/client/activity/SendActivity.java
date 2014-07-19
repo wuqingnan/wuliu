@@ -11,7 +11,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.wuliu.client.R;
 import com.wuliu.client.WLApplication;
-import com.wuliu.client.window.TimeWindow;
+import com.wuliu.client.window.TimeWheel;
 import com.wuliu.client.window.WheelWindow;
 
 import android.app.Activity;
@@ -238,7 +238,7 @@ public class SendActivity extends Activity {
 	
 	private void showTimePicker() {
 		if (mWheelWindow == null) {
-			mWheelWindow = new TimeWindow(getWindow().getDecorView(), mConfirmListener);
+			mWheelWindow = new WheelWindow(getWindow().getDecorView(), mConfirmListener, new TimeWheel(this));
 		}
 		mWheelWindow.show();
 	}

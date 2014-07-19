@@ -1,8 +1,13 @@
 package com.wuliu.client.activity;
 
+import java.sql.SQLException;
+
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.wuliu.client.R;
+import com.wuliu.client.WLApplication;
+import com.wuliu.client.area.AreaManager;
+import com.wuliu.client.db.DBHelper;
 import com.wuliu.client.fragment.BaseFragment;
 import com.wuliu.client.fragment.LoginFragment;
 import com.wuliu.client.fragment.MainFragment;
@@ -12,6 +17,7 @@ import com.wuliu.client.fragment.SendFragment;
 import com.wuliu.client.fragment.SetFragment;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +51,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		initFragment();
 		initSlidingMenu();
 		mHasLogin = false;
+		initArea();
 	}
 
 	@Override
@@ -127,6 +134,12 @@ public class MainActivity extends SlidingFragmentActivity {
 		trans.addToBackStack(null);
 		trans.commit();
 		mSlidingMenu.showContent();
+	}
+	
+	private void initArea() {
+		DBHelper helper = ((WLApplication)getApplication()).getHelper();
+		SQLiteDatabase db = helper.getReadableDatabase();
+		db.close();
 	}
 	
 }

@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-public abstract class WheelWindow {
+public class WheelWindow {
 
 	private static final String TAG = WheelWindow.class.getSimpleName();
 
@@ -65,9 +65,9 @@ public abstract class WheelWindow {
 		public void onClick(View view) {
 			if (view == mConfirm) {
 				if (mOnConfirmListener != null) {
-					String result = getResult(mLeft.getCurrentItem(),
-							mMiddle.getCurrentItem(), mRight.getCurrentItem());
-					mOnConfirmListener.onConfirm(result);
+					mOnConfirmListener.onConfirm(mIWheel.getResult(
+							mLeft.getCurrentItem(), mMiddle.getCurrentItem(),
+							mRight.getCurrentItem()));
 				}
 				dismiss();
 			}
@@ -88,15 +88,18 @@ public abstract class WheelWindow {
 	@InjectView(R.id.wheel_confirm)
 	ImageView mConfirm;
 
+	private IWheel mIWheel;
+
 	private OnConfirmListener mOnConfirmListener;
 
 	private int mLeftIndex;
 	private int mMiddleIndex;
 
-	public WheelWindow(View anchor, OnConfirmListener listener) {
+	public WheelWindow(View anchor, OnConfirmListener listener, IWheel wheel) {
 		mAnchorView = anchor;
 		mContext = anchor.getContext();
-		initData();
+		mIWheel = wheel;
+		wheel.initData();
 		initWindow();
 		initWheelView();
 		setOnConfirmListener(listener);
@@ -108,8 +111,8 @@ public abstract class WheelWindow {
 		ButterKnife.inject(this, view);
 		mWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
-//		mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//		mWindow.setOutsideTouchable(true);
+		// mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		// mWindow.setOutsideTouchable(true);
 	}
 
 	private void initWheelView() {
@@ -119,9 +122,9 @@ public abstract class WheelWindow {
 		mLeft.addScrollingListener(mScrollListener);
 		mMiddle.addScrollingListener(mScrollListener);
 		mConfirm.setOnClickListener(mOnClickListener);
-		mLeft.setViewAdapter(new DataAdapter(mContext, getLeftData()));
-		mMiddle.setViewAdapter(new DataAdapter(mContext, getMiddleData(0)));
-		mRight.setViewAdapter(new DataAdapter(mContext, getRightData(0, 0)));
+		mLeft.setViewAdapter(mIWheel.getLeftAdapter());
+		mMiddle.setViewAdapter(mIWheel.getMiddleAdapter(0));
+		mRight.setViewAdapter(mIWheel.getRightAdapter(0, 0));
 	}
 
 	public void show() {
@@ -141,15 +144,13 @@ public abstract class WheelWindow {
 	}
 
 	private void updateMiddle() {
-		mMiddle.setViewAdapter(new DataAdapter(mContext, getMiddleData(mLeft
-				.getCurrentItem())));
+		mMiddle.setViewAdapter(mIWheel.getMiddleAdapter(mLeft.getCurrentItem()));
 		mMiddle.setCurrentItem(0);
 		updateRight();
 	}
 
 	private void updateRight() {
-		mRight.setViewAdapter(new DataAdapter(mContext, getRightData(
-				mLeft.getCurrentItem(), mMiddle.getCurrentItem())));
+		mRight.setViewAdapter(mIWheel.getRightAdapter(mLeft.getCurrentItem(), mMiddle.getCurrentItem()));
 		mRight.setCurrentItem(0);
 	}
 
@@ -159,36 +160,6 @@ public abstract class WheelWindow {
 
 	public void setOnConfirmListener(OnConfirmListener listener) {
 		mOnConfirmListener = listener;
-	}
-
-	protected abstract void initData();
-
-	protected abstract String[] getLeftData();
-
-	protected abstract String[] getMiddleData(int leftIndex);
-
-	protected abstract String[] getRightData(int leftIndex, int middleIndex);
-
-	protected abstract String getResult(int left, int middle, int right);
-
-	private class DataAdapter extends ArrayWheelAdapter<String> {
-
-		public DataAdapter(Context context, String[] items) {
-			super(context, items);
-			setTextSize(getContext().getResources().getDimensionPixelSize(
-					R.dimen.text_size_wheel_window));
-		}
-
-		@Override
-		protected void configureTextView(TextView view) {
-			super.configureTextView(view);
-			view.setTypeface(Typeface.DEFAULT_BOLD);
-		}
-
-		@Override
-		public View getItem(int index, View cachedView, ViewGroup parent) {
-			return super.getItem(index, cachedView, parent);
-		}
 	}
 
 }

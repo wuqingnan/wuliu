@@ -1,5 +1,6 @@
 package com.wuliu.client.activity;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -12,7 +13,11 @@ import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.wuliu.client.R;
-import com.wuliu.client.window.CityWindow;
+import com.wuliu.client.WLApplication;
+import com.wuliu.client.bean.Area;
+import com.wuliu.client.db.DBHelper;
+import com.wuliu.client.window.AreaWheel;
+import com.wuliu.client.window.IWheel;
 import com.wuliu.client.window.WheelWindow;
 
 import android.app.Activity;
@@ -93,6 +98,7 @@ public class SearchActivity extends Activity {
 
 		@Override
 		public void onConfirm(String result) {
+			Log.d(TAG, "shizy---result: " + result);
 			mWheelWindow = null;
 		}
 		
@@ -199,7 +205,14 @@ public class SearchActivity extends Activity {
 	
 	private void showAreaPicker() {
 		if (mWheelWindow == null) {
-			mWheelWindow = new CityWindow(getWindow().getDecorView(), mConfirmListener);
+			IWheel<Area> wheel = null;
+			try {
+				DBHelper helper = ((WLApplication)getApplication()).getHelper();
+				wheel = new AreaWheel(this, helper.getAreaDao());
+				mWheelWindow = new WheelWindow(getWindow().getDecorView(), mConfirmListener, wheel);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		mWheelWindow.show();
 	}
