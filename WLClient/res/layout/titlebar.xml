@@ -11,9 +11,19 @@
         android:layout_height="wrap_content"
         android:src="@drawable/btn_title_back" />
 
+    <Button
+        android:id="@+id/titlebar_rightTxt"
+        style="@style/WuLiu.TextAppearance.Middle.LightGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_title"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/titlebar_title"
-        style="@style/WuLiu.Title"
+        style="@style/WuLiu.TextAppearance.Big.Yellow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

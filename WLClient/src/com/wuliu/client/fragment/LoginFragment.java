@@ -33,11 +33,13 @@ public class LoginFragment extends BaseFragment {
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
-			if (view == mMenuBtn) {
+			if (view == mBack) {
 				if (getActivity() instanceof MainActivity) {
 					((MainActivity) getActivity())
 							.onClickTitle(LoginFragment.this);
 				}
+			} else if (view == mRegister) {
+				register();
 			} else if (view == mShowPass) {
 				showPassword(mPassword.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 			} else if (view == mLoginSubmit) {
@@ -49,7 +51,9 @@ public class LoginFragment extends BaseFragment {
 	private View mRootView;
 
 	@InjectView(R.id.titlebar_leftBtn)
-	ImageView mMenuBtn;
+	ImageView mBack;
+	@InjectView(R.id.titlebar_rightTxt)
+	Button mRegister;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.login_username)
@@ -93,8 +97,11 @@ public class LoginFragment extends BaseFragment {
 
 	private void initTitle() {
 		mTitle.setText(R.string.title_login);
-		mMenuBtn.setImageResource(R.drawable.btn_title_back);
-		mMenuBtn.setOnClickListener(mOnClickListener);
+		mRegister.setVisibility(View.VISIBLE);
+		mRegister.setText(R.string.register);
+		mBack.setImageResource(R.drawable.btn_title_back);
+		mBack.setOnClickListener(mOnClickListener);
+		mRegister.setOnClickListener(mOnClickListener);
 	}
 
 	private void initView() {
@@ -134,6 +141,13 @@ public class LoginFragment extends BaseFragment {
 		if (text != null) {
 			mPassword.setSelection(text.length());
 		}
+	}
+	
+	/**
+	 * зЂВс
+	 */
+	private void register() {
+		
 	}
 
 	/**

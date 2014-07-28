@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="WuLiu.TextAppearance">
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:textColor">@color/text_color_white</item>
+    </style>
+    
+    <style name="WuLiu.TextAppearance.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+    
+    <style name="WuLiu.TextAppearance.Middle">
+        <item name="android:textSize">@dimen/text_size_middle</item>
+    </style>
+    
+    <style name="WuLiu.TextAppearance.Big">
+        <item name="android:textSize">@dimen/text_size_big</item>
+    </style>
+    
+    <style name="WuLiu.TextAppearance.Middle.LightGray">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+    </style>
+    
+    <style name="WuLiu.TextAppearance.Big.Yellow">
+        <item name="android:textColor">@color/text_color_yellow</item>
+    </style>
+</resources>
