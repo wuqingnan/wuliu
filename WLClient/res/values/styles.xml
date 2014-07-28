@@ -91,6 +91,21 @@
         <item name="android:gravity">center</item>
     </style>
     
+    <style name="WuLiu.EditText">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_edittext</item>
+    </style>
+    
+    <style name="Login_Button_Show">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+    
+    <style name="Login_Submit">
+        <item name="android:textColor">@color/text_color_white</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+    </style>
+    
     <style name="Popup_My_Title">
         <item name="android:textColor">@color/text_color_orange</item>
         <item name="android:textSize">@dimen/text_size_popup_my_title</item>

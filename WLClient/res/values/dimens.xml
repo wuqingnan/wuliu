@@ -2,6 +2,11 @@
 
     <dimen name="text_size_title">18sp</dimen>
     
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_middle">16sp</dimen>
+    <dimen name="text_size_big">18sp</dimen>
+    <dimen name="text_size_edittext">16sp</dimen>
+    
     <dimen name="text_size_login_tips">15sp</dimen>
     <dimen name="text_size_login_number">18sp</dimen>
     <dimen name="text_size_login_btn">16sp</dimen>
@@ -16,8 +21,8 @@
         
     <dimen name="text_size_wheel_window">11dp</dimen>
 
-    <dimen name="login_marginLeft">40dp</dimen>
-    <dimen name="login_marginRight">40dp</dimen>
+    <dimen name="login_marginLeft">14dp</dimen>
+    <dimen name="login_marginRight">14dp</dimen>
     <dimen name="login_marginTop">15dp</dimen>
     <dimen name="login_itemHeight">40dp</dimen>
     
@@ -29,4 +34,5 @@
     
     <dimen name="line_height">1dp</dimen>
     
+    <dimen name="edittext_drawable_padding">10dp</dimen>
 </resources>

@@ -31,6 +31,8 @@
     <color name="bg_color_gray">#ffe3e3e3</color>
     <color name="bg_color_tip">#ffcbc7c1</color>
     
+    
+    
     <color name="black">#ff000000</color>
     <color name="red">#ffff0000</color>
     <color name="red_txt">#ffdd170c</color>
@@ -55,4 +57,9 @@
     <color name="list_selector_account">#ffd7d7d7</color>
     <color name="umeng_socialize_comments_bg">#ff383d46</color>
     <color name="umeng_socialize_color_group">#ff2c3035</color>
+    
+    
+    
+    <drawable name="btn_normal">#00FFFFFF</drawable>
+    <drawable name="btn_pressed">#4DDDDDDD</drawable>
 </resources>

@@ -3,7 +3,7 @@
 
     <string name="app_name">AppClient</string>
     <string name="title_main">慧慧物流</string>
-    <string name="title_login">验证手机</string>
+    <string name="title_login">登录</string>
     <string name="title_set">设置</string>
     <string name="title_send">我要发货</string>
     <string name="title_bespeak">预约发货</string>
@@ -60,6 +60,18 @@
     <string name="confirm_txt">确认</string>
     
     <string name="bespeak_time_format">MM月dd日 HH:mm</string>
+    
+    <string name="login">登录</string>
+    <string name="login_hint_username">4-16位中英文、数字、下划线</string>
+    <string name="login_hint_password">4-32位英文、数字</string>
+    <string name="login_input_invalid">用户名或者密码中包含非法字符或长度不符合要求，请重新输入</string>
+    <string name="login_input_empty">用户名或者密码为空</string>
+    <string name="login_input_username_empty">用户名为空</string>
+    <string name="login_input_password_empty">密码为空</string>
+    <string name="login_input_username_invalid">用户名格式错误</string>
+    <string name="login_input_password_invalid">密码格式错误</string>
+    <string name="show">显示</string>
+    <string name="hide">隐藏</string>
     
     <string name="pull_to_refresh_pull">上拉加载…</string>
     <string name="pull_to_refresh_release">放开以加载…</string>

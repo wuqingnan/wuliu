@@ -1,5 +1,8 @@
 package com.wuliu.client.fragment;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -10,12 +13,14 @@ import com.wuliu.client.utils.Util;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,72 +38,11 @@ public class LoginFragment extends BaseFragment {
 					((MainActivity) getActivity())
 							.onClickTitle(LoginFragment.this);
 				}
-			} else if (view == mLoginCheck) {
-				if (Util.isPhoneNumber(mLoginNumber.getText().toString())) {
-					Toast.makeText(getActivity(), R.string.phone_verify_code,
-							Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(getActivity(), R.string.phone_format_error,
-							Toast.LENGTH_SHORT).show();
-				}
+			} else if (view == mShowPass) {
+				showPassword(mPassword.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 			} else if (view == mLoginSubmit) {
-				String number = mLoginNumber.getText().toString();
-				if (Util.isPhoneNumber(number)) {
-					if (mLoginCode.getText().toString().equals("1234")) {
-						if (getActivity() instanceof MainActivity) {
-							((MainActivity) getActivity()).loginSuccess(number);
-						}
-					} else {
-						Toast.makeText(getActivity(),
-								R.string.verify_code_error, Toast.LENGTH_SHORT)
-								.show();
-					}
-				} else {
-					Toast.makeText(getActivity(), R.string.phone_format_error,
-							Toast.LENGTH_SHORT).show();
-				}
+				login();
 			}
-		}
-	};
-
-	private TextWatcher mPhoneWatcher = new TextWatcher() {
-
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before,
-				int count) {
-
-		}
-
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
-
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {
-			mLoginCheck.setEnabled(s.length() == 11);
-		}
-	};
-
-	private TextWatcher mCodeWatcher = new TextWatcher() {
-
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before,
-				int count) {
-
-		}
-
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
-
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {
-			mLoginSubmit.setEnabled(s.length() == 4
-					&& mLoginNumber.length() == 11);
 		}
 	};
 
@@ -108,12 +52,12 @@ public class LoginFragment extends BaseFragment {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
-	@InjectView(R.id.login_number)
-	EditText mLoginNumber;
-	@InjectView(R.id.login_check)
-	TextView mLoginCheck;
-	@InjectView(R.id.login_code)
-	EditText mLoginCode;
+	@InjectView(R.id.login_username)
+	EditText mUserName;
+	@InjectView(R.id.login_password)
+	EditText mPassword;
+	@InjectView(R.id.login_show_pass)
+	Button mShowPass;
 	@InjectView(R.id.login_submit)
 	TextView mLoginSubmit;
 
@@ -154,12 +98,123 @@ public class LoginFragment extends BaseFragment {
 	}
 
 	private void initView() {
-		mLoginCheck.setOnClickListener(mOnClickListener);
+		mUserName.setText(getLastUserName());
+		mPassword.setInputType(InputType.TYPE_CLASS_TEXT
+				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		mShowPass.setOnClickListener(mOnClickListener);
 		mLoginSubmit.setOnClickListener(mOnClickListener);
-		mLoginNumber.addTextChangedListener(mPhoneWatcher);
-		mLoginCode.addTextChangedListener(mCodeWatcher);
-		mLoginCheck.setEnabled(false);
-		mLoginSubmit.setEnabled(false);
+	}
+
+	/**
+	 * 获取最后一次登陆的用户名
+	 * 
+	 * @return
+	 */
+	private String getLastUserName() {
+		return null;
+	}
+
+	/**
+	 * 显示密码
+	 * 
+	 * @param bShow
+	 */
+	public void showPassword(boolean bShow) {
+		String text = mPassword.getText().toString();
+		if (bShow) {
+			mPassword
+					.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+			mShowPass.setText(getResources().getString(R.string.hide));
+		} else {
+			mPassword.setInputType(InputType.TYPE_CLASS_TEXT
+					| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+			mShowPass.setText(getResources().getString(R.string.show));
+		}
+		mPassword.postInvalidate();
+		if (text != null) {
+			mPassword.setSelection(text.length());
+		}
+	}
+
+	/**
+	 * 登录
+	 */
+	private void login() {
+		if (validCheck()) {
+
+		}
+	}
+
+	/**
+	 * 检测登陆信息合法性
+	 * 
+	 * @return
+	 */
+	private boolean validCheck() {
+		boolean bRes = true;
+		String username = mUserName.getText().toString();
+		String password = mPassword.getText().toString();
+		if (username != null && username.equals("")) {
+			showTips(getResources().getString(
+					R.string.login_input_username_empty));
+			bRes = false;
+		} else if (password != null && password.equals("")) {
+			showTips(getResources().getString(
+					R.string.login_input_password_empty));
+			bRes = false;
+		} else if (!isUserValid(username)) {
+			showTips(getResources().getString(
+					R.string.login_input_username_invalid));
+			bRes = false;
+		} else if (!isPasswordValid(password)) {
+			showTips(getResources().getString(
+					R.string.login_input_password_invalid));
+			bRes = false;
+		}
+		return bRes;
+	}
+
+	/**
+	 * 验证密码合法性
+	 * 
+	 * @return true-valid false invalid
+	 */
+	private boolean isPasswordValid(String data) {
+		boolean bRes = false;
+		if (data != null && !data.equals("")) {
+			// 匹配英文数字下划线，长度4-32之间
+			String rex = "[a-z0-9A-Z_]{4,32}";
+			Pattern pattern = Pattern.compile(rex);
+			Matcher m = pattern.matcher(data);
+			bRes = m.matches();
+		}
+		return bRes;
+	}
+
+	/**
+	 * 验证用户名合法性
+	 * 
+	 * @return true-valid false invalid
+	 */
+	private boolean isUserValid(String data) {
+		boolean bRes = false;
+		if (data != null && !data.equals("")) {
+			// 匹配中英文下划线，长度4-16之间
+			String rex = "[a-z0-9A-Z_\u4e00-\u9fa5]{4,16}";
+			Pattern pattern = Pattern.compile(rex);
+			Matcher m = pattern.matcher(data);
+			bRes = m.matches();
+		}
+		return bRes;
+	}
+
+	/**
+	 * 显示提示
+	 * 
+	 * @param tips
+	 */
+	private void showTips(String tips) {
+		Toast.makeText(getActivity(), tips, Toast.LENGTH_SHORT).show();
 	}
 
 }
