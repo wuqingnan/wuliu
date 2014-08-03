@@ -8,9 +8,11 @@ import butterknife.InjectView;
 
 import com.wuliu.client.R;
 import com.wuliu.client.activity.MainActivity;
+import com.wuliu.client.activity.RegisterActivity;
 import com.wuliu.client.utils.Util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -147,7 +149,7 @@ public class LoginFragment extends BaseFragment {
 	 * зЂВс
 	 */
 	private void register() {
-		
+		getActivity().startActivity(new Intent(getActivity(), RegisterActivity.class));
 	}
 
 	/**

@@ -40,24 +40,17 @@
         <item>后天</item>
     </string-array>
 
-    <string-array name="color_names">
-        <item>Red</item>
-        <item>Green</item>
-        <item>Blue</item>
-        <item>White</item>
-        <item>Black</item>
-    </string-array>
-    
-    <string-array name="birds">
-        <item>Eagle</item>
-        <item>Flamingo</item>
-        <item>Heron</item>
-        <item>Ostrich</item>
-        <item>Peacock</item>
-        <item>Penguin</item>
-        <item>Toucan</item>
-        <item>Turkey</item>
-        <item>Vulture</item>
+    <string-array name="user_types">
+        <item>个人</item>
+        <item>信息部</item>
+        <item>代理</item>
+        <item>其他</item>
     </string-array>
 
+    <string-array name="user_type_values">
+        <item>SP01</item>
+        <item>SP02</item>
+        <item>SP03</item>
+        <item>SP04</item>
+    </string-array>
 </resources>

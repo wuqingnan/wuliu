@@ -15,6 +15,7 @@ import com.wuliu.client.fragment.MapFragment;
 import com.wuliu.client.fragment.MenuFragment;
 import com.wuliu.client.fragment.SendFragment;
 import com.wuliu.client.fragment.SetFragment;
+import com.wuliu.client.utils.DeviceInfo;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -52,6 +53,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		initSlidingMenu();
 		mHasLogin = false;
 		initArea();
+		DeviceInfo.init(this);
 	}
 
 	@Override

@@ -38,16 +38,12 @@
 
                 <com.wuliu.client.view.ClearEditText
                     android:id="@+id/login_username"
-                    style="@style/WuLiu.EditText"
+                    style="@style/WuLiu.EditText.ClearEditText"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_marginRight="5dp"
-                    android:background="@null"
-                    android:drawablePadding="@dimen/edittext_drawable_padding"
-                    android:drawableRight="@drawable/btn_edittext_clear"
                     android:hint="@string/login_hint_username"
-                    android:maxLength="16"
-                    android:singleLine="true" />
+                    android:maxLength="16" />
             </LinearLayout>
 
             <View
@@ -86,16 +82,12 @@
 
                     <com.wuliu.client.view.ClearEditText
                         android:id="@+id/login_password"
-                        style="@style/WuLiu.EditText"
+                        style="@style/WuLiu.EditText.ClearEditText"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_toLeftOf="@id/login_show_pass"
-                        android:background="@null"
-                        android:drawablePadding="@dimen/edittext_drawable_padding"
-                        android:drawableRight="@drawable/btn_edittext_clear"
                         android:hint="@string/login_hint_password"
-                        android:maxLength="32"
-                        android:singleLine="true" />
+                        android:maxLength="32" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
@@ -106,7 +98,7 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/login_itemHeight"
             android:layout_marginTop="20dp"
-            android:background="@drawable/btn_login"
+            android:background="@drawable/btn_default"
             android:text="@string/login" />
     </LinearLayout>
 
