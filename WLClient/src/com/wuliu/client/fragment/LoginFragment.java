@@ -3,14 +3,25 @@ package com.wuliu.client.fragment;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.wuliu.client.Const;
 import com.wuliu.client.R;
 import com.wuliu.client.activity.MainActivity;
 import com.wuliu.client.activity.RegisterActivity;
+import com.wuliu.client.api.BaseParams;
+import com.wuliu.client.utils.DeviceInfo;
 import com.wuliu.client.utils.Util;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +60,21 @@ public class LoginFragment extends BaseFragment {
 			}
 		}
 	};
+	
+	private JsonHttpResponseHandler mResponseHandler = new JsonHttpResponseHandler() {
+		
+		public void onFinish() {
+			hideProgressDialog();
+		};
+		
+		public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+			loginResult(response);
+		};
+		
+		public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+			loginResult(null);
+		};
+	};
 
 	private View mRootView;
 
@@ -67,6 +93,8 @@ public class LoginFragment extends BaseFragment {
 	@InjectView(R.id.login_submit)
 	TextView mLoginSubmit;
 
+	private ProgressDialog mProgressDialog;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -157,7 +185,19 @@ public class LoginFragment extends BaseFragment {
 	 */
 	private void login() {
 		if (validCheck()) {
-
+			String username = mUserName.getText().toString();
+			String password = mPassword.getText().toString();
+			
+			AsyncHttpClient client = new AsyncHttpClient();
+			BaseParams params = new BaseParams();
+			params.add("method", "loginCheck");
+			params.add("device_no", DeviceInfo.getIMEI());
+			params.add("suppler_cd", username);
+			params.add("passwd", password);
+			
+			showProgressDialog();
+			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_LOGIN, params));
+			client.get(Const.URL_LOGIN, params, mResponseHandler);
 		}
 	}
 
@@ -170,56 +210,22 @@ public class LoginFragment extends BaseFragment {
 		boolean bRes = true;
 		String username = mUserName.getText().toString();
 		String password = mPassword.getText().toString();
-		if (username != null && username.equals("")) {
+		if (username == null || username.equals("")) {
 			showTips(getResources().getString(
 					R.string.login_input_username_empty));
 			bRes = false;
-		} else if (password != null && password.equals("")) {
+		} else if (password == null || password.equals("")) {
 			showTips(getResources().getString(
 					R.string.login_input_password_empty));
 			bRes = false;
-		} else if (!isUserValid(username)) {
+		} else if (!Util.isUserValid(username)) {
 			showTips(getResources().getString(
 					R.string.login_input_username_invalid));
 			bRes = false;
-		} else if (!isPasswordValid(password)) {
+		} else if (!Util.isPasswordValid(password)) {
 			showTips(getResources().getString(
 					R.string.login_input_password_invalid));
 			bRes = false;
-		}
-		return bRes;
-	}
-
-	/**
-	 * 验证密码合法性
-	 * 
-	 * @return true-valid false invalid
-	 */
-	private boolean isPasswordValid(String data) {
-		boolean bRes = false;
-		if (data != null && !data.equals("")) {
-			// 匹配英文数字下划线，长度4-32之间
-			String rex = "[a-z0-9A-Z_]{4,32}";
-			Pattern pattern = Pattern.compile(rex);
-			Matcher m = pattern.matcher(data);
-			bRes = m.matches();
-		}
-		return bRes;
-	}
-
-	/**
-	 * 验证用户名合法性
-	 * 
-	 * @return true-valid false invalid
-	 */
-	private boolean isUserValid(String data) {
-		boolean bRes = false;
-		if (data != null && !data.equals("")) {
-			// 匹配中英文下划线，长度4-16之间
-			String rex = "[a-z0-9A-Z_\u4e00-\u9fa5]{4,16}";
-			Pattern pattern = Pattern.compile(rex);
-			Matcher m = pattern.matcher(data);
-			bRes = m.matches();
 		}
 		return bRes;
 	}
@@ -233,4 +239,44 @@ public class LoginFragment extends BaseFragment {
 		Toast.makeText(getActivity(), tips, Toast.LENGTH_SHORT).show();
 	}
 
+	private void showProgressDialog() {
+		if (mProgressDialog == null) {
+			mProgressDialog = new ProgressDialog(getActivity());
+			mProgressDialog.setMessage(getString(R.string.requesting));
+			mProgressDialog.setCancelable(false);
+		}
+		mProgressDialog.show();
+	}
+	
+	private void hideProgressDialog() {
+		if (mProgressDialog != null) {
+			mProgressDialog.hide();
+		}
+		mProgressDialog = null;
+	}
+	
+	private void loginResult(JSONArray response) {
+		if (response != null && response.length() > 0) {
+			try {
+				JSONObject object = response.getJSONObject(0);
+				int res = object.getInt("res");
+				String msg = object.getString("msg");
+				switch (res) {
+				case 1://失败
+					showTips(getString(R.string.login_failed));
+					return;
+				case 2://成功
+					showTips(getString(R.string.login_success));
+					((MainActivity)getActivity()).loginSuccess(mUserName.getText().toString());
+					return;
+				case 3://提示
+					showTips(msg);
+					return;
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		showTips(getString(R.string.login_failed));
+	}
 }

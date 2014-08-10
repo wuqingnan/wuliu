@@ -9,19 +9,28 @@ import java.net.URI;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
+import com.wuliu.client.Const;
 import com.wuliu.client.R;
+import com.wuliu.client.api.BaseParams;
+import com.wuliu.client.utils.DeviceInfo;
+import com.wuliu.client.utils.Util;
 import com.wuliu.client.view.ClearEditText;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,6 +59,21 @@ public class RegisterActivity extends Activity {
 		}
 	};
 
+	private JsonHttpResponseHandler mResponseHandler = new JsonHttpResponseHandler() {
+		
+		public void onFinish() {
+			hideProgressDialog();
+		};
+		
+		public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+			registerResult(response);
+		};
+		
+		public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+			registerResult(null);
+		};
+	};
+	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
@@ -73,6 +97,8 @@ public class RegisterActivity extends Activity {
 	private String[] mUserTypes;
 	private String[] mUserTypeValues;
 
+	private ProgressDialog mProgressDialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,31 +132,67 @@ public class RegisterActivity extends Activity {
 	}
 	
 	private void register() {
-		AsyncHttpClient client = new AsyncHttpClient();
-		RequestParams params = new RequestParams();
-		params.add("method", "registerGoodSupplyer");
-		params.add("device_no", "0000000000000000");
-		params.add("suppler_cd", "15810759237");
-		params.add("suppler_name", "15810759237");
-		params.add("suppler_type", "SP01");
-		params.add("phone", "15810759237");
-		params.add("credit_level", "CL01");
-		params.add("state", "0");
-		params.add("card_id", "123456789012345678");
-		params.add("passwd", "19851020");
-		client.get("http://218.21.213.76:7201/bss/registerGoodSupplyer.action", params,  new AsyncHttpResponseHandler() {
+		if (validCheck()) {
+			String phone = mPhone.getText().toString();
+			String password = mPassword.getText().toString();
+			String id = mIDNumber.getText().toString();
 			
-			@Override
-			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-				Log.d(TAG, "shizy---onSuccess");
-				Log.d(TAG, "shizy---data: " + new String(arg2));
-			}
+			AsyncHttpClient client = new AsyncHttpClient();
+			BaseParams params = new BaseParams();
+			params.add("method", "registerGoodSupplyer");
+			params.add("device_no", DeviceInfo.getIMEI());
+			params.add("suppler_cd", phone);
+			params.add("suppler_name", phone);
+			params.add("suppler_type", mUserTypeValues[mUserTypeIndex]);
+			params.add("phone", phone);
+			params.add("credit_level", "CL01");
+			params.add("state", "0");
+			params.add("card_id", (id == null || id.equals("")) ? "-9" : id);
+			params.add("passwd", password);
 			
-			@Override
-			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-				Log.d(TAG, "shizy---onFailure");
-			}
-		});
+			showProgressDialog();
+			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
+			client.get(Const.URL_REGISTER, params, mResponseHandler);
+		}
+	}
+	
+	private boolean validCheck() {
+		String phone = mPhone.getText().toString();
+		String code = mCode.getText().toString();
+		String password = mPassword.getText().toString();
+		String id = mIDNumber.getText().toString();
+		
+		if (phone == null || phone.equals("")) {
+			showTips(getResources().getString(
+					R.string.register_username_empty));
+			return false;
+		} else if (code == null || code.equals("")) {
+			showTips(getResources().getString(
+					R.string.register_code_empty));
+			return false;
+		} else if (password == null || password.equals("")) {
+			showTips(getResources().getString(
+					R.string.register_password_empty));
+			return false;
+		} else if (!Util.isPhoneNumber(phone)) {
+			showTips(getResources().getString(
+					R.string.register_username_invalid));
+			return false;
+		} else if (!Util.isCodeValid(code)) {
+			showTips(getResources().getString(
+					R.string.register_code_invalid));
+			return false;
+		} else if (!Util.isPasswordValid(password)) {
+			showTips(getResources().getString(
+					R.string.register_password_invalid));
+			return false;
+		} else if (id != null && !id.equals("") && !Util.isIDNumberValid(id)) {
+			showTips(getResources().getString(
+					R.string.register_id_invalid));
+			return false;
+		}
+		
+		return true;
 	}
 	
 	private void showTypeChooseDialog() {
@@ -147,6 +209,57 @@ public class RegisterActivity extends Activity {
 							}
 						}).setTitle("货源").create();
 		dialog.show();
+	}
+	
+	private void showProgressDialog() {
+		if (mProgressDialog == null) {
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage(getString(R.string.requesting));
+			mProgressDialog.setCancelable(false);
+		}
+		mProgressDialog.show();
+	}
+	
+	private void hideProgressDialog() {
+		if (mProgressDialog != null) {
+			mProgressDialog.hide();
+		}
+		mProgressDialog = null;
+	}
+	
+	/**
+	 * 显示提示
+	 * 
+	 * @param tips
+	 */
+	private void showTips(String tips) {
+		Toast.makeText(this, tips, Toast.LENGTH_SHORT).show();
+	}
+	
+	private void registerResult(JSONArray response) {
+		if (response != null && response.length() > 0) {
+			try {
+				JSONObject object = response.getJSONObject(0);
+				int res = object.getInt("res");
+				String msg = object.getString("msg");
+				switch (res) {
+				case 0://异常
+				case 1://失败
+					showTips(getString(R.string.register_failed));
+					return;
+				case 2://成功
+					showTips(getString(R.string.register_success));
+					finish();
+					return;
+				case 3://提示
+					showTips(msg);
+					return;
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		showTips(getString(R.string.register_failed));
 	}
 	
 }
