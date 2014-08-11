@@ -110,6 +110,7 @@ public class RegisterActivity extends Activity {
 	private void initView() {
 		ButterKnife.inject(this);
 		mTitle.setText(R.string.register);
+		mMenuBtn.setOnClickListener(mOnClickListener);
 		mCodeBtn.setOnClickListener(mOnClickListener);
 		mUserType.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);

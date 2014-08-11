@@ -26,11 +26,11 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 	private boolean hasFoucs;
 
 	public ClearEditText(Context context) {
-		super(context);
+		this(context, null);
 	}
 
 	public ClearEditText(Context context, AttributeSet attrs) {
-		super(context, attrs);
+		this(context, attrs, android.R.attr.editTextStyle);
 	}
 	
 	public ClearEditText(Context context, AttributeSet attrs, int defStyle) {

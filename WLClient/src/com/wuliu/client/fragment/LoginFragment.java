@@ -1,8 +1,5 @@
 package com.wuliu.client.fragment;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,9 +22,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,6 +135,7 @@ public class LoginFragment extends BaseFragment {
 				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		mShowPass.setOnClickListener(mOnClickListener);
 		mLoginSubmit.setOnClickListener(mOnClickListener);
+		mUserName.requestFocus();
 	}
 
 	/**
