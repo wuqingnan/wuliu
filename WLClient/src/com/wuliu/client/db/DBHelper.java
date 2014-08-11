@@ -11,9 +11,9 @@ import android.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.wuliu.client.area.AreaManager;
 import com.wuliu.client.bean.Area;
 import com.wuliu.client.bean.dao.AreaDao;
+import com.wuliu.client.manager.AreaManager;
 
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 

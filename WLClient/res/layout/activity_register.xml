@@ -42,6 +42,7 @@
                     android:layout_height="fill_parent"
                     android:layout_marginRight="5dp"
                     android:hint="@string/hint_register_username"
+                    android:inputType="phone"
                     android:maxLength="16" />
             </LinearLayout>
 
@@ -81,6 +82,7 @@
                         android:layout_height="fill_parent"
                         android:layout_toLeftOf="@id/register_get_code"
                         android:hint="@string/hint_register_code"
+                        android:inputType="number"
                         android:maxLength="4" />
                 </RelativeLayout>
             </LinearLayout>
@@ -107,9 +109,9 @@
                     style="@style/WuLiu.EditText.ClearEditText"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:inputType="textPassword"
                     android:layout_marginRight="5dp"
                     android:hint="@string/hint_register_password"
+                    android:inputType="textPassword"
                     android:maxLength="16" />
             </LinearLayout>
             

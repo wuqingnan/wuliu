@@ -8,22 +8,18 @@ import org.json.JSONObject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.wuliu.client.Const;
 import com.wuliu.client.R;
 import com.wuliu.client.activity.MainActivity;
-import com.wuliu.client.activity.RegisterActivity;
-import com.wuliu.client.api.BaseParams;
-import com.wuliu.client.utils.DeviceInfo;
+import com.wuliu.client.bean.UserInfo;
+import com.wuliu.client.manager.LoginManager;
+import com.wuliu.client.utils.EncryptUtil;
 import com.wuliu.client.utils.Util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +43,7 @@ public class LoginFragment extends BaseFragment {
 							.onClickTitle(LoginFragment.this);
 				}
 			} else if (view == mRegister) {
-				register();
+				((MainActivity) getActivity()).register();
 			} else if (view == mShowPass) {
 				showPassword(mPassword.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 			} else if (view == mLoginSubmit) {
@@ -56,7 +52,7 @@ public class LoginFragment extends BaseFragment {
 		}
 	};
 	
-	private JsonHttpResponseHandler mResponseHandler = new JsonHttpResponseHandler() {
+	private JsonHttpResponseHandler mLoginHandler = new JsonHttpResponseHandler() {
 		
 		public void onFinish() {
 			hideProgressDialog();
@@ -66,7 +62,7 @@ public class LoginFragment extends BaseFragment {
 			loginResult(response);
 		};
 		
-		public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 			loginResult(null);
 		};
 	};
@@ -89,6 +85,8 @@ public class LoginFragment extends BaseFragment {
 	TextView mLoginSubmit;
 
 	private ProgressDialog mProgressDialog;
+	
+	private UserInfo mUserInfo;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -170,31 +168,27 @@ public class LoginFragment extends BaseFragment {
 	}
 	
 	/**
-	 * 注册
-	 */
-	private void register() {
-		getActivity().startActivity(new Intent(getActivity(), RegisterActivity.class));
-	}
-
-	/**
 	 * 登录
 	 */
 	private void login() {
 		if (validCheck()) {
-			String username = mUserName.getText().toString();
-			String password = mPassword.getText().toString();
-			
-			AsyncHttpClient client = new AsyncHttpClient();
-			BaseParams params = new BaseParams();
-			params.add("method", "loginCheck");
-			params.add("device_no", DeviceInfo.getIMEI());
-			params.add("suppler_cd", username);
-			params.add("passwd", password);
-			
 			showProgressDialog();
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_LOGIN, params));
-			client.get(Const.URL_LOGIN, params, mResponseHandler);
+			if (mUserInfo == null) {
+				mUserInfo = new UserInfo();
+			}
+			String username = mUserName.getText().toString();
+			String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
+			mUserInfo.setUserName(username);
+			mUserInfo.setPassword(password);
+			LoginManager.getInstance().login(username, password, mLoginHandler);
 		}
+	}
+	
+	public void login(UserInfo info) {
+		showProgressDialog();
+		mUserInfo = info;
+		mUserName.setText(info.getUserName());
+		LoginManager.getInstance().login(info.getUserName(), info.getPassword(), mLoginHandler);
 	}
 
 	/**
@@ -246,7 +240,7 @@ public class LoginFragment extends BaseFragment {
 	
 	private void hideProgressDialog() {
 		if (mProgressDialog != null) {
-			mProgressDialog.hide();
+			mProgressDialog.dismiss();
 		}
 		mProgressDialog = null;
 	}
@@ -257,18 +251,13 @@ public class LoginFragment extends BaseFragment {
 				JSONObject object = response.getJSONObject(0);
 				int res = object.getInt("res");
 				String msg = object.getString("msg");
-				switch (res) {
-				case 1://失败
-					showTips(getString(R.string.login_failed));
-					return;
-				case 2://成功
-					showTips(getString(R.string.login_success));
-					((MainActivity)getActivity()).loginSuccess(mUserName.getText().toString());
-					return;
-				case 3://提示
-					showTips(msg);
-					return;
+				showTips(msg);
+				if (res == 2) {//成功
+					LoginManager.getInstance().setLogin(true);
+					LoginManager.getInstance().setUserInfo(mUserInfo);
+					((MainActivity)getActivity()).loginSuccess();
 				}
+				return;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

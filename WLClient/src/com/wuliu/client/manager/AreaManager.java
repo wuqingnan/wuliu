@@ -1,4 +1,4 @@
-package com.wuliu.client.area;
+package com.wuliu.client.manager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

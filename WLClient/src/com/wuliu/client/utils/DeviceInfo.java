@@ -14,6 +14,7 @@ public class DeviceInfo {
 
 	private static String sIMEI = null;
 	private static String sVersion = null;
+	private static String sPackageName = null;
 	
 	public static void init(Context context) {
 		TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -23,6 +24,7 @@ public class DeviceInfo {
 			PackageManager pm = context.getPackageManager();
 			PackageInfo info = pm.getPackageInfo(context.getPackageName(), 0);
 			sVersion = info.versionName;
+			sPackageName = info.packageName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -58,5 +60,13 @@ public class DeviceInfo {
 	 */
 	public static String getManufacturer() {
 		return Build.MANUFACTURER;
+	}
+	
+	/**
+	 * 获取包名
+	 * @return
+	 */
+	public static String getPackageName() {
+		return sPackageName;
 	}
 }

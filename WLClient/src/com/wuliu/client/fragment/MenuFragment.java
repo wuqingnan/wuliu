@@ -3,6 +3,7 @@ package com.wuliu.client.fragment;
 import com.wuliu.client.R;
 import com.wuliu.client.activity.MainActivity;
 import com.wuliu.client.adapter.MenuAdapter;
+import com.wuliu.client.manager.LoginManager;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -60,8 +61,8 @@ public class MenuFragment extends ListFragment {
 		setListAdapter(mMenuAdapter);
 	}
 
-	public void updateInfo(String number) {
-		mMenuPhone.setText(number);
+	public void updateInfo() {
+		mMenuPhone.setText(LoginManager.getInstance().getUserInfo().getUserName());
 	}
 
 	private void switchFragment(int position) {
@@ -77,5 +78,4 @@ public class MenuFragment extends ListFragment {
 			break;
 		}
 	}
-
 }

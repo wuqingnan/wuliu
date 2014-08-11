@@ -1,12 +1,11 @@
 package com.wuliu.client.activity;
 
-import java.sql.SQLException;
-
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.wuliu.client.Const;
 import com.wuliu.client.R;
 import com.wuliu.client.WLApplication;
-import com.wuliu.client.area.AreaManager;
+import com.wuliu.client.bean.UserInfo;
 import com.wuliu.client.db.DBHelper;
 import com.wuliu.client.fragment.BaseFragment;
 import com.wuliu.client.fragment.LoginFragment;
@@ -15,17 +14,15 @@ import com.wuliu.client.fragment.MapFragment;
 import com.wuliu.client.fragment.MenuFragment;
 import com.wuliu.client.fragment.SendFragment;
 import com.wuliu.client.fragment.SetFragment;
+import com.wuliu.client.manager.LoginManager;
 import com.wuliu.client.utils.DeviceInfo;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends SlidingFragmentActivity {
@@ -33,6 +30,8 @@ public class MainActivity extends SlidingFragmentActivity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 	
 	private static final int EXIT_TIME = 2000;
+	
+	private static final int REQUEST_CODE_REGISTER = 1 << 0;
 
 	private MapFragment mMapFragment;
 	private BaseFragment mTopFragment;
@@ -42,8 +41,6 @@ public class MainActivity extends SlidingFragmentActivity {
 	private SlidingMenu mSlidingMenu;
 
 	private long mExitTime;
-	private boolean mHasLogin;
-	private String mPhoneNumber;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,9 +48,10 @@ public class MainActivity extends SlidingFragmentActivity {
 		setContentView(R.layout.activity_main);
 		initFragment();
 		initSlidingMenu();
-		mHasLogin = false;
 		initArea();
+		Const.init(this);
 		DeviceInfo.init(this);
+		LoginManager.getInstance().autoLogin();
 	}
 
 	@Override
@@ -76,6 +74,19 @@ public class MainActivity extends SlidingFragmentActivity {
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUEST_CODE_REGISTER) {
+			if (resultCode == RESULT_OK) {
+				if (mTopFragment instanceof LoginFragment) {
+					UserInfo info = (UserInfo) data.getSerializableExtra("userinfo");
+					((LoginFragment)mTopFragment).login(info);
+				}
+			}
+		}
 	}
 
 	private void initFragment() {
@@ -103,7 +114,7 @@ public class MainActivity extends SlidingFragmentActivity {
 
 	public void onClickTitle(BaseFragment fragment) {
 		if (fragment instanceof MainFragment) {
-			if (mHasLogin) {
+			if (LoginManager.getInstance().hasLogin()) {
 				mSlidingMenu.showMenu();
 			} else {
 				switchContent(new LoginFragment());
@@ -120,12 +131,13 @@ public class MainActivity extends SlidingFragmentActivity {
 		}
 	}
 	
-	public void loginSuccess(String number) {
-		mHasLogin = true;
-		mPhoneNumber = number;
-		mMenuFragment.updateInfo(number);
+	public void loginSuccess() {
+		mMenuFragment.updateInfo();
 		mFragmentManager.popBackStack();
-		Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show();
+	}
+	
+	public void register() {
+		startActivityForResult(new Intent(this, RegisterActivity.class), REQUEST_CODE_REGISTER);
 	}
 
 	public void switchContent(BaseFragment fragment) {

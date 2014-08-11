@@ -1,14 +1,7 @@
 package com.wuliu.client.activity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
 
 import org.apache.http.Header;
-import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,14 +10,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.ResponseHandlerInterface;
 import com.wuliu.client.Const;
 import com.wuliu.client.R;
 import com.wuliu.client.api.BaseParams;
+import com.wuliu.client.bean.UserInfo;
 import com.wuliu.client.utils.DeviceInfo;
+import com.wuliu.client.utils.EncryptUtil;
 import com.wuliu.client.utils.Util;
 import com.wuliu.client.view.ClearEditText;
 
@@ -32,7 +24,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -59,7 +53,7 @@ public class RegisterActivity extends Activity {
 		}
 	};
 
-	private JsonHttpResponseHandler mResponseHandler = new JsonHttpResponseHandler() {
+	private JsonHttpResponseHandler mRegisterHandler = new JsonHttpResponseHandler() {
 		
 		public void onFinish() {
 			hideProgressDialog();
@@ -69,7 +63,7 @@ public class RegisterActivity extends Activity {
 			registerResult(response);
 		};
 		
-		public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 			registerResult(null);
 		};
 	};
@@ -114,6 +108,8 @@ public class RegisterActivity extends Activity {
 		mCodeBtn.setOnClickListener(mOnClickListener);
 		mUserType.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);
+		mPassword.setInputType(InputType.TYPE_CLASS_TEXT
+				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
 	}
 
 	private void initData() {
@@ -134,8 +130,10 @@ public class RegisterActivity extends Activity {
 	
 	private void register() {
 		if (validCheck()) {
+			showProgressDialog();
+			
 			String phone = mPhone.getText().toString();
-			String password = mPassword.getText().toString();
+			String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
 			String id = mIDNumber.getText().toString();
 			
 			AsyncHttpClient client = new AsyncHttpClient();
@@ -151,10 +149,22 @@ public class RegisterActivity extends Activity {
 			params.add("card_id", (id == null || id.equals("")) ? "-9" : id);
 			params.add("passwd", password);
 			
-			showProgressDialog();
 			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
-			client.get(Const.URL_REGISTER, params, mResponseHandler);
+			client.get(Const.URL_REGISTER, params, mRegisterHandler);
 		}
+	}
+	
+	private void login() {
+		hideProgressDialog();
+		Intent intent = new Intent();
+		UserInfo info = new UserInfo();
+		String phone = mPhone.getText().toString();
+		String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
+		info.setUserName(phone);
+		info.setPassword(password);
+		intent.putExtra("userinfo", info);
+		setResult(RESULT_OK, intent);
+		finish();
 	}
 	
 	private boolean validCheck() {
@@ -223,7 +233,7 @@ public class RegisterActivity extends Activity {
 	
 	private void hideProgressDialog() {
 		if (mProgressDialog != null) {
-			mProgressDialog.hide();
+			mProgressDialog.dismiss();
 		}
 		mProgressDialog = null;
 	}
@@ -243,19 +253,11 @@ public class RegisterActivity extends Activity {
 				JSONObject object = response.getJSONObject(0);
 				int res = object.getInt("res");
 				String msg = object.getString("msg");
-				switch (res) {
-				case 0://异常
-				case 1://失败
-					showTips(getString(R.string.register_failed));
-					return;
-				case 2://成功
-					showTips(getString(R.string.register_success));
-					finish();
-					return;
-				case 3://提示
-					showTips(msg);
-					return;
+				showTips(msg);
+				if (res == 2) {//成功
+					login();
 				}
+				return;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
