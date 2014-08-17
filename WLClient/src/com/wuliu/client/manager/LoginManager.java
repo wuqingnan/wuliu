@@ -73,7 +73,6 @@ public class LoginManager {
 		AsyncHttpClient client = new AsyncHttpClient();
 		BaseParams params = new BaseParams();
 		params.add("method", "loginCheck");
-		params.add("device_no", DeviceInfo.getIMEI());
 		params.add("suppler_cd", username);
 		params.add("passwd", password);
 		

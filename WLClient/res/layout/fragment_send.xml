@@ -141,6 +141,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
+                    android:maxLength="16"
                     android:background="@null" />
             </LinearLayout>
 
@@ -180,13 +181,30 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
+                    android:maxLength="4"
+                    android:inputType="numberDecimal"
                     android:background="@null" />
 
-                <TextView
-                    style="@style/Send_Item_Unit"
+                <RadioGroup
+                    android:id="@+id/goods_weight_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/kg" />
+                    android:orientation="horizontal" >
+                    
+                    <RadioButton
+                        android:id="@+id/goods_weight_unit_kg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_color_dark_gray"
+                        android:text="@string/unit_kg" />
+                    
+                    <RadioButton
+                        android:id="@+id/goods_weight_unit_tons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_color_dark_gray"
+                        android:text="@string/unit_tons" />
+                </RadioGroup>
             </LinearLayout>
 
             <View
@@ -224,6 +242,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
+                    android:maxLength="9"
+                    android:inputType="number"
                     android:background="@null" />
 
                 <TextView
@@ -233,6 +253,91 @@
                     android:text="@string/yuan" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/Send_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/goods_pay" />
+
+                <TextView
+                    style="@style/Send_Item_Asterisk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/asterisk" />
+
+                <EditText
+                    android:id="@+id/goods_pay"
+                    style="@style/Send_Item_Value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:maxLength="9"
+                    android:inputType="number"
+                    android:background="@null" />
+
+                <TextView
+                    style="@style/Send_Item_Unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yuan" />
+            </LinearLayout>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+
+                <TextView
+                    style="@style/Send_Item_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/goods_valid_time" />
+
+                <TextView
+                    style="@style/Send_Item_Asterisk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/asterisk"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/goods_valid_time"
+                    style="@style/Send_Item_Value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:drawableRight="@drawable/arrow_right" />
+            </LinearLayout>
+            
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/line_height"

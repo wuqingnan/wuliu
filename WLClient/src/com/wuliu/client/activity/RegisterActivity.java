@@ -59,7 +59,7 @@ public class RegisterActivity extends Activity {
 			hideProgressDialog();
 		};
 		
-		public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 			registerResult(response);
 		};
 		
@@ -89,7 +89,6 @@ public class RegisterActivity extends Activity {
 
 	private int mUserTypeIndex;
 	private String[] mUserTypes;
-	private String[] mUserTypeValues;
 
 	private ProgressDialog mProgressDialog;
 	
@@ -115,8 +114,6 @@ public class RegisterActivity extends Activity {
 	private void initData() {
 		mUserTypeIndex = 0;
 		mUserTypes = getResources().getStringArray(R.array.user_types);
-		mUserTypeValues = getResources().getStringArray(
-				R.array.user_type_values);
 		updateUserType();
 	}
 
@@ -139,14 +136,12 @@ public class RegisterActivity extends Activity {
 			AsyncHttpClient client = new AsyncHttpClient();
 			BaseParams params = new BaseParams();
 			params.add("method", "registerGoodSupplyer");
-			params.add("device_no", DeviceInfo.getIMEI());
 			params.add("suppler_cd", phone);
-			params.add("suppler_name", phone);
-			params.add("suppler_type", mUserTypeValues[mUserTypeIndex]);
+			params.add("suppler_type", "" + mUserTypeIndex);
 			params.add("phone", phone);
-			params.add("credit_level", "CL01");
+			params.add("credit_level", "0");
 			params.add("state", "0");
-			params.add("card_id", (id == null || id.equals("")) ? "-9" : id);
+			params.add("card_id", (id == null || id.equals("")) ? BaseParams.PARAM_DEFAULT : id);
 			params.add("passwd", password);
 			
 			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
@@ -174,31 +169,31 @@ public class RegisterActivity extends Activity {
 		String id = mIDNumber.getText().toString();
 		
 		if (phone == null || phone.equals("")) {
-			showTips(getResources().getString(
+			Util.showTips(this, getResources().getString(
 					R.string.register_username_empty));
 			return false;
 		} else if (code == null || code.equals("")) {
-			showTips(getResources().getString(
+			Util.showTips(this, getResources().getString(
 					R.string.register_code_empty));
 			return false;
 		} else if (password == null || password.equals("")) {
-			showTips(getResources().getString(
+			Util.showTips(this, getResources().getString(
 					R.string.register_password_empty));
 			return false;
 		} else if (!Util.isPhoneNumber(phone)) {
-			showTips(getResources().getString(
+			Util.showTips(this, getResources().getString(
 					R.string.register_username_invalid));
 			return false;
 		} else if (!Util.isCodeValid(code)) {
-			showTips(getResources().getString(
+			Util.showTips(this, getResources().getString(
 					R.string.register_code_invalid));
 			return false;
 		} else if (!Util.isPasswordValid(password)) {
-			showTips(getResources().getString(
+			Util.showTips(this, getResources().getString(
 					R.string.register_password_invalid));
 			return false;
 		} else if (id != null && !id.equals("") && !Util.isIDNumberValid(id)) {
-			showTips(getResources().getString(
+			Util.showTips(this, getResources().getString(
 					R.string.register_id_invalid));
 			return false;
 		}
@@ -238,22 +233,12 @@ public class RegisterActivity extends Activity {
 		mProgressDialog = null;
 	}
 	
-	/**
-	 * 显示提示
-	 * 
-	 * @param tips
-	 */
-	private void showTips(String tips) {
-		Toast.makeText(this, tips, Toast.LENGTH_SHORT).show();
-	}
-	
-	private void registerResult(JSONArray response) {
+	private void registerResult(JSONObject response) {
 		if (response != null && response.length() > 0) {
 			try {
-				JSONObject object = response.getJSONObject(0);
-				int res = object.getInt("res");
-				String msg = object.getString("msg");
-				showTips(msg);
+				int res = response.getInt("res");
+				String msg = response.getString("msg");
+				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					login();
 				}
@@ -262,7 +247,7 @@ public class RegisterActivity extends Activity {
 				e.printStackTrace();
 			}
 		}
-		showTips(getString(R.string.register_failed));
+		Util.showTips(this, getString(R.string.register_failed));
 	}
 	
 }

@@ -6,6 +6,7 @@ import butterknife.InjectView;
 import com.wuliu.client.R;
 import com.wuliu.client.activity.MainActivity;
 import com.wuliu.client.activity.SendActivity;
+import com.wuliu.client.manager.LoginManager;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,13 +31,21 @@ public class MainFragment extends BaseFragment {
 				}
 			}
 			else if (view == mMainSend) {
-				SendActivity.startSendActivity(getActivity(), false);
+				if (LoginManager.getInstance().hasLogin()) {
+					SendActivity.startSendActivity(getActivity(), false);
+				} else {
+					((MainActivity)getActivity()).switchContent(new LoginFragment());
+				}
 			}
 			else if (view == mMainInput) {
 				Toast.makeText(getActivity(), "跳转到搜索界面", Toast.LENGTH_SHORT).show();
 			}
 			else if (view == mMainBook) {
-				SendActivity.startSendActivity(getActivity(), true);
+				if (LoginManager.getInstance().hasLogin()) {
+					SendActivity.startSendActivity(getActivity(), true);
+				} else {
+					((MainActivity)getActivity()).switchContent(new LoginFragment());
+				}
 			}
 		}
 	};

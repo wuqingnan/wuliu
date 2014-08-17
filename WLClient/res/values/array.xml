@@ -7,25 +7,32 @@
         <item>告诉好友</item>
         <item>设置</item>
     </string-array>
-    
+
     <string-array name="goods_type_list">
-        <item>鲜花</item>
-        <item>蛋糕</item>
+        <item>大宗货物</item>
+        <item>普通货物</item>
         <item>生鲜果蔬</item>
-        <item>办公用品</item>
-        <item>电子数码</item>
-        <item>食品酒水</item>
-        <item>家居生活</item>
+        <item>小货物</item>
+        <item>其他</item>
     </string-array>
     
     <string-array name="goods_traffic_list">
-        <item>自行车</item>
-        <item>电动车</item>
-        <item>摩托车</item>
-        <item>汽车</item>
-        <item>地铁</item>
-        <item>公交</item>
         <item>不限</item>
+        <item>大型运输车</item>
+        <item>中型运输车</item>
+        <item>小型运输车</item>
+        <item>危险品运输车</item>
+        <item>货车</item>
+        <item>出租车</item>
+        <item>私家车</item>
+    </string-array>
+    
+    <string-array name="goods_valid_time_list">
+        <item>10分钟</item>
+        <item>30分钟</item>
+        <item>一小时</item>
+        <item>半天</item>
+        <item>当天</item>
     </string-array>
     
     <string-array name="pay_type_list">

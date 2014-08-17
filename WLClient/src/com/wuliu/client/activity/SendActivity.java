@@ -11,6 +11,8 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.wuliu.client.R;
 import com.wuliu.client.WLApplication;
+import com.wuliu.client.bean.Order;
+import com.wuliu.client.utils.Util;
 import com.wuliu.client.window.TimeWheel;
 import com.wuliu.client.window.WheelWindow;
 
@@ -21,16 +23,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class SendActivity extends Activity {
@@ -48,6 +47,8 @@ public class SendActivity extends Activity {
 				finish();
 			} else if (view == mGoodsType) {
 				showTypeChooseDialog();
+			} else if (view == mGoodsValidTime) {
+				showValidTimeChooseDialog();
 			} else if (view == mGoodsTraffic) {
 				showTrafficChooseDialog();
 			} else if (view == mSwapAddress) {
@@ -96,8 +97,14 @@ public class SendActivity extends Activity {
 	EditText mGoodsName;
 	@InjectView(R.id.goods_weight)
 	EditText mGoodsWeight;
+	@InjectView(R.id.goods_weight_unit)
+	RadioGroup mGoodsWeightUnit;
 	@InjectView(R.id.goods_value)
 	EditText mGoodsValue;
+	@InjectView(R.id.goods_pay)
+	EditText mGoodsPay;
+	@InjectView(R.id.goods_valid_time)
+	TextView mGoodsValidTime;
 	@InjectView(R.id.goods_traffic)
 	TextView mGoodsTraffic;
 	@InjectView(R.id.address_from)
@@ -117,8 +124,10 @@ public class SendActivity extends Activity {
 	
 	private String[] mTypeList;
 	private String[] mTrafficList;
+	private String[] mValidTimeList;
 	private int mTypeIndex;
 	private int mTrafficIndex;
+	private int mValidTimeIndex;
 	private long mBespeakTime;
 	private boolean mBespeak;
 	private boolean mIsFrom;
@@ -140,6 +149,7 @@ public class SendActivity extends Activity {
 	private void initView() {
 		ButterKnife.inject(this);
 		mGoodsType.setOnClickListener(mOnClickListener);
+		mGoodsValidTime.setOnClickListener(mOnClickListener);
 		mGoodsTraffic.setOnClickListener(mOnClickListener);
 		mSwapAddress.setOnClickListener(mOnClickListener);
 		mNextStep.setOnClickListener(mOnClickListener);
@@ -158,11 +168,17 @@ public class SendActivity extends Activity {
 	private void initData() {
 		mTypeIndex = 0;
 		mTrafficIndex = 0;
+		mValidTimeIndex = 0;
+		
 		mTypeList = getResources().getStringArray(R.array.goods_type_list);
 		mTrafficList = getResources()
 				.getStringArray(R.array.goods_traffic_list);
+		mValidTimeList = getResources()
+				.getStringArray(R.array.goods_valid_time_list);
 		updateType();
 		updateTraffic();
+		updateValidTime();
+		mGoodsWeightUnit.check(R.id.goods_weight_unit_kg);
 	}
 	
 	private void initAddress() {
@@ -184,13 +200,39 @@ public class SendActivity extends Activity {
 		mGoodsType.setText(mTypeList[mTypeIndex]);
 	}
 
+	private void updateValidTime() {
+		mGoodsValidTime.setText(mValidTimeList[mValidTimeIndex]);
+	}
+	
 	private void updateTraffic() {
 		mGoodsTraffic.setText(mTrafficList[mTrafficIndex]);
 	}
 	
 	private void sendDetail() {
-		Intent intent = new Intent(this, SendDetailActivity.class);
-		startActivity(intent);
+		if (checkValid()) {
+			Order order = new Order();
+			order.setGoodsType(mTypeIndex);
+			order.setGoodsName(mGoodsName.getText().toString());
+			if (mBespeak) {
+				order.setBespeakTime(mTakeTime.getText().toString());
+			}
+			boolean tons = mGoodsWeightUnit.getCheckedRadioButtonId() == R.id.goods_weight_unit_tons;
+			float weight = Float.parseFloat(mGoodsWeight.getText().toString());
+			order.setWeight((int)(weight * (tons ? 1000 : 1)));
+			order.setGoodsValue(Integer.parseInt(mGoodsValue.getText().toString()));
+			order.setPay(Integer.parseInt(mGoodsPay.getText().toString()));
+			order.setValidTime(mValidTimeIndex);
+			order.setTrunkType(mTrafficIndex);
+			order.setToAddress(mAddressTo.getText().toString());
+			order.setFromAddress(mAddressFrom.getText().toString());
+			LocationClient client = WLApplication.getLocationClient();
+			if (client != null) {
+				BDLocation location = client.getLastKnownLocation();
+				order.setLat(location.getLatitude());
+				order.setLon(location.getLongitude());
+			}
+			SendDetailActivity.startSendDetailActivity(this, order);
+		}
 	}
 	
 	private void searchAddress(boolean isFrom) {
@@ -219,6 +261,23 @@ public class SendActivity extends Activity {
 						}).setTitle("物品类型").create();
 		dialog.show();
 	}
+	
+	private void showValidTimeChooseDialog() {
+		AlertDialog dialog = new AlertDialog.Builder(this)
+		.setSingleChoiceItems(mValidTimeList, mValidTimeIndex,
+				new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog,
+					int which) {
+				mValidTimeIndex = which;
+				dialog.dismiss();
+				updateValidTime();
+			}
+		}).setTitle("有效时间").create();
+		dialog.show();
+	}
+	
 	
 	private void showTrafficChooseDialog() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
@@ -259,6 +318,61 @@ public class SendActivity extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 
+	private boolean checkValid() {
+		String takeTime = mTakeTime.getText().toString();
+		String goodsName = mGoodsName.getText().toString();
+		String goodsWeight = mGoodsWeight.getText().toString();
+		String goodsValue = mGoodsValue.getText().toString();
+		String goodsPay = mGoodsPay.getText().toString();
+		String addressFrom = mAddressFrom.getText().toString();
+		String addressTo = mAddressTo.getText().toString();
+		if (mBespeak && (takeTime == null || takeTime.equals(""))) {
+			Util.showTips(this, getResources().getString(
+					R.string.take_time_empty));
+			return false;
+		} else if (goodsName == null || goodsName.equals("")) {
+			Util.showTips(this, getResources().getString(
+					R.string.goods_name_empty));
+			return false;
+		} else if (goodsWeight == null || goodsWeight.equals("")) {
+			Util.showTips(this, getResources().getString(
+					R.string.goods_weight_empty));
+			return false;
+		} else if (goodsValue == null || goodsValue.equals("")) {
+			Util.showTips(this, getResources().getString(
+					R.string.goods_value_empty));
+			return false;
+		} else if (goodsPay == null || goodsPay.equals("")) {
+			Util.showTips(this, getResources().getString(
+					R.string.goods_pay_empty));
+			return false;
+		} else if (addressFrom == null || addressFrom.equals("")) {
+			Util.showTips(this, getResources().getString(
+					R.string.address_from_empty));
+			return false;
+		} else if (addressTo == null || addressTo.equals("")) {
+			Util.showTips(this, getResources().getString(
+					R.string.address_to_empty));
+			return false;
+		}
+		
+		if (!(Util.isInteger(goodsWeight) || Util.isDecimal(goodsWeight))) {
+			Util.showTips(this, getResources().getString(
+					R.string.goods_weight_error));
+			return false;
+		} else if (!Util.isInteger(goodsValue)) {
+			Util.showTips(this, getResources().getString(
+					R.string.goods_value_error));
+			return false;
+		} else if (!Util.isInteger(goodsPay)) {
+			Util.showTips(this, getResources().getString(
+					R.string.goods_value_error));
+			return false;
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * 打开发货页面
 	 * @param context

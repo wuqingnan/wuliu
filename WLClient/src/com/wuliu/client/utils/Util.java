@@ -3,6 +3,9 @@ package com.wuliu.client.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class Util {
 
 	public static boolean isPhoneNumber(String number) {
@@ -10,6 +13,40 @@ public class Util {
 			return false;
 		}
 		Pattern pattern = Pattern.compile("^1[3,5,7,8]\\d{9}$");
+		// 正则匹配11位号码是否满足手机号码格式
+		if (pattern.matcher(number).matches()) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 判断是否为正整数或0
+	 * @param number
+	 * @return
+	 */
+	public static boolean isInteger(String number) {
+		if (number == null || number.length() == 0) {
+			return false;
+		}
+		Pattern pattern = Pattern.compile("^(0|[1-9][0-9]*)$");
+		// 正则匹配11位号码是否满足手机号码格式
+		if (pattern.matcher(number).matches()) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 判断是否为正小数
+	 * @param number
+	 * @return
+	 */
+	public static boolean isDecimal(String number) {
+		if (number == null || number.length() == 0) {
+			return false;
+		}
+		Pattern pattern = Pattern.compile("^(0|[1-9][0-9]*)\\.[0-9]{1,}$");
 		// 正则匹配11位号码是否满足手机号码格式
 		if (pattern.matcher(number).matches()) {
 			return true;
@@ -77,5 +114,14 @@ public class Util {
 			return m.matches();
 		}
 		return false;
+	}
+	
+	/**
+	 * 显示提示
+	 * 
+	 * @param tips
+	 */
+	public static void showTips(Context context, String tips) {
+		Toast.makeText(context, tips, Toast.LENGTH_SHORT).show();
 	}
 }

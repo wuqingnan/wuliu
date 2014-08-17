@@ -58,7 +58,7 @@ public class LoginFragment extends BaseFragment {
 			hideProgressDialog();
 		};
 		
-		public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 			loginResult(response);
 		};
 		
@@ -245,12 +245,11 @@ public class LoginFragment extends BaseFragment {
 		mProgressDialog = null;
 	}
 	
-	private void loginResult(JSONArray response) {
+	private void loginResult(JSONObject response) {
 		if (response != null && response.length() > 0) {
 			try {
-				JSONObject object = response.getJSONObject(0);
-				int res = object.getInt("res");
-				String msg = object.getString("msg");
+				int res = response.getInt("res");
+				String msg = response.getString("msg");
 				showTips(msg);
 				if (res == 2) {//³É¹¦
 					LoginManager.getInstance().setLogin(true);
