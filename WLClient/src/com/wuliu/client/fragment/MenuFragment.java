@@ -62,7 +62,7 @@ public class MenuFragment extends ListFragment {
 	}
 
 	public void updateInfo() {
-		mMenuPhone.setText(LoginManager.getInstance().getUserInfo().getUserName());
+		mMenuPhone.setText(LoginManager.getInstance().getUserInfo().getPhone());
 	}
 
 	private void switchFragment(int position) {

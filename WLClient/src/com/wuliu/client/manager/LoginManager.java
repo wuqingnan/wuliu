@@ -69,12 +69,12 @@ public class LoginManager {
 		mHasLogin = hasLogin;
 	}
 	
-	public void login(String username, String password, ResponseHandlerInterface handler) {
+	public void login(String supplyer_cd, String passwd, ResponseHandlerInterface handler) {
 		AsyncHttpClient client = new AsyncHttpClient();
 		BaseParams params = new BaseParams();
 		params.add("method", "loginCheck");
-		params.add("suppler_cd", username);
-		params.add("passwd", password);
+		params.add("supplyer_cd", supplyer_cd);
+		params.add("passwd", passwd);
 		
 		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_LOGIN, params));
 		client.get(Const.URL_LOGIN, params, handler);
@@ -85,7 +85,7 @@ public class LoginManager {
 			read();
 		}
 		if (mUserInfo != null && !hasLogin()) {
-			login(mUserInfo.getUserName(), mUserInfo.getPassword(), mResponseHandler);
+			login(mUserInfo.getSupplyer_cd(), mUserInfo.getPasswd(), mResponseHandler);
 		}
 	}
 	

@@ -20,6 +20,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,18 +53,18 @@ public class LoginFragment extends BaseFragment {
 		}
 	};
 	
-	private JsonHttpResponseHandler mLoginHandler = new JsonHttpResponseHandler() {
+	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
 		
 		public void onFinish() {
 			hideProgressDialog();
 		};
 		
 		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-			loginResult(response);
+			requestResult(response);
 		};
 		
 		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-			loginResult(null);
+			requestResult(null);
 		};
 	};
 
@@ -176,19 +177,19 @@ public class LoginFragment extends BaseFragment {
 			if (mUserInfo == null) {
 				mUserInfo = new UserInfo();
 			}
-			String username = mUserName.getText().toString();
-			String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
-			mUserInfo.setUserName(username);
-			mUserInfo.setPassword(password);
-			LoginManager.getInstance().login(username, password, mLoginHandler);
+			String supplyer_cd = mUserName.getText().toString();
+			String passwd = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
+			mUserInfo.setSupplyer_cd(supplyer_cd);
+			mUserInfo.setPasswd(passwd);
+			LoginManager.getInstance().login(supplyer_cd, passwd, mRequestHandler);
 		}
 	}
 	
 	public void login(UserInfo info) {
 		showProgressDialog();
 		mUserInfo = info;
-		mUserName.setText(info.getUserName());
-		LoginManager.getInstance().login(info.getUserName(), info.getPassword(), mLoginHandler);
+		mUserName.setText(info.getSupplyer_cd());
+		LoginManager.getInstance().login(info.getSupplyer_cd(), info.getPasswd(), mRequestHandler);
 	}
 
 	/**
@@ -245,14 +246,16 @@ public class LoginFragment extends BaseFragment {
 		mProgressDialog = null;
 	}
 	
-	private void loginResult(JSONObject response) {
+	private void requestResult(JSONObject response) {
 		if (response != null && response.length() > 0) {
+			Log.d(TAG, "shizy---response: " + response.toString());
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				showTips(msg);
 				if (res == 2) {//³É¹¦
 					LoginManager.getInstance().setLogin(true);
+					mUserInfo.update(response.optJSONObject("supplyer"));
 					LoginManager.getInstance().setUserInfo(mUserInfo);
 					((MainActivity)getActivity()).loginSuccess();
 				}

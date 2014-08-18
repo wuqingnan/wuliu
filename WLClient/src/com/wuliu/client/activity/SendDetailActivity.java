@@ -137,7 +137,7 @@ public class SendDetailActivity extends Activity {
 			AsyncHttpClient client = new AsyncHttpClient();
 			BaseParams params = mOrder.getPublishParams();
 			params.add("method", "sendGoodInfos");
-			params.add("suppler_cd", LoginManager.getInstance().getUserInfo().getUserName());
+			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
 			
 			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_SEND_GOODS, params));
 			client.get(Const.URL_SEND_GOODS, params, mRequestHandler);

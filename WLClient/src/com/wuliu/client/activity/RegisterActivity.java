@@ -53,18 +53,18 @@ public class RegisterActivity extends Activity {
 		}
 	};
 
-	private JsonHttpResponseHandler mRegisterHandler = new JsonHttpResponseHandler() {
+	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
 		
 		public void onFinish() {
 			hideProgressDialog();
 		};
 		
 		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-			registerResult(response);
+			requestResult(response);
 		};
 		
 		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-			registerResult(null);
+			requestResult(null);
 		};
 	};
 	
@@ -136,8 +136,7 @@ public class RegisterActivity extends Activity {
 			AsyncHttpClient client = new AsyncHttpClient();
 			BaseParams params = new BaseParams();
 			params.add("method", "registerGoodSupplyer");
-			params.add("suppler_cd", phone);
-			params.add("suppler_type", "" + mUserTypeIndex);
+			params.add("supplyer_type", "" + mUserTypeIndex);
 			params.add("phone", phone);
 			params.add("credit_level", "0");
 			params.add("state", "0");
@@ -145,7 +144,7 @@ public class RegisterActivity extends Activity {
 			params.add("passwd", password);
 			
 			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
-			client.get(Const.URL_REGISTER, params, mRegisterHandler);
+			client.get(Const.URL_REGISTER, params, mRequestHandler);
 		}
 	}
 	
@@ -155,8 +154,8 @@ public class RegisterActivity extends Activity {
 		UserInfo info = new UserInfo();
 		String phone = mPhone.getText().toString();
 		String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
-		info.setUserName(phone);
-		info.setPassword(password);
+		info.setSupplyer_cd(phone);
+		info.setPasswd(password);
 		intent.putExtra("userinfo", info);
 		setResult(RESULT_OK, intent);
 		finish();
@@ -233,8 +232,9 @@ public class RegisterActivity extends Activity {
 		mProgressDialog = null;
 	}
 	
-	private void registerResult(JSONObject response) {
+	private void requestResult(JSONObject response) {
 		if (response != null && response.length() > 0) {
+			Log.d(TAG, "shizy---response: " + response.toString());
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
