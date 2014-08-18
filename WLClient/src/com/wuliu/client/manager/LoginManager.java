@@ -30,13 +30,15 @@ public class LoginManager {
 	
 	private JsonHttpResponseHandler mResponseHandler = new JsonHttpResponseHandler() {
 		
-		public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 			if (response != null && response.length() > 0) {
+				Log.d(TAG, "shizy---response: " + response.toString());
 				try {
-					JSONObject object = response.getJSONObject(0);
-					int res = object.getInt("res");
+					int res = response.getInt("res");
 					if (res == 2) {
 						setLogin(true);
+						mUserInfo.update(response.optJSONObject("supplyer"));
+						setUserInfo(mUserInfo);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -72,7 +74,7 @@ public class LoginManager {
 	public void login(String supplyer_cd, String passwd, ResponseHandlerInterface handler) {
 		AsyncHttpClient client = new AsyncHttpClient();
 		BaseParams params = new BaseParams();
-		params.add("method", "loginCheck");
+		params.add("method", "loginCheck2");
 		params.add("supplyer_cd", supplyer_cd);
 		params.add("passwd", passwd);
 		
