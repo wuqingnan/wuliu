@@ -35,12 +35,6 @@
         <item>当天</item>
     </string-array>
     
-    <string-array name="pay_type_list">
-        <item>现付（发货时现金支付）</item>
-        <item>到付（收货时现金支付）</item>
-        <item>账户余额支付</item>
-    </string-array>
-    
     <string-array name="time_days">
         <item>今天</item>
         <item>明天</item>
@@ -54,10 +48,4 @@
         <item>其他</item>
     </string-array>
 
-    <string-array name="user_type_values">
-        <item>SP01</item>
-        <item>SP02</item>
-        <item>SP03</item>
-        <item>SP04</item>
-    </string-array>
 </resources>

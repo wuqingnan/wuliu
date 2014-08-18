@@ -1,6 +1,5 @@
 package com.wuliu.client.activity;
 
-import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

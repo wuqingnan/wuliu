@@ -17,9 +17,6 @@ public class Order implements Serializable {
 	private static final int SOURCE_ANDROID = 1;
 	private static final int SOURCE_BROWSER = 2;
 	
-	private static final int FREE_NO = 0;
-	private static final int FREE_YES = 1;
-	
 	private String mGoodsName;
 	private int mGoodsValue;
 	private int mGoodsType;
@@ -50,7 +47,6 @@ public class Order implements Serializable {
 	public Order() {
 		mSource = SOURCE_ANDROID;
 		mState = 0;
-		mFree = FREE_YES;
 	}
 
 	public String getGoodsName() {

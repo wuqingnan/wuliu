@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AppClient</string>
+    <string name="app_name">汇流</string>
     <string name="title_main">慧慧物流</string>
     <string name="title_login">登录</string>
     <string name="title_register">注册</string>
@@ -40,9 +40,10 @@
     <string name="send_from">发货人：</string>
     <string name="send_to">收货人：</string>
     <string name="send_phone">手机号码：</string>
-    <string name="send_pay">付款方式：</string>
     <string name="send_comment">重要说明：</string>
-    <string name="my_id_number">我的身份证：</string>
+    <string name="message_free">是否免费：</string>
+    <string name="free_yes">免费</string>
+    <string name="free_no">收费</string>
     <string name="unit_kg">千克</string>
     <string name="unit_tons">吨</string>
     <string name="yuan">元</string>
