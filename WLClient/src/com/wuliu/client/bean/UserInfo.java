@@ -30,13 +30,13 @@ public class UserInfo implements Serializable {
 		if (object != null) {
 			setSupplyer_cd(object.optString("supplyer_cd"));
 			setSupplyer_name(object.optString("supplyer_name"));
-			setSupplyer_name(object.optString("supplyer_type"));
-			setSupplyer_name(object.optString("state"));
-			setSupplyer_name(object.optString("card_id"));
-			setSupplyer_name(object.optString("credit_level"));
-			setSupplyer_name(object.optString("phone"));
+			setSupplyer_type(object.optString("supplyer_type"));
+			setState(object.optString("state"));
+			setCard_id(object.optString("card_id"));
+			setCredit_level(object.optString("credit_level"));
+			setPhone(object.optString("phone"));
 			if (object.has("passwd")) {
-				setSupplyer_name(object.optString("passwd"));
+				setPasswd(object.optString("passwd"));
 			}
 		} 
 	}

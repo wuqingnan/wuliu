@@ -12,6 +12,8 @@ import com.wuliu.client.fragment.LoginFragment;
 import com.wuliu.client.fragment.MainFragment;
 import com.wuliu.client.fragment.MapFragment;
 import com.wuliu.client.fragment.MenuFragment;
+import com.wuliu.client.fragment.OrderFragment;
+import com.wuliu.client.fragment.ProfileFragment;
 import com.wuliu.client.fragment.SetFragment;
 import com.wuliu.client.manager.LoginManager;
 import com.wuliu.client.utils.DeviceInfo;
@@ -123,6 +125,12 @@ public class MainActivity extends SlidingFragmentActivity {
 			mFragmentManager.popBackStack();
 		}
 		else if (fragment instanceof SetFragment) {
+			mFragmentManager.popBackStack();
+		}
+		else if (fragment instanceof ProfileFragment) {
+			mFragmentManager.popBackStack();
+		}
+		else if (fragment instanceof OrderFragment) {
 			mFragmentManager.popBackStack();
 		}
 	}

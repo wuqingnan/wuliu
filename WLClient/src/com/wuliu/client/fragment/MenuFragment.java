@@ -5,15 +5,11 @@ import com.wuliu.client.activity.MainActivity;
 import com.wuliu.client.adapter.MenuAdapter;
 import com.wuliu.client.manager.LoginManager;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -69,13 +65,24 @@ public class MenuFragment extends ListFragment {
 		if (getActivity() == null) {
 			return;
 		}
+		BaseFragment fragment = null;
 		switch (position) {
+		case 0:
+			fragment = new OrderFragment();
+			break;
+		case 1:
+			fragment = new ProfileFragment();
+			break;
+		case 2:
+			break;
 		case 3:
-			SetFragment fragment = new SetFragment();
-			((MainActivity) getActivity()).switchContent(fragment);
+			fragment = new SetFragment();
 			break;
 		default:
 			break;
+		}
+		if (fragment != null) {
+			((MainActivity) getActivity()).switchContent(fragment);
 		}
 	}
 }

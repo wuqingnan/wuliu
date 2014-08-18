@@ -183,6 +183,7 @@
                     android:layout_weight="1.0"
                     android:maxLength="4"
                     android:inputType="numberDecimal"
+                    android:text="@string/zero"
                     android:background="@null" />
 
                 <RadioGroup
@@ -244,6 +245,7 @@
                     android:layout_weight="1.0"
                     android:maxLength="9"
                     android:inputType="number"
+                    android:text="@string/zero"
                     android:background="@null" />
 
                 <TextView
@@ -290,6 +292,7 @@
                     android:layout_weight="1.0"
                     android:maxLength="9"
                     android:inputType="number"
+                    android:text="@string/zero"
                     android:background="@null" />
 
                 <TextView
