@@ -134,6 +134,8 @@ public class RegisterActivity extends Activity {
 			String id = mIDNumber.getText().toString();
 			
 			AsyncHttpClient client = new AsyncHttpClient();
+			client.setURLEncodingEnabled(true);
+			
 			BaseParams params = new BaseParams();
 			params.add("method", "registerGoodSupplyer");
 			params.add("supplyer_type", "" + mUserTypeIndex);

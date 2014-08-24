@@ -135,11 +135,13 @@ public class SendDetailActivity extends Activity {
 			mOrder.setFree(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 0);
 			
 			AsyncHttpClient client = new AsyncHttpClient();
+			client.setURLEncodingEnabled(true);
+			
 			BaseParams params = mOrder.getPublishParams();
 			params.add("method", "sendGoodInfos");
 			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
 			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_SEND_GOODS, params));
+			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(false, Const.URL_SEND_GOODS, params));
 			client.get(Const.URL_SEND_GOODS, params, mRequestHandler);
 		}
 	}

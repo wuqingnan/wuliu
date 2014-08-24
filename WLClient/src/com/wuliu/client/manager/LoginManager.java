@@ -73,6 +73,8 @@ public class LoginManager {
 	
 	public void login(String supplyer_cd, String passwd, ResponseHandlerInterface handler) {
 		AsyncHttpClient client = new AsyncHttpClient();
+		client.setURLEncodingEnabled(true);
+		
 		BaseParams params = new BaseParams();
 		params.add("method", "loginCheck2");
 		params.add("supplyer_cd", supplyer_cd);

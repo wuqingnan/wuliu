@@ -17,6 +17,7 @@ public class Order implements Serializable {
 	private static final int SOURCE_ANDROID = 1;
 	private static final int SOURCE_BROWSER = 2;
 	
+	private String mGoodsCD;
 	private String mGoodsName;
 	private int mGoodsValue;
 	private int mGoodsType;
@@ -44,9 +45,19 @@ public class Order implements Serializable {
 	
 	private String mRemarks;
 	
+	private String mCreateDate;
+	
 	public Order() {
 		mSource = SOURCE_ANDROID;
 		mState = 0;
+	}
+
+	public String getGoodsCD() {
+		return mGoodsCD;
+	}
+
+	public void setGoodsCD(String goodsCD) {
+		mGoodsCD = goodsCD;
 	}
 
 	public String getGoodsName() {
@@ -209,14 +220,22 @@ public class Order implements Serializable {
 		mRemarks = remarks;
 	}
 	
+	public String getCreateDate() {
+		return mCreateDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		mCreateDate = createDate;
+	}
+
 	public BaseParams getPublishParams() {
 		BaseParams params = new BaseParams();
 		params.add("goods_name", TextUtils.isEmpty(mGoodsName) ? BaseParams.PARAM_DEFAULT : mGoodsName);
-		params.add("goods_value", mGoodsValue > 0 ? "" + mGoodsValue : BaseParams.PARAM_DEFAULT);
+		params.add("goods_value", mGoodsValue >= 0 ? "" + mGoodsValue : BaseParams.PARAM_DEFAULT);
 		params.add("goods_type_code", "" + mGoodsType);
-		params.add("weight", mWeight > 0 ? "" + mWeight : BaseParams.PARAM_DEFAULT);
+		params.add("weight", mWeight >= 0 ? "" + mWeight : BaseParams.PARAM_DEFAULT);
 		params.add("trunk_type_code", "" + mTrunkType);
-		params.add("goods_cost", mPay > 0 ? "" + mPay : BaseParams.PARAM_DEFAULT);
+		params.add("goods_cost", mPay >= 0 ? "" + mPay : BaseParams.PARAM_DEFAULT);
 		params.add("mess_fee", "" + mFree);
 		params.add("source_code", "" + mSource);
 		params.add("gps_addr_j", mLon > 0 ? "" + mLon : BaseParams.PARAM_DEFAULT);
@@ -229,6 +248,8 @@ public class Order implements Serializable {
 		params.add("remark", TextUtils.isEmpty(mRemarks) ? BaseParams.PARAM_DEFAULT : mRemarks);
 		params.add("pick_time", TextUtils.isEmpty(mBespeakTime) ? BaseParams.PARAM_DEFAULT : mBespeakTime);
 		params.add("valid_type", "" + mValidTime);
+		params.add("supplyer_name", mFromName);
+		params.add("supplyer_phone", mFromPhone);
 		return params;
 	}
 }

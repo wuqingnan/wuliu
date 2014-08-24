@@ -73,6 +73,8 @@
     
     <string name="confirm">确 定</string>
     <string name="confirm_txt">确认</string>
+    <string name="request_success">请求成功</string>
+    <string name="request_failed">请求失败</string>
     
     <string name="bespeak_time_format">MM月dd日 HH:mm</string>
     
@@ -336,7 +338,6 @@
     <string name="setvice_wander_tip">服务器很忙!请稍等片刻~~</string>
     <string name="evaluate_failed">评价失败，请稍候重试</string>
     <string name="complaints_failed">投诉失败，请稍候重试</string>
-    <string name="request_failed">请求失败，请稍候重试</string>
     <string name="cancel_failed">取消失败，请稍候重试</string>
     <string name="addprice_failed">修改失败，请稍候重试</string>
     <string name="endorder_failed">结束订单失败，请稍候重试</string>
