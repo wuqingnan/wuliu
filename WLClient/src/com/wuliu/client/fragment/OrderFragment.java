@@ -1,6 +1,8 @@
 package com.wuliu.client.fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.http.Header;
@@ -29,6 +31,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wuliu.client.Const;
 import com.wuliu.client.R;
 import com.wuliu.client.activity.MainActivity;
+import com.wuliu.client.activity.OrderDetailActivity;
 import com.wuliu.client.api.BaseParams;
 import com.wuliu.client.bean.Order;
 import com.wuliu.client.bean.UserInfo;
@@ -55,9 +58,10 @@ public class OrderFragment extends BaseFragment {
 	private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
 
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			Log.d(TAG, "shizy---arg2: " + arg2);
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			Order order = (Order) mAdapter.getItem(position);
+			OrderDetailActivity.startOrderDetailActivity(getActivity(), order.getGoodsCD());
 		}
 	};
 	
@@ -112,7 +116,7 @@ public class OrderFragment extends BaseFragment {
 	}
 
 	private void initTitle() {
-		mTitle.setText(R.string.title_order);
+		mTitle.setText(R.string.title_order_list);
 		mMenuBtn.setImageResource(R.drawable.btn_title_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 	}
@@ -191,8 +195,13 @@ public class OrderFragment extends BaseFragment {
 							order.setCreateDate(temp.optString("create_date"));
 							data.add(order);
 						}
+						Collections.sort(data, new Comparator<Order>() {
+							@Override
+							public int compare(Order lhs, Order rhs) {
+								return rhs.getCreateDate().compareTo(lhs.getCreateDate());
+							}
+						});
 						mAdapter.addData(data);
-						mAdapter.notifyDataSetChanged();
 					}
 				}
 				return;
@@ -231,10 +240,12 @@ public class OrderFragment extends BaseFragment {
 
 		public void clear() {
 			mData.clear();
+			notifyDataSetChanged();
 		}
 		
 		public void addData(List<Order> order) {
 			mData.addAll(order);
+			notifyDataSetChanged();
 		}
 		
 		@Override

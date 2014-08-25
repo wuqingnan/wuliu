@@ -43,7 +43,7 @@
                         style="@style/Send_Item_Name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/take_time" />
+                        android:text="@string/label_take_time" />
 
                     <TextView
                         style="@style/Send_Item_Asterisk"
@@ -88,7 +88,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/goods_type" />
+                    android:text="@string/label_goods_type" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -127,7 +127,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/goods_name" />
+                    android:text="@string/label_goods_name" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -166,7 +166,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/goods_weight" />
+                    android:text="@string/label_goods_weight" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -229,7 +229,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/goods_value" />
+                    android:text="@string/label_goods_value" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -276,7 +276,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/goods_pay" />
+                    android:text="@string/label_goods_pay" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -323,7 +323,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/goods_valid_time" />
+                    android:text="@string/label_goods_valid_time" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -362,7 +362,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/goods_traffic" />
+                    android:text="@string/label_goods_traffic" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -417,7 +417,14 @@
                             style="@style/Send_Item_Name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/address_from" />
+                            android:text="@string/label_address_from" />
+                        
+						<TextView
+		                    style="@style/Send_Item_Asterisk"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:text="@string/asterisk"
+		                    android:visibility="visible" />
 
                         <TextView
                             android:id="@+id/address_from"
@@ -443,8 +450,15 @@
                             style="@style/Send_Item_Name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/address_to" />
+                            android:text="@string/label_address_to" />
 
+                        <TextView
+		                    style="@style/Send_Item_Asterisk"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:text="@string/asterisk"
+		                    android:visibility="visible" />
+                        
                         <TextView
                             android:id="@+id/address_to"
                             style="@style/Send_Item_Value"

@@ -31,6 +31,8 @@ public class Order implements Serializable {
 	private double mLon;
 	
 	private int mState;
+	private int mCredit;
+	private int mStars;
 	
 	private String mFromName;
 	private String mFromPhone;
@@ -146,6 +148,22 @@ public class Order implements Serializable {
 
 	public void setState(int state) {
 		mState = state;
+	}
+
+	public int getCredit() {
+		return mCredit;
+	}
+
+	public void setCredit(int credit) {
+		mCredit = credit;
+	}
+
+	public int getStars() {
+		return mStars;
+	}
+
+	public void setStars(int stars) {
+		mStars = stars;
 	}
 
 	public String getFromName() {

@@ -85,6 +85,13 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
         
+        <activity
+            android:name="com.wuliu.client.activity.OrderDetailActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
+        </activity>
+        
         <!-- 公司：WxmfAt89Ine2KwXYEF0yizhU -->
         <!-- 家里：G0F0BDRhBrq2GU2jOREkXNMU -->
         <meta-data

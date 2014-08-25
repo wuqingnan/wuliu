@@ -35,6 +35,7 @@ public class SendActivity extends Activity {
 
 	private static final String TAG = SendActivity.class.getSimpleName();
 	
+	private static final String KEY_ORDER = "order";
 	private static final String KEY_BESPEAK = "bespeak";
 	
 	private static final int REQUEST_CODE_SEARCH = 0x010;
@@ -130,6 +131,7 @@ public class SendActivity extends Activity {
 	private long mBespeakTime;
 	private boolean mBespeak;
 	private boolean mIsFrom;
+	private Order mOrder;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +144,7 @@ public class SendActivity extends Activity {
 	}
 
 	private void handleIntent() {
+		mOrder = (Order) getIntent().getSerializableExtra(KEY_ORDER);
 		mBespeak = getIntent().getBooleanExtra(KEY_BESPEAK, false);
 	}
 	
@@ -380,6 +383,17 @@ public class SendActivity extends Activity {
 	public static void startSendActivity(Context context, boolean bespeak) {
 		Intent intent = new Intent(context, SendActivity.class);
 		intent.putExtra(KEY_BESPEAK, bespeak);
+		context.startActivity(intent);
+	}
+	
+	/**
+	 * 打开发货页面
+	 * @param context
+	 * @param bespeak
+	 */
+	public static void startSendActivity(Context context, Order order) {
+		Intent intent = new Intent(context, SendActivity.class);
+		intent.putExtra(KEY_ORDER, order);
 		context.startActivity(intent);
 	}
 }

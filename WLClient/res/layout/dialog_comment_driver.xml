@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/grade" />
+
+        <RadioGroup
+            android:id="@+id/comment_driver_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/comment_driver_star_good"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/star_good"
+                android:textColor="@color/text_color_dark_gray" />
+
+            <RadioButton
+                android:id="@+id/comment_driver_star_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/star_normal"
+                android:textColor="@color/text_color_dark_gray" />
+            
+            <RadioButton
+                android:id="@+id/comment_driver_star_bad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/star_bad"
+                android:textColor="@color/text_color_dark_gray" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comment" />
+
+        <EditText
+            android:id="@+id/comment_driver_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="25" />
+    </LinearLayout>
+
+</LinearLayout>

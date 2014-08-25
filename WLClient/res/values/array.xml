@@ -47,5 +47,25 @@
         <item>代理</item>
         <item>其他</item>
     </string-array>
-
+    
+    <string-array name="order_state_name">
+        <item>发送了消息</item>
+        <item>被抢单</item>
+        <item>修改订单</item>
+        <item>司机退单</item>
+        <item>发货人退单</item>
+        <item>发货人取消订单</item>
+        <item>发货人确认收货</item>
+    </string-array>
+	
+    <integer-array name="order_state_value" >
+        <item>0</item>
+        <item>1</item>
+        <item>7</item>
+        <item>21</item>
+        <item>22</item>
+        <item>8</item>
+        <item>9</item>
+    </integer-array>
+    
 </resources>
