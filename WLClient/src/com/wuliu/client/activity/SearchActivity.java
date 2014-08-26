@@ -41,7 +41,6 @@ public class SearchActivity extends Activity {
 
 	private static final String TAG = SearchActivity.class.getSimpleName();
 	
-	private static final String KEY_IS_FROM = "is_from";
 	private static final String KEY_SEARCH_INFOS = "search_infos";
 	
 	public static final String KEY_RESULT = "result";
@@ -61,38 +60,38 @@ public class SearchActivity extends Activity {
 		}
 	};
 	
-	private OnGetPoiSearchResultListener mPoiListener = new OnGetPoiSearchResultListener(){  
-		@Override
-		public void onGetPoiDetailResult(PoiDetailResult arg0) {
-			
-		}
-		@Override
-		public void onGetPoiResult(PoiResult result) {
-			if (result != null) {
-				mPoiList = result.getAllPoi();
-				mAdapter.notifyDataSetChanged();
-			}
-		}  
-	};
+//	private OnGetPoiSearchResultListener mPoiListener = new OnGetPoiSearchResultListener(){  
+//		@Override
+//		public void onGetPoiDetailResult(PoiDetailResult arg0) {
+//			
+//		}
+//		@Override
+//		public void onGetPoiResult(PoiResult result) {
+//			if (result != null) {
+//				mPoiList = result.getAllPoi();
+//				mAdapter.notifyDataSetChanged();
+//			}
+//		}  
+//	};
 	
-	private TextWatcher mWatcher = new TextWatcher() {
-		@Override
-		public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-			
-		}
-		
-		@Override
-		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-				int arg3) {
-			
-		}
-		
-		@Override
-		public void afterTextChanged(Editable arg0) {
-			updateClearState();
-			search();
-		}
-	};
+//	private TextWatcher mWatcher = new TextWatcher() {
+//		@Override
+//		public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+//			
+//		}
+//		
+//		@Override
+//		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+//				int arg3) {
+//			
+//		}
+//		
+//		@Override
+//		public void afterTextChanged(Editable arg0) {
+//			updateClearState();
+//			search();
+//		}
+//	};
 	
 	private WheelWindow.OnConfirmListener mConfirmListener = new WheelWindow.OnConfirmListener() {
 
@@ -100,6 +99,12 @@ public class SearchActivity extends Activity {
 		public void onConfirm(String result) {
 			Log.d(TAG, "shizy---result: " + result);
 			mWheelWindow = null;
+			String[] str = result.split("###");
+			if (str == null || str.length < 3) {
+				return;
+			}
+			System.arraycopy(str, 0, mSearchInfos, 0, 3);
+			initData();
 		}
 		
 	};
@@ -121,11 +126,11 @@ public class SearchActivity extends Activity {
 	
 	private WheelWindow mWheelWindow;
 	
-	private SearchListAdapter mAdapter;
+//	private SearchListAdapter mAdapter;
 	
-	private PoiSearch mPoiSearch;
+//	private PoiSearch mPoiSearch;
 	
-	private List<PoiInfo> mPoiList;
+//	private List<PoiInfo> mPoiList;
 	
 	//0:省、1:市、2:区县、3:街道
 	private String[] mSearchInfos;
@@ -138,15 +143,15 @@ public class SearchActivity extends Activity {
 		setContentView(R.layout.activity_search);
 		handleIntent();
 		initView();
-		initSearch();
+//		initSearch();
 		initData();
 	}
 	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		mPoiSearch.destroy();
-	}
+//	@Override
+//	protected void onDestroy() {
+//		super.onDestroy();
+//		mPoiSearch.destroy();
+//	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -162,8 +167,10 @@ public class SearchActivity extends Activity {
 	
 	private void handleIntent() {
 		Intent intent = getIntent();
-		mIsFrom = intent.getBooleanExtra(KEY_IS_FROM, false);
 		mSearchInfos = intent.getStringArrayExtra(KEY_SEARCH_INFOS);
+		if (mSearchInfos == null) {
+			mSearchInfos = new String[4];
+		}
 	}
 	
 	private void initView() {
@@ -173,16 +180,16 @@ public class SearchActivity extends Activity {
 		mSearchArea.setOnClickListener(mOnClickListener);
 		mSearchClear.setOnClickListener(mOnClickListener);
 		mSearchConfirm.setOnClickListener(mOnClickListener);
-		mSearchInput.addTextChangedListener(mWatcher);
+//		mSearchInput.addTextChangedListener(mWatcher);
 		mTitle.setText(R.string.title_search);
-		mAdapter = new SearchListAdapter();
-		mSearchList.setAdapter(mAdapter);
+//		mAdapter = new SearchListAdapter();
+//		mSearchList.setAdapter(mAdapter);
 	}
 	
-	private void initSearch() {
-		mPoiSearch = PoiSearch.newInstance();
-		mPoiSearch.setOnGetPoiSearchResultListener(mPoiListener);
-	}
+//	private void initSearch() {
+//		mPoiSearch = PoiSearch.newInstance();
+//		mPoiSearch.setOnGetPoiSearchResultListener(mPoiListener);
+//	}
 	
 	private void initData() {
 		if (mSearchInfos != null) {
@@ -198,7 +205,8 @@ public class SearchActivity extends Activity {
 	
 	private void confirm() {
 		Intent intent = new Intent();
-		intent.putExtra(KEY_RESULT, mSearchInput.getText());
+		mSearchInfos[3] = mSearchInput.getText().toString();
+		intent.putExtra(KEY_RESULT, mSearchInfos);
 		setResult(RESULT_OK, intent);
 		finish();
 	}
@@ -215,58 +223,58 @@ public class SearchActivity extends Activity {
 			}
 		}
 		mWheelWindow.show();
+		mWheelWindow.updateByInfo(mSearchInfos);
 	}
 	
-	private void search() {
-		String keyword = mSearchInput.getText().toString();
-		if (TextUtils.isEmpty(keyword)) {
-			
-		}
-		else {
-			Log.d(TAG, "shizy---keyword: " + keyword);
-			mPoiSearch.searchInCity((new PoiCitySearchOption())
-					.city("北京")  
-					.keyword(keyword)  
-					.pageNum(0));
-		}
-	}
+//	private void search() {
+//		String keyword = mSearchInput.getText().toString();
+//		if (TextUtils.isEmpty(keyword)) {
+//			
+//		}
+//		else {
+//			Log.d(TAG, "shizy---keyword: " + keyword);
+//			mPoiSearch.searchInCity((new PoiCitySearchOption())
+//					.city("北京")  
+//					.keyword(keyword)  
+//					.pageNum(0));
+//		}
+//	}
 	
 	private void updateClearState() {
 		mSearchClear.setVisibility(TextUtils.isEmpty(mSearchInput.getText()) ? View.GONE : View.VISIBLE);
 	}
 	
-	public static void startSearchActivity(Activity activity, boolean isFrom, int requestCode, String[] infos) {
+	public static void startSearchActivity(Activity activity, int requestCode, String[] infos) {
 		Intent intent = new Intent(activity, SearchActivity.class);
-		intent.putExtra(KEY_IS_FROM, isFrom);
 		intent.putExtra(KEY_SEARCH_INFOS, infos);
 		activity.startActivityForResult(intent, requestCode);
 	}
 	
-	private class SearchListAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			return mPoiList == null ? 0 : mPoiList.size();
-		}
-
-		@Override
-		public Object getItem(int arg0) {
-			return mPoiList.get(arg0);
-		}
-
-		@Override
-		public long getItemId(int arg0) {
-			return arg0;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup viewGroup) {
-			if (convertView == null) {
-				convertView = new TextView(SearchActivity.this);
-			}
-			((TextView)convertView).setText(mPoiList.get(position).address);
-			return convertView;
-		}
-		
-	}
+//	private class SearchListAdapter extends BaseAdapter {
+//
+//		@Override
+//		public int getCount() {
+//			return mPoiList == null ? 0 : mPoiList.size();
+//		}
+//
+//		@Override
+//		public Object getItem(int arg0) {
+//			return mPoiList.get(arg0);
+//		}
+//
+//		@Override
+//		public long getItemId(int arg0) {
+//			return arg0;
+//		}
+//
+//		@Override
+//		public View getView(int position, View convertView, ViewGroup viewGroup) {
+//			if (convertView == null) {
+//				convertView = new TextView(SearchActivity.this);
+//			}
+//			((TextView)convertView).setText(mPoiList.get(position).address);
+//			return convertView;
+//		}
+//		
+//	}
 }

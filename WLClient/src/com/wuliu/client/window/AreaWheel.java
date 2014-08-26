@@ -56,6 +56,32 @@ public class AreaWheel implements IWheel<Area> {
 	}
 
 	@Override
+	public int getLeftIndex(String key) {
+		return getIndex(mLeftData, key);
+	}
+
+	@Override
+	public int getMiddleIndex(String key) {
+		return getIndex(mMiddleData, key);
+	}
+
+	@Override
+	public int getRightIndex(String key) {
+		return getIndex(mRightData, key);
+	}
+	
+	private int getIndex(List<Area> data, String key) {
+		if (data != null && key != null) {
+			for (int i = 0; i < data.size(); i++) {
+				if (key.equals(data.get(i).getName())) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+	
+	@Override
 	public WheelViewAdapter getLeftAdapter() {
 		return new DataAdapter(mContext, getLeftData());
 	}
@@ -76,11 +102,11 @@ public class AreaWheel implements IWheel<Area> {
 		if (mLeftData != null && mLeftData.size() > left) {
 			sb.append(mLeftData.get(left));
 		}
-		sb.append("|");
+		sb.append("###");
 		if (mMiddleData != null && mMiddleData.size() > middle) {
 			sb.append(mMiddleData.get(middle));
 		}
-		sb.append("|");
+		sb.append("###");
 		if (mRightData != null && mRightData.size() > right) {
 			sb.append(mRightData.get(right));
 		}
@@ -104,4 +130,5 @@ public class AreaWheel implements IWheel<Area> {
 			return super.getItem(index, cachedView, parent);
 		}
 	}
+	
 }

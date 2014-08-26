@@ -150,10 +150,20 @@ public class SendActivity extends Activity {
 		if (resultCode == RESULT_OK) {
 			if (requestCode == REQUEST_CODE_SEARCH) {
 				if (data != null) {
-					String address = data.getStringExtra(SearchActivity.KEY_RESULT);
+					String[] infos = data.getStringArrayExtra(SearchActivity.KEY_RESULT);
+					String address = "";
+					if (infos != null) {
+						for (int i = 0; i < infos.length; i++) {
+							if (infos[i] != null) {
+								address += infos[i] + " ";
+							}
+						}
+					}
 					if (mIsFrom) {
+						mFromInfos = infos;
 						mAddressFrom.setText(address);
 					} else {
+						mToInfos = infos;
 						mAddressTo.setText(address);
 					}
 				}
@@ -260,6 +270,8 @@ public class SendActivity extends Activity {
 			updateType();
 			updateTraffic();
 			updateValidTime();
+			mFromInfos = null;
+			mToInfos = null;
 		}
 	}
 	
@@ -301,7 +313,7 @@ public class SendActivity extends Activity {
 	
 	private void searchAddress(boolean isFrom) {
 		mIsFrom = isFrom;
-		SearchActivity.startSearchActivity(SendActivity.this, isFrom, REQUEST_CODE_SEARCH, isFrom ? mFromInfos : mToInfos);
+		SearchActivity.startSearchActivity(SendActivity.this, REQUEST_CODE_SEARCH, isFrom ? mFromInfos : mToInfos);
 	}
 
 	private void swapAddress() {

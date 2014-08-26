@@ -94,6 +94,21 @@ public class TimeWheel implements IWheel<String> {
 	}
 
 	@Override
+	public int getLeftIndex(String key) {
+		return 0;
+	}
+
+	@Override
+	public int getMiddleIndex(String key) {
+		return 0;
+	}
+
+	@Override
+	public int getRightIndex(String key) {
+		return 0;
+	}
+	
+	@Override
 	public WheelViewAdapter getLeftAdapter() {
 		return new DataAdapter(mContext, getLeftData());
 	}

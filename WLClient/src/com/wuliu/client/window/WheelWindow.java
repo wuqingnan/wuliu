@@ -162,4 +162,25 @@ public class WheelWindow {
 		mOnConfirmListener = listener;
 	}
 
+	public void updateByInfo(String[] data) {
+		if (data == null || data.length < 3) {
+			return;
+		}
+		int leftIndex = mIWheel.getLeftIndex(data[0]);
+		if (leftIndex >= 0) {
+			mLeftIndex = leftIndex;
+			mLeft.setCurrentItem(leftIndex);
+			updateMiddle();
+			int middleIndex = mIWheel.getMiddleIndex(data[1]);
+			if (middleIndex >= 0) {
+				mMiddleIndex = middleIndex;
+				mMiddle.setCurrentItem(middleIndex);
+				updateRight();
+				int rightIndex = mIWheel.getRightIndex(data[2]);
+				if (rightIndex >= 0) {
+					mRight.setCurrentItem(rightIndex);
+				}
+			}
+		}
+	}
 }

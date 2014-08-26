@@ -13,7 +13,13 @@ public interface IWheel<T> {
 	public List<T> getMiddleData(int leftIndex);
 
 	public List<T> getRightData(int leftIndex, int middleIndex);
+	
+	public int getLeftIndex(String key);
+	
+	public int getMiddleIndex(String key);
 
+	public int getRightIndex(String key);
+	
 	public WheelViewAdapter getLeftAdapter();
 	
 	public WheelViewAdapter getMiddleAdapter(int leftIndex);
