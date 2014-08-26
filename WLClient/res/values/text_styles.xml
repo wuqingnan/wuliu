@@ -10,6 +10,10 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
     
+    <style name="WuLiu.TextAppearance.Small.DarkGray">
+        <item name="android:textColor">@color/text_color_dark_gray</item>
+    </style>
+    
     <style name="WuLiu.TextAppearance.Middle">
         <item name="android:textSize">@dimen/text_size_middle</item>
     </style>

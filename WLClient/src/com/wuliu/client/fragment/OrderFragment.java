@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -69,6 +70,7 @@ public class OrderFragment extends BaseFragment {
 		
 		public void onFinish() {
 			hideProgressDialog();
+			mLoadView.setVisibility(View.GONE);
 		};
 		
 		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -80,6 +82,22 @@ public class OrderFragment extends BaseFragment {
 		};
 	};
 	
+	private AbsListView.OnScrollListener mOnScrollListener = new AbsListView.OnScrollListener() {
+		
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			if (view.getLastVisiblePosition() == view.getCount() - 1) {
+				loadMore();
+			}
+		}
+		
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem,
+				int visibleItemCount, int totalItemCount) {
+			
+		}
+	};
+	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
@@ -88,10 +106,12 @@ public class OrderFragment extends BaseFragment {
 	ListView mListView;
 	
 	private View mRootView;
+	private View mLoadView;
 	private ProgressDialog mProgressDialog;
 	
 	private int mPage;
 	private boolean mMore;
+	private boolean mLoading;
 	
 	private OrderAdapter mAdapter = null;
 	
@@ -122,21 +142,30 @@ public class OrderFragment extends BaseFragment {
 	}
 
 	private void initView() {
+		initFooter();
 		mAdapter = new OrderAdapter(getActivity());
 		mListView.setAdapter(mAdapter);
+		mListView.setOnScrollListener(mOnScrollListener);
 		mListView.setOnItemClickListener(mOnItemClickListener);
+	}
+	
+	private void initFooter() {
+		View view = getActivity().getLayoutInflater().inflate(R.layout.load_layout, null);
+		mLoadView = view.findViewById(R.id.loadView);
+		mLoadView.setVisibility(View.GONE);
+		mListView.addFooterView(view);
 	}
 	
 	private void initData() {
 		mPage = 1;
 		mMore = true;
+		showProgressDialog();
 		loadData();
 	}
 	
 	private void loadData() {
-		if (mMore) {
-			showProgressDialog();
-			
+		if (mMore && !mLoading) {
+			mLoading = true;
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.setURLEncodingEnabled(true);
 			
@@ -150,6 +179,17 @@ public class OrderFragment extends BaseFragment {
 			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ORDER_LIST, params));
 			client.get(Const.URL_ORDER_LIST, params, mRequestHandler);
 		}
+	}
+	
+	private void loadMore() {
+		if (mLoading) {
+			return;
+		}
+		if (!mMore) {
+			return;
+		}
+		mLoadView.setVisibility(View.VISIBLE);
+		loadData();
 	}
 	
 	private void showProgressDialog() {
@@ -169,6 +209,7 @@ public class OrderFragment extends BaseFragment {
 	}
 	
 	private void requestResult(JSONObject response) {
+		mLoading = false;
 		if (response != null && response.length() > 0) {
 			Log.d(TAG, "shizy---response: " + response.toString());
 			try {
