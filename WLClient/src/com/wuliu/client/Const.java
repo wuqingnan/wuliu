@@ -12,9 +12,11 @@ public class Const {
 	public static final String URL_ORDER_LIST = "http://218.21.213.76:7201/bss/getAllMySupplys.action";
 	public static final String URL_ORDER_DETAIL = "http://218.21.213.76:7201/bss/getMySupplyCos.action";
 	public static final String URL_CANCEL_ORDER = "http://218.21.213.76:7201/bss/cancelMessage.action";
+	public static final String URL_CHANGE_ORDER = "http://218.21.213.76:7201/bss/changeCos.action";
 	public static final String URL_CONSULT_ORDER = "http://218.21.213.76:7201/bss/supplyerDropMessage.action";
 	public static final String URL_CONFIRM_ORDER = "http://218.21.213.76:7201/bss/supplyerCompleteMessage.action";
 	public static final String URL_COMMENT_ORDER = "http://218.21.213.76:7201/bss/ticketDriver.action";
+	public static final String URL_POSITION_UPLOAD = "http://218.21.213.76:7201/bss/collectSupplyInfos.action";
 	
 	private static String sFilePath = null;
 	private static String sExternalPath = null;

@@ -1,10 +1,17 @@
 package com.wuliu.client.activity;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.loopj.android.http.AsyncHttpClient;
 import com.wuliu.client.Const;
 import com.wuliu.client.R;
 import com.wuliu.client.WLApplication;
+import com.wuliu.client.api.BaseParams;
 import com.wuliu.client.bean.UserInfo;
 import com.wuliu.client.db.DBHelper;
 import com.wuliu.client.fragment.BaseFragment;
@@ -23,6 +30,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -40,7 +48,9 @@ public class MainActivity extends SlidingFragmentActivity {
 	private FragmentManager mFragmentManager;
 
 	private SlidingMenu mSlidingMenu;
-
+	
+	private ScheduledThreadPoolExecutor mTimerTask;
+	
 	private long mExitTime;
 
 	@Override
@@ -53,6 +63,8 @@ public class MainActivity extends SlidingFragmentActivity {
 		Const.init(this);
 		DeviceInfo.init(this);
 		LoginManager.getInstance().autoLogin();
+		mTimerTask = new ScheduledThreadPoolExecutor(1);
+		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
 	}
 
 	@Override
@@ -68,6 +80,8 @@ public class MainActivity extends SlidingFragmentActivity {
 					mExitTime = System.currentTimeMillis();
 				}
 				else {
+					mTimerTask.shutdown();
+					mTimerTask.shutdownNow();
 					finish();
 					System.exit(0);
 				}
@@ -160,4 +174,41 @@ public class MainActivity extends SlidingFragmentActivity {
 		db.close();
 	}
 	
+	private class PositionTask implements Runnable {
+		
+		AsyncHttpClient mHttpClient;
+		
+		public PositionTask() {
+			mHttpClient = new AsyncHttpClient();
+			mHttpClient.setURLEncodingEnabled(true);
+		}
+		
+		@Override
+		public void run() {
+			UserInfo info = LoginManager.getInstance().getUserInfo();
+			if (info == null) {
+				return;
+			}
+			
+			LocationClient client = WLApplication.getLocationClient();
+			if (client == null) { 
+				return;
+			}
+			
+			BDLocation location = client.getLastKnownLocation();
+			
+			BaseParams params = new BaseParams();
+			params.add("method", "collectSupplyInfos");
+			params.add("supplyer_cd", info.getSupplyer_cd());
+			params.add("gps_j", "" + location.getLongitude());
+			params.add("gps_w", "" + location.getLatitude());
+			params.add("speed", "" + location.getSpeed());
+			params.add("phone_type", "" + DeviceInfo.getModel());
+			params.add("operate_sysem", "" + DeviceInfo.getOSName());
+			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
+			
+			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_POSITION_UPLOAD, params));
+			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
+		}
+	}
 }

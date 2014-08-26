@@ -270,4 +270,18 @@ public class Order implements Serializable {
 		params.add("supplyer_phone", mFromPhone);
 		return params;
 	}
+	
+	public BaseParams getChangeParams() {
+		BaseParams params = new BaseParams();
+		params.add("goods_cd", mGoodsCD);
+		params.add("supplyer_name", mFromName);
+		params.add("supplyer_phone", mFromPhone);
+		params.add("start_addr", mFromAddress);
+		params.add("end_addr", mToAddress);
+		params.add("reciver_name", mToName);
+		params.add("reciver_phone", mToPhone);
+		params.add("mess_fee", "" + mFree);
+		params.add("goods_cost", mPay >= 0 ? "" + mPay : BaseParams.PARAM_DEFAULT);
+		return params;
+	}
 }

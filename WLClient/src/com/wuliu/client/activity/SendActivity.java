@@ -141,8 +141,26 @@ public class SendActivity extends Activity {
 		initView();
 		initData();
 		initAddress();
+		changeOrder();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			if (requestCode == REQUEST_CODE_SEARCH) {
+				if (data != null) {
+					String address = data.getStringExtra(SearchActivity.KEY_RESULT);
+					if (mIsFrom) {
+						mAddressFrom.setText(address);
+					} else {
+						mAddressTo.setText(address);
+					}
+				}
+			}
+		}
+	}
+	
 	private void handleIntent() {
 		mOrder = (Order) getIntent().getSerializableExtra(KEY_ORDER);
 		mBespeak = getIntent().getBooleanExtra(KEY_BESPEAK, false);
@@ -210,6 +228,41 @@ public class SendActivity extends Activity {
 		mGoodsTraffic.setText(mTrafficList[mTrafficIndex]);
 	}
 	
+	private void changeOrder() {
+		if (mOrder != null) {//如果是通过修改订单的方式进入页面
+			mTitle.setText(R.string.title_change_order);
+			mGoodsName.setEnabled(false);
+			mGoodsWeight.setEnabled(false);
+			mGoodsValue.setEnabled(false);
+			for (int i = 0; i < mGoodsWeightUnit.getChildCount(); i++) {
+				mGoodsWeightUnit.getChildAt(i).setEnabled(false);
+			}
+			mGoodsType.setOnClickListener(null);
+			mGoodsValidTime.setOnClickListener(null);
+			mGoodsTraffic.setOnClickListener(null);
+			
+			mGoodsName.setText(mOrder.getGoodsName());
+			mGoodsValue.setText(mOrder.getGoodsValue() + "");
+			mTypeIndex = mOrder.getGoodsType();
+			mTrafficIndex = mOrder.getTrunkType();
+			mValidTimeIndex = mOrder.getValidTime();
+			mGoodsPay.setText(mOrder.getPay() + "");
+			mAddressFrom.setText(mOrder.getFromAddress());
+			mAddressTo.setText(mOrder.getToAddress());
+			int weight = mOrder.getWeight();
+			if (weight < 1000) {
+				mGoodsWeightUnit.check(R.id.goods_weight_unit_kg);
+				mGoodsWeight.setText(weight + "");
+			} else {
+				mGoodsWeightUnit.check(R.id.goods_weight_unit_tons);
+				mGoodsWeight.setText(String.format("%.2f", weight / 1000f));
+			}
+			updateType();
+			updateTraffic();
+			updateValidTime();
+		}
+	}
+	
 	private void sendDetail() {
 		if (checkValid()) {
 			Order order = new Order();
@@ -232,6 +285,15 @@ public class SendActivity extends Activity {
 				BDLocation location = client.getLastKnownLocation();
 				order.setLat(location.getLatitude());
 				order.setLon(location.getLongitude());
+			}
+			if (mOrder != null) {
+				order.setGoodsCD(mOrder.getGoodsCD());
+				order.setFromName(mOrder.getFromName());
+				order.setFromPhone(mOrder.getFromPhone());
+				order.setToName(mOrder.getToName());
+				order.setToPhone(mOrder.getToPhone());
+				order.setFree(mOrder.getFree());
+				order.setRemarks(mOrder.getRemarks());
 			}
 			SendDetailActivity.startSendDetailActivity(this, order);
 		}

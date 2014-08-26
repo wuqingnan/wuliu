@@ -217,10 +217,14 @@ public class OrderFragment extends BaseFragment {
 		private Context mContext;
 		private LayoutInflater mInflater;
 		private List<Order> mData = new ArrayList<Order>();
+		private String[] mStateName;
+		private int[] mStateValue;
 		
 		public OrderAdapter(Context context) {
 			mContext = context;
 			mInflater = LayoutInflater.from(context);
+			mStateName = context.getResources().getStringArray(R.array.order_state_name);
+			mStateValue = context.getResources().getIntArray(R.array.order_state_value);
 		}
 		
 		@Override
@@ -259,10 +263,20 @@ public class OrderFragment extends BaseFragment {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			Order order = mData.get(position);
-			holder.refresh(order);
+			holder.refresh(order, mStateName[getStateIndexByValue(order.getState())]);
 			return convertView;
 		}
 		
+		private int getStateIndexByValue(int value) {
+			int index = 0;
+			for (int i = 0; i < mStateValue.length; i++) {
+				if (mStateValue[i] == value) {
+					index = i;
+					break;
+				}
+			}
+			return index;
+		}
 	}
 	
 	public static class ViewHolder {
@@ -278,9 +292,9 @@ public class OrderFragment extends BaseFragment {
 			ButterKnife.inject(this, parent);
 		}
 		
-		public void refresh(Order order) {
+		public void refresh(Order order, String state) {
 			if (order != null) {
-				mState.setText(order.getState() + "");
+				mState.setText(state);
 				mOrderName.setText(order.getGoodsName());
 				mOrderDate.setText(order.getCreateDate());
 			}

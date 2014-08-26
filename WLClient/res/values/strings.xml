@@ -135,8 +135,10 @@
     <string name="publish_success">发布成功</string>
     <string name="publish_failed">发布失败</string>
     <string name="continue_send">继续发货</string>
+    <string name="change_success">修改成功</string>
     <string name="know">知道了</string>
-    <string name="publish_message">请保持手机畅通，自由快递人将会尽快联系您收取货物！</string>
+    <string name="publish_order_message">请保持手机畅通，自由快递人将会尽快联系您收取货物！</string>
+    <string name="change_order_message">请保持手机畅通，自由快递人将会尽快联系您收取货物！</string>
     
     <string name="order_cancel">取消订单</string>
     <string name="order_change">修改订单</string>
