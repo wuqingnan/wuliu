@@ -21,7 +21,7 @@ public class EncryptUtil {
 			}
 			md = MessageDigest.getInstance(encName);
 			md.update(bt);
-			strDes = bytes2Hex(md.digest()); // to HexString
+			strDes = bytes2Hex(md.digest()).toUpperCase(); // to HexString
 		} catch (NoSuchAlgorithmException e) {
 			return null;
 		}

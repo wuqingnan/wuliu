@@ -177,7 +177,7 @@ public class OrderDetailActivity extends Activity {
 		mConsultBtn.setVisibility(View.GONE);
 		mConfirmBtn.setVisibility(View.GONE);
 		mCommentBtn.setVisibility(View.GONE);
-		if (state == 0) {
+		if (state == 0 || state == 7) {
 			mCancelBtn.setVisibility(View.VISIBLE);
 			mChangeBtn.setVisibility(View.VISIBLE);
 			mFooter.setVisibility(View.VISIBLE);
