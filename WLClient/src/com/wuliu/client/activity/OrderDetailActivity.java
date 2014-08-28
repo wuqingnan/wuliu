@@ -320,7 +320,7 @@ public class OrderDetailActivity extends Activity {
 	}
 	
 	private void changeOrder() {
-		SendActivity.startSendActivity(this, mAdapter.getOrder());
+		OrderChangeActivity.startOrderChangeActivity(this, mAdapter.getOrder());
 	}
 	
 	private void consultOrder() {

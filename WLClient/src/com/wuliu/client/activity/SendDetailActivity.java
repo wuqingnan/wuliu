@@ -66,21 +66,6 @@ public class SendDetailActivity extends Activity {
 		};
 	};
 	
-	private JsonHttpResponseHandler mChangeHandler = new JsonHttpResponseHandler() {
-		
-		public void onFinish() {
-			hideProgressDialog();
-		};
-		
-		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-			changeResult(response);
-		};
-		
-		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-			changeResult(null);
-		};
-	};
-
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
@@ -108,8 +93,6 @@ public class SendDetailActivity extends Activity {
 	
 	private Order mOrder;
 	
-	private boolean mChangeOrder;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -121,7 +104,6 @@ public class SendDetailActivity extends Activity {
 	
 	private void handleIntent() {
 		mOrder = (Order) getIntent().getSerializableExtra(KEY_ORDER);
-		mChangeOrder = mOrder.getGoodsCD() != null;
 	}
 
 	private void initView() {
@@ -134,26 +116,7 @@ public class SendDetailActivity extends Activity {
 	}
 	
 	private void initData() {
-		if (mChangeOrder) {
-			int free = mOrder.getFree();
-			if (free == 1) {
-				mMessageFree.check(R.id.message_free_yes);
-			} else {
-				mMessageFree.check(R.id.message_free_no);
-			}
-			mSendFrom.setText(mOrder.getFromName());
-			mSendFromPhone.setText(mOrder.getFromPhone());
-			mSendTo.setText(mOrder.getToName());
-			mSendToPhone.setText(mOrder.getToPhone());
-			String remarks = mOrder.getRemarks();
-			if (remarks != null && !remarks.equals(BaseParams.PARAM_DEFAULT)) {
-				mSendComment.setText(remarks);
-			}
-			mSendComment.setEnabled(false);
-		}
-		else {
-			mMessageFree.check(R.id.message_free_yes);
-		}
+		mMessageFree.check(R.id.message_free_yes);
 	}
 
 	private void showRule() {
@@ -174,21 +137,12 @@ public class SendDetailActivity extends Activity {
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.setURLEncodingEnabled(true);
 			
-			if (mChangeOrder) {
-				BaseParams params = mOrder.getChangeParams();
-				params.add("method", "changeCos");
-				params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
-				
-				Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(false, Const.URL_CHANGE_ORDER, params));
-				client.get(Const.URL_CHANGE_ORDER, params, mChangeHandler);
-			} else {
-				BaseParams params = mOrder.getPublishParams();
-				params.add("method", "sendGoodInfos");
-				params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
-				
-				Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(false, Const.URL_SEND_GOODS, params));
-				client.get(Const.URL_SEND_GOODS, params, mRequestHandler);
-			}
+			BaseParams params = mOrder.getPublishParams();
+			params.add("method", "sendGoodInfos");
+			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
+			
+			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(false, Const.URL_SEND_GOODS, params));
+			client.get(Const.URL_SEND_GOODS, params, mRequestHandler);
 		}
 	}
 
@@ -265,22 +219,6 @@ public class SendDetailActivity extends Activity {
 		dialog.show();
 	}
 	
-	private void showChangeSuccessDialog() {
-		AlertDialog dialog = new AlertDialog.Builder(this)
-		.setTitle(R.string.change_success)
-		.setMessage(R.string.change_order_message)
-		.setCancelable(false)
-		.setNegativeButton(R.string.know, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				startActivity(new Intent(SendDetailActivity.this, MainActivity.class));
-			}
-		})
-		.create();
-		dialog.show();
-	}
-
 	private void requestResult(JSONObject response) {
 		if (response != null && response.length() > 0) {
 			try {
@@ -289,23 +227,6 @@ public class SendDetailActivity extends Activity {
 				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					showPublishSuccessDialog();
-				}
-				return;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		Util.showTips(this, getString(R.string.publish_failed));
-	}
-	
-	private void changeResult(JSONObject response) {
-		if (response != null && response.length() > 0) {
-			try {
-				int res = response.getInt("res");
-				String msg = response.getString("msg");
-				Util.showTips(this, msg);
-				if (res == 2) {//成功
-					showChangeSuccessDialog();
 				}
 				return;
 			} catch (JSONException e) {

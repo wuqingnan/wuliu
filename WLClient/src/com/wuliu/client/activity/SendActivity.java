@@ -35,7 +35,6 @@ public class SendActivity extends Activity {
 
 	private static final String TAG = SendActivity.class.getSimpleName();
 	
-	private static final String KEY_ORDER = "order";
 	private static final String KEY_BESPEAK = "bespeak";
 	
 	private static final int REQUEST_CODE_SEARCH = 0x010;
@@ -131,17 +130,15 @@ public class SendActivity extends Activity {
 	private long mBespeakTime;
 	private boolean mBespeak;
 	private boolean mIsFrom;
-	private Order mOrder;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_send);
+		setContentView(R.layout.activity_send);
 		handleIntent();
 		initView();
 		initData();
 		initAddress();
-		changeOrder();
 	}
 
 	@Override
@@ -172,7 +169,6 @@ public class SendActivity extends Activity {
 	}
 	
 	private void handleIntent() {
-		mOrder = (Order) getIntent().getSerializableExtra(KEY_ORDER);
 		mBespeak = getIntent().getBooleanExtra(KEY_BESPEAK, false);
 	}
 	
@@ -238,43 +234,6 @@ public class SendActivity extends Activity {
 		mGoodsTraffic.setText(mTrafficList[mTrafficIndex]);
 	}
 	
-	private void changeOrder() {
-		if (mOrder != null) {//如果是通过修改订单的方式进入页面
-			mTitle.setText(R.string.title_change_order);
-			mGoodsName.setEnabled(false);
-			mGoodsWeight.setEnabled(false);
-			mGoodsValue.setEnabled(false);
-			for (int i = 0; i < mGoodsWeightUnit.getChildCount(); i++) {
-				mGoodsWeightUnit.getChildAt(i).setEnabled(false);
-			}
-			mGoodsType.setOnClickListener(null);
-			mGoodsValidTime.setOnClickListener(null);
-			mGoodsTraffic.setOnClickListener(null);
-			
-			mGoodsName.setText(mOrder.getGoodsName());
-			mGoodsValue.setText(mOrder.getGoodsValue() + "");
-			mTypeIndex = mOrder.getGoodsType();
-			mTrafficIndex = mOrder.getTrunkType();
-			mValidTimeIndex = mOrder.getValidTime();
-			mGoodsPay.setText(mOrder.getPay() + "");
-			mAddressFrom.setText(mOrder.getFromAddress());
-			mAddressTo.setText(mOrder.getToAddress());
-			int weight = mOrder.getWeight();
-			if (weight < 1000) {
-				mGoodsWeightUnit.check(R.id.goods_weight_unit_kg);
-				mGoodsWeight.setText(weight + "");
-			} else {
-				mGoodsWeightUnit.check(R.id.goods_weight_unit_tons);
-				mGoodsWeight.setText(String.format("%.2f", weight / 1000f));
-			}
-			updateType();
-			updateTraffic();
-			updateValidTime();
-			mFromInfos = null;
-			mToInfos = null;
-		}
-	}
-	
 	private void sendDetail() {
 		if (checkValid()) {
 			Order order = new Order();
@@ -298,22 +257,13 @@ public class SendActivity extends Activity {
 				order.setLat(location.getLatitude());
 				order.setLon(location.getLongitude());
 			}
-			if (mOrder != null) {
-				order.setGoodsCD(mOrder.getGoodsCD());
-				order.setFromName(mOrder.getFromName());
-				order.setFromPhone(mOrder.getFromPhone());
-				order.setToName(mOrder.getToName());
-				order.setToPhone(mOrder.getToPhone());
-				order.setFree(mOrder.getFree());
-				order.setRemarks(mOrder.getRemarks());
-			}
 			SendDetailActivity.startSendDetailActivity(this, order);
 		}
 	}
 	
 	private void searchAddress(boolean isFrom) {
 		mIsFrom = isFrom;
-		SearchActivity.startSearchActivity(SendActivity.this, REQUEST_CODE_SEARCH, isFrom ? mFromInfos : mToInfos);
+		SearchActivity.startSearchActivity(this, REQUEST_CODE_SEARCH, isFrom ? mFromInfos : mToInfos);
 	}
 
 	private void swapAddress() {
@@ -460,14 +410,4 @@ public class SendActivity extends Activity {
 		context.startActivity(intent);
 	}
 	
-	/**
-	 * 打开发货页面
-	 * @param context
-	 * @param bespeak
-	 */
-	public static void startSendActivity(Context context, Order order) {
-		Intent intent = new Intent(context, SendActivity.class);
-		intent.putExtra(KEY_ORDER, order);
-		context.startActivity(intent);
-	}
 }
