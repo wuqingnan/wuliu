@@ -87,6 +87,8 @@ public class OrderChangeActivity extends Activity {
 	RadioGroup mMessageFree;
 	@InjectView(R.id.goods_pay)
 	EditText mGoodsPay;
+	@InjectView(R.id.send_comment)
+	EditText mSendComment;
 	@InjectView(R.id.address_from)
 	TextView mAddressFrom;
 	@InjectView(R.id.address_to)
@@ -172,6 +174,10 @@ public class OrderChangeActivity extends Activity {
 			mSendFromPhone.setText(mOrder.getFromPhone());
 			mSendTo.setText(mOrder.getToName());
 			mSendToPhone.setText(mOrder.getToPhone());
+			String remarks = mOrder.getRemarks();
+			if (remarks != null && !remarks.equals(BaseParams.PARAM_DEFAULT)) {
+				mSendComment.setText(remarks);
+			}
 		}
 	}
 	
@@ -193,7 +199,11 @@ public class OrderChangeActivity extends Activity {
 			mOrder.setFromPhone(mSendFromPhone.getText().toString());
 			mOrder.setToName(mSendTo.getText().toString());
 			mOrder.setToPhone(mSendToPhone.getText().toString());
+			mOrder.setRemarks(mSendComment.getText().toString());
 			mOrder.setFree(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 0);
+			mOrder.setPay(Integer.parseInt(mGoodsPay.getText().toString()));
+			mOrder.setToAddress(mAddressTo.getText().toString());
+			mOrder.setFromAddress(mAddressFrom.getText().toString());
 			
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.setURLEncodingEnabled(true);

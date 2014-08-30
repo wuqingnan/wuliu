@@ -42,7 +42,7 @@ public class Order implements Serializable {
 	private String mToPhone;
 	private String mToAddress;
 	
-	private String mBespeakTime;
+	private String mPickTime;
 	private int mValidTime;
 	
 	private String mRemarks;
@@ -214,12 +214,12 @@ public class Order implements Serializable {
 		mToAddress = toAddress;
 	}
 
-	public String getBespeakTime() {
-		return mBespeakTime;
+	public String getPickTime() {
+		return mPickTime;
 	}
 
-	public void setBespeakTime(String bespeakTime) {
-		mBespeakTime = bespeakTime;
+	public void setPickTime(String pickTime) {
+		mPickTime = pickTime;
 	}
 
 	public int getValidTime() {
@@ -264,7 +264,7 @@ public class Order implements Serializable {
 		params.add("reciver", mToName);
 		params.add("reciver_phone", mToPhone);
 		params.add("remark", TextUtils.isEmpty(mRemarks) ? BaseParams.PARAM_DEFAULT : mRemarks);
-		params.add("pick_time", TextUtils.isEmpty(mBespeakTime) ? BaseParams.PARAM_DEFAULT : mBespeakTime);
+		params.add("pick_time", TextUtils.isEmpty(mPickTime) ? BaseParams.PARAM_DEFAULT : mPickTime);
 		params.add("valid_type", "" + mValidTime);
 		params.add("supplyer_name", mFromName);
 		params.add("supplyer_phone", mFromPhone);
@@ -282,6 +282,7 @@ public class Order implements Serializable {
 		params.add("reciver_phone", mToPhone);
 		params.add("mess_fee", "" + mFree);
 		params.add("goods_cost", mPay >= 0 ? "" + mPay : BaseParams.PARAM_DEFAULT);
+		params.add("remark", TextUtils.isEmpty(mRemarks) ? BaseParams.PARAM_DEFAULT : mRemarks);
 		return params;
 	}
 }

@@ -6,7 +6,14 @@ public class Driver {
 	private String driver_name;
 	private String phone;
 	private String credit_level;
+	private int stars;
 	
+	public int getStars() {
+		return stars;
+	}
+	public void setStars(int stars) {
+		this.stars = stars;
+	}
 	public String getDriver_cd() {
 		return driver_cd;
 	}

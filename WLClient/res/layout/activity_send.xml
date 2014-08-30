@@ -23,7 +23,7 @@
                 android:background="@color/line_light" />
 
             <LinearLayout
-                android:id="@+id/take_time_layout"
+                android:id="@+id/pick_time_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -43,7 +43,7 @@
                         style="@style/Send_Item_Name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_take_time" />
+                        android:text="@string/label_pick_time" />
 
                     <TextView
                         style="@style/Send_Item_Asterisk"
@@ -52,12 +52,12 @@
                         android:text="@string/asterisk" />
 
                     <TextView
-                        android:id="@+id/take_time"
+                        android:id="@+id/pick_time"
                         style="@style/Send_Item_Value"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:hint="@string/take_time_hint" />
+                        android:hint="@string/pick_time_hint" />
                     <ImageView
                         android:id="@+id/clear_time"
                         android:layout_width="wrap_content"

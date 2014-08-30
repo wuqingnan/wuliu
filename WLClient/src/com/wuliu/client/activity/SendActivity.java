@@ -55,9 +55,9 @@ public class SendActivity extends Activity {
 			} else if (view == mNextStep) {
 				sendDetail();
 			} else if (view == mClearTime) {
-				mTakeTime.setText(null);
+				mPickTime.setText(null);
 				updateClearState();
-			} else if (view == mTakeTime) {
+			} else if (view == mPickTime) {
 				showTimePicker();
 			} else if (view == mAddressFrom) {
 				searchAddress(true);
@@ -73,7 +73,7 @@ public class SendActivity extends Activity {
 		public void onConfirm(String result) {
 			mBespeakTime = Long.parseLong(result);
 			SimpleDateFormat format = new SimpleDateFormat(getString(R.string.bespeak_time_format));
-			mTakeTime.setText(format.format(new Date(mBespeakTime)));
+			mPickTime.setText(format.format(new Date(mBespeakTime)));
 			updateClearState();
 			mWheelWindow = null;
 		}
@@ -84,10 +84,10 @@ public class SendActivity extends Activity {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
-	@InjectView(R.id.take_time_layout)
-	LinearLayout mTakeTimeLayout;
-	@InjectView(R.id.take_time)
-	TextView mTakeTime;
+	@InjectView(R.id.pick_time_layout)
+	LinearLayout mPickTimeLayout;
+	@InjectView(R.id.pick_time)
+	TextView mPickTime;
 	@InjectView(R.id.clear_time)
 	ImageView mClearTime;
 	@InjectView(R.id.goods_type)
@@ -184,8 +184,8 @@ public class SendActivity extends Activity {
 		mAddressFrom.setOnClickListener(mOnClickListener);
 		mAddressTo.setOnClickListener(mOnClickListener);
 		if (mBespeak) {
-			mTakeTimeLayout.setVisibility(View.VISIBLE);
-			mTakeTime.setOnClickListener(mOnClickListener);
+			mPickTimeLayout.setVisibility(View.VISIBLE);
+			mPickTime.setOnClickListener(mOnClickListener);
 			mClearTime.setOnClickListener(mOnClickListener);
 		}
 		mTitle.setText(mBespeak ? R.string.title_bespeak : R.string.title_send);
@@ -240,7 +240,7 @@ public class SendActivity extends Activity {
 			order.setGoodsType(mTypeIndex);
 			order.setGoodsName(mGoodsName.getText().toString());
 			if (mBespeak) {
-				order.setBespeakTime(mTakeTime.getText().toString());
+				order.setPickTime(mPickTime.getText().toString());
 			}
 			boolean tons = mGoodsWeightUnit.getCheckedRadioButtonId() == R.id.goods_weight_unit_tons;
 			float weight = Float.parseFloat(mGoodsWeight.getText().toString());
@@ -329,7 +329,7 @@ public class SendActivity extends Activity {
 	}
 	
 	private void updateClearState() {
-		mClearTime.setVisibility(TextUtils.isEmpty(mTakeTime.getText()) ? View.GONE : View.VISIBLE);
+		mClearTime.setVisibility(TextUtils.isEmpty(mPickTime.getText()) ? View.GONE : View.VISIBLE);
 	}
 	
 	@Override
@@ -345,16 +345,16 @@ public class SendActivity extends Activity {
 	}
 
 	private boolean checkValid() {
-		String takeTime = mTakeTime.getText().toString();
+		String pickTime = mPickTime.getText().toString();
 		String goodsName = mGoodsName.getText().toString();
 		String goodsWeight = mGoodsWeight.getText().toString();
 		String goodsValue = mGoodsValue.getText().toString();
 		String goodsPay = mGoodsPay.getText().toString();
 		String addressFrom = mAddressFrom.getText().toString();
 		String addressTo = mAddressTo.getText().toString();
-		if (mBespeak && (takeTime == null || takeTime.equals(""))) {
+		if (mBespeak && (pickTime == null || pickTime.equals(""))) {
 			Util.showTips(this, getResources().getString(
-					R.string.take_time_empty));
+					R.string.pick_time_empty));
 			return false;
 		} else if (goodsName == null || goodsName.equals("")) {
 			Util.showTips(this, getResources().getString(
@@ -379,6 +379,10 @@ public class SendActivity extends Activity {
 		} else if (addressTo == null || addressTo.equals("")) {
 			Util.showTips(this, getResources().getString(
 					R.string.address_to_empty));
+			return false;
+		} else if (mTrafficIndex == 0) {
+			Util.showTips(this, getResources().getString(
+					R.string.trunk_type_error));
 			return false;
 		}
 		

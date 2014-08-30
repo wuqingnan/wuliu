@@ -171,7 +171,8 @@ public class OrderDetailActivity extends Activity {
 		mCommentBtn.setOnClickListener(mOnClickListener);
 	}
 	
-	private void updateFooter(int state) {
+	private void updateFooter(Order order) {
+		int state = order.getState();
 		mCancelBtn.setVisibility(View.GONE);
 		mChangeBtn.setVisibility(View.GONE);
 		mConsultBtn.setVisibility(View.GONE);
@@ -185,7 +186,7 @@ public class OrderDetailActivity extends Activity {
 			mConsultBtn.setVisibility(View.VISIBLE);
 			mConfirmBtn.setVisibility(View.VISIBLE);
 			mFooter.setVisibility(View.VISIBLE);
-		} else if (state == 9) {
+		} else if (state == 9 && order.getCredit() == 0) {
 			mCommentBtn.setVisibility(View.VISIBLE);
 			mFooter.setVisibility(View.VISIBLE);
 		} else {
@@ -291,16 +292,19 @@ public class OrderDetailActivity extends Activity {
 		order.setFree(infos.optInt("mess_fee"));
 		order.setPay(infos.optInt("goods_cost"));
 		order.setState(infos.optInt("state"));
+		order.setPickTime(infos.optString("pick_time"));
+		order.setCreateDate(infos.optString("create_date"));
+		order.setRemarks(infos.optString("remark"));
 
-		int state = order.getState();
-		if (state == 1 || state == 21 || state == 22 || state == 9) {
+		String driverCD = infos.optString("driver_cd");
+		if (driverCD != null && driverCD.length() > 0 && !driverCD.equals(BaseParams.PARAM_DEFAULT)) {
 			driver = new Driver();
-			driver.setDriver_cd(infos.optString("driver_cd"));
+			driver.setDriver_cd(driverCD);
 			driver.setDriver_name(infos.optString("driver_name"));
 			driver.setPhone(infos.optString("phone"));
 			driver.setCredit_level(infos.optString("credit_level"));
 		}
-		updateFooter(state);
+		updateFooter(order);
 		mAdapter.setData(order, driver);
 	}
 	
@@ -476,8 +480,15 @@ public class OrderDetailActivity extends Activity {
 	public static class DetailAdapter extends BaseAdapter {
 
 		private static final int[] NAMES = {
+			R.string.label_order_code,
+			R.string.label_order_state,
 			R.string.label_goods_name,
 			R.string.label_goods_type,
+			R.string.label_goods_pay,
+			R.string.label_message_free,
+			R.string.label_pick_time,
+			R.string.label_create_time,
+			R.string.label_send_comment,
 			R.string.label_send_from,
 			R.string.label_send_phone,
 			R.string.label_send_to,
@@ -486,11 +497,9 @@ public class OrderDetailActivity extends Activity {
 			R.string.label_address_to,
 			R.string.label_driver_name,
 			R.string.label_driver_phone,
-			R.string.label_driver_level
+			R.string.label_driver_level,
+			R.string.label_driver_score
 		};
-		
-		private static final int COUNT_ORDER = 8;
-		private static final int COUNT_DRIVER = 3;
 		
 		private Context mContext;
 		private LayoutInflater mInflater;
@@ -498,21 +507,30 @@ public class OrderDetailActivity extends Activity {
 		private Driver mDriver;
 		
 		private String[] mTypes;
+		private String[] mStars;
+		private String[] mStateName;
+		private int[] mStateValue;
+		
+		private int mOrderCnt;
+		private int mDriverCnt;
 		
 		public DetailAdapter(Context context) {
 			mContext = context;
 			mInflater = LayoutInflater.from(context);
 			mTypes = context.getResources().getStringArray(R.array.goods_type_list);
+			mStars = context.getResources().getStringArray(R.array.driver_stars);
+			mStateName = context.getResources().getStringArray(R.array.order_state_name);
+			mStateValue = context.getResources().getIntArray(R.array.order_state_value);
 		}
 		
 		@Override
 		public int getCount() {
 			int size = 0;
 			if (mOrder != null) {
-				size += COUNT_ORDER;
+				size += mOrderCnt;
 			}
 			if (mDriver != null) {
-				size += COUNT_DRIVER;
+				size += mDriverCnt;
 			}
 			return size;
 		}
@@ -530,6 +548,14 @@ public class OrderDetailActivity extends Activity {
 		public void setData(Order order, Driver driver) {
 			mOrder = order;
 			mDriver = driver;
+			mOrderCnt = 15;
+			if (mDriver != null) {
+				if (mOrder.getCredit() == 1) {
+					mDriverCnt = 4;
+				} else {
+					mDriverCnt = 3;
+				}
+			}
 			notifyDataSetChanged();
 		}
 		
@@ -554,6 +580,32 @@ public class OrderDetailActivity extends Activity {
 			int name = NAMES[position];
 			String value = null;
 			switch (name) {
+			case R.string.label_order_code:
+				value = mOrder.getGoodsCD();
+				break;
+			case R.string.label_order_state:
+				value = mStateName[getStateIndexByValue(mOrder.getState())];
+				break;
+			case R.string.label_goods_pay:
+				value = String.format(mContext.getString(R.string.value_yuan), mOrder.getPay());
+				break;
+			case R.string.label_message_free:
+				int free = mOrder.getFree();
+				if (free == 0) {
+					value = mContext.getString(R.string.free_no);
+				} else {
+					value = mContext.getString(R.string.free_yes);
+				}
+				break;
+			case R.string.label_pick_time:
+				value = mOrder.getPickTime();
+				break;
+			case R.string.label_create_time:
+				value = mOrder.getCreateDate();
+				break;
+			case R.string.label_send_comment:
+				value = mOrder.getRemarks();
+				break;
 			case R.string.label_goods_name:
 				value = mOrder.getGoodsName();
 				break;
@@ -591,11 +643,27 @@ public class OrderDetailActivity extends Activity {
 			case R.string.label_driver_level:
 				value = mDriver.getCredit_level();
 				break;
+			case R.string.label_driver_score:
+				int stars = mDriver.getStars();
+				if (stars >= 0 && stars < mStars.length) {
+					value = mStars[stars];
+				}
+				break;
 			}
 			holder.refresh(name, value);
 			return convertView;
 		}
 		
+		private int getStateIndexByValue(int value) {
+			int index = 0;
+			for (int i = 0; i < mStateValue.length; i++) {
+				if (mStateValue[i] == value) {
+					index = i;
+					break;
+				}
+			}
+			return index;
+		}
 	}
 	
 	public static class ViewHolder {
