@@ -605,6 +605,9 @@ public class OrderDetailActivity extends Activity {
 				break;
 			case R.string.label_send_comment:
 				value = mOrder.getRemarks();
+				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+					value = null;
+				}
 				break;
 			case R.string.label_goods_name:
 				value = mOrder.getGoodsName();
