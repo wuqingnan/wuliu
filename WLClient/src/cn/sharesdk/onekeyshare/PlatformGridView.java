@@ -8,7 +8,7 @@
 
 package cn.sharesdk.onekeyshare;
 
-import static com.wuliu.client.supplyer.R.*;
+import static cn.sharesdk.framework.utils.R.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;

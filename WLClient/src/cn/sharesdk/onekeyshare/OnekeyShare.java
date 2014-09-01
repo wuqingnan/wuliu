@@ -8,7 +8,7 @@
 
 package cn.sharesdk.onekeyshare;
 
-import static com.wuliu.client.supplyer.R.*;
+import static cn.sharesdk.framework.utils.R.*;
 import static cn.sharesdk.framework.utils.BitmapHelper.*;
 import java.io.File;
 import java.util.ArrayList;
