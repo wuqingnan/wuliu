@@ -1,4 +1,4 @@
-package com.wuliu.client.bean;
+﻿package com.wuliu.client.bean;
 
 import java.io.Serializable;
 

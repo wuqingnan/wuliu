@@ -1,4 +1,4 @@
-package com.wuliu.client.bean;
+ï»¿package com.wuliu.client.bean;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import com.wuliu.client.api.BaseParams;
 public class Order implements Serializable {
 
 	/**
-	 * ĞòÁĞ»¯
+	 * åºåˆ—åŒ–
 	 */
 	private static final long serialVersionUID = -5479381025006216331L;
 	

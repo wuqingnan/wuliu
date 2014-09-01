@@ -1,4 +1,4 @@
-package com.wuliu.client.fragment;
+﻿package com.wuliu.client.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

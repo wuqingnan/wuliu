@@ -95,10 +95,10 @@
     <string name="login_input_empty">用户名或者密码为空</string>
     <string name="login_input_username_empty">用户名为空</string>
     <string name="login_input_password_empty">密码为空</string>
-    <string name="login_input_username_invalid">用户名格式错误</string>
-    <string name="login_input_password_invalid">密码格式错误</string>
-    <string name="hint_login_username">4-16位中英文、数字、下划线</string>
-    <string name="hint_login_password">4-32位英文、数字</string>
+    <string name="phone_invalid">手机号码格式错误</string>
+    <string name="password_invalid">密码格式错误，（6-16）位字母、数字、下划线</string>
+    <string name="hint_login_username">请输入手机号码</string>
+    <string name="hint_login_password">请输入密码</string>
     <string name="show">显示</string>
     <string name="hide">隐藏</string>
     
@@ -111,9 +111,7 @@
     <string name="register_username_empty">手机号为空</string>
     <string name="register_code_empty">验证码为空</string>
     <string name="register_password_empty">密码为空</string>
-    <string name="register_username_invalid">手机号格式错误</string>
     <string name="register_code_invalid">验证码格式错误</string>
-    <string name="register_password_invalid">密码格式错误</string>
     <string name="register_id_invalid">身份证号码格式错误</string>
     <string name="hint_register_username">请输入手机号码</string>
     <string name="hint_register_code">验证码</string>
@@ -168,6 +166,8 @@
     
     
     <string name="requesting">正在请求，请等待…</string>
+    
+    <string name="invite_msg">我正在使用汇流，非常方便，赶紧下载吧http://www.baidu.com</string>
     
     
     <string name="pull_to_refresh_pull">上拉加载…</string>

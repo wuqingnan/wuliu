@@ -1,4 +1,4 @@
-package com.wuliu.client.activity;
+锘縫ackage com.wuliu.client.activity;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -244,7 +244,7 @@ public class OrderDetailActivity extends Activity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//成功
+				if (res == 2) {//鎴愬姛
 					parseJson(response.optJSONObject("infos"));
 				}
 				return;
@@ -262,7 +262,7 @@ public class OrderDetailActivity extends Activity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//成功
+				if (res == 2) {//鎴愬姛
 					refresh();
 				}
 				return;

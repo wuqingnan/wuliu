@@ -1,4 +1,4 @@
-package com.wuliu.client.fragment;
+ï»¿package com.wuliu.client.fragment;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -199,13 +199,13 @@ public class MapFragment extends BaseFragment {
 		Bundle bundle2 = new Bundle();
 		Bundle bundle3 = new Bundle();
 
-		bundle1.putString("name", "Ê·Ê¦¸µ");
-		bundle2.putString("name", "¸ßÊ¦¸µ");
-		bundle3.putString("name", "ÑîÊ¦¸µ");
+		bundle1.putString("name", "å²å¸ˆå‚…");
+		bundle2.putString("name", "é«˜å¸ˆå‚…");
+		bundle3.putString("name", "æ¨å¸ˆå‚…");
 
-		bundle1.putString("info", "ÎªÈËÕıÖ±¡¢ÀÖÉÆºÃÊ©");
-		bundle2.putString("info", "ÒõÏÕ½ÆÕ©¡¢±°±ÉÎŞ³Ü");
-		bundle3.putString("info", "¼éÒùÂ°ÂÓ¡¢ÎŞ¶ñ²»×÷");
+		bundle1.putString("info", "ä¸ºäººæ­£ç›´ã€ä¹å–„å¥½æ–½");
+		bundle2.putString("info", "é˜´é™©ç‹¡è¯ˆã€å‘é„™æ— è€»");
+		bundle3.putString("info", "å¥¸æ·«æ³æ ã€æ— æ¶ä¸ä½œ");
 
 		OverlayOptions option1 = new MarkerOptions().position(ll1).icon(bitmap)
 				.extraInfo(bundle1);

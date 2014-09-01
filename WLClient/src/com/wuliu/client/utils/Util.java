@@ -1,9 +1,11 @@
-package com.wuliu.client.utils;
+ï»¿package com.wuliu.client.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.widget.Toast;
 
 public class Util {
@@ -13,7 +15,7 @@ public class Util {
 			return false;
 		}
 		Pattern pattern = Pattern.compile("^1[3,5,7,8]\\d{9}$");
-		// ÕıÔòÆ¥Åä11Î»ºÅÂëÊÇ·ñÂú×ãÊÖ»úºÅÂë¸ñÊ½
+		// æ­£åˆ™åŒ¹é…11ä½å·ç æ˜¯å¦æ»¡è¶³æ‰‹æœºå·ç æ ¼å¼
 		if (pattern.matcher(number).matches()) {
 			return true;
 		}
@@ -21,7 +23,7 @@ public class Util {
 	}
 	
 	/**
-	 * ÅĞ¶ÏÊÇ·ñÎªÕıÕûÊı»ò0
+	 * åˆ¤æ–­æ˜¯å¦ä¸ºæ­£æ•´æ•°æˆ–0
 	 * @param number
 	 * @return
 	 */
@@ -30,7 +32,7 @@ public class Util {
 			return false;
 		}
 		Pattern pattern = Pattern.compile("^(0|[1-9][0-9]*)$");
-		// ÕıÔòÆ¥Åä11Î»ºÅÂëÊÇ·ñÂú×ãÊÖ»úºÅÂë¸ñÊ½
+		// æ­£åˆ™åŒ¹é…11ä½å·ç æ˜¯å¦æ»¡è¶³æ‰‹æœºå·ç æ ¼å¼
 		if (pattern.matcher(number).matches()) {
 			return true;
 		}
@@ -38,7 +40,7 @@ public class Util {
 	}
 	
 	/**
-	 * ÅĞ¶ÏÊÇ·ñÎªÕıĞ¡Êı
+	 * åˆ¤æ–­æ˜¯å¦ä¸ºæ­£å°æ•°
 	 * @param number
 	 * @return
 	 */
@@ -47,7 +49,7 @@ public class Util {
 			return false;
 		}
 		Pattern pattern = Pattern.compile("^(0|[1-9][0-9]*)\\.[0-9]{1,}$");
-		// ÕıÔòÆ¥Åä11Î»ºÅÂëÊÇ·ñÂú×ãÊÖ»úºÅÂë¸ñÊ½
+		// æ­£åˆ™åŒ¹é…11ä½å·ç æ˜¯å¦æ»¡è¶³æ‰‹æœºå·ç æ ¼å¼
 		if (pattern.matcher(number).matches()) {
 			return true;
 		}
@@ -55,14 +57,14 @@ public class Util {
 	}
 	
 	/**
-	 * ÑéÖ¤ÃÜÂëºÏ·¨ĞÔ
+	 * éªŒè¯å¯†ç åˆæ³•æ€§
 	 * 
 	 * @return true-valid false invalid
 	 */
 	public static boolean isPasswordValid(String data) {
 		if (data != null && !data.equals("")) {
-			// Æ¥ÅäÓ¢ÎÄÊı×ÖÏÂ»®Ïß£¬³¤¶È4-32Ö®¼ä
-			String rex = "[a-z0-9A-Z_]{4,32}";
+			// åŒ¹é…è‹±æ–‡æ•°å­—ä¸‹åˆ’çº¿ï¼Œé•¿åº¦6-16ä¹‹é—´
+			String rex = "[a-z0-9A-Z_]{6,16}";
 			Pattern pattern = Pattern.compile(rex);
 			Matcher m = pattern.matcher(data);
 			return m.matches();
@@ -71,13 +73,13 @@ public class Util {
 	}
 	
 	/**
-	 * ÑéÖ¤ÓÃ»§ÃûºÏ·¨ĞÔ
+	 * éªŒè¯ç”¨æˆ·ååˆæ³•æ€§
 	 * 
 	 * @return true-valid false invalid
 	 */
 	public static boolean isUserValid(String data) {
 		if (data != null && !data.equals("")) {
-			// Æ¥ÅäÖĞÓ¢ÎÄÏÂ»®Ïß£¬³¤¶È4-16Ö®¼ä
+			// åŒ¹é…ä¸­è‹±æ–‡ä¸‹åˆ’çº¿ï¼Œé•¿åº¦4-16ä¹‹é—´
 			String rex = "[a-z0-9A-Z_\u4e00-\u9fa5]{4,16}";
 			Pattern pattern = Pattern.compile(rex);
 			Matcher m = pattern.matcher(data);
@@ -87,7 +89,7 @@ public class Util {
 	}
 	
 	/**
-	 * ÑéÖ¤Ğ§ÑéÂëºÏ·¨ĞÔ
+	 * éªŒè¯æ•ˆéªŒç åˆæ³•æ€§
 	 * 
 	 * @return true-valid false invalid
 	 */
@@ -102,7 +104,7 @@ public class Util {
 	}
 	
 	/**
-	 * ÑéÖ¤Éí·İÖ¤ºÅÂëºÏ·¨ĞÔ
+	 * éªŒè¯èº«ä»½è¯å·ç åˆæ³•æ€§
 	 * 
 	 * @return true-valid false invalid
 	 */
@@ -117,11 +119,30 @@ public class Util {
 	}
 	
 	/**
-	 * ÏÔÊ¾ÌáÊ¾
+	 * æ˜¾ç¤ºæç¤º
 	 * 
 	 * @param tips
 	 */
 	public static void showTips(Context context, String tips) {
 		Toast.makeText(context, tips, Toast.LENGTH_SHORT).show();
+	}
+	
+	/**
+	 * å‘é€çŸ­ä¿¡
+	 * @param context
+	 * @param phone
+	 * @param msg
+	 */
+	public static void sendMessage(Context context, String phone, String msg) {
+		Intent intent = null;
+		if (phone != null && Util.isPhoneNumber(phone)) {
+			Uri uri = Uri.parse("smsto:" + phone);
+			intent = new Intent(Intent.ACTION_SENDTO, uri);
+		} else {
+			intent = new Intent(Intent.ACTION_VIEW);
+			intent.setType("vnd.android-dir/mms-sms");
+		}
+		intent.putExtra("sms_body", msg);
+		context.startActivity(intent);
 	}
 }

@@ -1,4 +1,4 @@
-package com.wuliu.client.activity;
+﻿package com.wuliu.client.activity;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;

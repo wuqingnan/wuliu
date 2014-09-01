@@ -1,4 +1,4 @@
-package com.wuliu.client.window;
+﻿package com.wuliu.client.window;
 
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;

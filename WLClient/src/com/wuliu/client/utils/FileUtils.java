@@ -1,4 +1,4 @@
-package com.wuliu.client.utils;
+﻿package com.wuliu.client.utils;
 
 import android.os.Environment;
 import android.os.StatFs;

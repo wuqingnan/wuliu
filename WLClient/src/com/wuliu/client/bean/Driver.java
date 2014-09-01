@@ -1,4 +1,4 @@
-package com.wuliu.client.bean;
+﻿package com.wuliu.client.bean;
 
 public class Driver {
 

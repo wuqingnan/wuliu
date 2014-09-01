@@ -1,4 +1,4 @@
-package com.wuliu.client.api;
+﻿package com.wuliu.client.api;
 
 import com.loopj.android.http.RequestParams;
 import com.wuliu.client.utils.DeviceInfo;

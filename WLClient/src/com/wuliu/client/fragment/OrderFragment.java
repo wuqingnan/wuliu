@@ -1,4 +1,4 @@
-package com.wuliu.client.fragment;
+﻿package com.wuliu.client.fragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -216,7 +216,7 @@ public class OrderFragment extends BaseFragment {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(getActivity(), msg);
-				if (res == 2) {//�ɹ�
+				if (res == 2) {//成功
 					mPage++;
 					int pageCount = response.getInt("pagetotalnum");
 					if (mPage > pageCount) {

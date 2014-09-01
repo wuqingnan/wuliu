@@ -1,4 +1,4 @@
-package com.wuliu.client.activity;
+锘縫ackage com.wuliu.client.activity;
 
 
 import org.apache.http.Header;
@@ -122,7 +122,7 @@ public class RegisterActivity extends Activity {
 	}
 
 	private void getVerifyCode() {
-		Toast.makeText(this, "验证码：1234", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "楠岃瘉鐮侊細1234", Toast.LENGTH_SHORT).show();
 	}
 	
 	private void register() {
@@ -183,7 +183,7 @@ public class RegisterActivity extends Activity {
 			return false;
 		} else if (!Util.isPhoneNumber(phone)) {
 			Util.showTips(this, getResources().getString(
-					R.string.register_username_invalid));
+					R.string.phone_invalid));
 			return false;
 		} else if (!Util.isCodeValid(code)) {
 			Util.showTips(this, getResources().getString(
@@ -191,7 +191,7 @@ public class RegisterActivity extends Activity {
 			return false;
 		} else if (!Util.isPasswordValid(password)) {
 			Util.showTips(this, getResources().getString(
-					R.string.register_password_invalid));
+					R.string.password_invalid));
 			return false;
 		} else if (id != null && !id.equals("") && !Util.isIDNumberValid(id)) {
 			Util.showTips(this, getResources().getString(
@@ -214,7 +214,7 @@ public class RegisterActivity extends Activity {
 								dialog.dismiss();
 								updateUserType();
 							}
-						}).setTitle("货源").create();
+						}).setTitle("璐ф簮").create();
 		dialog.show();
 	}
 	
@@ -241,7 +241,7 @@ public class RegisterActivity extends Activity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//成功
+				if (res == 2) {//鎴愬姛
 					login();
 				}
 				return;

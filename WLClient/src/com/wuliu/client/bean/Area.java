@@ -1,4 +1,4 @@
-package com.wuliu.client.bean;
+﻿package com.wuliu.client.bean;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

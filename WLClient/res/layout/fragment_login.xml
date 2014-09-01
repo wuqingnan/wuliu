@@ -43,7 +43,8 @@
                     android:layout_height="fill_parent"
                     android:layout_marginRight="5dp"
                     android:hint="@string/hint_login_username"
-                    android:maxLength="16" />
+                    android:inputType="number"
+                    android:maxLength="11" />
             </LinearLayout>
 
             <View
@@ -87,7 +88,7 @@
                         android:layout_height="fill_parent"
                         android:layout_toLeftOf="@id/login_show_pass"
                         android:hint="@string/hint_login_password"
-                        android:maxLength="32" />
+                        android:maxLength="16" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

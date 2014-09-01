@@ -1,4 +1,4 @@
-package com.wuliu.client.fragment;
+ï»¿package com.wuliu.client.fragment;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -138,7 +138,7 @@ public class LoginFragment extends BaseFragment {
 	}
 
 	/**
-	 * »ñÈ¡×îºóÒ»´ÎµÇÂ½µÄÓÃ»§Ãû
+	 * è·å–æœ€åä¸€æ¬¡ç™»é™†çš„ç”¨æˆ·å
 	 * 
 	 * @return
 	 */
@@ -147,7 +147,7 @@ public class LoginFragment extends BaseFragment {
 	}
 
 	/**
-	 * ÏÔÊ¾ÃÜÂë
+	 * æ˜¾ç¤ºå¯†ç 
 	 * 
 	 * @param bShow
 	 */
@@ -169,7 +169,7 @@ public class LoginFragment extends BaseFragment {
 	}
 	
 	/**
-	 * µÇÂ¼
+	 * ç™»å½•
 	 */
 	private void login() {
 		if (validCheck()) {
@@ -193,7 +193,7 @@ public class LoginFragment extends BaseFragment {
 	}
 
 	/**
-	 * ¼ì²âµÇÂ½ĞÅÏ¢ºÏ·¨ĞÔ
+	 * æ£€æµ‹ç™»é™†ä¿¡æ¯åˆæ³•æ€§
 	 * 
 	 * @return
 	 */
@@ -211,18 +211,18 @@ public class LoginFragment extends BaseFragment {
 			bRes = false;
 		} else if (!Util.isUserValid(username)) {
 			showTips(getResources().getString(
-					R.string.login_input_username_invalid));
+					R.string.phone_invalid));
 			bRes = false;
 		} else if (!Util.isPasswordValid(password)) {
 			showTips(getResources().getString(
-					R.string.login_input_password_invalid));
+					R.string.password_invalid));
 			bRes = false;
 		}
 		return bRes;
 	}
 
 	/**
-	 * ÏÔÊ¾ÌáÊ¾
+	 * æ˜¾ç¤ºæç¤º
 	 * 
 	 * @param tips
 	 */
@@ -253,7 +253,7 @@ public class LoginFragment extends BaseFragment {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				showTips(msg);
-				if (res == 2) {//³É¹¦
+				if (res == 2) {//æˆåŠŸ
 					LoginManager.getInstance().setLogin(true);
 					mUserInfo.update(response.optJSONObject("supplyer"));
 					LoginManager.getInstance().setUserInfo(mUserInfo);

@@ -1,4 +1,4 @@
-package com.wuliu.client.fragment;
+ï»¿package com.wuliu.client.fragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -38,7 +38,7 @@ public class MainFragment extends BaseFragment {
 				}
 			}
 			else if (view == mMainInput) {
-				Toast.makeText(getActivity(), "Ìø×ªµ½ËÑË÷½çÃæ", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), "è·³è½¬åˆ°æœç´¢ç•Œé¢", Toast.LENGTH_SHORT).show();
 			}
 			else if (view == mMainBook) {
 				if (LoginManager.getInstance().hasLogin()) {

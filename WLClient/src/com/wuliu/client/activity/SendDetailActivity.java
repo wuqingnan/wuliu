@@ -1,4 +1,4 @@
-package com.wuliu.client.activity;
+﻿package com.wuliu.client.activity;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -225,7 +225,7 @@ public class SendDetailActivity extends Activity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//�ɹ�
+				if (res == 2) {//成功
 					showPublishSuccessDialog();
 				}
 				return;

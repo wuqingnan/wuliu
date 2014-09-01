@@ -1,4 +1,4 @@
-package com.wuliu.client.activity;
+ï»¿package com.wuliu.client.activity;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -132,7 +132,7 @@ public class SearchActivity extends Activity {
 	
 //	private List<PoiInfo> mPoiList;
 	
-	//0:Ê¡¡¢1:ÊĞ¡¢2:ÇøÏØ¡¢3:½ÖµÀ
+	//0:çœã€1:å¸‚ã€2:åŒºå¿ã€3:è¡—é“
 	private String[] mSearchInfos;
 	
 	private boolean mIsFrom;
@@ -234,7 +234,7 @@ public class SearchActivity extends Activity {
 //		else {
 //			Log.d(TAG, "shizy---keyword: " + keyword);
 //			mPoiSearch.searchInCity((new PoiCitySearchOption())
-//					.city("±±¾©")  
+//					.city("åŒ—äº¬")  
 //					.keyword(keyword)  
 //					.pageNum(0));
 //		}

@@ -1,9 +1,10 @@
-package com.wuliu.client.fragment;
+﻿package com.wuliu.client.fragment;
 
 import com.wuliu.client.R;
 import com.wuliu.client.activity.MainActivity;
 import com.wuliu.client.adapter.MenuAdapter;
 import com.wuliu.client.manager.LoginManager;
+import com.wuliu.client.utils.Util;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -18,7 +19,7 @@ public class MenuFragment extends ListFragment {
 	private static final String TAG = MenuFragment.class.getSimpleName();
 
 	private static final int[] ICONS = new int[] { R.drawable.icon_order,
-			R.drawable.icon_account, R.drawable.icon_share,
+			R.drawable.icon_account, R.drawable.icon_share, R.drawable.icon_share,
 			R.drawable.icon_setting };
 
 	private MenuAdapter mMenuAdapter;
@@ -74,8 +75,11 @@ public class MenuFragment extends ListFragment {
 			fragment = new ProfileFragment();
 			break;
 		case 2:
+			Util.sendMessage(getActivity(), null, getResources().getString(R.string.invite_msg));
 			break;
 		case 3:
+			break;
+		case 4:
 			fragment = new SetFragment();
 			break;
 		default:

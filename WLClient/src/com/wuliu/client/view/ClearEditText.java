@@ -1,4 +1,4 @@
-package com.wuliu.client.view;
+ï»¿package com.wuliu.client.view;
 
 import com.wuliu.client.R;
 
@@ -16,12 +16,12 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 		TextWatcher {
 
 	/**
-	 * É¾³ı°´Å¥µÄÒıÓÃ
+	 * åˆ é™¤æŒ‰é’®çš„å¼•ç”¨
 	 */
 	private Drawable mClearDrawable;
 	private Context mContext;
 	/**
-	 * ¿Ø¼şÊÇ·ñÓĞ½¹µã
+	 * æ§ä»¶æ˜¯å¦æœ‰ç„¦ç‚¹
 	 */
 	private boolean hasFoucs;
 
@@ -48,16 +48,16 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 
 		mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(),
 				mClearDrawable.getIntrinsicHeight());
-		// Ä¬ÈÏÉèÖÃÒş²ØÍ¼±ê
+		// é»˜è®¤è®¾ç½®éšè—å›¾æ ‡
 		setClearIconVisible(false);
-		// ÉèÖÃ½¹µã¸Ä±äµÄ¼àÌı
+		// è®¾ç½®ç„¦ç‚¹æ”¹å˜çš„ç›‘å¬
 		setOnFocusChangeListener(this);
-		// ÉèÖÃÊäÈë¿òÀïÃæÄÚÈİ·¢Éú¸Ä±äµÄ¼àÌı
+		// è®¾ç½®è¾“å…¥æ¡†é‡Œé¢å†…å®¹å‘ç”Ÿæ”¹å˜çš„ç›‘å¬
 		addTextChangedListener(this);
 		int right = mContext.getResources().getDimensionPixelSize(R.dimen.edittext_drawable_padding);
 		setPadding(getPaddingLeft(), getPaddingTop(), (int) right,
 				getPaddingBottom());
-		// ÉèÖÃÎªµ¥ĞĞ
+		// è®¾ç½®ä¸ºå•è¡Œ
 		setSingleLine();
 		setMaxEms(32);
 	}
@@ -79,7 +79,7 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 	}
 
 	/**
-	 * µ±ClearEditText½¹µã·¢Éú±ä»¯µÄÊ±ºò£¬ÅĞ¶ÏÀïÃæ×Ö·û´®³¤¶ÈÉèÖÃÇå³ıÍ¼±êµÄÏÔÊ¾ÓëÒş²Ø
+	 * å½“ClearEditTextç„¦ç‚¹å‘ç”Ÿå˜åŒ–çš„æ—¶å€™ï¼Œåˆ¤æ–­é‡Œé¢å­—ç¬¦ä¸²é•¿åº¦è®¾ç½®æ¸…é™¤å›¾æ ‡çš„æ˜¾ç¤ºä¸éšè—
 	 */
 	@Override
 	public void onFocusChange(View v, boolean hasFocus) {
@@ -87,7 +87,7 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 		EditText _v = (EditText) v;
 		if (!hasFocus) {
 			setClearIconVisible(false);
-			// Ê§È¥½¹µã
+			// å¤±å»ç„¦ç‚¹
 			_v.setHint(_v.getTag().toString());
 		} else {
 			String hint = _v.getHint().toString();
@@ -98,7 +98,7 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 	}
 
 	/**
-	 * ÉèÖÃÇå³ıÍ¼±êµÄÏÔÊ¾ÓëÒş²Ø£¬µ÷ÓÃsetCompoundDrawablesÎªEditText»æÖÆÉÏÈ¥
+	 * è®¾ç½®æ¸…é™¤å›¾æ ‡çš„æ˜¾ç¤ºä¸éšè—ï¼Œè°ƒç”¨setCompoundDrawablesä¸ºEditTextç»˜åˆ¶ä¸Šå»
 	 * 
 	 * @param visible
 	 */
@@ -109,7 +109,7 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 	}
 
 	/**
-	 * µ±ÊäÈë¿òÀïÃæÄÚÈİ·¢Éú±ä»¯µÄÊ±ºò»Øµ÷µÄ·½·¨
+	 * å½“è¾“å…¥æ¡†é‡Œé¢å†…å®¹å‘ç”Ÿå˜åŒ–çš„æ—¶å€™å›è°ƒçš„æ–¹æ³•
 	 */
 	@Override
 	public void onTextChanged(CharSequence s, int start, int count, int after) {

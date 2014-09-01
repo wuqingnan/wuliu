@@ -1,4 +1,4 @@
-package com.wuliu.client;
+ï»¿package com.wuliu.client;
 
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
@@ -18,7 +18,7 @@ public class WLApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		// ÔÚÊ¹ÓÃ SDK ¸÷×é¼äÖ®Ç°³õÊ¼»¯ context ĞÅÏ¢£¬´«Èë ApplicationContext
+		// åœ¨ä½¿ç”¨ SDK å„ç»„é—´ä¹‹å‰åˆå§‹åŒ– context ä¿¡æ¯ï¼Œä¼ å…¥ ApplicationContext
 		SDKInitializer.initialize(this);
 		mInstance = this;
 	}

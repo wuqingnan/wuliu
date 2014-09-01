@@ -1,4 +1,4 @@
-package com.wuliu.client.utils;
+锘縫ackage com.wuliu.client.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -47,7 +47,7 @@ public class DeviceInfo {
 	}
 	
 	/**
-	 * 获取手机型号
+	 * 鑾峰彇鎵嬫満鍨嬪彿
 	 * @return
 	 */
 	public static String getModel() {
@@ -55,7 +55,7 @@ public class DeviceInfo {
 	}
 	
 	/**
-	 * 获取制造商
+	 * 鑾峰彇鍒堕�犲晢
 	 * @return
 	 */
 	public static String getManufacturer() {
@@ -63,7 +63,7 @@ public class DeviceInfo {
 	}
 	
 	/**
-	 * 获取包名
+	 * 鑾峰彇鍖呭悕
 	 * @return
 	 */
 	public static String getPackageName() {

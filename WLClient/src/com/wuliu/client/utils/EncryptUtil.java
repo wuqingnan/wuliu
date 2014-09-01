@@ -1,4 +1,4 @@
-package com.wuliu.client.utils;
+﻿package com.wuliu.client.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

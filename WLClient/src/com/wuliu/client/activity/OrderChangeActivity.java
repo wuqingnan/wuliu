@@ -1,4 +1,4 @@
-package com.wuliu.client.activity;
+ï»¿package com.wuliu.client.activity;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -100,7 +100,7 @@ public class OrderChangeActivity extends Activity {
 	
 	private ProgressDialog mProgressDialog;
 	
-	//0:Ê¡¡¢1:ÊĞ¡¢2:ÇøÏØ¡¢3:½ÖµÀ
+	//0:çœã€1:å¸‚ã€2:åŒºå¿ã€3:è¡—é“
 	private String[] mFromInfos = new String[4];
 	private String[] mToInfos = new String[4];
 	private Order mOrder;
@@ -303,7 +303,7 @@ public class OrderChangeActivity extends Activity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//³É¹¦
+				if (res == 2) {//æˆåŠŸ
 					showChangeSuccessDialog();
 				}
 				return;
@@ -315,7 +315,7 @@ public class OrderChangeActivity extends Activity {
 	}
 	
 	/**
-	 * ´ò¿ªĞŞ¸Ä¶©µ¥Ò³Ãæ
+	 * æ‰“å¼€ä¿®æ”¹è®¢å•é¡µé¢
 	 * @param context
 	 * @param bespeak
 	 */

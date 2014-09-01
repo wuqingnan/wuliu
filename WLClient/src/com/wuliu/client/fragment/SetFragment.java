@@ -1,4 +1,4 @@
-package com.wuliu.client.fragment;
+﻿package com.wuliu.client.fragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

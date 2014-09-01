@@ -1,4 +1,4 @@
-package com.wuliu.client.adapter;
+﻿package com.wuliu.client.adapter;
 
 import com.wuliu.client.R;
 

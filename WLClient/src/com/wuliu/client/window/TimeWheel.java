@@ -1,4 +1,4 @@
-package com.wuliu.client.window;
+ï»¿package com.wuliu.client.window;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +42,7 @@ public class TimeWheel implements IWheel<String> {
 		mDays.addAll(Arrays.asList(mContext.getResources().getStringArray(R.array.time_days)));
 		if (hour >= 22 && ("" + hour + minute).compareTo("2250") > 0) {
 			mToday = false;
-			//É¾³ý½ñÌì
+			//åˆ é™¤ä»Šå¤©
 			mDays.remove(0);
 		}
 		else {
@@ -54,7 +54,7 @@ public class TimeWheel implements IWheel<String> {
 		mAllHours = new ArrayList<String>();
 		mHoursForToday = new ArrayList<String>();
 		for (int i = 0; i < 24; i++) {
-			String hourStr = (i < 10 ? "0" + i : i) + "µã";
+			String hourStr = (i < 10 ? "0" + i : i) + "ç‚¹";
 			mAllHours.add(hourStr);
 			if (i >= hour + (mNextHour ? 1 : 2)) {
 				mHoursForToday.add(hourStr);
@@ -64,7 +64,7 @@ public class TimeWheel implements IWheel<String> {
 		mAllMinutes = new ArrayList<String>();
 		mMinutesForNow = new ArrayList<String>();
 		for (int i = 0; i < 6; i++) {
-			String minuteStr = (i == 0 ? "00" : i * 10) + "·Ö";
+			String minuteStr = (i == 0 ? "00" : i * 10) + "åˆ†";
 			mAllMinutes.add(minuteStr);
 			if (i >= minute / 10 + (minute % 10 == 0 ? 0 : 1)) {
 				mMinutesForNow.add(minuteStr);

@@ -1,4 +1,4 @@
-package com.wuliu.client.activity;
+﻿package com.wuliu.client.activity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

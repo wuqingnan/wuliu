@@ -1,4 +1,4 @@
-package com.wuliu.client.activity;
+ï»¿package com.wuliu.client.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -117,7 +117,7 @@ public class SendActivity extends Activity {
 
 	private WheelWindow mWheelWindow;
 	
-	//0:Ê¡¡¢1:ÊĞ¡¢2:ÇøÏØ¡¢3:½ÖµÀ
+	//0:çœã€1:å¸‚ã€2:åŒºå¿ã€3:è¡—é“
 	private String[] mFromInfos = new String[4];
 	private String[] mToInfos = new String[4];
 	
@@ -284,7 +284,7 @@ public class SendActivity extends Activity {
 								dialog.dismiss();
 								updateType();
 							}
-						}).setTitle("ÎïÆ·ÀàĞÍ").create();
+						}).setTitle("ç‰©å“ç±»å‹").create();
 		dialog.show();
 	}
 	
@@ -300,7 +300,7 @@ public class SendActivity extends Activity {
 				dialog.dismiss();
 				updateValidTime();
 			}
-		}).setTitle("ÓĞĞ§Ê±¼ä").create();
+		}).setTitle("æœ‰æ•ˆæ—¶é—´").create();
 		dialog.show();
 	}
 	
@@ -317,7 +317,7 @@ public class SendActivity extends Activity {
 				dialog.dismiss();
 				updateTraffic();
 			}
-		}).setTitle("½»Í¨¹¤¾ß").create();
+		}).setTitle("äº¤é€šå·¥å…·").create();
 		dialog.show();
 	}
 	
@@ -404,7 +404,7 @@ public class SendActivity extends Activity {
 	}
 	
 	/**
-	 * ´ò¿ª·¢»õÒ³Ãæ
+	 * æ‰“å¼€å‘è´§é¡µé¢
 	 * @param context
 	 * @param bespeak
 	 */
