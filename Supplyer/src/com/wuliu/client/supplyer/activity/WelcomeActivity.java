@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,6 +121,10 @@ public class WelcomeActivity extends Activity {
 		finish();
 	}
 	
+	public void onClick(View view) {
+		enterApp();
+	}
+	
 	private class InitTask implements Runnable {
 		@Override
 		public void run() {
@@ -162,7 +167,9 @@ public class WelcomeActivity extends Activity {
 	private class FeatureAdapter extends PagerAdapter {
 		
 		private final int[] VIEWS = {
-			R.layout.activity_main
+			R.layout.new_feature0,
+			R.layout.new_feature1,
+			R.layout.new_feature2
 		};
 		
 		private List<View> mViews = new ArrayList<View>();
@@ -178,7 +185,7 @@ public class WelcomeActivity extends Activity {
 		
 		@Override
 		public int getCount() {
-			return 0;
+			return mViews.size();
 		}
 
 		@Override

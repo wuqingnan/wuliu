@@ -6,6 +6,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/new_feature1" />
+        android:background="@drawable/new_feature0" />
 
 </RelativeLayout>

@@ -164,11 +164,11 @@
     
     <string name="value_yuan">%1$s 元</string>
     
-    
     <string name="requesting">正在请求，请等待…</string>
     
     <string name="invite_msg">我正在使用汇流，非常方便，赶紧下载吧http://www.baidu.com</string>
     
+    <string name="click_enter">点击进入</string>
     
     <string name="pull_to_refresh_pull">上拉加载…</string>
     <string name="pull_to_refresh_release">放开以加载…</string>
