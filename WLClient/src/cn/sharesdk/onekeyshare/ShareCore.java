@@ -19,7 +19,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.text.TextUtils;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
-import cn.sharesdk.framework.utils.R;
+import com.wuliu.client.supplyer.R;
 import cn.sharesdk.framework.ShareSDK;
 
 /**

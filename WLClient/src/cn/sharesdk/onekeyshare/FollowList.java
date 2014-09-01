@@ -8,7 +8,7 @@
 
 package cn.sharesdk.onekeyshare;
 
-import static cn.sharesdk.framework.utils.R.*;
+import static com.wuliu.client.supplyer.R.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import m.framework.ui.widget.asyncview.AsyncImageView;

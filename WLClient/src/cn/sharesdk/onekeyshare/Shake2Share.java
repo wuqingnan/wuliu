@@ -8,7 +8,7 @@
 
 package cn.sharesdk.onekeyshare;
 
-import static cn.sharesdk.framework.utils.R.*;
+import static com.wuliu.client.supplyer.R.*;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;

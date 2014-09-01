@@ -35,7 +35,7 @@
                     style="@style/WuLiu.Label"
                     android:text="@string/label_phone" />
 
-                <com.wuliu.client.view.ClearEditText
+                <com.wuliu.client.supplyer.view.ClearEditText
                     android:id="@+id/register_phone"
                     style="@style/WuLiu.EditText.ClearEditText"
                     android:layout_width="fill_parent"
@@ -75,7 +75,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true" />
 
-                    <com.wuliu.client.view.ClearEditText
+                    <com.wuliu.client.supplyer.view.ClearEditText
                         android:id="@+id/register_code"
                         style="@style/WuLiu.EditText.ClearEditText"
                         android:layout_width="fill_parent"
@@ -104,7 +104,7 @@
                     style="@style/WuLiu.Label"
                     android:text="@string/label_password" />
 
-                <com.wuliu.client.view.ClearEditText
+                <com.wuliu.client.supplyer.view.ClearEditText
                     android:id="@+id/register_password"
                     style="@style/WuLiu.EditText.ClearEditText"
                     android:layout_width="fill_parent"
@@ -132,7 +132,7 @@
                     style="@style/WuLiu.Label"
                     android:text="@string/label_id_number" />
 
-                <com.wuliu.client.view.ClearEditText
+                <com.wuliu.client.supplyer.view.ClearEditText
                     android:id="@+id/register_id"
                     style="@style/WuLiu.EditText.ClearEditText"
                     android:layout_width="fill_parent"
