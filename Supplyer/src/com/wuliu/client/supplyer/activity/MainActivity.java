@@ -59,9 +59,6 @@ public class MainActivity extends SlidingFragmentActivity {
 		setContentView(R.layout.activity_main);
 		initFragment();
 		initSlidingMenu();
-		initArea();
-		Const.init(this);
-		DeviceInfo.init(this);
 		LoginManager.getInstance().autoLogin();
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
@@ -166,12 +163,6 @@ public class MainActivity extends SlidingFragmentActivity {
 		trans.addToBackStack(null);
 		trans.commit();
 		mSlidingMenu.showContent();
-	}
-	
-	private void initArea() {
-		DBHelper helper = ((WLApplication)getApplication()).getHelper();
-		SQLiteDatabase db = helper.getReadableDatabase();
-		db.close();
 	}
 	
 	private class PositionTask implements Runnable {
