@@ -36,7 +36,8 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
-
+	<uses-permission android:name="android.permission.GET_TASKS" />
+    
     <application
         android:name="com.wuliu.client.supplyer.WLApplication"
         android:allowBackup="true"
@@ -98,6 +99,28 @@
             android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
+        
+        <activity
+	  		android:name="cn.sharesdk.framework.ShareSDKUIShell"
+	  		android:theme="@android:style/Theme.Translucent.NoTitleBar"
+	  		android:configChanges="keyboardHidden|orientation|screenSize"
+	  		android:screenOrientation="portrait"
+	  		android:windowSoftInputMode="stateHidden|adjustResize" >
+	   		<intent-filter>
+	        	<data android:scheme="tencent100371282" />
+	        	<action android:name="android.intent.action.VIEW" />
+	        	<category android:name="android.intent.category.BROWSABLE" />
+	       	 	<category android:name="android.intent.category.DEFAULT" />
+	    	</intent-filter>
+		</activity>
+		
+        <!--微信分享回调 -->
+		<activity
+  			android:name=".wxapi.WXEntryActivity"
+  			android:theme="@android:style/Theme.Translucent.NoTitleBar"
+  			android:configChanges="keyboardHidden|orientation|screenSize"
+  			android:exported="true"
+  			android:screenOrientation="portrait" />
         
         <!-- 公司：WxmfAt89Ine2KwXYEF0yizhU -->
         <!-- 家里：G0F0BDRhBrq2GU2jOREkXNMU -->
