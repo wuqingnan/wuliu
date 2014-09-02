@@ -172,7 +172,7 @@ public class RegisterActivity extends Activity {
 		initView();
 		initData();
 		mHandler = new RegisterHandler(this);
-		SMSSDK.initSDK(this, "2eba51630152", "cf2b6f211993b819e18072f5e61ff3de");
+		SMSSDK.initSDK(this, "2efbb3982f2a", "5fadc7e323623a695f5fe6b26d5ed79f");
 		SMSSDK.registerEventHandler(mEventHandler);
 	}
 	
