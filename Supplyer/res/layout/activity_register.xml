@@ -73,7 +73,8 @@
                         android:layout_height="fill_parent"
                         style="@style/Register_Code_Button"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:enabled="false" />
 
                     <com.wuliu.client.supplyer.view.ClearEditText
                         android:id="@+id/register_code"

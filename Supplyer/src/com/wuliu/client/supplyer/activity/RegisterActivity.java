@@ -8,11 +8,14 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wuliu.client.supplyer.Const;
 import com.wuliu.client.supplyer.R;
+import com.wuliu.client.supplyer.WeakHandler;
 import com.wuliu.client.supplyer.api.BaseParams;
 import com.wuliu.client.supplyer.bean.UserInfo;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
@@ -26,7 +29,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +44,16 @@ import android.widget.Toast;
 public class RegisterActivity extends Activity {
 
 	private static final String TAG = RegisterActivity.class.getSimpleName();
-
+	
+	private static final String COUNTRY_CODE = "86";
+	
+	private static final long COOLDOWN_TIME = 60 * 1000;
+	
+	private static final int MSG_GET_VERIFICATION_CODE_ERROR = 1 << 0;
+	private static final int MSG_GET_VERIFICATION_CODE_COMPLETE = 1 << 1;
+	private static final int MSG_SUBMIT_VERIFICATION_CODE_ERROR = 1 << 2;
+	private static final int MSG_SUBMIT_VERIFICATION_CODE_COMPLETE = 1 << 3;
+	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -68,6 +84,59 @@ public class RegisterActivity extends Activity {
 		};
 	};
 	
+	private TextWatcher mTextWatcher = new TextWatcher() {
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+			if (s != null && Util.isPhoneNumber(s.toString()) && !mCoolDown) {
+				mCodeBtn.setEnabled(true);
+			}
+			else {
+				mCodeBtn.setEnabled(false);
+			}
+		}
+		
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			
+		}
+		
+		@Override
+		public void afterTextChanged(Editable s) {
+			
+		}
+	};
+	
+	private EventHandler mEventHandler = new EventHandler() {
+		@Override
+		public void afterEvent(int event, int result, Object data) {
+			super.afterEvent(event, result, data);
+			Log.d(TAG, "shizy---afterEvent: " + event);
+			Log.d(TAG, "shizy---afterEvent: " + result);
+			Log.d(TAG, "shizy---afterEvent: " + data);
+			if (result == SMSSDK.RESULT_COMPLETE) {
+				if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+					mHandler.sendEmptyMessage(MSG_GET_VERIFICATION_CODE_COMPLETE);
+				} else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+					mHandler.sendEmptyMessage(MSG_SUBMIT_VERIFICATION_CODE_COMPLETE);
+				}
+			} else if (result == SMSSDK.RESULT_ERROR) {
+				if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+					mHandler.sendEmptyMessage(MSG_GET_VERIFICATION_CODE_ERROR);
+				} else if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+					mHandler.sendEmptyMessage(MSG_SUBMIT_VERIFICATION_CODE_ERROR);
+				}
+			}
+		}
+		
+		@Override
+		public void beforeEvent(int event, Object data) {
+			super.beforeEvent(event, data);
+			Log.d(TAG, "shizy---beforeEvent: " + event);
+			Log.d(TAG, "shizy---beforeEvent: " + data);
+		}
+	};
+	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
@@ -89,7 +158,11 @@ public class RegisterActivity extends Activity {
 
 	private int mUserTypeIndex;
 	private String[] mUserTypes;
-
+	
+	private boolean mCoolDown = false;
+	
+	private RegisterHandler mHandler = null;
+	
 	private ProgressDialog mProgressDialog;
 	
 	@Override
@@ -98,6 +171,15 @@ public class RegisterActivity extends Activity {
 		setContentView(R.layout.activity_register);
 		initView();
 		initData();
+		mHandler = new RegisterHandler(this);
+		SMSSDK.initSDK(this, "2eba51630152", "cf2b6f211993b819e18072f5e61ff3de");
+		SMSSDK.registerEventHandler(mEventHandler);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		SMSSDK.unregisterAllEventHandler();
 	}
 
 	private void initView() {
@@ -109,6 +191,7 @@ public class RegisterActivity extends Activity {
 		mSubmit.setOnClickListener(mOnClickListener);
 		mPassword.setInputType(InputType.TYPE_CLASS_TEXT
 				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		mPhone.addTextChangedListener(mTextWatcher);
 	}
 
 	private void initData() {
@@ -122,32 +205,52 @@ public class RegisterActivity extends Activity {
 	}
 
 	private void getVerifyCode() {
-		Toast.makeText(this, "验证码：1234", Toast.LENGTH_SHORT).show();
+		Log.d(TAG, "shizy---getVerifyCode");
+		mCoolDown = true;
+		mCodeBtn.setEnabled(false);
+		SMSSDK.getVerificationCode(COUNTRY_CODE, mPhone.getText().toString());
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				mCoolDown = false;
+				String phone = mPhone.getText().toString();
+				if (phone != null && Util.isPhoneNumber(phone)) {
+					mCodeBtn.setEnabled(true);
+				}
+			}
+		}, COOLDOWN_TIME);
+//		Toast.makeText(this, "验证码：1234", Toast.LENGTH_SHORT).show();
 	}
 	
 	private void register() {
 		if (validCheck()) {
 			showProgressDialog();
-			
-			String phone = mPhone.getText().toString();
-			String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
-			String id = mIDNumber.getText().toString();
-			
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.setURLEncodingEnabled(true);
-			
-			BaseParams params = new BaseParams();
-			params.add("method", "registerGoodSupplyer");
-			params.add("supplyer_type", "" + mUserTypeIndex);
-			params.add("phone", phone);
-			params.add("credit_level", "0");
-			params.add("state", "0");
-			params.add("card_id", (id == null || id.equals("")) ? BaseParams.PARAM_DEFAULT : id);
-			params.add("passwd", password);
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
-			client.get(Const.URL_REGISTER, params, mRequestHandler);
+			SMSSDK.submitVerificationCode(COUNTRY_CODE, mPhone.getText().toString(), mCode.getText().toString());
 		}
+	}
+	
+	/**
+	 * 提交注册信息
+	 */
+	private void submit() {
+		String phone = mPhone.getText().toString();
+		String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
+		String id = mIDNumber.getText().toString();
+		
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.setURLEncodingEnabled(true);
+		
+		BaseParams params = new BaseParams();
+		params.add("method", "registerGoodSupplyer");
+		params.add("supplyer_type", "" + mUserTypeIndex);
+		params.add("phone", phone);
+		params.add("credit_level", "0");
+		params.add("state", "0");
+		params.add("card_id", (id == null || id.equals("")) ? BaseParams.PARAM_DEFAULT : id);
+		params.add("passwd", password);
+		
+		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
+		client.get(Const.URL_REGISTER, params, mRequestHandler);
 	}
 	
 	private void login() {
@@ -252,4 +355,29 @@ public class RegisterActivity extends Activity {
 		Util.showTips(this, getString(R.string.register_failed));
 	}
 	
+	private static class RegisterHandler extends WeakHandler<RegisterActivity> {
+
+		public RegisterHandler(RegisterActivity reference) {
+			super(reference);
+		}
+
+		@Override
+		public void handleMessage(RegisterActivity t, Message msg) {
+			switch (msg.what) {
+			case MSG_GET_VERIFICATION_CODE_ERROR:
+				Util.showTips(t, "获取失败");
+				break;
+			case MSG_GET_VERIFICATION_CODE_COMPLETE:
+				Util.showTips(t, "获取成功，请等待短信");
+				break;
+			case MSG_SUBMIT_VERIFICATION_CODE_ERROR:
+				t.hideProgressDialog();
+				Util.showTips(t, "效验码验证失败！");
+				break;
+			case MSG_SUBMIT_VERIFICATION_CODE_COMPLETE:
+				t.submit();
+				break;
+			}
+		}
+	}
 }
