@@ -169,6 +169,16 @@
     <string name="invite_msg">我正在使用汇流，非常方便，赶紧下载吧http://www.baidu.com</string>
     
     <string name="click_enter">点击进入</string>
+
+    <string name="voice">音效开关</string>
+    <string name="send_guide">发货指南</string>
+    <string name="suggest">意见反馈</string>
+    <string name="about_app">关于汇流</string>
+    <string name="check_update">检查更新</string>
+    <string name="change_passwd">修改密码</string>
+    <string name="logout">退出登录</string>
+    
+    
     
     <string name="pull_to_refresh_pull">上拉加载…</string>
     <string name="pull_to_refresh_release">放开以加载…</string>

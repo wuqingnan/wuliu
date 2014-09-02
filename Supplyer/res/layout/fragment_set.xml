@@ -7,5 +7,96 @@
     
     <include layout="@layout/titlebar"/>
     
-
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_marginTop="20dp"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	    android:orientation="vertical" >
+	    
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp" >
+	        
+	        <TextView
+	            style="@style/WuLiu.TextAppearance.Middle.LightGray"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:text="@string/voice" />
+	        
+	        <ToggleButton
+	            android:id="@+id/set_voice"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:background="@drawable/btn_toggle"
+	            android:textOn=""
+	            android:textOff=""
+	            android:checked="true" />
+	    </RelativeLayout>
+	    
+	    <TextView
+	        android:id="@+id/set_guide"
+            style="@style/WuLiu.TextAppearance.Middle.LightGray"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/send_guide" />
+	    
+	    <TextView
+	        android:id="@+id/set_suggest"
+            style="@style/WuLiu.TextAppearance.Middle.LightGray"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/suggest" />
+	    
+	    <TextView
+	        android:id="@+id/set_about"
+            style="@style/WuLiu.TextAppearance.Middle.LightGray"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/about_app" />
+	    
+	    <RelativeLayout
+	        android:id="@+id/set_update"
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp" >
+	        
+	        <TextView
+	            style="@style/WuLiu.TextAppearance.Middle.LightGray"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:text="@string/check_update" />
+	        
+	        <TextView
+	            android:id="@+id/set_version"
+	            style="@style/WuLiu.TextAppearance.Middle.LightGray"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_centerVertical="true" />
+	    </RelativeLayout>
+	    
+	    <TextView
+	        android:id="@+id/set_change_passwd"
+            style="@style/WuLiu.TextAppearance.Middle.LightGray"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/change_passwd" />
+	    
+	    <Button
+	        android:id="@+id/set_logout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingLeft="50dp"
+	        android:paddingRight="50dp"
+	        android:text="@string/logout" />
+	</LinearLayout>
 </LinearLayout>

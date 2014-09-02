@@ -95,6 +95,7 @@ public class LoginManager {
 	
 	public void logout() {
 		clear();
+		mHasLogin = false;
 		mUserInfo = null;
 	}
 	

@@ -5,13 +5,19 @@ import butterknife.InjectView;
 
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.activity.MainActivity;
+import com.wuliu.client.supplyer.manager.LoginManager;
+import com.wuliu.client.supplyer.utils.DeviceInfo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class SetFragment extends BaseFragment {
 
@@ -25,16 +31,51 @@ public class SetFragment extends BaseFragment {
 					((MainActivity) getActivity())
 							.onClickTitle(SetFragment.this);
 				}
+			} else if (view == mGuide) {
+				guide();
+			} else if (view == mSuggest) {
+				suggest();
+			} else if (view == mAbout) {
+				about();
+			} else if (view == mUpdate) {
+				update();
+			} else if (view == mChangePasswd) {
+				changePasswd();
+			} else if (view == mLogout) {
+				logout();
 			}
 		}
 	};
 
+	private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			
+		}
+	};
+	
 	private View mRootView;
 
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
+	@InjectView(R.id.set_voice)
+	ToggleButton mVoice;
+	@InjectView(R.id.set_guide)
+	TextView mGuide;
+	@InjectView(R.id.set_suggest)
+	TextView mSuggest;
+	@InjectView(R.id.set_about)
+	TextView mAbout;
+	@InjectView(R.id.set_update)
+	RelativeLayout mUpdate;
+	@InjectView(R.id.set_version)
+	TextView mVersion;
+	@InjectView(R.id.set_change_passwd)
+	TextView mChangePasswd;
+	@InjectView(R.id.set_logout)
+	Button mLogout;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +93,7 @@ public class SetFragment extends BaseFragment {
 	private void init() {
 		ButterKnife.inject(this, mRootView);
 		initTitle();
+		initData();
 		initView();
 	}
 
@@ -61,7 +103,42 @@ public class SetFragment extends BaseFragment {
 		mMenuBtn.setOnClickListener(mOnClickListener);
 	}
 
+	private void initData() {
+		mVersion.setText(DeviceInfo.getAppVersion());
+	}
+	
 	private void initView() {
-
+		mVoice.setOnCheckedChangeListener(mOnCheckedChangeListener);
+		mGuide.setOnClickListener(mOnClickListener);
+		mSuggest.setOnClickListener(mOnClickListener);
+		mAbout.setOnClickListener(mOnClickListener);
+		mUpdate.setOnClickListener(mOnClickListener);
+		mChangePasswd.setOnClickListener(mOnClickListener);
+		mLogout.setOnClickListener(mOnClickListener);
+	}
+	
+	private void guide() {
+		
+	}
+	
+	private void suggest() {
+		
+	}
+	
+	private void about() {
+		
+	}
+	
+	private void update() {
+		
+	}
+	
+	private void changePasswd() {
+		
+	}
+	
+	private void logout() {
+		LoginManager.getInstance().logout();
+		((MainActivity) getActivity()).onClickTitle(SetFragment.this);
 	}
 }
