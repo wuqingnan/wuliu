@@ -27,7 +27,7 @@ public class MainFragment extends BaseFragment {
 		public void onClick(View view) {
 			if (view == mMenuBtn) {
 				if (getActivity() instanceof MainActivity) {
-					((MainActivity)getActivity()).onClickTitle(MainFragment.this);
+					((MainActivity)getActivity()).showMenu();
 				}
 			}
 			else if (view == mMainSend) {

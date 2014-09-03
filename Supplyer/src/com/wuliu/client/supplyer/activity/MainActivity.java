@@ -124,30 +124,15 @@ public class MainActivity extends SlidingFragmentActivity {
 		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 	}
 
-	public void onClickTitle(BaseFragment fragment) {
-		if (fragment instanceof MainFragment) {
-			if (LoginManager.getInstance().hasLogin()) {
-				mSlidingMenu.showMenu();
-			} else {
-				switchContent(new LoginFragment());
-			}
-		}
-		else if (fragment instanceof LoginFragment) {
-			mFragmentManager.popBackStack();
-		}
-		else if (fragment instanceof SetFragment) {
-			mFragmentManager.popBackStack();
-		}
-		else if (fragment instanceof ProfileFragment) {
-			mFragmentManager.popBackStack();
-		}
-		else if (fragment instanceof OrderFragment) {
-			mFragmentManager.popBackStack();
+	public void showMenu() {
+		if (LoginManager.getInstance().hasLogin()) {
+			mSlidingMenu.showMenu();
+		} else {
+			switchContent(new LoginFragment());
 		}
 	}
 	
-	public void loginSuccess() {
-		mMenuFragment.updateInfo();
+	public void back() {
 		mFragmentManager.popBackStack();
 	}
 	

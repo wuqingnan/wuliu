@@ -28,8 +28,7 @@ public class SetFragment extends BaseFragment {
 		public void onClick(View view) {
 			if (view == mMenuBtn) {
 				if (getActivity() instanceof MainActivity) {
-					((MainActivity) getActivity())
-							.onClickTitle(SetFragment.this);
+					((MainActivity) getActivity()).back();
 				}
 			} else if (view == mGuide) {
 				guide();
@@ -139,6 +138,6 @@ public class SetFragment extends BaseFragment {
 	
 	private void logout() {
 		LoginManager.getInstance().logout();
-		((MainActivity) getActivity()).onClickTitle(SetFragment.this);
+		((MainActivity) getActivity()).back();
 	}
 }

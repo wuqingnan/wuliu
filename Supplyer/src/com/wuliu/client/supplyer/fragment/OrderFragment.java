@@ -49,8 +49,7 @@ public class OrderFragment extends BaseFragment {
 		public void onClick(View view) {
 			if (view == mMenuBtn) {
 				if (getActivity() instanceof MainActivity) {
-					((MainActivity) getActivity())
-							.onClickTitle(OrderFragment.this);
+					((MainActivity) getActivity()).back();
 				}
 			}
 		}

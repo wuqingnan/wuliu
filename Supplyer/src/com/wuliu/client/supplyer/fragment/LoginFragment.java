@@ -12,10 +12,12 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.activity.MainActivity;
 import com.wuliu.client.supplyer.bean.UserInfo;
+import com.wuliu.client.supplyer.event.LoginEvent;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.EncryptUtil;
 import com.wuliu.client.supplyer.utils.Util;
 
+import de.greenrobot.event.EventBus;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -40,8 +42,7 @@ public class LoginFragment extends BaseFragment {
 		public void onClick(View view) {
 			if (view == mBack) {
 				if (getActivity() instanceof MainActivity) {
-					((MainActivity) getActivity())
-							.onClickTitle(LoginFragment.this);
+					((MainActivity) getActivity()).back();
 				}
 			} else if (view == mRegister) {
 				((MainActivity) getActivity()).register();
@@ -257,7 +258,8 @@ public class LoginFragment extends BaseFragment {
 					LoginManager.getInstance().setLogin(true);
 					mUserInfo.update(response.optJSONObject("supplyer"));
 					LoginManager.getInstance().setUserInfo(mUserInfo);
-					((MainActivity)getActivity()).loginSuccess();
+					((MainActivity)getActivity()).back();
+					EventBus.getDefault().post(new LoginEvent());
 				}
 				return;
 			} catch (JSONException e) {

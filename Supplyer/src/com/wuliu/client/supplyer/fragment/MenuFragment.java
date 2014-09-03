@@ -6,9 +6,12 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.activity.MainActivity;
 import com.wuliu.client.supplyer.adapter.MenuAdapter;
+import com.wuliu.client.supplyer.event.LoginEvent;
+import com.wuliu.client.supplyer.event.LogoutEvent;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.Util;
 
+import de.greenrobot.event.EventBus;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -32,6 +35,7 @@ public class MenuFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		EventBus.getDefault().register(this);
 		View view = inflater.inflate(R.layout.fragment_menu, null);
 		return view;
 	}
@@ -41,6 +45,12 @@ public class MenuFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		initHeader();
 		initAdapter();
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		EventBus.getDefault().unregister(this);
 	}
 
 	@Override
@@ -61,8 +71,12 @@ public class MenuFragment extends ListFragment {
 		setListAdapter(mMenuAdapter);
 	}
 
-	public void updateInfo() {
-		mMenuPhone.setText(LoginManager.getInstance().getUserInfo().getPhone());
+	private void updateInfo() {
+		if (LoginManager.getInstance().hasLogin()) {
+			mMenuPhone.setText(LoginManager.getInstance().getUserInfo().getPhone());
+		} else {
+			mMenuPhone.setText(null);
+		}
 	}
 
 	private void showShare() {
@@ -121,5 +135,21 @@ public class MenuFragment extends ListFragment {
 		if (fragment != null) {
 			((MainActivity) getActivity()).switchContent(fragment);
 		}
+	}
+	
+	/**
+	 * 处理登陆消息
+	 * @param event
+	 */
+	public void onEventMainThread(LoginEvent event) {
+		updateInfo();
+	}
+	
+	/**
+	 * 处理注销消息
+	 * @param event
+	 */
+	public void onEventMainThread(LogoutEvent event) {
+		updateInfo();
 	}
 }

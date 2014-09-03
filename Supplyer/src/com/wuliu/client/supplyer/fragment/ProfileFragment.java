@@ -23,8 +23,7 @@ public class ProfileFragment extends BaseFragment {
 		public void onClick(View view) {
 			if (view == mMenuBtn) {
 				if (getActivity() instanceof MainActivity) {
-					((MainActivity) getActivity())
-							.onClickTitle(ProfileFragment.this);
+					((MainActivity) getActivity()).back();
 				}
 			}
 		}

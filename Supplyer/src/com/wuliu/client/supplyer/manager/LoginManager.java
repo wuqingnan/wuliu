@@ -19,8 +19,12 @@ import com.loopj.android.http.ResponseHandlerInterface;
 import com.wuliu.client.supplyer.Const;
 import com.wuliu.client.supplyer.api.BaseParams;
 import com.wuliu.client.supplyer.bean.UserInfo;
+import com.wuliu.client.supplyer.event.LoginEvent;
+import com.wuliu.client.supplyer.event.LogoutEvent;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
 import com.wuliu.client.supplyer.utils.FileUtils;
+
+import de.greenrobot.event.EventBus;
 
 public class LoginManager {
 
@@ -39,6 +43,7 @@ public class LoginManager {
 						setLogin(true);
 						mUserInfo.update(response.optJSONObject("supplyer"));
 						setUserInfo(mUserInfo);
+						EventBus.getDefault().post(new LoginEvent());
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -97,6 +102,7 @@ public class LoginManager {
 		clear();
 		mHasLogin = false;
 		mUserInfo = null;
+		EventBus.getDefault().post(new LogoutEvent());
 	}
 	
 	public void setUserInfo(UserInfo info) {
