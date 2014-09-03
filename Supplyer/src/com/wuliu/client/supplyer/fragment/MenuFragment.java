@@ -45,6 +45,7 @@ public class MenuFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		initHeader();
 		initAdapter();
+		updateInfo();
 	}
 	
 	@Override
