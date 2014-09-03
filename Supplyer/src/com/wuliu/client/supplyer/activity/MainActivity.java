@@ -49,8 +49,6 @@ public class MainActivity extends SlidingFragmentActivity {
 
 	private SlidingMenu mSlidingMenu;
 	
-	private ScheduledThreadPoolExecutor mTimerTask;
-	
 	private long mExitTime;
 
 	@Override
@@ -60,8 +58,6 @@ public class MainActivity extends SlidingFragmentActivity {
 		initFragment();
 		initSlidingMenu();
 		LoginManager.getInstance().autoLogin();
-		mTimerTask = new ScheduledThreadPoolExecutor(1);
-		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
 	}
 
 	@Override
@@ -77,8 +73,6 @@ public class MainActivity extends SlidingFragmentActivity {
 					mExitTime = System.currentTimeMillis();
 				}
 				else {
-					mTimerTask.shutdown();
-					mTimerTask.shutdownNow();
 					finish();
 					System.exit(0);
 				}
@@ -150,41 +144,4 @@ public class MainActivity extends SlidingFragmentActivity {
 		mSlidingMenu.showContent();
 	}
 	
-	private class PositionTask implements Runnable {
-		
-		AsyncHttpClient mHttpClient;
-		
-		public PositionTask() {
-			mHttpClient = new AsyncHttpClient();
-			mHttpClient.setURLEncodingEnabled(true);
-		}
-		
-		@Override
-		public void run() {
-			UserInfo info = LoginManager.getInstance().getUserInfo();
-			if (info == null) {
-				return;
-			}
-			
-			LocationClient client = WLApplication.getLocationClient();
-			if (client == null) { 
-				return;
-			}
-			
-			BDLocation location = client.getLastKnownLocation();
-			
-			BaseParams params = new BaseParams();
-			params.add("method", "collectSupplyInfos");
-			params.add("supplyer_cd", info.getSupplyer_cd());
-			params.add("gps_j", "" + location.getLongitude());
-			params.add("gps_w", "" + location.getLatitude());
-			params.add("speed", "" + location.getSpeed());
-			params.add("phone_type", "" + DeviceInfo.getModel());
-			params.add("operate_sysem", "" + DeviceInfo.getOSName());
-			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_POSITION_UPLOAD, params));
-			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
-		}
-	}
 }

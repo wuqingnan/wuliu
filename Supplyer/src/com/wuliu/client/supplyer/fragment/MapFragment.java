@@ -1,35 +1,46 @@
 ﻿package com.wuliu.client.supplyer.fragment;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMyLocationClickListener;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
+import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfigeration;
+import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.model.LatLng;
+import com.loopj.android.http.AsyncHttpClient;
+import com.wuliu.client.supplyer.Const;
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.WLApplication;
+import com.wuliu.client.supplyer.api.BaseParams;
+import com.wuliu.client.supplyer.bean.UserInfo;
+import com.wuliu.client.supplyer.manager.LoginManager;
+import com.wuliu.client.supplyer.utils.DeviceInfo;
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +67,18 @@ public class MapFragment extends BaseFragment {
 		}
 
 	};
+	
+	private OnMapClickListener mOnMapClickListener = new OnMapClickListener() {
+		@Override
+		public boolean onMapPoiClick(MapPoi poi) {
+			return false;
+		}
+		
+		@Override
+		public void onMapClick(LatLng point) {
+			mBaiduMap.hideInfoWindow();
+		}
+	};
 
 	private BDLocationListener mLocListener = new BDLocationListener() {
 
@@ -67,23 +90,23 @@ public class MapFragment extends BaseFragment {
 		@Override
 		public void onReceiveLocation(BDLocation location) {
 //			Log.d(TAG, "shizy---onReceiveLocation");
-//			if (location == null || mMapView == null) {
-//				return;
-//			}
-//			MyLocationData locData = new MyLocationData.Builder()
-//					.accuracy(location.getRadius())
-//					.direction(location.getDirection())
-//					.latitude(location.getLatitude())
-//					.longitude(location.getLongitude()).build();
-//			mBaiduMap.setMyLocationData(locData);
-//			if (mIsFirstLoc) {
-//				mIsFirstLoc = false;
-//				LatLng ll = new LatLng(location.getLatitude(),
-//						location.getLongitude());
-//				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-//				mBaiduMap.animateMapStatus(u);
-//				showMyLocInfo();
-//			}
+			if (location == null || mMapView == null) {
+				return;
+			}
+			MyLocationData locData = new MyLocationData.Builder()
+					.accuracy(location.getRadius())
+					.direction(location.getDirection())
+					.latitude(location.getLatitude())
+					.longitude(location.getLongitude()).build();
+			mBaiduMap.setMyLocationData(locData);
+			if (mIsFirstLoc) {
+				mIsFirstLoc = false;
+				LatLng ll = new LatLng(location.getLatitude(),
+						location.getLongitude());
+				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+				mBaiduMap.animateMapStatus(u);
+				showMyLocInfo();
+			}
 		}
 	};
 
@@ -103,6 +126,8 @@ public class MapFragment extends BaseFragment {
 
 	private boolean mIsFirstLoc;
 
+	private ScheduledThreadPoolExecutor mTimerTask;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -131,6 +156,9 @@ public class MapFragment extends BaseFragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		mTimerTask.shutdown();
+		mTimerTask.shutdownNow();
+		mLocClient.unRegisterLocationListener(mLocListener);
 		mLocClient.stop();
 		mBaiduMap.setMyLocationEnabled(false);
 		mMapView.onDestroy();
@@ -139,9 +167,11 @@ public class MapFragment extends BaseFragment {
 	private void init() {
 		mIsFirstLoc = true;
 		initView();
-		setMap();
-		setMyLocation();
+		initMap();
+		initLocation();
 		addMarker();
+		mTimerTask = new ScheduledThreadPoolExecutor(1);
+		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
 	}
 
 	private void initView() {
@@ -158,9 +188,10 @@ public class MapFragment extends BaseFragment {
 		mDriverInfo = (TextView) mDriverLayout.findViewById(R.id.driver_info);
 	}
 
-	private void setMap() {
+	private void initMap() {
 		mBaiduMap = mMapView.getMap();
 		mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+		mBaiduMap.setOnMapClickListener(mOnMapClickListener);
 		mBaiduMap.setOnMyLocationClickListener(mLocClickListener);
 		mBaiduMap.setOnMarkerClickListener(mOnMarkerClickListener);
 		mUiSettings = mBaiduMap.getUiSettings();
@@ -169,23 +200,24 @@ public class MapFragment extends BaseFragment {
 		mUiSettings.setScrollGesturesEnabled(true);
 		mUiSettings.setRotateGesturesEnabled(false);
 		mUiSettings.setOverlookingGesturesEnabled(false);
+		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
+				LocationMode.NORMAL, true, null));
 	}
 
-	private void setMyLocation() {
+	private void initLocation() {
 		mBaiduMap.setMyLocationEnabled(true);
-		// mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
-		// LocationMode.NORMAL, true, null));
-		mLocClient = new LocationClient(getActivity());
+		mLocClient = new LocationClient(getActivity().getApplicationContext());
 		WLApplication.setLocationClient(mLocClient);
 		mLocClient.registerLocationListener(mLocListener);
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true);
 		option.setCoorType("bd09ll");
-		option.setScanSpan(1000);
-		option.disableCache(true);
+		option.setScanSpan(60 * 1000);
 		option.setIsNeedAddress(true);
+		option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
 		mLocClient.setLocOption(option);
 		mLocClient.start();
+		mLocClient.requestLocation();
 	}
 
 	private void addMarker() {
@@ -253,4 +285,41 @@ public class MapFragment extends BaseFragment {
 		mBaiduMap.showInfoWindow(infoWindow);
 	}
 	
+	private class PositionTask implements Runnable {
+		
+		AsyncHttpClient mHttpClient;
+		
+		public PositionTask() {
+			mHttpClient = new AsyncHttpClient();
+			mHttpClient.setURLEncodingEnabled(true);
+		}
+		
+		@Override
+		public void run() {
+			UserInfo info = LoginManager.getInstance().getUserInfo();
+			if (info == null) {
+				return;
+			}
+			
+			LocationClient client = WLApplication.getLocationClient();
+			if (client == null) { 
+				return;
+			}
+			
+			BDLocation location = client.getLastKnownLocation();
+			
+			BaseParams params = new BaseParams();
+			params.add("method", "collectSupplyInfos");
+			params.add("supplyer_cd", info.getSupplyer_cd());
+			params.add("gps_j", "" + location.getLongitude());
+			params.add("gps_w", "" + location.getLatitude());
+			params.add("speed", "" + location.getSpeed());
+			params.add("phone_type", "" + DeviceInfo.getModel());
+			params.add("operate_sysem", "" + DeviceInfo.getOSName());
+			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
+			
+			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_POSITION_UPLOAD, params));
+			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
+		}
+	}
 }
