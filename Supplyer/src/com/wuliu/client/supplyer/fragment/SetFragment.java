@@ -5,6 +5,7 @@ import butterknife.InjectView;
 
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.activity.MainActivity;
+import com.wuliu.client.supplyer.activity.WebViewActivity;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
 
@@ -117,7 +118,7 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void guide() {
-		
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.title_send_guide), WebViewActivity.URL_GUIDE);
 	}
 	
 	private void suggest() {
@@ -125,7 +126,7 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void about() {
-		
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.title_about_app), WebViewActivity.URL_ABOUT);
 	}
 	
 	private void update() {
