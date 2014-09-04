@@ -21,10 +21,11 @@
         
     <dimen name="text_size_wheel_window">11dp</dimen>
 
-    <dimen name="login_marginLeft">14dp</dimen>
-    <dimen name="login_marginRight">14dp</dimen>
-    <dimen name="login_marginTop">15dp</dimen>
-    <dimen name="login_itemHeight">40dp</dimen>
+    <dimen name="btn_default_height">40dp</dimen>
+    
+    <dimen name="default_marginLeft">14dp</dimen>
+    <dimen name="default_marginRight">14dp</dimen>
+    <dimen name="default_marginTop">15dp</dimen>
     
     <dimen name="slidingmenu_offset">60dp</dimen>
     <dimen name="list_padding">10dp</dimen>

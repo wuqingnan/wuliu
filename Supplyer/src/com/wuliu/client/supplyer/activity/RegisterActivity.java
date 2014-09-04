@@ -2,7 +2,6 @@
 
 
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,18 +17,15 @@ import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.WeakHandler;
 import com.wuliu.client.supplyer.api.BaseParams;
 import com.wuliu.client.supplyer.bean.UserInfo;
-import com.wuliu.client.supplyer.utils.DeviceInfo;
 import com.wuliu.client.supplyer.utils.EncryptUtil;
 import com.wuliu.client.supplyer.utils.Util;
 import com.wuliu.client.supplyer.view.ClearEditText;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
@@ -39,9 +35,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends BaseActivity {
 
 	private static final String TAG = RegisterActivity.class.getSimpleName();
 	

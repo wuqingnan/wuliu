@@ -18,7 +18,6 @@ import com.wuliu.client.supplyer.bean.UserInfo;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.Util;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -37,7 +36,7 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class OrderDetailActivity extends Activity {
+public class OrderDetailActivity extends BaseActivity {
 
 	private static final String TAG = OrderDetailActivity.class.getSimpleName();
 	

@@ -16,7 +16,6 @@ import com.wuliu.client.supplyer.bean.Order;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.Util;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class OrderChangeActivity extends Activity {
+public class OrderChangeActivity extends BaseActivity {
 	
 	private static final String TAG = OrderChangeActivity.class.getSimpleName();
 	

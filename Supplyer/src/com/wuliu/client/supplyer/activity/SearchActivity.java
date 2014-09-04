@@ -1,17 +1,10 @@
 ﻿package com.wuliu.client.supplyer.activity;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
-import com.baidu.mapapi.search.poi.PoiCitySearchOption;
-import com.baidu.mapapi.search.poi.PoiDetailResult;
-import com.baidu.mapapi.search.poi.PoiResult;
-import com.baidu.mapapi.search.poi.PoiSearch;
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.WLApplication;
 import com.wuliu.client.supplyer.bean.Area;
@@ -23,21 +16,17 @@ import com.wuliu.client.supplyer.window.WheelWindow;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends BaseActivity {
 
 	private static final String TAG = SearchActivity.class.getSimpleName();
 	

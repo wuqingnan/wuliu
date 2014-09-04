@@ -5,7 +5,6 @@ import butterknife.InjectView;
 
 import com.wuliu.client.supplyer.R;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,7 +15,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends BaseActivity {
 
 	private static final String TAG = WebViewActivity.class.getSimpleName();
 	

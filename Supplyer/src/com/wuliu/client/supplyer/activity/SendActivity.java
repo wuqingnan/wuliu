@@ -15,7 +15,6 @@ import com.wuliu.client.supplyer.utils.Util;
 import com.wuliu.client.supplyer.window.TimeWheel;
 import com.wuliu.client.supplyer.window.WheelWindow;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,7 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class SendActivity extends Activity {
+public class SendActivity extends BaseActivity {
 
 	private static final String TAG = SendActivity.class.getSimpleName();
 	

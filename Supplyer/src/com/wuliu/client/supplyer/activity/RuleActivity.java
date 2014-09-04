@@ -5,13 +5,12 @@ import butterknife.InjectView;
 
 import com.wuliu.client.supplyer.R;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class RuleActivity extends Activity {
+public class RuleActivity extends BaseActivity {
 
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override

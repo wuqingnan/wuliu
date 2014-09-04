@@ -12,8 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/login_titlebar"
-        android:layout_marginLeft="@dimen/login_marginLeft"
-        android:layout_marginRight="@dimen/login_marginRight"
+        android:layout_marginTop="@dimen/default_marginTop"
+        android:layout_marginLeft="@dimen/default_marginLeft"
+        android:layout_marginRight="@dimen/default_marginRight"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical" >
@@ -23,7 +24,6 @@
             style="@style/ClearEditText.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/login_input_user"
             android:hint="@string/hint_login_username"
             android:inputType="number"
@@ -61,7 +61,7 @@
             android:id="@+id/login_submit"
             style="@style/Login_Submit"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/login_itemHeight"
+            android:layout_height="@dimen/btn_default_height"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_default"
             android:text="@string/login" />
