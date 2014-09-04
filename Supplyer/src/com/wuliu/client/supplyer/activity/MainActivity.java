@@ -1,32 +1,17 @@
 ﻿package com.wuliu.client.supplyer.activity;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
-import com.loopj.android.http.AsyncHttpClient;
-import com.wuliu.client.supplyer.Const;
 import com.wuliu.client.supplyer.R;
-import com.wuliu.client.supplyer.WLApplication;
-import com.wuliu.client.supplyer.api.BaseParams;
 import com.wuliu.client.supplyer.bean.UserInfo;
-import com.wuliu.client.supplyer.db.DBHelper;
 import com.wuliu.client.supplyer.fragment.BaseFragment;
 import com.wuliu.client.supplyer.fragment.LoginFragment;
 import com.wuliu.client.supplyer.fragment.MainFragment;
 import com.wuliu.client.supplyer.fragment.MapFragment;
 import com.wuliu.client.supplyer.fragment.MenuFragment;
-import com.wuliu.client.supplyer.fragment.OrderFragment;
-import com.wuliu.client.supplyer.fragment.ProfileFragment;
-import com.wuliu.client.supplyer.fragment.SetFragment;
 import com.wuliu.client.supplyer.manager.LoginManager;
-import com.wuliu.client.supplyer.utils.DeviceInfo;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;

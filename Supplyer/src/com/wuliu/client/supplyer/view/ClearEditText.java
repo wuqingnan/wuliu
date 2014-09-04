@@ -43,7 +43,7 @@ public class ClearEditText extends EditText implements OnFocusChangeListener,
 		mClearDrawable = getCompoundDrawables()[2];
 		if (mClearDrawable == null) {
 			mClearDrawable = getResources().getDrawable(
-					R.drawable.btn_edittext_clear);
+					R.drawable.input_edit_clear);
 		}
 
 		mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(),

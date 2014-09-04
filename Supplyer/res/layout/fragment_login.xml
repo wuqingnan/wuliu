@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white" >
 
     <include
@@ -9,89 +9,53 @@
         layout="@layout/titlebar" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/login_titlebar"
         android:layout_marginLeft="@dimen/login_marginLeft"
         android:layout_marginRight="@dimen/login_marginRight"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <com.wuliu.client.supplyer.view.ClearEditText
+            android:id="@+id/login_username"
+            style="@style/ClearEditText.Light"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_round_rect"
-            android:orientation="vertical" >
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/login_input_user"
+            android:hint="@string/hint_login_username"
+            android:inputType="number"
+            android:maxLength="11" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/login_itemHeight"
-                android:orientation="horizontal" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/login_input_user" />
+            <Button
+                android:id="@+id/login_show_pass"
+                style="@style/Login_Button_Show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@null"
+                android:text="@string/show" />
 
-                <com.wuliu.client.supplyer.view.ClearEditText
-                    android:id="@+id/login_username"
-                    style="@style/WuLiu.EditText.ClearEditText"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginRight="5dp"
-                    android:hint="@string/hint_login_username"
-                    android:inputType="number"
-                    android:maxLength="11" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/line_height"
-                android:background="@color/line_light" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/login_itemHeight"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/login_input_password" />
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
-
-                    <Button
-                        android:id="@+id/login_show_pass"
-                        style="@style/Login_Button_Show"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:background="@null"
-                        android:text="@string/show" />
-
-                    <com.wuliu.client.supplyer.view.ClearEditText
-                        android:id="@+id/login_password"
-                        style="@style/WuLiu.EditText.ClearEditText"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_toLeftOf="@id/login_show_pass"
-                        android:hint="@string/hint_login_password"
-                        android:maxLength="16" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
+            <com.wuliu.client.supplyer.view.ClearEditText
+                android:id="@+id/login_password"
+                style="@style/ClearEditText.Light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/login_show_pass"
+                android:drawableLeft="@drawable/login_input_password"
+                android:hint="@string/hint_login_password"
+                android:maxLength="16" />
+        </RelativeLayout>
 
         <Button
             android:id="@+id/login_submit"

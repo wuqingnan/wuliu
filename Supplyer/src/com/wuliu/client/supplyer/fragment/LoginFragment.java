@@ -135,7 +135,6 @@ public class LoginFragment extends BaseFragment {
 				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		mShowPass.setOnClickListener(mOnClickListener);
 		mLoginSubmit.setOnClickListener(mOnClickListener);
-		mUserName.requestFocus();
 	}
 
 	/**
