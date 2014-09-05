@@ -34,7 +34,7 @@ public class MainFragment extends BaseFragment {
 				if (LoginManager.getInstance().hasLogin()) {
 					SendActivity.startSendActivity(getActivity(), false);
 				} else {
-					((MainActivity)getActivity()).switchContent(new LoginFragment());
+					((MainActivity)getActivity()).changeFragment(new LoginFragment());
 				}
 			}
 			else if (view == mMainInput) {
@@ -44,7 +44,7 @@ public class MainFragment extends BaseFragment {
 				if (LoginManager.getInstance().hasLogin()) {
 					SendActivity.startSendActivity(getActivity(), true);
 				} else {
-					((MainActivity)getActivity()).switchContent(new LoginFragment());
+					((MainActivity)getActivity()).changeFragment(new LoginFragment());
 				}
 			}
 		}

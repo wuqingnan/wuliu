@@ -38,10 +38,10 @@ public class MainActivity extends BaseActivity {
 		public void onMenuClick(int menu) {
 			switch (menu) {
 			case MenuView.MENU_ORDER:
-				switchContent(new OrderFragment());
+				changeFragment(new OrderFragment());
 				break;
 			case MenuView.MENU_PROFILE:
-				switchContent(new ProfileFragment());
+				changeFragment(new ProfileFragment());
 				break;
 			case MenuView.MENU_INVITE:
 				Util.sendMessage(MainActivity.this, null, getResources().getString(R.string.invite_msg));
@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
 				Util.showShare(MainActivity.this);
 				break;
 			case MenuView.MENU_SETTING:
-				switchContent(new SetFragment());
+				changeFragment(new SetFragment());
 				break;
 			}
 		}
@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity {
 		if (LoginManager.getInstance().hasLogin()) {
 			mMenuDrawer.openMenu();
 		} else {
-			switchContent(new LoginFragment());
+			changeFragment(new LoginFragment());
 		}
 	}
 	
@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity {
 		startActivityForResult(new Intent(this, RegisterActivity.class), REQUEST_CODE_REGISTER);
 	}
 
-	public void switchContent(BaseFragment fragment) {
+	public void changeFragment(BaseFragment fragment) {
 		mTopFragment = fragment;
 		FragmentTransaction trans = mFragmentManager.beginTransaction();
 		trans.setCustomAnimations(R.anim.push_in, R.anim.push_out, R.anim.pop_in, R.anim.pop_out);
