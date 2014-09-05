@@ -37,9 +37,6 @@ public class MainFragment extends BaseFragment {
 					((MainActivity)getActivity()).changeFragment(new LoginFragment());
 				}
 			}
-			else if (view == mMainInput) {
-				Toast.makeText(getActivity(), "跳转到搜索界面", Toast.LENGTH_SHORT).show();
-			}
 			else if (view == mMainBook) {
 				if (LoginManager.getInstance().hasLogin()) {
 					SendActivity.startSendActivity(getActivity(), true);
@@ -47,22 +44,6 @@ public class MainFragment extends BaseFragment {
 					((MainActivity)getActivity()).changeFragment(new LoginFragment());
 				}
 			}
-		}
-	};
-	
-	private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			int action = event.getAction();
-			switch(action) {
-			case MotionEvent.ACTION_DOWN:
-				mMainSpeak.setImageResource(R.drawable.book_speak_pressed);
-				break;
-			case MotionEvent.ACTION_UP:
-				mMainSpeak.setImageResource(R.drawable.book_speak_normal);
-				break;
-			}
-			return true;
 		}
 	};
 	
@@ -74,10 +55,6 @@ public class MainFragment extends BaseFragment {
 	TextView mTitle;
 	@InjectView(R.id.main_send)
 	Button mMainSend;
-	@InjectView(R.id.main_input)
-	TextView mMainInput;
-	@InjectView(R.id.main_speak)
-	ImageView mMainSpeak;
 	@InjectView(R.id.main_book)
 	Button mMainBook;
 	
@@ -111,9 +88,7 @@ public class MainFragment extends BaseFragment {
 	
 	private void initBottom() {
 		mMainSend.setOnClickListener(mOnClickListener);
-		mMainInput.setOnClickListener(mOnClickListener);
 		mMainBook.setOnClickListener(mOnClickListener);
-		mMainSpeak.setOnTouchListener(mOnTouchListener);
 	}
 	
 }

@@ -10,36 +10,17 @@
 
     <Button
         android:id="@+id/main_send"
-        style="@style/WuLiu.Main.Send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6.666dp" />
-
-    <RelativeLayout
-        android:id="@+id/main_right_layout"
+        style="@style/SendButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.0" >
-
-        <TextView
-            android:id="@+id/main_input"
-            style="@style/WuLiu.Main.Input"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/main_speak"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/book_speak_normal" />
-    </RelativeLayout>
+        android:layout_weight="1.0"
+        android:layout_marginLeft="6.666dp"
+        android:layout_marginRight="6.666dp" />
 
     <Button
         android:id="@+id/main_book"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
         android:layout_marginRight="6.666dp"
         android:background="@drawable/btn_book" />
 

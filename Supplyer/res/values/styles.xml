@@ -32,23 +32,6 @@
         <item name="android:paddingLeft">10dp</item>
     </style>
 
-    <style name="WuLiu.Login.Check">
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/text_color_login_btn</item>
-        <item name="android:textSize">@dimen/text_size_login_btn</item>
-        <item name="android:text">@string/check</item>
-        <item name="android:background">@drawable/check_selector</item>
-    </style>
-
-    <style name="WuLiu.Login.Submit">
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/text_color_login_btn</item>
-        <item name="android:textSize">@dimen/text_size_login_btn</item>
-        <item name="android:text">@string/start</item>
-        <item name="android:background">@drawable/check_selector</item>
-    </style>
-
     <style name="WuLiu.Menu" />
 
     <style name="WuLiu.Menu.Item" />
@@ -65,25 +48,13 @@
         <item name="android:textSize">@dimen/text_size_menu</item>
     </style>
 
-    <style name="WuLiu.Main" />
-    
-    <style name="WuLiu.Main.Send">
-        <item name="android:background">@drawable/btn_call_left</item>
+    <style name="SendButton">
         <item name="android:text">@string/send</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/text_size_main_input</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">5dp</item>
-        <item name="android:paddingRight">5dp</item>
-    </style>
-    
-    <style name="WuLiu.Main.Input">
-        <item name="android:background">@drawable/book_input</item>
-        <item name="android:hint">@string/send_where</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textColorHint">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_main_input</item>
-        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_send</item>
     </style>
     
     <style name="WuLiu.EditText">
