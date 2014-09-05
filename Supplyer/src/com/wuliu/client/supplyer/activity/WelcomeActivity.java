@@ -28,6 +28,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 public class WelcomeActivity extends BaseActivity {
@@ -201,6 +204,15 @@ public class WelcomeActivity extends BaseActivity {
         @Override
         public Object instantiateItem(View container, int position) {
             View view = mViews.get(position);
+            //-----以下临时添加-------
+            if (position == 2) {
+            	Button btn = (Button) view.findViewById(R.id.feature_enter);
+            	Animation anim = AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.breath);
+            	anim.setRepeatMode(Animation.REVERSE);
+            	anim.setRepeatCount(Animation.INFINITE);
+            	btn.startAnimation(anim);
+            }
+            //-----以上临时添加-------
             ((ViewPager) container).addView(view, 0);
             return view;
         }
