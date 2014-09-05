@@ -44,9 +44,11 @@ public class MainActivity extends BaseActivity {
 				changeFragment(new ProfileFragment());
 				break;
 			case MenuView.MENU_INVITE:
+				mMenuDrawer.closeMenu();
 				Util.sendMessage(MainActivity.this, null, getResources().getString(R.string.invite_msg));
 				break;
 			case MenuView.MENU_SHARE:
+				mMenuDrawer.closeMenu();
 				Util.showShare(MainActivity.this);
 				break;
 			case MenuView.MENU_SETTING:
@@ -96,6 +98,11 @@ public class MainActivity extends BaseActivity {
 					finish();
 					System.exit(0);
 				}
+				return true;
+			}
+		} else if (keyCode == KeyEvent.KEYCODE_MENU) {
+			if (mFragmentManager.getBackStackEntryCount() == 0) {
+				mMenuDrawer.toggleMenu();
 				return true;
 			}
 		}
