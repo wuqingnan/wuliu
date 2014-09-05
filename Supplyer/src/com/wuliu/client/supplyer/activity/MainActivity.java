@@ -19,6 +19,7 @@ import com.wuliu.client.supplyer.view.MenuView;
 import de.greenrobot.event.EventBus;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -62,7 +63,6 @@ public class MainActivity extends BaseActivity {
 	private MenuDrawer mMenuDrawer;
 	
 	private MapFragment mMapFragment;
-	private BaseFragment mTopFragment;
 	private FragmentManager mFragmentManager;
 
 	private long mExitTime;
@@ -114,9 +114,10 @@ public class MainActivity extends BaseActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REQUEST_CODE_REGISTER) {
 			if (resultCode == RESULT_OK) {
-				if (mTopFragment instanceof LoginFragment) {
+				Fragment fragment = mFragmentManager.findFragmentByTag(LoginFragment.class.getName());
+				if (fragment != null) {
 					UserInfo info = (UserInfo) data.getSerializableExtra("userinfo");
-					((LoginFragment)mTopFragment).login(info);
+					((LoginFragment)fragment).login(info);
 				}
 			}
 		}
@@ -137,11 +138,10 @@ public class MainActivity extends BaseActivity {
 	private void initFragment() {
 		mFragmentManager = getSupportFragmentManager();
 		mMapFragment = new MapFragment();
-		mTopFragment = new MainFragment();
 		mFragmentManager.beginTransaction()
 				.replace(R.id.mapLayout, mMapFragment).commit();
 		mFragmentManager.beginTransaction()
-				.replace(R.id.topLayout, mTopFragment).commit();
+				.replace(R.id.topLayout, new MainFragment()).commit();
 	}
 
 	public void showMenu() {
@@ -161,10 +161,9 @@ public class MainActivity extends BaseActivity {
 	}
 
 	public void changeFragment(BaseFragment fragment) {
-		mTopFragment = fragment;
 		FragmentTransaction trans = mFragmentManager.beginTransaction();
 		trans.setCustomAnimations(R.anim.push_in, R.anim.push_out, R.anim.pop_in, R.anim.pop_out);
-		trans.replace(R.id.topLayout, fragment);
+		trans.replace(R.id.topLayout, fragment, fragment.getClass().getName());
 		trans.addToBackStack(null);
 		trans.commit();
 		mMenuDrawer.closeMenu();
