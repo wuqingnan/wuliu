@@ -15,15 +15,15 @@
     
     <color name="text_color_menu">#ffa6a6a6</color>
     
+    <color name="bg_title">#F1F0F0</color>
     <color name="bg_main_bottom">#ECECEC</color>
-    
+	<color name="bg_popup_window">#80000000</color>
+
     <color name="line_dark">#000000</color>
     <color name="line_light">#CCCCCC</color>
     
     <color name="white">#ffffffff</color>
     <color name="green">#ff00ff00</color>
-
-    <color name="bg_popup_window">#80000000</color>
     
     <color name="shadow_color_yellow">#ffd1761a</color>
     <color name="shadow_color_white">#ffffffff</color>
