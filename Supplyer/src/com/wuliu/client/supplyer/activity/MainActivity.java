@@ -1,16 +1,22 @@
 ﻿package com.wuliu.client.supplyer.activity;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import net.simonvt.menudrawer.MenuDrawer;
+import net.simonvt.menudrawer.Position;
+
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.bean.UserInfo;
 import com.wuliu.client.supplyer.fragment.BaseFragment;
 import com.wuliu.client.supplyer.fragment.LoginFragment;
 import com.wuliu.client.supplyer.fragment.MainFragment;
 import com.wuliu.client.supplyer.fragment.MapFragment;
-import com.wuliu.client.supplyer.fragment.MenuFragment;
+import com.wuliu.client.supplyer.fragment.OrderFragment;
+import com.wuliu.client.supplyer.fragment.ProfileFragment;
+import com.wuliu.client.supplyer.fragment.SetFragment;
 import com.wuliu.client.supplyer.manager.LoginManager;
+import com.wuliu.client.supplyer.utils.Util;
+import com.wuliu.client.supplyer.view.MenuView;
 
+import de.greenrobot.event.EventBus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +25,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
-public class MainActivity extends SlidingFragmentActivity {
+public class MainActivity extends BaseActivity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
 	
@@ -27,31 +33,60 @@ public class MainActivity extends SlidingFragmentActivity {
 	
 	private static final int REQUEST_CODE_REGISTER = 1 << 0;
 
+	private MenuView.OnMenuClickListener mOnMenuClickListener = new MenuView.OnMenuClickListener() {
+		@Override
+		public void onMenuClick(int menu) {
+			switch (menu) {
+			case MenuView.MENU_ORDER:
+				switchContent(new OrderFragment());
+				break;
+			case MenuView.MENU_PROFILE:
+				switchContent(new ProfileFragment());
+				break;
+			case MenuView.MENU_INVITE:
+				Util.sendMessage(MainActivity.this, null, getResources().getString(R.string.invite_msg));
+				break;
+			case MenuView.MENU_SHARE:
+				Util.showShare(MainActivity.this);
+				break;
+			case MenuView.MENU_SETTING:
+				switchContent(new SetFragment());
+				break;
+			}
+		}
+	};
+	
+	private MenuView mMenuView;
+	private MenuDrawer mMenuDrawer;
+	
 	private MapFragment mMapFragment;
 	private BaseFragment mTopFragment;
-	private MenuFragment mMenuFragment;
 	private FragmentManager mFragmentManager;
 
-	private SlidingMenu mSlidingMenu;
-	
 	private long mExitTime;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		initFragment();
-		initSlidingMenu();
+        initMenu();
+        initFragment();
 		LoginManager.getInstance().autoLogin();
 	}
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(mMenuView);
+	}
+	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (mSlidingMenu.isMenuShowing()) {
-				mSlidingMenu.showContent();
-				return true;
-			}
+			final int drawerState = mMenuDrawer.getDrawerState();
+	        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
+	            mMenuDrawer.closeMenu();
+	            return true;
+	        }
 			if (mFragmentManager.getBackStackEntryCount() == 0) {
 				if (System.currentTimeMillis() - mExitTime > EXIT_TIME) {
 					Toast.makeText(this, R.string.quit_next_time, Toast.LENGTH_SHORT).show();
@@ -80,32 +115,31 @@ public class MainActivity extends SlidingFragmentActivity {
 		}
 	}
 
+	private void initMenu() {
+		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, Position.LEFT, MenuDrawer.MENU_DRAG_WINDOW);
+        mMenuDrawer.setContentView(R.layout.activity_main);
+        mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_NONE);
+        
+        mMenuView = new MenuView(this);
+        mMenuView.setOnMenuClickListener(mOnMenuClickListener);
+        EventBus.getDefault().register(mMenuView);
+        
+        mMenuDrawer.setMenuView(mMenuView);
+	}
+
 	private void initFragment() {
 		mFragmentManager = getSupportFragmentManager();
 		mMapFragment = new MapFragment();
 		mTopFragment = new MainFragment();
-		mMenuFragment = new MenuFragment();
 		mFragmentManager.beginTransaction()
 				.replace(R.id.mapLayout, mMapFragment).commit();
 		mFragmentManager.beginTransaction()
 				.replace(R.id.topLayout, mTopFragment).commit();
-		setBehindContentView(R.layout.menu_frame);
-		mFragmentManager.beginTransaction()
-				.replace(R.id.menu_frame, mMenuFragment).commit();
-	}
-
-	private void initSlidingMenu() {
-		mSlidingMenu = getSlidingMenu();
-		mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-		// sm.setShadowDrawable(R.drawable.shadow);
-		mSlidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		mSlidingMenu.setFadeDegree(0.35f);
-		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 	}
 
 	public void showMenu() {
 		if (LoginManager.getInstance().hasLogin()) {
-			mSlidingMenu.showMenu();
+			mMenuDrawer.openMenu();
 		} else {
 			switchContent(new LoginFragment());
 		}
@@ -126,7 +160,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		trans.replace(R.id.topLayout, fragment);
 		trans.addToBackStack(null);
 		trans.commit();
-		mSlidingMenu.showContent();
+		mMenuDrawer.closeMenu();
 	}
 	
 }
