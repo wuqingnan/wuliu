@@ -17,6 +17,7 @@ public class Const {
 	public static final String URL_CONFIRM_ORDER = "http://218.21.213.76:7201/bss/supplyerCompleteMessage.action";
 	public static final String URL_COMMENT_ORDER = "http://218.21.213.76:7201/bss/ticketDriver.action";
 	public static final String URL_POSITION_UPLOAD = "http://218.21.213.76:7201/bss/collectSupplyInfos.action";
+	public static final String URL_CHANGE_PASSWORD = "http://218.21.213.76:7201/bss/changeSupplyerPwd.action";
 	
 	private static String sFilePath = null;
 	private static String sExternalPath = null;

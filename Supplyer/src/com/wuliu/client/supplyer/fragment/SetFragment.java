@@ -4,11 +4,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import com.wuliu.client.supplyer.R;
+import com.wuliu.client.supplyer.activity.ChangePasswordActivity;
 import com.wuliu.client.supplyer.activity.MainActivity;
 import com.wuliu.client.supplyer.activity.WebViewActivity;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -134,7 +136,7 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void changePasswd() {
-		
+		getActivity().startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
 	}
 	
 	private void logout() {
