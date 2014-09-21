@@ -3,6 +3,10 @@
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -28,6 +32,7 @@ import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wuliu.client.supplyer.Const;
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.WLApplication;
@@ -35,6 +40,7 @@ import com.wuliu.client.supplyer.api.BaseParams;
 import com.wuliu.client.supplyer.bean.UserInfo;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
+import com.wuliu.client.supplyer.utils.Util;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +54,17 @@ public class MapFragment extends BaseFragment {
 
 	private static final String TAG = MapFragment.class.getSimpleName();
 
+	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
+		
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+			requestResult(response);
+		};
+		
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+			requestResult(null);
+		};
+	};
+	
 	private OnMarkerClickListener mOnMarkerClickListener = new OnMarkerClickListener() {
 
 		@Override
@@ -107,6 +124,7 @@ public class MapFragment extends BaseFragment {
 				mBaiduMap.animateMapStatus(u);
 				showMyLocInfo();
 			}
+			requestDriver(location);
 		}
 	};
 
@@ -283,6 +301,41 @@ public class MapFragment extends BaseFragment {
 					}
 				});
 		mBaiduMap.showInfoWindow(infoWindow);
+	}
+	
+	private void requestDriver(BDLocation location) {
+		if (!LoginManager.getInstance().hasLogin()) {
+			return;
+		}
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.setURLEncodingEnabled(true);
+		
+		BaseParams params = new BaseParams();
+		params.add("method", "getNearDrivers");
+		params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
+		params.add("passwd", LoginManager.getInstance().getUserInfo().getPasswd());
+		params.add("radius", "5000");
+		params.add("gps_j", "" + location.getLongitude());
+		params.add("gps_w", "" + location.getLatitude());
+		
+		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_NEAR_DRIVER, params));
+		client.get(Const.URL_NEAR_DRIVER, params, mRequestHandler);
+	}
+	
+	private void requestResult(JSONObject response) {
+		if (response != null && response.length() > 0) {
+			Log.d(TAG, "shizy---response123: " + response.toString());
+			try {
+				int res = response.getInt("res");
+				String msg = response.getString("msg");
+				if (res == 2) {//成功
+					
+				}
+				return;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	private class PositionTask implements Runnable {
