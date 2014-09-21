@@ -6,6 +6,7 @@ import butterknife.InjectView;
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.activity.ChangePasswordActivity;
 import com.wuliu.client.supplyer.activity.MainActivity;
+import com.wuliu.client.supplyer.activity.SuggestActivity;
 import com.wuliu.client.supplyer.activity.WebViewActivity;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
@@ -124,7 +125,7 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void suggest() {
-		
+		getActivity().startActivity(new Intent(getActivity(), SuggestActivity.class));
 	}
 	
 	private void about() {

@@ -12,24 +12,21 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wuliu.client.supplyer.Const;
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.api.BaseParams;
-import com.wuliu.client.supplyer.bean.UserInfo;
 import com.wuliu.client.supplyer.manager.LoginManager;
-import com.wuliu.client.supplyer.utils.EncryptUtil;
 import com.wuliu.client.supplyer.utils.Util;
-import com.wuliu.client.supplyer.view.ClearEditText;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ChangePasswordActivity extends BaseActivity {
-
-	private static final String TAG = ChangePasswordActivity.class.getSimpleName();
+public class SuggestActivity extends BaseActivity {
+	
+	private static final String TAG = SuggestActivity.class.getSimpleName();
 	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
@@ -56,18 +53,12 @@ public class ChangePasswordActivity extends BaseActivity {
 			requestResult(null);
 		};
 	};
-	
-	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
-	@InjectView(R.id.password_old)
-	ClearEditText mOldPassword;
-	@InjectView(R.id.password_new)
-	ClearEditText mNewPassword;
-	@InjectView(R.id.password_repeat)
-	ClearEditText mRepeatPassword;
+	@InjectView(R.id.suggestion)
+	EditText mSuggestion;
 	@InjectView(R.id.submit)
 	Button mSubmit;
 	
@@ -76,19 +67,14 @@ public class ChangePasswordActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_change_password);
+		setContentView(R.layout.activity_suggest);
 		initView();
 	}
 	
 	private void initView() {
 		ButterKnife.inject(this);
-		mTitle.setText(R.string.title_change_password);
-		mOldPassword.setInputType(InputType.TYPE_CLASS_TEXT
-				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
-		mNewPassword.setInputType(InputType.TYPE_CLASS_TEXT
-				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
-		mRepeatPassword.setInputType(InputType.TYPE_CLASS_TEXT
-				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		mTitle.setText(R.string.title_suggest);
+		mMenuBtn.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);
 	}
 	
@@ -98,20 +84,20 @@ public class ChangePasswordActivity extends BaseActivity {
 	private void submit() {
 		if (validCheck()) {
 			showProgressDialog();
-			String oldPass = EncryptUtil.encrypt(mOldPassword.getText().toString(), EncryptUtil.MD5);
-			String newPass = EncryptUtil.encrypt(mNewPassword.getText().toString(), EncryptUtil.MD5);
+			
+			String content = mSuggestion.getText().toString();
 			
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.setURLEncodingEnabled(true);
 			
 			BaseParams params = new BaseParams();
-			params.add("method", "changeSupplyerPwd");
+			params.add("method", "supplyerSuggest");
 			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
-			params.add("old_pwd", oldPass);
-			params.add("new_pwd", newPass);
+			params.add("passwd", LoginManager.getInstance().getUserInfo().getPasswd());
+			params.add("content", content);
 			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_CHANGE_PASSWORD, params));
-			client.get(Const.URL_CHANGE_PASSWORD, params, mRequestHandler);
+			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_SUGGEST, params));
+			client.get(Const.URL_SUGGEST, params, mRequestHandler);
 		}
 	}
 	
@@ -122,40 +108,10 @@ public class ChangePasswordActivity extends BaseActivity {
 	 */
 	private boolean validCheck() {
 		boolean bRes = true;
-		String oldPass = mOldPassword.getText().toString();
-		String newPass = mNewPassword.getText().toString();
-		String repeatPass = mRepeatPassword.getText().toString();
-		if (oldPass == null || oldPass.equals("")) {
+		String content = mSuggestion.getText().toString();
+		if (content == null || content.trim().length() == 0) {
 			Util.showTips(this, getString(
-					R.string.old_password_empty));
-			bRes = false;
-		} else if (newPass == null || newPass.equals("")) {
-			Util.showTips(this, getString(
-					R.string.new_password_empty));
-			bRes = false;
-		} else if (repeatPass == null || repeatPass.equals("")) {
-			Util.showTips(this, getString(
-					R.string.repeat_password_empty));
-			bRes = false;
-		} else if (!Util.isUserValid(oldPass)) {
-			Util.showTips(this, getResources().getString(
-					R.string.old_password_invalid));
-			bRes = false;
-		} else if (!Util.isPasswordValid(newPass)) {
-			Util.showTips(this, getResources().getString(
-					R.string.new_password_invalid));
-			bRes = false;
-		} else if (!Util.isPasswordValid(repeatPass)) {
-			Util.showTips(this, getResources().getString(
-					R.string.repeat_password_invalid));
-			bRes = false;
-		} else if (!newPass.equals(repeatPass)) {
-			Util.showTips(this, getResources().getString(
-					R.string.repeat_diff_new));
-			bRes = false;
-		} else if (newPass.equals(oldPass)) {
-			Util.showTips(this, getResources().getString(
-					R.string.new_password_same));
+					R.string.suggestion_empty));
 			bRes = false;
 		}
 		return bRes;
@@ -185,10 +141,7 @@ public class ChangePasswordActivity extends BaseActivity {
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
 				if (res == 2) {//³É¹¦
-					String newPass = EncryptUtil.encrypt(mNewPassword.getText().toString(), EncryptUtil.MD5);
-					UserInfo info = LoginManager.getInstance().getUserInfo();
-					info.setPasswd(newPass);
-					LoginManager.getInstance().setUserInfo(info);
+					mSuggestion.setText(null);
 				}
 				return;
 			} catch (JSONException e) {

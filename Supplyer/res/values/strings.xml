@@ -16,6 +16,7 @@
     <string name="title_send_guide">发货指南</string>
     <string name="title_about_app">关于汇流</string>
     <string name="title_change_password">修改密码</string>
+    <string name="title_suggest">意见反馈</string>
     
     <string name="title_rule">平台服务使用规则</string>
     <string name="login_tips">为方便司机接您时联系您，请验证手机~</string>
@@ -193,6 +194,9 @@
     <string name="new_password_same">新密码与旧密码相同</string>
     <string name="repeat_diff_new">新密码两次输入不一致</string>
     <string name="submit">提交</string>
+    
+    <string name="suggestion">意见反馈</string>
+    <string name="suggestion_empty">内容不能为空</string>
     
     <string name="pull_to_refresh_pull">上拉加载…</string>
     <string name="pull_to_refresh_release">放开以加载…</string>
