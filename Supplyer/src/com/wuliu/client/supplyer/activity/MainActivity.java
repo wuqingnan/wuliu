@@ -1,10 +1,13 @@
 ﻿package com.wuliu.client.supplyer.activity;
 
+import java.util.List;
+
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
 
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.bean.UserInfo;
+import com.wuliu.client.supplyer.event.UpdateEvent;
 import com.wuliu.client.supplyer.fragment.BaseFragment;
 import com.wuliu.client.supplyer.fragment.LoginFragment;
 import com.wuliu.client.supplyer.fragment.MainFragment;
@@ -13,6 +16,7 @@ import com.wuliu.client.supplyer.fragment.OrderFragment;
 import com.wuliu.client.supplyer.fragment.ProfileFragment;
 import com.wuliu.client.supplyer.fragment.SetFragment;
 import com.wuliu.client.supplyer.manager.LoginManager;
+import com.wuliu.client.supplyer.utils.UpdateUtil;
 import com.wuliu.client.supplyer.utils.Util;
 import com.wuliu.client.supplyer.view.MenuView;
 
@@ -21,6 +25,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -71,17 +76,22 @@ public class MainActivity extends BaseActivity {
 
 	private long mExitTime;
 
+	private UpdateEvent mUpdateEvent;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         initMenu();
         initFragment();
 		LoginManager.getInstance().autoLogin();
+		EventBus.getDefault().register(this);
+		UpdateUtil.checkUpdate(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 		EventBus.getDefault().unregister(mMenuView);
 	}
 	
@@ -159,6 +169,17 @@ public class MainActivity extends BaseActivity {
 
 	private void initFragment() {
 		mFragmentManager = getSupportFragmentManager();
+		
+		mFragmentManager.addOnBackStackChangedListener(new OnBackStackChangedListener() {
+			@Override
+			public void onBackStackChanged() {
+				List<Fragment> fragments = mFragmentManager.getFragments();
+				for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
+					Log.d(TAG, "shizy---fragment: " + mFragmentManager.getBackStackEntryAt(i).getName());
+				}				
+			}
+		});
+		
 		mMapFragment = new MapFragment();
 		mFragmentManager.beginTransaction()
 				.replace(R.id.mapLayout, mMapFragment).commit();
@@ -186,9 +207,18 @@ public class MainActivity extends BaseActivity {
 		FragmentTransaction trans = mFragmentManager.beginTransaction();
 		trans.setCustomAnimations(R.anim.push_in, R.anim.push_out, R.anim.pop_in, R.anim.pop_out);
 		trans.replace(R.id.topLayout, fragment, fragment.getClass().getName());
-		trans.addToBackStack(null);
+		trans.addToBackStack(fragment.getClass().getSimpleName());
 		trans.commit();
 		mMenuDrawer.closeMenu();
+	}
+	
+	public void onEventMainThread(UpdateEvent event) {
+		if (event.isNeedUpdate()) {
+			List<Fragment> fragments = mFragmentManager.getFragments();
+			for (Fragment fragment : fragments) {
+				Log.d(TAG, "shizy---fragment: " + fragment.getClass().getSimpleName());
+			}
+		}
 	}
 	
 }

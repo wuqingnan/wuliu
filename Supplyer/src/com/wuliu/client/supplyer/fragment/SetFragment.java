@@ -10,6 +10,7 @@ import com.wuliu.client.supplyer.activity.SuggestActivity;
 import com.wuliu.client.supplyer.activity.WebViewActivity;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
+import com.wuliu.client.supplyer.utils.UpdateUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -133,7 +134,7 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void update() {
-		
+		UpdateUtil.checkUpdate(getActivity());
 	}
 	
 	private void changePasswd() {
