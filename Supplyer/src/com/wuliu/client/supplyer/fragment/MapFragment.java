@@ -4,6 +4,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +38,7 @@ import com.wuliu.client.supplyer.Const;
 import com.wuliu.client.supplyer.R;
 import com.wuliu.client.supplyer.WLApplication;
 import com.wuliu.client.supplyer.api.BaseParams;
+import com.wuliu.client.supplyer.bean.Driver;
 import com.wuliu.client.supplyer.bean.UserInfo;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
@@ -187,7 +189,6 @@ public class MapFragment extends BaseFragment {
 		initView();
 		initMap();
 		initLocation();
-		addMarker();
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
 	}
@@ -238,34 +239,33 @@ public class MapFragment extends BaseFragment {
 		mLocClient.requestLocation();
 	}
 
-	private void addMarker() {
-		LatLng ll1 = new LatLng(39.972821, 116.400244);
-		LatLng ll2 = new LatLng(39.972821, 116.429199);
-		LatLng ll3 = new LatLng(39.959723, 116.415541);
+	private void addMarker(JSONArray markers) {
+		if (markers == null || markers.length() <= 0) {
+			return;
+		}
+		
 		BitmapDescriptor bitmap = BitmapDescriptorFactory
 				.fromResource(R.drawable.marker1);
 
-		Bundle bundle1 = new Bundle();
-		Bundle bundle2 = new Bundle();
-		Bundle bundle3 = new Bundle();
-
-		bundle1.putString("name", "史师傅");
-		bundle2.putString("name", "高师傅");
-		bundle3.putString("name", "杨师傅");
-
-		bundle1.putString("info", "为人正直、乐善好施");
-		bundle2.putString("info", "阴险狡诈、卑鄙无耻");
-		bundle3.putString("info", "奸淫掳掠、无恶不作");
-
-		OverlayOptions option1 = new MarkerOptions().position(ll1).icon(bitmap)
-				.extraInfo(bundle1);
-		OverlayOptions option2 = new MarkerOptions().position(ll2).icon(bitmap)
-				.extraInfo(bundle2);
-		OverlayOptions option3 = new MarkerOptions().position(ll3).icon(bitmap)
-				.extraInfo(bundle3);
-		mBaiduMap.addOverlay(option1);
-		mBaiduMap.addOverlay(option2);
-		mBaiduMap.addOverlay(option3);
+		JSONObject info = null;
+		String[] trucks = getResources().getStringArray(R.array.goods_traffic_list);
+		for (int i = 0; i < markers.length(); i++) {
+			try {
+				info = markers.getJSONObject(i);
+				int truck = info.optInt("trunk_type_code");
+				LatLng ll = new LatLng(info.optDouble("gps_w"), info.optDouble("gps_j"));
+				Bundle bundle = new Bundle();
+				bundle.putString("name", info.optString("driver_name"));
+				if (truck >= 0 && truck < trucks.length) {
+					bundle.putString("info", trucks[truck]);
+				}
+				OverlayOptions option = new MarkerOptions().position(ll).icon(bitmap)
+						.extraInfo(bundle);
+				mBaiduMap.addOverlay(option);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void showMyLocInfo() {
@@ -304,16 +304,11 @@ public class MapFragment extends BaseFragment {
 	}
 	
 	private void requestDriver(BDLocation location) {
-		if (!LoginManager.getInstance().hasLogin()) {
-			return;
-		}
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.setURLEncodingEnabled(true);
 		
 		BaseParams params = new BaseParams();
 		params.add("method", "getNearDrivers");
-		params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
-		params.add("passwd", LoginManager.getInstance().getUserInfo().getPasswd());
 		params.add("radius", "5000");
 		params.add("gps_j", "" + location.getLongitude());
 		params.add("gps_w", "" + location.getLatitude());
@@ -329,7 +324,7 @@ public class MapFragment extends BaseFragment {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				if (res == 2) {//成功
-					
+					addMarker(response.optJSONArray("info"));
 				}
 				return;
 			} catch (JSONException e) {
