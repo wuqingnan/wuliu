@@ -33,6 +33,10 @@ public class MainActivity extends BaseActivity {
 	private static final int EXIT_TIME = 2000;
 	
 	private static final int REQUEST_CODE_REGISTER = 1 << 0;
+	
+	public static final String KEY_REDIRECT = "redirect";
+	public static final String KEY_REDIRECT_TO = "redirect_to";
+	public static final int REDIRECT_TO_ORDERDETAIL = 1 << 0;
 
 	private MenuView.OnMenuClickListener mOnMenuClickListener = new MenuView.OnMenuClickListener() {
 		@Override
@@ -119,6 +123,24 @@ public class MainActivity extends BaseActivity {
 					UserInfo info = (UserInfo) data.getSerializableExtra("userinfo");
 					((LoginFragment)fragment).login(info);
 				}
+			}
+		}
+	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		if (intent.getBooleanExtra(KEY_REDIRECT, false)) {
+			int to = intent.getIntExtra(KEY_REDIRECT_TO, 0);
+			switch (to) {
+			case REDIRECT_TO_ORDERDETAIL:
+				OrderDetailActivity.startOrderDetailActivity(this, intent.getStringExtra("goods_cd"));
+				break;
+			}
+		}
+		else {
+			if (mFragmentManager.getBackStackEntryCount() > 0) {
+				back();
 			}
 		}
 	}

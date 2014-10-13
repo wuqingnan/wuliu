@@ -200,18 +200,22 @@ public class SendDetailActivity extends BaseActivity {
 				.setTitle(R.string.publish_success)
 				.setMessage(R.string.publish_order_message)
 				.setCancelable(false)
-				.setPositiveButton(R.string.continue_send, new DialogInterface.OnClickListener() {
+				.setPositiveButton(R.string.know, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 						startActivity(new Intent(SendDetailActivity.this, MainActivity.class));
 					}
 				})
-				.setNegativeButton(R.string.know, new DialogInterface.OnClickListener() {
+				.setNegativeButton(R.string.title_order_detail, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
-						startActivity(new Intent(SendDetailActivity.this, MainActivity.class));
+						Intent intent = new Intent(SendDetailActivity.this, MainActivity.class);
+						intent.putExtra(MainActivity.KEY_REDIRECT, true);
+						intent.putExtra(MainActivity.KEY_REDIRECT_TO, MainActivity.REDIRECT_TO_ORDERDETAIL);
+						intent.putExtra("goods_cd", mOrder.getGoodsCD());
+						startActivity(intent);
 					}
 				})
 				.create();
@@ -225,6 +229,11 @@ public class SendDetailActivity extends BaseActivity {
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
 				if (res == 2) {//成功
+					JSONObject info = response.optJSONObject("infos");
+					if (info != null) {
+						String goods_cd = info.optString("goods_cd");
+						mOrder.setGoodsCD(goods_cd);
+					}
 					showPublishSuccessDialog();
 				}
 				return;

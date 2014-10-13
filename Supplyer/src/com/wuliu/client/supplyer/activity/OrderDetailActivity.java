@@ -302,6 +302,7 @@ public class OrderDetailActivity extends BaseActivity {
 			driver.setDriver_name(infos.optString("driver_name"));
 			driver.setPhone(infos.optString("phone"));
 			driver.setCredit_level(infos.optString("credit_level"));
+			driver.setTrunk_type_code(infos.optInt("trunk_type_code"));
 		}
 		updateFooter(order);
 		mAdapter.setData(order, driver);
@@ -496,6 +497,7 @@ public class OrderDetailActivity extends BaseActivity {
 			R.string.label_address_to,
 			R.string.label_driver_name,
 			R.string.label_driver_phone,
+			R.string.label_driver_truck,
 			R.string.label_driver_level,
 			R.string.label_driver_score
 		};
@@ -510,6 +512,8 @@ public class OrderDetailActivity extends BaseActivity {
 		private String[] mStateName;
 		private int[] mStateValue;
 		
+		private String[] mTrucks;
+		
 		private int mOrderCnt;
 		private int mDriverCnt;
 		
@@ -520,6 +524,7 @@ public class OrderDetailActivity extends BaseActivity {
 			mStars = context.getResources().getStringArray(R.array.driver_stars);
 			mStateName = context.getResources().getStringArray(R.array.order_state_name);
 			mStateValue = context.getResources().getIntArray(R.array.order_state_value);
+			mTrucks = context.getResources().getStringArray(R.array.goods_traffic_list);
 		}
 		
 		@Override
@@ -550,9 +555,9 @@ public class OrderDetailActivity extends BaseActivity {
 			mOrderCnt = 15;
 			if (mDriver != null) {
 				if (mOrder.getCredit() == 1) {
-					mDriverCnt = 4;
+					mDriverCnt = 5;
 				} else {
-					mDriverCnt = 3;
+					mDriverCnt = 4;
 				}
 			}
 			notifyDataSetChanged();
@@ -641,6 +646,12 @@ public class OrderDetailActivity extends BaseActivity {
 				break;
 			case R.string.label_driver_phone:
 				value = mDriver.getPhone();
+				break;
+			case R.string.label_driver_truck:
+				int truck = mDriver.getTrunk_type_code();
+				if (truck >= 0 && truck < mTrucks.length) {
+					value = mTrucks[truck];
+				}
 				break;
 			case R.string.label_driver_level:
 				value = mDriver.getCredit_level();

@@ -125,8 +125,8 @@ public class MapFragment extends BaseFragment {
 				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 				mBaiduMap.animateMapStatus(u);
 				showMyLocInfo();
+				requestDriver(location);
 			}
-			requestDriver(location);
 		}
 	};
 

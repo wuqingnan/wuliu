@@ -63,6 +63,7 @@
     
     <string name="label_driver_name">司机姓名：</string>
     <string name="label_driver_phone">司机电话：</string>
+    <string name="label_driver_truck">车俩类型：</string>
     <string name="label_driver_level">司机等级：</string>
     <string name="label_driver_score">打分分值：</string>
     
