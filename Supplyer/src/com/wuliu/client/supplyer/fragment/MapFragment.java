@@ -363,7 +363,7 @@ public class MapFragment extends BaseFragment {
 			params.add("gps_w", "" + location.getLatitude());
 			params.add("speed", "" + location.getSpeed());
 			params.add("phone_type", "" + DeviceInfo.getModel());
-			params.add("operate_sysem", "" + DeviceInfo.getOSName());
+			params.add("operate_system", "" + DeviceInfo.getOSName());
 			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
 			
 			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_POSITION_UPLOAD, params));
