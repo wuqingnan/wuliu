@@ -8,10 +8,13 @@ import com.wuliu.client.supplyer.activity.ChangePasswordActivity;
 import com.wuliu.client.supplyer.activity.MainActivity;
 import com.wuliu.client.supplyer.activity.SuggestActivity;
 import com.wuliu.client.supplyer.activity.WebViewActivity;
+import com.wuliu.client.supplyer.event.UpdateEvent;
 import com.wuliu.client.supplyer.manager.LoginManager;
 import com.wuliu.client.supplyer.utils.DeviceInfo;
 import com.wuliu.client.supplyer.utils.UpdateUtil;
+import com.wuliu.client.supplyer.utils.Util;
 
+import de.greenrobot.event.EventBus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -94,6 +97,14 @@ public class SetFragment extends BaseFragment {
 		init();
 	}
 
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().unregister(this);
+		}
+	}
+	
 	private void init() {
 		ButterKnife.inject(this, mRootView);
 		initTitle();
@@ -134,7 +145,10 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void update() {
-		UpdateUtil.checkUpdate(getActivity());
+		if (!EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().register(this);
+		}
+		UpdateUtil.checkUpdate();
 	}
 	
 	private void changePasswd() {
@@ -144,5 +158,12 @@ public class SetFragment extends BaseFragment {
 	private void logout() {
 		LoginManager.getInstance().logout();
 		((MainActivity) getActivity()).back();
+	}
+	
+	public void onEventMainThread(UpdateEvent event) {
+		((MainActivity)getActivity()).showUpdateDialog(event);
+		if (event == null || !event.isNeedUpdate()) {
+			Util.showTips(getActivity(), getString(R.string.latest_version));
+		}
 	}
 }

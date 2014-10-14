@@ -9,6 +9,7 @@ import com.wuliu.client.supplyer.activity.SendActivity;
 import com.wuliu.client.supplyer.manager.LoginManager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,6 +64,7 @@ public class MainFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		Log.d(TAG, "MainFragment.onCreateView");
 		mRootView = inflater.inflate(R.layout.fragment_main, null);
 		return mRootView;
 	}
@@ -71,6 +73,12 @@ public class MainFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		init();
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		Log.d(TAG, "MainFragment.onDestroyView");
 	}
 	
 	private void init() {

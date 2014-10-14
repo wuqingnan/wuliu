@@ -17,6 +17,5 @@
         android:layout_marginBottom="50dp"
         android:onClick="onClick"
         android:textColor="@color/red"
-        android:background="@drawable/btn_enter"
-        android:text="@string/click_enter" />
+        android:background="@drawable/btn_enter" />
 </RelativeLayout>

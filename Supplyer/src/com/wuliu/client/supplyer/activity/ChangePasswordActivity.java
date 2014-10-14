@@ -89,11 +89,12 @@ public class ChangePasswordActivity extends BaseActivity {
 				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		mRepeatPassword.setInputType(InputType.TYPE_CLASS_TEXT
 				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		mMenuBtn.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);
 	}
 	
 	/**
-	 * Ìá½»
+	 * ï¿½á½»
 	 */
 	private void submit() {
 		if (validCheck()) {
@@ -116,7 +117,7 @@ public class ChangePasswordActivity extends BaseActivity {
 	}
 	
 	/**
-	 * ¼ì²âÐÅÏ¢ºÏ·¨ÐÔ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ï·ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -184,7 +185,7 @@ public class ChangePasswordActivity extends BaseActivity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//³É¹¦
+				if (res == 2) {//ï¿½É¹ï¿½
 					String newPass = EncryptUtil.encrypt(mNewPassword.getText().toString(), EncryptUtil.MD5);
 					UserInfo info = LoginManager.getInstance().getUserInfo();
 					info.setPasswd(newPass);

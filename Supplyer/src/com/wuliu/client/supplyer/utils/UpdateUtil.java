@@ -21,12 +21,11 @@ public class UpdateUtil {
 	
 	private static boolean sChecking = false;
 	
-	public static void checkUpdate(Context context) {
+	public static void checkUpdate() {
 		if (sChecking) {
 			return;
 		}
 		sChecking = true;
-		String app_name = context.getResources().getString(R.string.app_name);
 		String appVersion = DeviceInfo.getAppVersion();
 		
 		AsyncHttpClient client = new AsyncHttpClient();
@@ -34,7 +33,7 @@ public class UpdateUtil {
 		
 		BaseParams params = new BaseParams();
 		params.add("method", "updateAPP");
-		params.add("app_name", app_name);
+		params.add("app_name", "ANDSUP");
 		params.add("now_version", appVersion);
 		
 		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_UPDATE, params));

@@ -89,6 +89,8 @@
     
     <string name="confirm">确 定</string>
     <string name="cancel">取消</string>
+    <string name="upgrade">升级</string>
+    <string name="exit">退出</string>
     <string name="confirm_txt">确认</string>
     <string name="request_success">请求成功</string>
     <string name="request_failed">请求失败</string>
@@ -198,6 +200,9 @@
     
     <string name="suggestion">意见反馈</string>
     <string name="suggestion_empty">内容不能为空</string>
+    
+    <string name="latest_version">当前已经是最新版本</string>
+    
     
     <string name="pull_to_refresh_pull">上拉加载…</string>
     <string name="pull_to_refresh_release">放开以加载…</string>
@@ -351,8 +356,6 @@
     <string name="share_friends">分享好友</string>
     <string name="favorable_comment">给滴滴好评</string>
     <string name="about">关于</string>
-    <string name="upgrade">升级</string>
-    <string name="exit">退\u0009\u0009出</string>
     <string name="guidebook">乘客指南</string>
     <string name="feedback">意见反馈</string>
     <string name="contact_us_qq">"其他反馈途径：

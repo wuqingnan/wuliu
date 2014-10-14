@@ -21,7 +21,10 @@ import com.wuliu.client.supplyer.utils.Util;
 import com.wuliu.client.supplyer.view.MenuView;
 
 import de.greenrobot.event.EventBus;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -76,7 +79,8 @@ public class MainActivity extends BaseActivity {
 
 	private long mExitTime;
 
-	private UpdateEvent mUpdateEvent;
+	private boolean mFirstCheckUpdate = true;
+	private boolean mShowUpdateDialog = false;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +89,7 @@ public class MainActivity extends BaseActivity {
         initFragment();
 		LoginManager.getInstance().autoLogin();
 		EventBus.getDefault().register(this);
-		UpdateUtil.checkUpdate(this);
+		UpdateUtil.checkUpdate();
 	}
 
 	@Override
@@ -109,8 +113,7 @@ public class MainActivity extends BaseActivity {
 					mExitTime = System.currentTimeMillis();
 				}
 				else {
-					finish();
-					System.exit(0);
+					exit();
 				}
 				return true;
 			}
@@ -170,16 +173,6 @@ public class MainActivity extends BaseActivity {
 	private void initFragment() {
 		mFragmentManager = getSupportFragmentManager();
 		
-		mFragmentManager.addOnBackStackChangedListener(new OnBackStackChangedListener() {
-			@Override
-			public void onBackStackChanged() {
-				List<Fragment> fragments = mFragmentManager.getFragments();
-				for (int i = 0; i < mFragmentManager.getBackStackEntryCount(); i++) {
-					Log.d(TAG, "shizy---fragment: " + mFragmentManager.getBackStackEntryAt(i).getName());
-				}				
-			}
-		});
-		
 		mMapFragment = new MapFragment();
 		mFragmentManager.beginTransaction()
 				.replace(R.id.mapLayout, mMapFragment).commit();
@@ -212,11 +205,52 @@ public class MainActivity extends BaseActivity {
 		mMenuDrawer.closeMenu();
 	}
 	
+	private void exit() {
+		finish();
+		System.exit(0);
+	}
+	
 	public void onEventMainThread(UpdateEvent event) {
-		if (event.isNeedUpdate()) {
-			List<Fragment> fragments = mFragmentManager.getFragments();
-			for (Fragment fragment : fragments) {
-				Log.d(TAG, "shizy---fragment: " + fragment.getClass().getSimpleName());
+		if (mFirstCheckUpdate) {
+			mFirstCheckUpdate = false;			
+			showUpdateDialog(event);
+		}
+	}
+	
+	public synchronized void showUpdateDialog(final UpdateEvent event) {
+		if (event != null) {
+			if (event.isNeedUpdate()) {
+				if (mShowUpdateDialog) {
+					return;
+				}
+				mShowUpdateDialog = true;
+				
+				AlertDialog dialog = new AlertDialog.Builder(this)
+				.setTitle(event.getVersion())
+				.setMessage(event.getContent())
+				.setCancelable(false)
+				.setPositiveButton(R.string.upgrade, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						mShowUpdateDialog = false;
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse(event.getUrl()));
+						startActivity(intent);
+					}
+				})
+				.setNegativeButton(event.isForce() ? R.string.exit : R.string.cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						mShowUpdateDialog = false;
+						if (event.isForce()) {
+							exit();
+						}
+					}
+				})
+				.create();
+				dialog.show();
 			}
 		}
 	}
