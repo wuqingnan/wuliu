@@ -101,6 +101,8 @@ public class OrderFragment extends BaseFragment {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
+	@InjectView(R.id.order_count)
+	TextView mOrderCount;
 	@InjectView(R.id.order_list)
 	ListView mListView;
 	
@@ -221,6 +223,7 @@ public class OrderFragment extends BaseFragment {
 					if (mPage > pageCount) {
 						mMore = false;
 					}
+					int totalnum = response.getInt("totalnum");
 					JSONArray infos = response.optJSONArray("infos");
 					if (infos != null && infos.length() > 0) {
 						JSONObject temp = null;
@@ -242,6 +245,12 @@ public class OrderFragment extends BaseFragment {
 							}
 						});
 						mAdapter.addData(data);
+						if (totalnum > 0) {
+							mOrderCount.setText("共有" + totalnum + "个订单");
+							mOrderCount.setVisibility(View.VISIBLE);
+						} else {
+							mOrderCount.setVisibility(View.GONE);
+						}
 					}
 				}
 				return;

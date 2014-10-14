@@ -7,6 +7,13 @@
     
     <include layout="@layout/titlebar"/>
     
+    <TextView
+        android:id="@+id/order_count"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:visibility="gone" />
+    
 	<ListView
 	    android:id="@+id/order_list"
 	    android:layout_width="fill_parent"
