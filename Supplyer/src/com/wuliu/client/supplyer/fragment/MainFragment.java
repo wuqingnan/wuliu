@@ -89,7 +89,7 @@ public class MainFragment extends BaseFragment {
 	}
 	
 	private void initTitle() {
-		mTitle.setText(R.string.title_main);
+		mTitle.setText(R.string.app_name);
 		mMenuBtn.setImageResource(R.drawable.btn_title_menu);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 	}
