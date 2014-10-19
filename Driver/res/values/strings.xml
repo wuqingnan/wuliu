@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">博为物流宝</string>
+
+    <string name="home_tab_home">首页</string>
+    <string name="home_tab_msg">消息</string>
+    <string name="home_tab_order">订单</string>
+    <string name="home_tab_find">找货</string>
+    <string name="home_tab_mine">我的</string>
+</resources>

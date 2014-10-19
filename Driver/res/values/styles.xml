@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="home_tab">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@drawable/color_home_tab</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@null</item>
+        <item name="android:paddingTop">7.0dip</item>
+        <item name="android:paddingBottom">5.0dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
+</resources>
