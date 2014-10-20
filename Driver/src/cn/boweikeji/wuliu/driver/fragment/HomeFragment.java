@@ -307,7 +307,7 @@ public class HomeFragment extends BaseFragment {
 		client.setURLEncodingEnabled(true);
 		
 		BaseParams params = new BaseParams();
-		params.add("method", "getNearDrivers");
+		params.add("method", "getNearDriversByDrv");
 		params.add("radius", "5000");
 		params.add("gps_j", "" + location.getLongitude());
 		params.add("gps_w", "" + location.getLatitude());
@@ -356,14 +356,15 @@ public class HomeFragment extends BaseFragment {
 			BDLocation location = client.getLastKnownLocation();
 			
 			BaseParams params = new BaseParams();
-			params.add("method", "collectSupplyInfos");
-			params.add("supplyer_cd", info.getSupplyer_cd());
+			params.add("method", "collectDriverInfos");
+			params.add("driver_cd", info.getSupplyer_cd());
 			params.add("gps_j", "" + location.getLongitude());
 			params.add("gps_w", "" + location.getLatitude());
 			params.add("speed", "" + location.getSpeed());
 			params.add("phone_type", "" + DeviceInfo.getModel());
 			params.add("operate_system", "" + DeviceInfo.getOSName());
 			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
+			params.add("app_version", "" + DeviceInfo.getAppVersion());
 			
 			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_POSITION_UPLOAD, params));
 			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
