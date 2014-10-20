@@ -61,11 +61,11 @@
   			android:exported="true"
   			android:screenOrientation="portrait" />
         
-        <!-- 公司：WxmfAt89Ine2KwXYEF0yizhU -->
-        <!-- 家里：G0F0BDRhBrq2GU2jOREkXNMU -->
+        <!-- 公司：WPQPn6aXVRCmnsbG9mNC8wvX -->
+        <!-- 家里：GF87p4aB0cwNiFBnPC7glgEy -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="WxmfAt89Ine2KwXYEF0yizhU" />
+            android:value="WPQPn6aXVRCmnsbG9mNC8wvX" />
 
         <service
             android:name="com.baidu.location.f"
