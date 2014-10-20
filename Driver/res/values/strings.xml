@@ -8,4 +8,6 @@
     <string name="home_tab_order">订单</string>
     <string name="home_tab_find">找货</string>
     <string name="home_tab_mine">我的</string>
+    
+    <string name="myloc">我在 %1$s 附近</string>
 </resources>

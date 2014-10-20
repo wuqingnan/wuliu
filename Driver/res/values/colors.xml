@@ -8,4 +8,11 @@
     <color name="gray">#ffbbbbb1</color>
     
     <color name="home_tab_normal">#ff8798a3</color>
+    
+    <color name="text_color_yellow">#ffff8b01</color>
+    <color name="text_color_orange">#ffff7000</color>
+    <color name="text_color_white">#ffffffff</color>
+    <color name="text_color_lighter_gray">#ffababab</color>
+    <color name="text_color_light_gray">#ff888888</color>
+    <color name="text_color_dark_gray">#ff333333</color>
 </resources>

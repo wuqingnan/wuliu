@@ -19,7 +19,7 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical" >
 
-        <com.wuliu.client.supplyer.view.ClearEditText
+        <cn.boweikeji.wuliu.supplyer.view.ClearEditText
             android:id="@+id/login_username"
             style="@style/ClearEditText.Light"
             android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                 android:background="@null"
                 android:text="@string/show" />
 
-            <com.wuliu.client.supplyer.view.ClearEditText
+            <cn.boweikeji.wuliu.supplyer.view.ClearEditText
                 android:id="@+id/login_password"
                 style="@style/ClearEditText.Light"
                 android:layout_width="match_parent"

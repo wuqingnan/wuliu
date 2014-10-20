@@ -16,4 +16,23 @@
         <item name="android:layout_weight">1.0</item>
     </style>
 
+    <style name="Popup_My_Title">
+        <item name="android:textColor">@color/text_color_orange</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+    </style>
+    
+    <style name="Popup_My_Info">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+    
+    <style name="Popup_Driver_Name">
+        <item name="android:textColor">@color/text_color_orange</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+    </style>
+
+    <style name="Popup_Driver_Info">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
 </resources>

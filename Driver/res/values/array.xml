@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="goods_type_list">
+        <item>大宗货物</item>
+        <item>普通货物</item>
+        <item>生鲜果蔬</item>
+        <item>小货物</item>
+        <item>其他</item>
+    </string-array>
+    
+    <string-array name="goods_traffic_list">
+        <item>请选择</item>
+        <item>货物运输车</item>
+        <item>生鲜运输车</item>
+        <item>冷藏运输车</item>
+        <item>集装车</item>
+        <item>高栏车</item>
+        <item>低栏车</item>
+        <item>拖车</item>
+        <item>罐式车</item>
+        <item>自卸车</item>
+        <item>危险品运输车</item>
+        <item>其他</item>
+    </string-array>
+   	   
+    <string-array name="goods_valid_time_list">
+        <item>10分钟</item>
+        <item>30分钟</item>
+        <item>一小时</item>
+        <item>半天</item>
+        <item>当天</item>
+    </string-array>
+    
+    <string-array name="time_days">
+        <item>今天</item>
+        <item>明天</item>
+        <item>后天</item>
+    </string-array>
+
+    <string-array name="user_types">
+        <item>个人</item>
+        <item>信息部</item>
+        <item>代理</item>
+        <item>其他</item>
+    </string-array>
+    
+    <string-array name="order_state_name">
+        <item>发送了消息</item>
+        <item>被抢单</item>
+        <item>修改订单</item>
+        <item>司机退单</item>
+        <item>发货人退单</item>
+        <item>后台退单</item>
+        <item>发货人取消订单</item>
+        <item>发货人确认收货</item>
+    </string-array>
+	
+    <integer-array name="order_state_value" >
+        <item>0</item>
+        <item>1</item>
+        <item>7</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>8</item>
+        <item>9</item>
+    </integer-array>
+    
+    <string-array name="driver_stars">
+        <item>差</item>
+        <item>一般</item>
+        <item>非常好</item>
+    </string-array>
+</resources>

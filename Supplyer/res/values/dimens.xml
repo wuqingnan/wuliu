@@ -16,9 +16,6 @@
     <dimen name="text_size_main_send">18sp</dimen>
     <dimen name="text_size_main_input">16sp</dimen>
     
-    <dimen name="text_size_popup_my_title">16sp</dimen>
-    <dimen name="text_size_popup_my_info">14sp</dimen>
-        
     <dimen name="text_size_wheel_window">11dp</dimen>
 
     <dimen name="btn_default_height">40dp</dimen>

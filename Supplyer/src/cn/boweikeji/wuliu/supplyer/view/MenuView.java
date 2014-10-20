@@ -1,0 +1,128 @@
+package cn.boweikeji.wuliu.supplyer.view;
+
+import cn.boweikeji.wuliu.supplyer.adapter.MenuAdapter;
+import cn.boweikeji.wuliu.supplyer.event.LoginEvent;
+import cn.boweikeji.wuliu.supplyer.event.LogoutEvent;
+import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
+
+import cn.boweikeji.wuliu.supplyer.R;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+public class MenuView extends RelativeLayout {
+	
+	private static final String TAG = MenuView.class.getSimpleName();
+	
+	public static final int MENU_ORDER = 0;
+	public static final int MENU_PROFILE = 1;
+	public static final int MENU_INVITE = 2;
+	public static final int MENU_SHARE = 3;
+	public static final int MENU_SETTING = 4;
+	
+	private static final int[] ICONS = new int[] { R.drawable.icon_order,
+			R.drawable.icon_account, R.drawable.icon_share,
+			R.drawable.icon_share, R.drawable.icon_setting };
+
+	public static interface OnMenuClickListener {
+		
+		public void onMenuClick(int menu);
+		
+	}
+	
+	private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			if (mOnMenuClickListener != null) {
+				mOnMenuClickListener.onMenuClick((int)id);
+			}
+		}
+	};
+	
+	private TextView mMenuPhone;
+	private ListView mListView;
+	private MenuAdapter mMenuAdapter;
+	
+	private OnMenuClickListener mOnMenuClickListener;
+
+	public MenuView(Context context) {
+		super(context);
+		init();
+	}
+
+	public MenuView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init();
+	}
+
+	public MenuView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		init();
+	}
+
+	private void init() {
+		initView();
+		initHeader();
+		initAdapter();
+		updateInfo();
+	}
+
+	private void initView() {
+		LayoutInflater.from(getContext()).inflate(R.layout.menu_layout, this);
+		mListView = (ListView) findViewById(R.id.menu_list);
+		mListView.setOnItemClickListener(mOnItemClickListener);
+	}
+
+	private void initHeader() {
+		View view = LayoutInflater.from(getContext()).inflate(
+				R.layout.fragment_menu_header, null);
+		mMenuPhone = (TextView) view.findViewById(R.id.menu_phone);
+		mListView.addHeaderView(view);
+	}
+
+	private void initAdapter() {
+		mMenuAdapter = new MenuAdapter(getContext(), ICONS, getResources()
+				.getStringArray(R.array.menu_names));
+		mListView.setAdapter(mMenuAdapter);
+	}
+
+	private void updateInfo() {
+		if (LoginManager.getInstance().hasLogin()) {
+			mMenuPhone.setText(LoginManager.getInstance().getUserInfo()
+					.getPhone());
+		} else {
+			mMenuPhone.setText(null);
+		}
+	}
+	
+	public OnMenuClickListener getOnMenuClickListener() {
+		return mOnMenuClickListener;
+	}
+
+	public void setOnMenuClickListener(OnMenuClickListener listener) {
+		mOnMenuClickListener = listener;
+	}
+
+	/**
+	 * 处理登陆消息
+	 * @param event
+	 */
+	public void onEventMainThread(LoginEvent event) {
+		updateInfo();
+	}
+	
+	/**
+	 * 处理注销消息
+	 * @param event
+	 */
+	public void onEventMainThread(LogoutEvent event) {
+		updateInfo();
+	}
+}

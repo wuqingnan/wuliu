@@ -19,7 +19,7 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical" >
 
-        <com.wuliu.client.supplyer.view.ClearEditText
+        <cn.boweikeji.wuliu.supplyer.view.ClearEditText
             android:id="@+id/register_phone"
             style="@style/ClearEditText.Light"
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:layout_centerVertical="true"
                 android:enabled="false" />
 
-            <com.wuliu.client.supplyer.view.ClearEditText
+            <cn.boweikeji.wuliu.supplyer.view.ClearEditText
                 android:id="@+id/register_code"
                 style="@style/ClearEditText.Light"
                 android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                 android:maxLength="4" />
         </RelativeLayout>
 
-        <com.wuliu.client.supplyer.view.ClearEditText
+        <cn.boweikeji.wuliu.supplyer.view.ClearEditText
             android:id="@+id/register_password"
             style="@style/ClearEditText.Light"
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
             android:inputType="textPassword"
             android:maxLength="16" />
 
-        <com.wuliu.client.supplyer.view.ClearEditText
+        <cn.boweikeji.wuliu.supplyer.view.ClearEditText
             android:id="@+id/register_id"
             style="@style/ClearEditText.Light"
             android:layout_width="match_parent"
