@@ -17,9 +17,8 @@ import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.UpdateUtil;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 import cn.boweikeji.wuliu.supplyer.view.MenuView;
-
+import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.R;
-
 import de.greenrobot.event.EventBus;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -50,11 +49,15 @@ public class MainActivity extends BaseActivity {
 		@Override
 		public void onMenuClick(int menu) {
 			switch (menu) {
+			case MenuView.MENU_PROFILE:
+				changeFragment(new ProfileFragment());
+				break; 
 			case MenuView.MENU_ORDER:
 				changeFragment(new OrderFragment());
 				break;
-			case MenuView.MENU_PROFILE:
-				changeFragment(new ProfileFragment());
+			case MenuView.MENU_MESSAGE:
+				mMenuDrawer.closeMenu();
+				WebViewActivity.startWebViewActivity(MainActivity.this, getString(R.string.title_system_msg), Const.URL_SYSTEM_MSG);
 				break;
 			case MenuView.MENU_INVITE:
 				mMenuDrawer.closeMenu();
@@ -118,7 +121,7 @@ public class MainActivity extends BaseActivity {
 				return true;
 			}
 		} else if (keyCode == KeyEvent.KEYCODE_MENU) {
-			if (mFragmentManager.getBackStackEntryCount() == 0) {
+			if (mFragmentManager.getBackStackEntryCount() == 0 && LoginManager.getInstance().hasLogin()) {
 				mMenuDrawer.toggleMenu();
 				return true;
 			}

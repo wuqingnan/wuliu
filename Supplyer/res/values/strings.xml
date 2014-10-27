@@ -16,6 +16,7 @@
     <string name="title_about_app">关于汇流</string>
     <string name="title_change_password">修改密码</string>
     <string name="title_suggest">意见反馈</string>
+    <string name="title_system_msg">系统消息</string>    
     
     <string name="title_rule">平台服务使用规则</string>
     <string name="login_tips">为方便司机接您时联系您，请验证手机~</string>

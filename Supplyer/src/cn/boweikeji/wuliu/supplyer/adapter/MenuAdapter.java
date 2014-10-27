@@ -53,8 +53,6 @@ public class MenuAdapter extends BaseAdapter {
 			holder = new ViewHolder(convertView);
 			convertView.setTag(holder);
 		}
-		Log.d("", "shizy---holder.mIconView: " + holder.mIconView);
-		Log.d("", "shizy---mIcons[position]: " + mIcons[position]);
 		holder.mIconView.setImageResource(mIcons[position]);
 		holder.mTitleView.setText(mNames[position]);
 		return convertView;

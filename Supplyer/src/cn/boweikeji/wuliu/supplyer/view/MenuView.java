@@ -20,8 +20,9 @@ public class MenuView extends RelativeLayout {
 	
 	private static final String TAG = MenuView.class.getSimpleName();
 	
+	public static final int MENU_PROFILE = -1;
 	public static final int MENU_ORDER = 0;
-	public static final int MENU_PROFILE = 1;
+	public static final int MENU_MESSAGE = 1;
 	public static final int MENU_INVITE = 2;
 	public static final int MENU_SHARE = 3;
 	public static final int MENU_SETTING = 4;
