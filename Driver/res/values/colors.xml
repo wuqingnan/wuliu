@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="bg_title">#F1F0F0</color>
+
+    <color name="line_dark">#000000</color>
+    <color name="line_light">#CCCCCC</color>
+    
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>
     <color name="green">#ff00ff00</color>
@@ -15,4 +20,5 @@
     <color name="text_color_lighter_gray">#ffababab</color>
     <color name="text_color_light_gray">#ff888888</color>
     <color name="text_color_dark_gray">#ff333333</color>
+    
 </resources>

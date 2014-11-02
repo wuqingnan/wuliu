@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WLApplication;
@@ -48,12 +50,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class HomeFragment extends BaseFragment {
 
 	private static final String TAG = HomeFragment.class.getSimpleName();
+	
+	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View view) {
+			if (view == mLogin) {
+				
+			}
+		}
+	};
 	
 	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
 		
@@ -129,7 +141,18 @@ public class HomeFragment extends BaseFragment {
 		}
 	};
 
-	private MapView mMapView;
+	private View mRootView;
+	
+	@InjectView(R.id.titlebar_leftBtn)
+	ImageView mBack;
+	@InjectView(R.id.titlebar_rightTxt)
+	Button mRegister;
+	@InjectView(R.id.titlebar_title)
+	TextView mTitle;
+	@InjectView(R.id.titlebar_rightTxt)
+	Button mLogin;
+	@InjectView(R.id.bmapView)
+	MapView mMapView;
 	private BaiduMap mBaiduMap;
 	private UiSettings mUiSettings;
 
@@ -150,8 +173,8 @@ public class HomeFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mMapView = (MapView) inflater.inflate(R.layout.fragment_home, null);
-		return mMapView;
+		mRootView = inflater.inflate(R.layout.fragment_home, null);
+		return mRootView;
 	}
 
 	@Override
@@ -184,7 +207,9 @@ public class HomeFragment extends BaseFragment {
 	}
 
 	private void init() {
+		ButterKnife.inject(this, mRootView);
 		mIsFirstLoc = true;
+		initTitle();
 		initView();
 		initMap();
 		initLocation();
@@ -192,6 +217,14 @@ public class HomeFragment extends BaseFragment {
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
 	}
 
+	private void initTitle() {
+		mTitle.setText(R.string.title_home);
+		mBack.setVisibility(View.GONE);
+		mLogin.setVisibility(View.VISIBLE);
+		mLogin.setText(R.string.login);
+		mLogin.setOnClickListener(mOnClickListener);
+	}
+	
 	private void initView() {
 		mMyLocLayout = LayoutInflater.from(getActivity()).inflate(
 				R.layout.popup_myloc, null);

@@ -1,5 +1,7 @@
 <resources>
 
+    <style name="WuLiu"/>
+    
     <style name="home_tab">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@drawable/color_home_tab</item>
