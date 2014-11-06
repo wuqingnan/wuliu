@@ -7,6 +7,7 @@
     <dimen name="default_marginLeft">14dp</dimen>
     <dimen name="default_marginRight">14dp</dimen>
     <dimen name="default_marginTop">15dp</dimen>
+    <dimen name="default_marginBottom">20dp</dimen>
     
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_middle">16sp</dimen>

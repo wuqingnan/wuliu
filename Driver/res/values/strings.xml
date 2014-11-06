@@ -11,8 +11,9 @@
 
     <string name="title_home">@string/app_name</string>
     
-    <string name="register">注册</string>
     <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="next_step">下一步</string>
     
     <string name="myloc">我在 %1$s 附近</string>
     
@@ -30,4 +31,28 @@
     <string name="hint_login_password">请输入密码</string>
     <string name="show">显示</string>
     <string name="hide">隐藏</string>
+    
+    <string name="get_verify_code">获取验证码</string>
+    <string name="register_username_empty">手机号为空</string>
+    <string name="register_code_empty">验证码为空</string>
+    <string name="register_password_empty">密码为空</string>
+    <string name="register_code_invalid">验证码格式错误</string>
+    <string name="register_id_invalid">身份证号码格式错误</string>
+    <string name="register_success">注册成功</string>
+    <string name="register_failed">注册失败</string>
+    
+    <string name="vertify_code">验证码</string>
+    <string name="phone">手机号</string>
+    <string name="password">密码</string>
+    <string name="name">姓名</string>
+    <string name="id_number">身份证号码</string>
+    <string name="truck_no">车牌号</string>
+    <string name="truck_load">载重吨位</string>
+    <string name="recommend_no">推荐码</string>
+    <string name="remark">个人说明</string>
+    
+    <string name="label_driver_type">类型：</string>
+    <string name="label_id_front">身份证正面：</string>
+    <string name="label_area_code">所属地：</string>
+    <string name="label_truck_type">车辆类型：</string>
 </resources>

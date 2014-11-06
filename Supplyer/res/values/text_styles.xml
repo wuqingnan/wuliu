@@ -14,6 +14,10 @@
         <item name="android:textColor">@color/text_color_dark_gray</item>
     </style>
     
+    <style name="WuLiu.TextAppearance.Small.LightGray">
+        <item name="android:textColor">@color/text_color_light_gray</item>
+    </style>
+    
     <style name="WuLiu.TextAppearance.Middle">
         <item name="android:textSize">@dimen/text_size_middle</item>
     </style>
@@ -26,7 +30,15 @@
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>
     
+    <style name="WuLiu.TextAppearance.Middle.White">
+        <item name="android:textColor">@color/text_color_white</item>
+    </style>
+    
     <style name="WuLiu.TextAppearance.Big.Yellow">
         <item name="android:textColor">@color/text_color_yellow</item>
+    </style>
+    
+    <style name="WuLiu.TextAppearance.Big.White">
+        <item name="android:textColor">@color/text_color_white</item>
     </style>
 </resources>

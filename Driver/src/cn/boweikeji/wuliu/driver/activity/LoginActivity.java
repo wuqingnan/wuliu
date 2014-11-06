@@ -40,7 +40,7 @@ public class LoginActivity extends BaseActivity {
 			if (view == mBack) {
 				finish();
 			} else if (view == mRegister) {
-				//((MainActivity) getActivity()).register();
+				RegisterPhoneActivity.startRegisterPhoneActivity(LoginActivity.this);
 			} else if (view == mShowPass) {
 				showPassword(mPassword.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 			} else if (view == mLoginSubmit) {

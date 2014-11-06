@@ -55,13 +55,4 @@
         <item name="android:background">@drawable/edit_text_holo_dark</item>
     </style>
     
-    <style name="Login_Button_Show">
-        <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-    
-    <style name="Login_Submit">
-        <item name="android:textColor">@color/text_color_white</item>
-        <item name="android:textSize">@dimen/text_size_big</item>
-    </style>
 </resources>

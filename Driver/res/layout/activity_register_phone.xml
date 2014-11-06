@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="@color/white"
     android:orientation="vertical" >
 
@@ -18,13 +18,13 @@
         android:orientation="vertical" >
 
         <cn.boweikeji.wuliu.driver.view.ClearEditText
-            android:id="@+id/login_username"
+            android:id="@+id/register_phone"
             style="@style/ClearEditText.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/login_input_user"
-            android:hint="@string/hint_login_username"
-            android:inputType="number"
+            android:layout_marginTop="10dp"
+            android:hint="@string/phone"
+            android:inputType="phone"
             android:maxLength="11" />
 
         <RelativeLayout
@@ -33,36 +33,36 @@
             android:layout_marginTop="5dp" >
 
             <Button
-                android:id="@+id/login_show_pass"
-                style="@style/WuLiu.TextAppearance.Small.LightGray"
+                android:id="@+id/register_get_code"
+                style="@style/WuLiu.TextAppearance.Middle.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@null"
-                android:text="@string/show" />
+                android:layout_margin="3dp"
+                android:background="@drawable/btn_default"
+                android:enabled="false"
+                android:text="@string/get_verify_code" />
 
             <cn.boweikeji.wuliu.driver.view.ClearEditText
-                android:id="@+id/login_password"
+                android:id="@+id/register_code"
                 style="@style/ClearEditText.Light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/login_show_pass"
-                android:drawableLeft="@drawable/login_input_password"
-                android:hint="@string/hint_login_password"
-                android:maxLength="16" />
+                android:layout_toLeftOf="@id/register_get_code"
+                android:hint="@string/vertify_code"
+                android:inputType="number"
+                android:maxLength="4" />
         </RelativeLayout>
 
         <Button
-            android:id="@+id/login_submit"
+            android:id="@+id/next_step"
             style="@style/WuLiu.TextAppearance.Big.White"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/btn_default_height"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_default"
-            android:text="@string/login" />
+            android:text="@string/next_step" />
     </LinearLayout>
 
 </LinearLayout>

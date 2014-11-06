@@ -5,13 +5,13 @@
     android:background="@color/background" >
 
     <include
-        android:id="@+id/register_titlebar"
+        android:id="@+id/titlebar"
         layout="@layout/titlebar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/register_titlebar"
+        android:layout_below="@id/titlebar"
         android:layout_marginTop="@dimen/default_marginTop"
         android:layout_marginLeft="@dimen/default_marginLeft"
         android:layout_marginRight="@dimen/default_marginRight"
@@ -33,13 +33,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp" >
+            
             <Button
                 android:id="@+id/register_get_code"
-                style="@style/Register_Code_Button"
+                style="@style/WuLiu.TextAppearance.Middle.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="@drawable/btn_default"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:text="@string/get_verify_code"
                 android:enabled="false" />
 
             <cn.boweikeji.wuliu.supplyer.view.ClearEditText
@@ -81,14 +85,14 @@
             android:orientation="horizontal" >
 
             <TextView
-                style="@style/Register_User_Type"
+                style="@style/WuLiu.TextAppearance.Middle.LightGray"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/label_user_type" />
 
             <TextView
                 android:id="@+id/register_user_type"
-                style="@style/Register_User_Type"
+                style="@style/WuLiu.TextAppearance.Middle.LightGray"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
@@ -99,7 +103,7 @@
 
         <Button
             android:id="@+id/register_submit"
-            style="@style/Login_Submit"
+            style="@style/WuLiu.TextAppearance.Big.White"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/btn_default_height"
             android:layout_marginTop="20dp"

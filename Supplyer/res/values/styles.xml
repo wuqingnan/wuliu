@@ -78,32 +78,9 @@
         <item name="android:background">@drawable/edit_text_holo_dark</item>
     </style>
     
-    <style name="Register_User_Type">
-        <item name="android:textSize">@dimen/text_size_middle</item>
-        <item name="android:textColor">@color/text_color_light_gray</item>
-    </style>
-    
     <style name="WuLiu.Label">
         <item name="android:textColor">@color/text_color_dark_gray</item>
         <item name="android:textSize">@dimen/text_size_middle</item>
-    </style>
-    
-    <style name="Login_Button_Show">
-        <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-    
-    <style name="Login_Submit">
-        <item name="android:textColor">@color/text_color_white</item>
-        <item name="android:textSize">@dimen/text_size_big</item>
-    </style>
-    
-    <style name="Register_Code_Button">
-        <item name="android:textColor">@color/text_color_white</item>
-        <item name="android:textSize">@dimen/text_size_middle</item>
-        <item name="android:background">@drawable/btn_default</item>
-        <item name="android:layout_margin">3dp</item>
-        <item name="android:text">@string/get_verify_code</item>
     </style>
     
     <style name="Popup_My_Title">
