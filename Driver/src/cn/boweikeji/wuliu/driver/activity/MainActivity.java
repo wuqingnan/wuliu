@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity {
 		R.id.home_tab_msg,
 		R.id.home_tab_order,
 		R.id.home_tab_find,
-		R.id.home_tab_mine
+		R.id.home_tab_more
 	};
 	
 	private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {

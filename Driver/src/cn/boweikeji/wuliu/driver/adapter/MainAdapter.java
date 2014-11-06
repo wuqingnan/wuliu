@@ -7,7 +7,7 @@ import cn.boweikeji.wuliu.driver.activity.MainActivity;
 import cn.boweikeji.wuliu.driver.fragment.FindFragment;
 import cn.boweikeji.wuliu.driver.fragment.HomeFragment;
 import cn.boweikeji.wuliu.driver.fragment.MessageFragment;
-import cn.boweikeji.wuliu.driver.fragment.MineFragment;
+import cn.boweikeji.wuliu.driver.fragment.MoreFragment;
 import cn.boweikeji.wuliu.driver.fragment.OrderFragment;
 
 public class MainAdapter extends FragmentPagerAdapter {
@@ -33,7 +33,7 @@ public class MainAdapter extends FragmentPagerAdapter {
 			fragment = new FindFragment();
 			break;
 		case 4:
-			fragment = new MineFragment();
+			fragment = new MoreFragment();
 			break;
 		}
 		return fragment;

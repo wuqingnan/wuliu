@@ -49,6 +49,12 @@ public class MessageFragment extends BaseFragment {
 		init();
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		mWebView.destroy();
+	}
+	
 	private void init() {
 		ButterKnife.inject(this, mRootView);
 		initTitle();

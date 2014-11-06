@@ -7,7 +7,7 @@
     <string name="home_tab_msg">消息</string>
     <string name="home_tab_order">订单</string>
     <string name="home_tab_find">找货</string>
-    <string name="home_tab_mine">我的</string>
+    <string name="home_tab_more">更多</string>
 
     <string name="title_home">@string/app_name</string>
     

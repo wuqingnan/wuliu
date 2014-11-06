@@ -10,4 +10,6 @@
     
     <dimen name="line_height">1dp</dimen>
     <dimen name="title_height">48dp</dimen>
+    
+    <dimen name="fragment_more_item_height">40dp</dimen>
 </resources>

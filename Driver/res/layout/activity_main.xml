@@ -50,10 +50,10 @@
                     android:text="@string/home_tab_find" />
 
                 <RadioButton
-                    android:id="@+id/home_tab_mine"
+                    android:id="@+id/home_tab_more"
                     style="@style/home_tab"
-                    android:drawableTop="@drawable/btn_tab_mine"
-                    android:text="@string/home_tab_mine" />
+                    android:drawableTop="@drawable/btn_tab_more"
+                    android:text="@string/home_tab_more" />
             </RadioGroup>
 
             <TextView
@@ -82,6 +82,7 @@
         android:id="@+id/viewpager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="@color/white"
         android:layout_above="@id/bottom_layout" />
 
 </RelativeLayout>
