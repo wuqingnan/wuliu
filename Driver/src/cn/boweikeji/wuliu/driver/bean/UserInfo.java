@@ -9,9 +9,11 @@ public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = -3150201271050256513L;
 	
-	private String supplyer_cd;
-	private String supplyer_name;
-	private String supplyer_type;
+	private String driver_cd;
+	private String driver_name;
+	private String driver_type;
+	private String comp_name;
+	private String attract_no;
 	private String state;
 	private String card_id;
 	private String credit_level;
@@ -28,9 +30,11 @@ public class UserInfo implements Serializable {
 	
 	public void update(JSONObject object) {
 		if (object != null) {
-			setSupplyer_cd(object.optString("supplyer_cd"));
-			setSupplyer_name(object.optString("supplyer_name"));
-			setSupplyer_type(object.optString("supplyer_type"));
+			setDriver_cd(object.optString("driver_cd"));
+			setDriver_name(object.optString("driver_name"));
+			setDriver_type(object.optString("driver_type"));
+			setComp_name(object.optString("comp_name"));
+			setAttract_no(object.optString("attract_no"));
 			setState(object.optString("state"));
 			setCard_id(object.optString("card_id"));
 			setCredit_level(object.optString("credit_level"));
@@ -41,28 +45,44 @@ public class UserInfo implements Serializable {
 		} 
 	}
 	
-	public String getSupplyer_cd() {
-		return supplyer_cd;
+	public String getDriver_cd() {
+		return driver_cd;
 	}
 
-	public void setSupplyer_cd(String supplyer_cd) {
-		this.supplyer_cd = supplyer_cd;
+	public void setDriver_cd(String driver_cd) {
+		this.driver_cd = driver_cd;
 	}
 
-	public String getSupplyer_name() {
-		return supplyer_name;
+	public String getDriver_name() {
+		return driver_name;
 	}
 
-	public void setSupplyer_name(String supplyer_name) {
-		this.supplyer_name = supplyer_name;
+	public void setDriver_name(String driver_name) {
+		this.driver_name = driver_name;
 	}
 
-	public String getSupplyer_type() {
-		return supplyer_type;
+	public String getDriver_type() {
+		return driver_type;
 	}
 
-	public void setSupplyer_type(String supplyer_type) {
-		this.supplyer_type = supplyer_type;
+	public void setDriver_type(String driver_type) {
+		this.driver_type = driver_type;
+	}
+
+	public String getComp_name() {
+		return comp_name;
+	}
+
+	public void setComp_name(String comp_name) {
+		this.comp_name = comp_name;
+	}
+
+	public String getAttract_no() {
+		return attract_no;
+	}
+
+	public void setAttract_no(String attract_no) {
+		this.attract_no = attract_no;
 	}
 
 	public String getState() {
@@ -109,9 +129,11 @@ public class UserInfo implements Serializable {
 	public String toString() {
 		try {
 			JSONObject obj = new JSONObject();
-			obj.put("supplyer_cd", supplyer_cd);
-			obj.put("supplyer_name", supplyer_name);
-			obj.put("supplyer_type", supplyer_type);
+			obj.put("driver_cd", driver_cd);
+			obj.put("driver_name", driver_name);
+			obj.put("driver_type", driver_type);
+			obj.put("comp_name", comp_name);
+			obj.put("attract_no", attract_no);
 			obj.put("state", state);
 			obj.put("card_id", card_id);
 			obj.put("credit_level", credit_level);

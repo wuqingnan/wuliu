@@ -15,4 +15,19 @@
     <string name="login">登录</string>
     
     <string name="myloc">我在 %1$s 附近</string>
+    
+    <string name="requesting">正在请求，请等待…</string>
+    
+    <string name="login_success">登录成功</string>
+    <string name="login_failed">登录失败</string>
+    <string name="login_input_invalid">用户名或者密码中包含非法字符或长度不符合要求，请重新输入</string>
+    <string name="login_input_empty">用户名或者密码为空</string>
+    <string name="login_input_username_empty">用户名为空</string>
+    <string name="login_input_password_empty">密码为空</string>
+    <string name="phone_invalid">手机号码格式错误</string>
+    <string name="password_invalid">密码格式错误，（6-16）位字母、数字、下划线</string>
+    <string name="hint_login_username">请输入手机号码</string>
+    <string name="hint_login_password">请输入密码</string>
+    <string name="show">显示</string>
+    <string name="hide">隐藏</string>
 </resources>

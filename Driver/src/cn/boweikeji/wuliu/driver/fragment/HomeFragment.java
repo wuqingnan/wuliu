@@ -13,6 +13,7 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WLApplication;
+import cn.boweikeji.wuliu.driver.activity.LoginActivity;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
@@ -62,7 +63,7 @@ public class HomeFragment extends BaseFragment {
 		@Override
 		public void onClick(View view) {
 			if (view == mLogin) {
-				
+				LoginActivity.startLoginActivity(getActivity());
 			}
 		}
 	};
@@ -390,7 +391,7 @@ public class HomeFragment extends BaseFragment {
 			
 			BaseParams params = new BaseParams();
 			params.add("method", "collectDriverInfos");
-			params.add("driver_cd", info.getSupplyer_cd());
+			params.add("driver_cd", info.getDriver_cd());
 			params.add("gps_j", "" + location.getLongitude());
 			params.add("gps_w", "" + location.getLatitude());
 			params.add("speed", "" + location.getSpeed());

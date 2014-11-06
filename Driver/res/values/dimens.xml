@@ -4,6 +4,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="default_marginLeft">14dp</dimen>
+    <dimen name="default_marginRight">14dp</dimen>
+    <dimen name="default_marginTop">15dp</dimen>
+    
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_middle">16sp</dimen>
     <dimen name="text_size_big">18sp</dimen>
@@ -11,5 +15,9 @@
     <dimen name="line_height">1dp</dimen>
     <dimen name="title_height">48dp</dimen>
     
+    <dimen name="btn_default_height">40dp</dimen>
+    
     <dimen name="fragment_more_item_height">40dp</dimen>
+    
+    <dimen name="edittext_drawable_padding">10dp</dimen>
 </resources>

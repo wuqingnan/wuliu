@@ -40,7 +40,7 @@ public class LoginManager {
 					int res = response.getInt("res");
 					if (res == 2) {
 						setLogin(true);
-						mUserInfo.update(response.optJSONObject("supplyer"));
+						mUserInfo.update(response.optJSONObject("infos"));
 						setUserInfo(mUserInfo);
 						EventBus.getDefault().post(new LoginEvent());
 					}
@@ -75,13 +75,13 @@ public class LoginManager {
 		mHasLogin = hasLogin;
 	}
 	
-	public void login(String supplyer_cd, String passwd, ResponseHandlerInterface handler) {
+	public void login(String driver_cd, String passwd, ResponseHandlerInterface handler) {
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.setURLEncodingEnabled(true);
 		
 		BaseParams params = new BaseParams();
-		params.add("method", "loginCheck2");
-		params.add("supplyer_cd", supplyer_cd);
+		params.add("method", "driverLoginCheck");
+		params.add("driver_cd", driver_cd);
 		params.add("passwd", passwd);
 		
 		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_LOGIN, params));
@@ -93,7 +93,7 @@ public class LoginManager {
 			read();
 		}
 		if (mUserInfo != null && !hasLogin()) {
-			login(mUserInfo.getSupplyer_cd(), mUserInfo.getPasswd(), mResponseHandler);
+			login(mUserInfo.getDriver_cd(), mUserInfo.getPasswd(), mResponseHandler);
 		}
 	}
 	
