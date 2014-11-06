@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			for (int i = 0; i < TAB_IDS.length; i++) {
 				if (TAB_IDS[i] == checkedId) {
-		    		mViewPager.setCurrentItem(i);
+		    		mViewPager.setCurrentItem(i, false);
 					break;
 				}
 			}

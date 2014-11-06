@@ -1,5 +1,6 @@
 package cn.boweikeji.wuliu.driver.fragment;
 
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,8 +19,6 @@ import butterknife.InjectView;
 public class MessageFragment extends BaseFragment {
 
 	public static final String TAG = MessageFragment.class.getSimpleName();
-	
-	private static final String LOAD_URL = "http://www.baidu.com";
 	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
@@ -88,7 +87,7 @@ public class MessageFragment extends BaseFragment {
 	}
 	
 	private void initData() {
-		mWebView.loadUrl(LOAD_URL);
+		mWebView.loadUrl(Const.URL_SYSTEM_MSG);
 	}
 	
 }
