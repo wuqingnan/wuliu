@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -25,17 +26,18 @@ import android.widget.TextView;
 
 public class RegisterProfileActivity extends BaseActivity {
 
-	private static final String TAG = RegisterProfileActivity.class.getSimpleName();
+	private static final String TAG = RegisterProfileActivity.class
+			.getSimpleName();
 
 	private static final String COUNTRY_CODE = "86";
-	
+
 	private static final long COOLDOWN_TIME = 60 * 1000;
-	
+
 	private static final int MSG_GET_VERIFICATION_CODE_ERROR = 1 << 0;
 	private static final int MSG_GET_VERIFICATION_CODE_COMPLETE = 1 << 1;
 	private static final int MSG_SUBMIT_VERIFICATION_CODE_ERROR = 1 << 2;
 	private static final int MSG_SUBMIT_VERIFICATION_CODE_COMPLETE = 1 << 3;
-	
+
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -46,9 +48,9 @@ public class RegisterProfileActivity extends BaseActivity {
 			} else if (view == mDriverType) {
 				driverType();
 			} else if (view == mAreaCode) {
-				
+
 			} else if (view == mIDImage) {
-				
+
 			} else if (view == mNextStep) {
 				vertify();
 			}
@@ -57,27 +59,27 @@ public class RegisterProfileActivity extends BaseActivity {
 
 	private TextWatcher mTextWatcher = new TextWatcher() {
 		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) {
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
 			if (s != null && Util.isPhoneNumber(s.toString()) && !mCoolDown) {
 				mCodeBtn.setEnabled(true);
-			}
-			else {
+			} else {
 				mCodeBtn.setEnabled(false);
 			}
 		}
-		
+
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
-			
+
 		}
-		
+
 		@Override
 		public void afterTextChanged(Editable s) {
-			
+
 		}
 	};
-	
+
 	private EventHandler mEventHandler = new EventHandler() {
 		@Override
 		public void afterEvent(int event, int result, Object data) {
@@ -99,7 +101,7 @@ public class RegisterProfileActivity extends BaseActivity {
 				}
 			}
 		}
-		
+
 		@Override
 		public void beforeEvent(int event, Object data) {
 			super.beforeEvent(event, data);
@@ -107,7 +109,7 @@ public class RegisterProfileActivity extends BaseActivity {
 			Log.d(TAG, "shizy---beforeEvent: " + data);
 		}
 	};
-	
+
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
 	@InjectView(R.id.titlebar_title)
@@ -124,6 +126,8 @@ public class RegisterProfileActivity extends BaseActivity {
 	ClearEditText mName;
 	@InjectView(R.id.register_driver_type)
 	TextView mDriverType;
+	@InjectView(R.id.register_company)
+	ClearEditText mCompany;
 	@InjectView(R.id.register_area_code)
 	TextView mAreaCode;
 	@InjectView(R.id.register_id)
@@ -134,14 +138,14 @@ public class RegisterProfileActivity extends BaseActivity {
 	Button mNextStep;
 
 	private boolean mCoolDown = false;
-	
+
 	private RegisterHandler mHandler = null;
-	
+
 	private ProgressDialog mProgressDialog;
-	
+
 	private String[] mDriverTypes;
 	private int mDriverTypeIndex;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -152,6 +156,7 @@ public class RegisterProfileActivity extends BaseActivity {
 		SMSSDK.initSDK(this, "2efbb3982f2a", "5fadc7e323623a695f5fe6b26d5ed79f");
 		SMSSDK.registerEventHandler(mEventHandler);
 	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -168,6 +173,8 @@ public class RegisterProfileActivity extends BaseActivity {
 		mIDImage.setOnClickListener(mOnClickListener);
 		mNextStep.setOnClickListener(mOnClickListener);
 		mPhone.addTextChangedListener(mTextWatcher);
+		mPasswd.setInputType(InputType.TYPE_CLASS_TEXT
+				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
 	}
 
 	private void initData() {
@@ -175,7 +182,7 @@ public class RegisterProfileActivity extends BaseActivity {
 		mDriverTypes = getResources().getStringArray(R.array.driver_types);
 		updateDriverType();
 	}
-	
+
 	private void getVerifyCode() {
 		mCoolDown = true;
 		mCodeBtn.setEnabled(false);
@@ -191,47 +198,49 @@ public class RegisterProfileActivity extends BaseActivity {
 			}
 		}, COOLDOWN_TIME);
 	}
-	
+
 	private void vertify() {
 		next();
 		if (validCheck()) {
 			showProgressDialog();
-			SMSSDK.submitVerificationCode(COUNTRY_CODE, mPhone.getText().toString(), mCode.getText().toString());
+			SMSSDK.submitVerificationCode(COUNTRY_CODE, mPhone.getText()
+					.toString(), mCode.getText().toString());
 		}
 	}
-	
+
 	private void next() {
-		RegisterTruckActivity.startRegisterInfoActivity(this, mPhone.getText().toString());
+		RegisterTruckActivity.startRegisterInfoActivity(this, mPhone.getText()
+				.toString());
 	}
-	
+
 	private boolean validCheck() {
 		String phone = mPhone.getText().toString();
 		String code = mCode.getText().toString();
-		
+
 		if (phone == null || phone.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.register_username_empty));
+			Util.showTips(this,
+					getResources().getString(R.string.phone_empty));
 			return false;
 		} else if (code == null || code.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.register_code_empty));
+			Util.showTips(this,
+					getResources().getString(R.string.vertify_code_empty));
 			return false;
 		} else if (!Util.isPhoneNumber(phone)) {
-			Util.showTips(this, getResources().getString(
-					R.string.phone_invalid));
+			Util.showTips(this, getResources()
+					.getString(R.string.phone_invalid));
 			return false;
 		} else if (!Util.isCodeValid(code)) {
-			Util.showTips(this, getResources().getString(
-					R.string.register_code_invalid));
+			Util.showTips(this,
+					getResources().getString(R.string.vertify_code_invalid));
 			return false;
 		}
 		return true;
 	}
-	
+
 	private void updateDriverType() {
 		mDriverType.setText(mDriverTypes[mDriverTypeIndex]);
 	}
-	
+
 	private void driverType() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
 				.setSingleChoiceItems(mDriverTypes, mDriverTypeIndex,
@@ -247,7 +256,7 @@ public class RegisterProfileActivity extends BaseActivity {
 						}).setTitle("货源").create();
 		dialog.show();
 	}
-	
+
 	private void showProgressDialog() {
 		if (mProgressDialog == null) {
 			mProgressDialog.setMessage(getString(R.string.requesting));
@@ -255,19 +264,20 @@ public class RegisterProfileActivity extends BaseActivity {
 		}
 		mProgressDialog.show();
 	}
-	
+
 	private void hideProgressDialog() {
 		if (mProgressDialog != null) {
 			mProgressDialog.dismiss();
 		}
 		mProgressDialog = null;
 	}
-	
+
 	public static void startRegisterPhoneActivity(Context context) {
 		context.startActivity(new Intent(context, RegisterProfileActivity.class));
 	}
-	
-	private static class RegisterHandler extends WeakHandler<RegisterProfileActivity> {
+
+	private static class RegisterHandler extends
+			WeakHandler<RegisterProfileActivity> {
 
 		public RegisterHandler(RegisterProfileActivity reference) {
 			super(reference);
@@ -293,5 +303,5 @@ public class RegisterProfileActivity extends BaseActivity {
 			}
 		}
 	}
-	
+
 }

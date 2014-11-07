@@ -9,6 +9,7 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
+import cn.boweikeji.wuliu.driver.bean.RegisterInfo;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.utils.EncryptUtil;
 import cn.boweikeji.wuliu.driver.utils.Util;
@@ -43,11 +44,10 @@ public class RegisterTruckActivity extends BaseActivity {
 		public void onClick(View view) {
 			if (view == mMenuBtn) {
 				finish();
-//			} else if (view == mUserType) {
-//				showTypeChooseDialog();
-//			} else if (view == mCodeBtn) {
-//			} else if (view == mSubmit) {
-//				register();
+			} else if (view == mTruckType) {
+				truckType();
+			} else if (view == mSubmit) {
+				register();
 			}
 		}
 	};
@@ -84,8 +84,10 @@ public class RegisterTruckActivity extends BaseActivity {
 	@InjectView(R.id.register_submit)
 	Button mSubmit;
 
-	private int mUserTypeIndex;
-	private String[] mUserTypes;
+	private int mTruckTypeIndex;
+	private String[] mTruckTypes;
+	
+	private RegisterInfo mRegisterInfo;
 	
 	private ProgressDialog mProgressDialog;
 	
@@ -106,51 +108,42 @@ public class RegisterTruckActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		mTitle.setText(R.string.register);
 		mMenuBtn.setOnClickListener(mOnClickListener);
-//		mCodeBtn.setOnClickListener(mOnClickListener);
-//		mUserType.setOnClickListener(mOnClickListener);
-//		mSubmit.setOnClickListener(mOnClickListener);
-//		mPassword.setInputType(InputType.TYPE_CLASS_TEXT
-//				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		mTruckType.setOnClickListener(mOnClickListener);
+		mSubmit.setOnClickListener(mOnClickListener);
 	}
 
 	private void initData() {
-		mUserTypeIndex = 0;
-		mUserTypes = getResources().getStringArray(R.array.driver_types);
-		updateUserType();
+		mTruckTypeIndex = 0;
+		mTruckTypes = getResources().getStringArray(R.array.goods_traffic_list);
+		updateTruckType();
 	}
 
-	private void updateUserType() {
-//		mUserType.setText(mUserTypes[mUserTypeIndex]);
+	private void updateTruckType() {
+		mTruckType.setText(mTruckTypes[mTruckTypeIndex]);
 	}
 
 	private void register() {
 		if (validCheck()) {
 			showProgressDialog();
+			updateLoadImage();
 		}
+	}
+	
+	private void updateLoadImage() {
+		
 	}
 	
 	/**
 	 * 提交注册信息
 	 */
 	private void submit() {
-//		String phone = mPhone.getText().toString();
-//		String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
-//		String id = mIDNumber.getText().toString();
-//		
-//		AsyncHttpClient client = new AsyncHttpClient();
-//		client.setURLEncodingEnabled(true);
-//		
-//		BaseParams params = new BaseParams();
-//		params.add("method", "registerGoodSupplyer");
-//		params.add("supplyer_type", "" + mUserTypeIndex);
-//		params.add("phone", phone);
-//		params.add("credit_level", "0");
-//		params.add("state", "0");
-//		params.add("card_id", (id == null || id.equals("")) ? BaseParams.PARAM_DEFAULT : id);
-//		params.add("passwd", password);
-//		
-//		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
-//		client.get(Const.URL_REGISTER, params, mRequestHandler);
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.setURLEncodingEnabled(true);
+		
+		BaseParams params = mRegisterInfo.getRegisterParams();
+		
+		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
+		client.get(Const.URL_REGISTER, params, mRequestHandler);
 	}
 	
 	private void login() {
@@ -167,55 +160,38 @@ public class RegisterTruckActivity extends BaseActivity {
 	}
 	
 	private boolean validCheck() {
-//		String phone = mPhone.getText().toString();
-//		String code = mCode.getText().toString();
-//		String password = mPassword.getText().toString();
-//		String id = mIDNumber.getText().toString();
-//		
-//		if (phone == null || phone.equals("")) {
-//			Util.showTips(this, getResources().getString(
-//					R.string.register_username_empty));
-//			return false;
-//		} else if (code == null || code.equals("")) {
-//			Util.showTips(this, getResources().getString(
-//					R.string.register_code_empty));
-//			return false;
-//		} else if (password == null || password.equals("")) {
-//			Util.showTips(this, getResources().getString(
-//					R.string.register_password_empty));
-//			return false;
-//		} else if (!Util.isPhoneNumber(phone)) {
-//			Util.showTips(this, getResources().getString(
-//					R.string.phone_invalid));
-//			return false;
-//		} else if (!Util.isCodeValid(code)) {
-//			Util.showTips(this, getResources().getString(
-//					R.string.register_code_invalid));
-//			return false;
-//		} else if (!Util.isPasswordValid(password)) {
-//			Util.showTips(this, getResources().getString(
-//					R.string.password_invalid));
-//			return false;
-//		} else if (id != null && !id.equals("") && !Util.isIDNumberValid(id)) {
-//			Util.showTips(this, getResources().getString(
-//					R.string.register_id_invalid));
-//			return false;
-//		}
+		String tNumber = mTruckNumber.getText().toString();
+		String tLoad = mTruckLoad.getText().toString();
+		String rNumber = mRecommendNumber.getText().toString();
+		String remark = mRemark.getText().toString();
 		
+		if (mTruckTypeIndex == 0) {
+			Util.showTips(this, getResources().getString(
+					R.string.choose_truck_type));
+			return false;
+		} else if (tNumber == null || tNumber.equals("")) {
+			Util.showTips(this, getResources().getString(
+					R.string.truck_number_empty));
+			return false;
+		} else if (tLoad == null || tLoad.equals("")) {
+			Util.showTips(this, getResources().getString(
+					R.string.truck_load_empty));
+			return false;
+		}
 		return true;
 	}
 	
-	private void showTypeChooseDialog() {
+	private void truckType() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
-				.setSingleChoiceItems(mUserTypes, mUserTypeIndex,
+				.setSingleChoiceItems(mTruckTypes, mTruckTypeIndex,
 						new DialogInterface.OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								mUserTypeIndex = which;
+								mTruckTypeIndex = which;
 								dialog.dismiss();
-								updateUserType();
+								updateTruckType();
 							}
 						}).setTitle("货源").create();
 		dialog.show();

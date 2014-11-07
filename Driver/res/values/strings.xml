@@ -32,19 +32,15 @@
     <string name="show">显示</string>
     <string name="hide">隐藏</string>
     
-    <string name="get_verify_code">获取验证码</string>
-    <string name="register_username_empty">手机号为空</string>
-    <string name="register_code_empty">验证码为空</string>
-    <string name="register_password_empty">密码为空</string>
-    <string name="register_code_invalid">验证码格式错误</string>
-    <string name="register_id_invalid">身份证号码格式错误</string>
     <string name="register_success">注册成功</string>
     <string name="register_failed">注册失败</string>
     
+    <string name="get_verify_code">获取验证码</string>
     <string name="vertify_code">验证码</string>
     <string name="phone">手机号</string>
     <string name="password">密码</string>
     <string name="name">姓名</string>
+    <string name="company">所属企业</string>
     <string name="id_number">身份证号码</string>
     <string name="truck_no">车牌号</string>
     <string name="truck_load">载重吨位</string>
@@ -55,4 +51,13 @@
     <string name="label_id_front">身份证正面：</string>
     <string name="label_area_code">所属地：</string>
     <string name="label_truck_type">车辆类型：</string>
+    
+    <string name="phone_empty">手机号为空</string>
+    <string name="vertify_code_empty">验证码为空</string>
+    <string name="password_empty">密码为空</string>
+    <string name="truck_number_empty">车牌号为空</string>
+    <string name="truck_load_empty">载重吨位为空</string>
+    <string name="vertify_code_invalid">验证码格式错误</string>
+    <string name="id_number_invalid">身份证号码格式错误</string>
+    <string name="choose_truck_type">请选择车辆类型</string>
 </resources>
