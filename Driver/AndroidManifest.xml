@@ -64,14 +64,14 @@
         </activity>
         
         <activity
-            android:name="cn.boweikeji.wuliu.driver.activity.RegisterPhoneActivity"
+            android:name="cn.boweikeji.wuliu.driver.activity.RegisterProfileActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         
         <activity
-            android:name="cn.boweikeji.wuliu.driver.activity.RegisterInfoActivity"
+            android:name="cn.boweikeji.wuliu.driver.activity.RegisterTruckActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:theme="@android:style/Theme.Black.NoTitleBar" >

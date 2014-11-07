@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/titlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/default_marginLeft"
+        android:layout_marginRight="@dimen/default_marginRight"
+        android:layout_marginTop="@dimen/default_marginTop"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_holo_light"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/label_truck_type" />
+
+            <TextView
+                android:id="@+id/register_truck_type"
+                style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/arrow_right"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <cn.boweikeji.wuliu.driver.view.ClearEditText
+            android:id="@+id/register_truck_no"
+            style="@style/ClearEditText.Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="@string/truck_no"
+            android:maxLength="10" />
+
+        <cn.boweikeji.wuliu.driver.view.ClearEditText
+            android:id="@+id/register_truck_load"
+            style="@style/ClearEditText.Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="@string/truck_load"
+            android:maxLength="3" />
+
+        <cn.boweikeji.wuliu.driver.view.ClearEditText
+            android:id="@+id/register_recommend_no"
+            style="@style/ClearEditText.Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="@string/recommend_no"
+            android:maxLength="10" />
+
+        <cn.boweikeji.wuliu.driver.view.ClearEditText
+            android:id="@+id/register_remark"
+            style="@style/ClearEditText.Light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="@string/remark"
+            android:maxLength="18" />
+
+        <Button
+            android:id="@+id/register_submit"
+            style="@style/WuLiu.TextAppearance.Big.White"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/btn_default_height"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_default"
+            android:text="@string/register" />
+    </LinearLayout>
+
+</LinearLayout>

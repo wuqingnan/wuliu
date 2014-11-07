@@ -32,9 +32,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class RegisterInfoActivity extends BaseActivity {
+public class RegisterTruckActivity extends BaseActivity {
 	
-	private static final String TAG = RegisterInfoActivity.class.getSimpleName();
+	private static final String TAG = RegisterTruckActivity.class.getSimpleName();
 	
 	private static final String KEY_PHONE = "phone";
 	
@@ -71,20 +71,18 @@ public class RegisterInfoActivity extends BaseActivity {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
-	@InjectView(R.id.register_phone)
-	ClearEditText mPhone;
-//	@InjectView(R.id.register_code)
-//	ClearEditText mCode;
-//	@InjectView(R.id.register_get_code)
-//	Button mCodeBtn;
-//	@InjectView(R.id.register_password)
-//	ClearEditText mPassword;
-//	@InjectView(R.id.register_id)
-//	ClearEditText mIDNumber;
-//	@InjectView(R.id.register_user_type)
-//	TextView mUserType;
-//	@InjectView(R.id.register_submit)
-//	Button mSubmit;
+	@InjectView(R.id.register_truck_type)
+	TextView mTruckType;
+	@InjectView(R.id.register_truck_no)
+	ClearEditText mTruckNumber;
+	@InjectView(R.id.register_truck_load)
+	ClearEditText mTruckLoad;
+	@InjectView(R.id.register_recommend_no)
+	ClearEditText mRecommendNumber;
+	@InjectView(R.id.register_remark)
+	ClearEditText mRemark;
+	@InjectView(R.id.register_submit)
+	Button mSubmit;
 
 	private int mUserTypeIndex;
 	private String[] mUserTypes;
@@ -94,7 +92,7 @@ public class RegisterInfoActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register_info);
+		setContentView(R.layout.activity_register_truck);
 		initView();
 		initData();
 	}
@@ -117,7 +115,7 @@ public class RegisterInfoActivity extends BaseActivity {
 
 	private void initData() {
 		mUserTypeIndex = 0;
-		mUserTypes = getResources().getStringArray(R.array.user_types);
+		mUserTypes = getResources().getStringArray(R.array.driver_types);
 		updateUserType();
 	}
 
@@ -258,7 +256,7 @@ public class RegisterInfoActivity extends BaseActivity {
 	}
 	
 	public static void startRegisterInfoActivity(Context context, String phone) {
-		Intent intent = new Intent(context, RegisterInfoActivity.class);
+		Intent intent = new Intent(context, RegisterTruckActivity.class);
 		intent.putExtra(KEY_PHONE, phone);
 		context.startActivity(intent);
 	}

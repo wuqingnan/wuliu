@@ -2,15 +2,16 @@ package cn.boweikeji.wuliu.driver.activity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import cn.boweikeji.wuliu.driver.view.ClearEditText;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -22,9 +23,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class RegisterPhoneActivity extends BaseActivity {
+public class RegisterProfileActivity extends BaseActivity {
 
-	private static final String TAG = RegisterPhoneActivity.class.getSimpleName();
+	private static final String TAG = RegisterProfileActivity.class.getSimpleName();
 
 	private static final String COUNTRY_CODE = "86";
 	
@@ -42,6 +43,12 @@ public class RegisterPhoneActivity extends BaseActivity {
 				finish();
 			} else if (view == mCodeBtn) {
 				getVerifyCode();
+			} else if (view == mDriverType) {
+				driverType();
+			} else if (view == mAreaCode) {
+				
+			} else if (view == mIDImage) {
+				
 			} else if (view == mNextStep) {
 				vertify();
 			}
@@ -111,6 +118,18 @@ public class RegisterPhoneActivity extends BaseActivity {
 	ClearEditText mCode;
 	@InjectView(R.id.register_get_code)
 	Button mCodeBtn;
+	@InjectView(R.id.register_password)
+	ClearEditText mPasswd;
+	@InjectView(R.id.register_name)
+	ClearEditText mName;
+	@InjectView(R.id.register_driver_type)
+	TextView mDriverType;
+	@InjectView(R.id.register_area_code)
+	TextView mAreaCode;
+	@InjectView(R.id.register_id)
+	ClearEditText mIDNumber;
+	@InjectView(R.id.register_id_front)
+	TextView mIDImage;
 	@InjectView(R.id.next_step)
 	Button mNextStep;
 
@@ -120,11 +139,15 @@ public class RegisterPhoneActivity extends BaseActivity {
 	
 	private ProgressDialog mProgressDialog;
 	
+	private String[] mDriverTypes;
+	private int mDriverTypeIndex;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register_phone);
+		setContentView(R.layout.activity_register_profile);
 		initView();
+		initData();
 		mHandler = new RegisterHandler(this);
 		SMSSDK.initSDK(this, "2efbb3982f2a", "5fadc7e323623a695f5fe6b26d5ed79f");
 		SMSSDK.registerEventHandler(mEventHandler);
@@ -140,10 +163,19 @@ public class RegisterPhoneActivity extends BaseActivity {
 		mTitle.setText(R.string.register);
 		mBack.setOnClickListener(mOnClickListener);
 		mCodeBtn.setOnClickListener(mOnClickListener);
+		mDriverType.setOnClickListener(mOnClickListener);
+		mAreaCode.setOnClickListener(mOnClickListener);
+		mIDImage.setOnClickListener(mOnClickListener);
 		mNextStep.setOnClickListener(mOnClickListener);
 		mPhone.addTextChangedListener(mTextWatcher);
 	}
 
+	private void initData() {
+		mDriverTypeIndex = 0;
+		mDriverTypes = getResources().getStringArray(R.array.driver_types);
+		updateDriverType();
+	}
+	
 	private void getVerifyCode() {
 		mCoolDown = true;
 		mCodeBtn.setEnabled(false);
@@ -169,7 +201,7 @@ public class RegisterPhoneActivity extends BaseActivity {
 	}
 	
 	private void next() {
-		RegisterInfoActivity.startRegisterInfoActivity(this, mPhone.getText().toString());
+		RegisterTruckActivity.startRegisterInfoActivity(this, mPhone.getText().toString());
 	}
 	
 	private boolean validCheck() {
@@ -196,9 +228,28 @@ public class RegisterPhoneActivity extends BaseActivity {
 		return true;
 	}
 	
+	private void updateDriverType() {
+		mDriverType.setText(mDriverTypes[mDriverTypeIndex]);
+	}
+	
+	private void driverType() {
+		AlertDialog dialog = new AlertDialog.Builder(this)
+				.setSingleChoiceItems(mDriverTypes, mDriverTypeIndex,
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								mDriverTypeIndex = which;
+								dialog.dismiss();
+								updateDriverType();
+							}
+						}).setTitle("货源").create();
+		dialog.show();
+	}
+	
 	private void showProgressDialog() {
 		if (mProgressDialog == null) {
-			mProgressDialog = new ProgressDialog(this);
 			mProgressDialog.setMessage(getString(R.string.requesting));
 			mProgressDialog.setCancelable(false);
 		}
@@ -213,17 +264,17 @@ public class RegisterPhoneActivity extends BaseActivity {
 	}
 	
 	public static void startRegisterPhoneActivity(Context context) {
-		context.startActivity(new Intent(context, RegisterPhoneActivity.class));
+		context.startActivity(new Intent(context, RegisterProfileActivity.class));
 	}
 	
-	private static class RegisterHandler extends WeakHandler<RegisterPhoneActivity> {
+	private static class RegisterHandler extends WeakHandler<RegisterProfileActivity> {
 
-		public RegisterHandler(RegisterPhoneActivity reference) {
+		public RegisterHandler(RegisterProfileActivity reference) {
 			super(reference);
 		}
 
 		@Override
-		public void handleMessage(RegisterPhoneActivity t, Message msg) {
+		public void handleMessage(RegisterProfileActivity t, Message msg) {
 			switch (msg.what) {
 			case MSG_GET_VERIFICATION_CODE_ERROR:
 				Util.showTips(t, "获取失败");

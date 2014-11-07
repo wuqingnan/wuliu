@@ -58,10 +58,9 @@
         <item>后天</item>
     </string-array>
 
-    <string-array name="user_types">
+    <string-array name="driver_types">
         <item>个人</item>
-        <item>信息部</item>
-        <item>代理</item>
+        <item>企业</item>
         <item>其他</item>
     </string-array>
     
