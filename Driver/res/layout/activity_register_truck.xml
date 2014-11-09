@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:hint="@string/truck_load"
+            android:inputType="numberDecimal"
             android:maxLength="3" />
 
         <cn.boweikeji.wuliu.driver.view.ClearEditText

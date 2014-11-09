@@ -1,5 +1,12 @@
 package cn.boweikeji.wuliu.driver.activity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,22 +18,25 @@ import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.RegisterInfo;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
-import cn.boweikeji.wuliu.driver.utils.EncryptUtil;
+import cn.boweikeji.wuliu.driver.event.LoginEvent;
+import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import cn.boweikeji.wuliu.driver.view.ClearEditText;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import de.greenrobot.event.EventBus;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +47,7 @@ public class RegisterTruckActivity extends BaseActivity {
 	
 	private static final String TAG = RegisterTruckActivity.class.getSimpleName();
 	
-	private static final String KEY_PHONE = "phone";
+	private static final String KEY_INFO = "info";
 	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
@@ -47,9 +57,27 @@ public class RegisterTruckActivity extends BaseActivity {
 			} else if (view == mTruckType) {
 				truckType();
 			} else if (view == mSubmit) {
-				register();
+				submit();
 			}
 		}
+	};
+	
+	private JsonHttpResponseHandler mUploadHandler = new JsonHttpResponseHandler() {
+		
+		public void onFinish() {
+			
+		};
+		
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+			Log.d(TAG, "shizy---onSuccess");
+			uploadResult(response);
+		};
+		
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+			uploadResult(null);
+			Log.d(TAG, "shizy---onFailure");
+		};
+		
 	};
 
 	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
@@ -87,9 +115,9 @@ public class RegisterTruckActivity extends BaseActivity {
 	private int mTruckTypeIndex;
 	private String[] mTruckTypes;
 	
-	private RegisterInfo mRegisterInfo;
-	
 	private ProgressDialog mProgressDialog;
+	
+	private RegisterInfo mRegInfo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +141,9 @@ public class RegisterTruckActivity extends BaseActivity {
 	}
 
 	private void initData() {
+		Intent intent = getIntent();
+		mRegInfo = (RegisterInfo) intent.getSerializableExtra(KEY_INFO);
+		
 		mTruckTypeIndex = 0;
 		mTruckTypes = getResources().getStringArray(R.array.goods_traffic_list);
 		updateTruckType();
@@ -122,41 +153,45 @@ public class RegisterTruckActivity extends BaseActivity {
 		mTruckType.setText(mTruckTypes[mTruckTypeIndex]);
 	}
 
-	private void register() {
+	private void submit() {
 		if (validCheck()) {
 			showProgressDialog();
-			updateLoadImage();
+			new ImageTask(this, mRegInfo.getIDImagePath()).execute();
 		}
 	}
 	
-	private void updateLoadImage() {
-		
+	private void uploadImage(String path) {
+		Log.d(TAG, "shizy---path: " + path);
+		try {
+			if (path != null) {
+				AsyncHttpClient client = new AsyncHttpClient();
+				client.setURLEncodingEnabled(true);
+				
+				BaseParams params = new BaseParams();
+				params.put("myFile", new File(path));
+				params.add("remark", Const.NULL);
+				Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_UPLOAD_IMAGE, params));
+				client.post(Const.URL_UPLOAD_IMAGE, params, mUploadHandler);
+				return;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		hideProgressDialog();
+		Util.showTips(this, getResources().getString(R.string.upload_id_image_fail));
 	}
 	
 	/**
 	 * 提交注册信息
 	 */
-	private void submit() {
+	private void register() {
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.setURLEncodingEnabled(true);
 		
-		BaseParams params = mRegisterInfo.getRegisterParams();
+		BaseParams params = mRegInfo.getRegisterParams();
 		
 		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
 		client.get(Const.URL_REGISTER, params, mRequestHandler);
-	}
-	
-	private void login() {
-//		hideProgressDialog();
-//		Intent intent = new Intent();
-//		UserInfo info = new UserInfo();
-//		String phone = mPhone.getText().toString();
-//		String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
-////		info.setSupplyer_cd(phone);
-//		info.setPasswd(password);
-//		intent.putExtra("userinfo", info);
-//		setResult(RESULT_OK, intent);
-//		finish();
 	}
 	
 	private boolean validCheck() {
@@ -178,6 +213,18 @@ public class RegisterTruckActivity extends BaseActivity {
 					R.string.truck_load_empty));
 			return false;
 		}
+		
+		if (!(Util.isInteger(tLoad) || Util.isDecimal(tLoad))) {
+			Util.showTips(this, getResources().getString(
+					R.string.truck_load_invalid));
+			return false;
+		}
+		
+		mRegInfo.setTrunk_no(tNumber);
+		mRegInfo.setLoad_weight(Float.parseFloat(tLoad));
+		mRegInfo.setAttract_no(rNumber);
+		mRegInfo.setRemark(remark);
+		
 		return true;
 	}
 	
@@ -193,7 +240,7 @@ public class RegisterTruckActivity extends BaseActivity {
 								dialog.dismiss();
 								updateTruckType();
 							}
-						}).setTitle("货源").create();
+						}).setTitle("车辆类型").create();
 		dialog.show();
 	}
 	
@@ -213,6 +260,15 @@ public class RegisterTruckActivity extends BaseActivity {
 		mProgressDialog = null;
 	}
 	
+	private void registerSuccess(JSONObject infos) {
+		LoginManager.getInstance().setLogin(true);
+		UserInfo userInfo = new UserInfo(infos);
+		userInfo.setPasswd(mRegInfo.getMD5Passwd());
+		LoginManager.getInstance().setUserInfo(userInfo);
+		EventBus.getDefault().post(new LoginEvent());
+		startActivity(new Intent(this, MainActivity.class));
+	}
+	
 	private void requestResult(JSONObject response) {
 		if (response != null && response.length() > 0) {
 			Log.d(TAG, "shizy---response: " + response.toString());
@@ -221,7 +277,7 @@ public class RegisterTruckActivity extends BaseActivity {
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
 				if (res == 2) {//成功
-					login();
+					registerSuccess(response.optJSONObject("infos"));
 				}
 				return;
 			} catch (JSONException e) {
@@ -231,10 +287,117 @@ public class RegisterTruckActivity extends BaseActivity {
 		Util.showTips(this, getString(R.string.register_failed));
 	}
 	
-	public static void startRegisterInfoActivity(Context context, String phone) {
+	private void uploadResult(JSONObject response) {
+		Log.d(TAG, "shizy---uploadResult");
+		if (response != null && response.length() > 0) {
+			Log.d(TAG, "shizy---response: " + response.toString());
+			try {
+				int res = response.getInt("res");
+				String msg = response.getString("msg");
+				Util.showTips(this, msg);
+				if (res == 2) {//成功
+					mRegInfo.setCard_photo(response.optString("attachment_id"));
+					register();
+				} else {
+					hideProgressDialog();
+				}
+				return;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		hideProgressDialog();
+		Util.showTips(this, getString(R.string.upload_id_image_fail));
+	}
+	
+	public static void startRegisterInfoActivity(Context context, RegisterInfo info) {
 		Intent intent = new Intent(context, RegisterTruckActivity.class);
-		intent.putExtra(KEY_PHONE, phone);
+		intent.putExtra(KEY_INFO, info);
 		context.startActivity(intent);
+	}
+	
+	public static class ImageTask extends AsyncTask<Void, Integer, String> {
+		
+		private static final int WIDTH = 960;
+		private static final int HEIGHT = 640;
+		
+		private WeakReference<RegisterTruckActivity> mReference;
+		private String mPath;
+		
+		public ImageTask(RegisterTruckActivity activity, String path) {
+			mReference = new WeakReference<RegisterTruckActivity>(activity);
+			mPath = path;
+		}
+		
+		@Override
+		protected String doInBackground(Void... arg0) {
+			BitmapFactory.Options op = new BitmapFactory.Options();
+	        op.inJustDecodeBounds = true;
+	        BitmapFactory.decodeFile(mPath, op);
+	        int xScale = op.outWidth / WIDTH;
+	        int yScale = op.outHeight / HEIGHT;
+	        op.inSampleSize = xScale > yScale ? xScale : yScale;
+	        op.inJustDecodeBounds = false;
+	        Bitmap bitmap = BitmapFactory.decodeFile(mPath, op);
+	        byte[] data = compressImage(bitmap);
+	        String filePath = saveImage(data);
+	        if (bitmap != null) {
+	        	if (!bitmap.isRecycled()) {
+	        		bitmap.recycle();
+	        	}
+	        	bitmap = null;
+	        }
+			return filePath;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			RegisterTruckActivity activity = mReference.get();
+			if (activity != null) {
+				activity.uploadImage(result);
+			}
+		}
+		
+		private byte[] compressImage(Bitmap image) {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+			int options = 100;
+			while (baos.toByteArray().length / 1024 > 100) {
+				baos.reset();
+				image.compress(Bitmap.CompressFormat.JPEG, options, baos);
+				options -= 10;//每次都减少10
+			}
+			Log.d(TAG, "shizy---options: " + options);
+			byte[] data = null;
+			try {
+				data = baos.toByteArray();
+				baos.close();
+				baos = null;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return data;
+		}
+		
+		private String saveImage(byte[] data) {
+			try {
+				Context context = mReference.get();
+				if (context != null) {
+					String filePath = context.getFilesDir().getPath() + "/card.jpg";
+					FileOutputStream fos = new FileOutputStream(filePath);
+					fos.write(data);
+					fos.close();
+					fos = null;
+					return filePath;
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	}
 	
 }

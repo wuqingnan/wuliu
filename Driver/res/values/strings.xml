@@ -15,6 +15,8 @@
     <string name="register">注册</string>
     <string name="next_step">下一步</string>
     
+    <string name="choose_image">选择照片</string>
+    
     <string name="myloc">我在 %1$s 附近</string>
     
     <string name="requesting">正在请求，请等待…</string>
@@ -55,9 +57,18 @@
     <string name="phone_empty">手机号为空</string>
     <string name="vertify_code_empty">验证码为空</string>
     <string name="password_empty">密码为空</string>
+    <string name="name_empty">姓名为空</string>
+    <string name="company_empty">所属企业为空</string>
+    <string name="id_number_empty">身份证号码为空</string>
     <string name="truck_number_empty">车牌号为空</string>
     <string name="truck_load_empty">载重吨位为空</string>
     <string name="vertify_code_invalid">验证码格式错误</string>
     <string name="id_number_invalid">身份证号码格式错误</string>
+    <string name="truck_load_invalid">载重吨位格式错误</string>
     <string name="choose_truck_type">请选择车辆类型</string>
+    <string name="choose_city">请选择所在城市</string>
+    <string name="choose_id_image">请选择身份证正面照</string>
+
+    <string name="upload_id_image_fail">身份证上传失败</string>
+    
 </resources>

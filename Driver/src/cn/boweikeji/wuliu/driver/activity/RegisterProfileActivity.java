@@ -4,17 +4,24 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WeakHandler;
+import cn.boweikeji.wuliu.driver.bean.RegisterInfo;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import cn.boweikeji.wuliu.driver.view.ClearEditText;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -37,7 +44,10 @@ public class RegisterProfileActivity extends BaseActivity {
 	private static final int MSG_GET_VERIFICATION_CODE_COMPLETE = 1 << 1;
 	private static final int MSG_SUBMIT_VERIFICATION_CODE_ERROR = 1 << 2;
 	private static final int MSG_SUBMIT_VERIFICATION_CODE_COMPLETE = 1 << 3;
-
+	
+	private static final int REQUEST_CODE_PICK = 1 << 0;
+	private static final int REQUEST_CODE_CAPTURE = 1 << 1;
+	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -50,7 +60,7 @@ public class RegisterProfileActivity extends BaseActivity {
 			} else if (view == mAreaCode) {
 
 			} else if (view == mIDImage) {
-
+				chooseIDImage();
 			} else if (view == mNextStep) {
 				vertify();
 			}
@@ -133,7 +143,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	@InjectView(R.id.register_id)
 	ClearEditText mIDNumber;
 	@InjectView(R.id.register_id_front)
-	TextView mIDImage;
+	ImageView mIDImage;
 	@InjectView(R.id.next_step)
 	Button mNextStep;
 
@@ -145,6 +155,18 @@ public class RegisterProfileActivity extends BaseActivity {
 
 	private String[] mDriverTypes;
 	private int mDriverTypeIndex;
+	
+	private String mCity;
+	
+	/** 照片Uri */
+	private Uri mPhotoUri;
+	private String mPhotoPath;
+	private Bitmap mPhoto;
+	
+	private int mPhotoWidth;
+	private int mPhotoHeight;
+	
+	private RegisterInfo mRegInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +183,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		SMSSDK.unregisterAllEventHandler();
+		recyclePhoto();
 	}
 
 	private void initView() {
@@ -181,6 +204,12 @@ public class RegisterProfileActivity extends BaseActivity {
 		mDriverTypeIndex = 0;
 		mDriverTypes = getResources().getStringArray(R.array.driver_types);
 		updateDriverType();
+		
+		mPhotoWidth = getResources().getDimensionPixelSize(R.dimen.id_image_width);
+		mPhotoHeight = getResources().getDimensionPixelSize(R.dimen.id_image_height);
+		
+		mCity = "北京市";
+		updateCity();
 	}
 
 	private void getVerifyCode() {
@@ -200,7 +229,6 @@ public class RegisterProfileActivity extends BaseActivity {
 	}
 
 	private void vertify() {
-		next();
 		if (validCheck()) {
 			showProgressDialog();
 			SMSSDK.submitVerificationCode(COUNTRY_CODE, mPhone.getText()
@@ -209,13 +237,16 @@ public class RegisterProfileActivity extends BaseActivity {
 	}
 
 	private void next() {
-		RegisterTruckActivity.startRegisterInfoActivity(this, mPhone.getText()
-				.toString());
+		RegisterTruckActivity.startRegisterInfoActivity(this, mRegInfo);
 	}
 
 	private boolean validCheck() {
 		String phone = mPhone.getText().toString();
 		String code = mCode.getText().toString();
+		String passwd = mPasswd.getText().toString();
+		String name = mName.getText().toString();
+		String company = mCompany.getText().toString();
+		String idNumber = mIDNumber.getText().toString();
 
 		if (phone == null || phone.equals("")) {
 			Util.showTips(this,
@@ -225,6 +256,30 @@ public class RegisterProfileActivity extends BaseActivity {
 			Util.showTips(this,
 					getResources().getString(R.string.vertify_code_empty));
 			return false;
+		} else if (passwd == null || passwd.equals("")) {
+			Util.showTips(this,
+					getResources().getString(R.string.password_empty));
+			return false;
+		} else if (name == null || name.equals("")) {
+			Util.showTips(this,
+					getResources().getString(R.string.name_empty));
+			return false;
+		} else if ((company == null || company.equals("")) && mDriverTypeIndex == 1) {
+			Util.showTips(this,
+					getResources().getString(R.string.company_empty));
+			return false;
+		} else if (mCity == null || mCity.equals("")) {
+			Util.showTips(this,
+					getResources().getString(R.string.choose_city));
+			return false;
+		} else if (idNumber == null || idNumber.equals("")) {
+			Util.showTips(this,
+					getResources().getString(R.string.id_number_empty));
+			return false;
+		} else if (mPhotoPath == null || mPhotoPath.equals("")) {
+			Util.showTips(this,
+					getResources().getString(R.string.choose_id_image));
+			return false;
 		} else if (!Util.isPhoneNumber(phone)) {
 			Util.showTips(this, getResources()
 					.getString(R.string.phone_invalid));
@@ -233,14 +288,48 @@ public class RegisterProfileActivity extends BaseActivity {
 			Util.showTips(this,
 					getResources().getString(R.string.vertify_code_invalid));
 			return false;
+		} else if (!Util.isPasswordValid(passwd)) {
+			Util.showTips(this,
+					getResources().getString(R.string.password_invalid));
+			return false;
+		} else if (!Util.isIDNumberValid(idNumber)) {
+			Util.showTips(this,
+					getResources().getString(R.string.id_number_invalid));
+			return false;
 		}
+		
+		if (mRegInfo == null) {
+			mRegInfo = new RegisterInfo();
+			mRegInfo.setPhone(phone);
+			mRegInfo.setPasswd(passwd);
+			mRegInfo.setDriver_name(name);
+			mRegInfo.setDriver_type(mDriverTypeIndex);
+			mRegInfo.setComp_name(company);
+			mRegInfo.setArea_code(mCity);
+			mRegInfo.setCard_id(idNumber);
+			mRegInfo.setIDImagePath(mPhotoPath);
+		}
+		
 		return true;
 	}
 
 	private void updateDriverType() {
 		mDriverType.setText(mDriverTypes[mDriverTypeIndex]);
+		switch (mDriverTypeIndex) {
+		case 0:
+		case 2:
+			mCompany.setVisibility(View.GONE);
+			break;
+		case 1:
+			mCompany.setVisibility(View.VISIBLE);
+			break;
+		}
 	}
 
+	private void updateCity() {
+		mAreaCode.setText(mCity);
+	}
+	
 	private void driverType() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
 				.setSingleChoiceItems(mDriverTypes, mDriverTypeIndex,
@@ -253,12 +342,53 @@ public class RegisterProfileActivity extends BaseActivity {
 								dialog.dismiss();
 								updateDriverType();
 							}
-						}).setTitle("货源").create();
+						}).setTitle("类型").create();
+		dialog.show();
+	}
+	
+	private void chooseIDImage() {
+		AlertDialog dialog = new AlertDialog.Builder(this)
+		.setItems(R.array.choose_image_from, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface arg0, int which) {
+				switch (which) {
+				case 0://相册
+					pickImage();
+					break;
+				case 1://拍照
+					startCamera();
+					break;
+				}
+			}
+		})
+		.setTitle(R.string.choose_image).create();
 		dialog.show();
 	}
 
+	/**
+	 * 选择图片
+	 */
+	private void pickImage() {
+		Intent intent = new Intent(Intent.ACTION_PICK);
+		intent.setType("image/*");
+		startActivityForResult(intent, REQUEST_CODE_PICK);
+	}
+	
+	/**
+	 * 开启照相机
+	 */
+	private void startCamera() {
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		try {
+    		mPhotoUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+    		intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mPhotoUri);
+    	} catch (Exception e) {}
+		startActivityForResult(intent, REQUEST_CODE_CAPTURE);
+	}
+	
 	private void showProgressDialog() {
 		if (mProgressDialog == null) {
+			mProgressDialog = new ProgressDialog(this);
 			mProgressDialog.setMessage(getString(R.string.requesting));
 			mProgressDialog.setCancelable(false);
 		}
@@ -270,6 +400,83 @@ public class RegisterProfileActivity extends BaseActivity {
 			mProgressDialog.dismiss();
 		}
 		mProgressDialog = null;
+	}
+	
+	/**
+	 * 加载图片
+	 * @param uri	图片本地路径
+	 */
+	private void loadImage(Uri uri) {
+		mPhotoPath = uri2path(uri);
+		if (mPhotoPath == null) {
+			return;
+		}
+		BitmapFactory.Options op = new BitmapFactory.Options();
+        op.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mPhotoPath, op);
+        int xScale = op.outWidth / mPhotoWidth;
+        int yScale = op.outHeight / mPhotoHeight;
+        op.inSampleSize = xScale > yScale ? xScale : yScale;
+        op.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeFile(mPhotoPath, op);
+        mIDImage.setImageBitmap(bitmap);
+        recyclePhoto();
+        mPhoto = bitmap;
+	}
+	
+	/**
+	 * uri转本地路径
+	 * @param uri
+	 * @return
+	 */
+	private String uri2path(Uri uri) {
+		if (uri == null) {
+			return null;
+		}
+		String[] proj = { MediaStore.Images.Media.DATA };  
+		Cursor actualimagecursor = managedQuery(uri,proj,null,null,null);  
+		int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);  
+		actualimagecursor.moveToFirst();  
+		String path = actualimagecursor.getString(actual_image_column_index);
+		return path;
+	}
+	
+	/**
+	 * 释放图片
+	 */
+	private void recyclePhoto() {
+		if (mPhoto != null) {
+        	if (!mPhoto.isRecycled()) {
+        		mPhoto.recycle();
+        	}
+        	mPhoto = null;
+        }
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+			case REQUEST_CODE_CAPTURE:
+				loadImage(mPhotoUri);
+				break;
+			case REQUEST_CODE_PICK:
+				loadImage(data.getData());
+				break;
+			}
+		} else {
+			switch (requestCode) {
+			case REQUEST_CODE_CAPTURE:
+				Log.d(TAG, "onFailture Capture");
+				if (mPhotoUri != null) {
+					getContentResolver().delete(mPhotoUri, null, null);
+				}
+				break;
+			case REQUEST_CODE_PICK:
+				break;
+			}
+		}
 	}
 
 	public static void startRegisterPhoneActivity(Context context) {

@@ -112,11 +112,11 @@ public class Util {
 	 * 
 	 * @return true-valid false invalid
 	 */
-	public static boolean isIDNumberValid(String code) {
-		if (code != null && !code.equals("")) {
+	public static boolean isIDNumberValid(String number) {
+		if (number != null && !number.equals("")) {
 			String rex = "([0-9]{17})([0-9Xx])";
 			Pattern pattern = Pattern.compile(rex);
-			Matcher m = pattern.matcher(code);
+			Matcher m = pattern.matcher(number);
 			return m.matches();
 		}
 		return false;

@@ -59,8 +59,6 @@ public class WelcomeActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome);
-		Const.init(this);
-		DeviceInfo.init(this);
 		initView();
 		initData();
 		mHandler = new WelcomeHandler(this);

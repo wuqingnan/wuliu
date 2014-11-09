@@ -23,6 +23,7 @@ public class Const {
 	public static final String URL_SUGGEST = "http://218.21.213.76:7201/bss/supplyerSuggest.action";
 	public static final String URL_UPDATE = "http://218.21.213.76:7201/bss/updateAPP.action";
 	public static final String URL_NEAR_DRIVER = "http://218.21.213.76:7201/bss/getNearDriversByDrv.action";
+	public static final String URL_UPLOAD_IMAGE = "http://218.21.213.76:7201/bss/doUpload.action";
 	
 	private static String sFilePath = null;
 	private static String sExternalPath = null;

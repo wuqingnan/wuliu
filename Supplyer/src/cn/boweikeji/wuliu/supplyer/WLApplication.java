@@ -1,6 +1,7 @@
 ﻿package cn.boweikeji.wuliu.supplyer;
 
 import cn.boweikeji.wuliu.supplyer.db.DBHelper;
+import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
 
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
@@ -22,6 +23,8 @@ public class WLApplication extends Application {
 		// 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
 		SDKInitializer.initialize(this);
 		mInstance = this;
+		Const.init(this);
+		DeviceInfo.init(this);
 	}
 	
 	public DBHelper getHelper() {

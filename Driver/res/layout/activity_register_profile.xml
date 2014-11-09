@@ -27,8 +27,6 @@
                 style="@style/ClearEditText.Light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
                 android:hint="@string/phone"
                 android:inputType="phone"
                 android:maxLength="11" />
@@ -152,25 +150,24 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_holo_light"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
                 <TextView
                     style="@style/WuLiu.TextAppearance.Middle.LightGray"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:layout_marginLeft="12dp"
                     android:text="@string/label_id_front" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/register_id_front"
-                    style="@style/WuLiu.TextAppearance.Middle.LightGray"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/arrow_right"
-                    android:gravity="center" />
+                    android:layout_width="@dimen/id_image_width"
+                    android:layout_height="@dimen/id_image_height"
+                    android:layout_marginLeft="5dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/id_img1" />
             </LinearLayout>
 
             <Button
