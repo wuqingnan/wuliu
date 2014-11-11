@@ -8,6 +8,8 @@
     <string name="home_tab_order">订单</string>
     <string name="home_tab_find">找货</string>
     <string name="home_tab_more">更多</string>
+    
+    <string name="quit_next_time">再按一次退出</string>
 
     <string name="title_home">@string/app_name</string>
     <string name="title_choose_city">选择城市</string>

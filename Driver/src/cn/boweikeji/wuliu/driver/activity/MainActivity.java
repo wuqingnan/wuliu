@@ -11,13 +11,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class MainActivity extends BaseActivity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
+	
+	private static final int EXIT_TIME = 2000;
 	
 	public static final int[] TAB_IDS = {
 		R.id.home_tab_home,
@@ -68,12 +72,31 @@ public class MainActivity extends BaseActivity {
 	
 	private FragmentManager mFragmentManager;
 	
+	private long mExitTime;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
     }
+    
+    @Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mFragmentManager.getBackStackEntryCount() == 0) {
+				if (System.currentTimeMillis() - mExitTime > EXIT_TIME) {
+					Toast.makeText(this, R.string.quit_next_time, Toast.LENGTH_SHORT).show();
+					mExitTime = System.currentTimeMillis();
+				}
+				else {
+					exit();
+				}
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
     
     private void init() {
     	mFragmentManager = getSupportFragmentManager();
@@ -88,4 +111,9 @@ public class MainActivity extends BaseActivity {
     	mViewPager.setAdapter(mAdapter);
     }
     
+	private void exit() {
+		finish();
+		System.exit(0);
+	}
+	
 }

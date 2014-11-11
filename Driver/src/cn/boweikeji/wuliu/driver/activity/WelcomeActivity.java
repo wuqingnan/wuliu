@@ -1,22 +1,17 @@
-package cn.boweikeji.wuliu.supplyer.activity;
+package cn.boweikeji.wuliu.driver.activity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.WeakHandler;
+import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import cn.boweikeji.wuliu.supplyer.WLApplication;
-import cn.boweikeji.wuliu.supplyer.WeakHandler;
-import cn.boweikeji.wuliu.supplyer.db.DBHelper;
-import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
-
-import cn.boweikeji.wuliu.supplyer.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -89,12 +84,6 @@ public class WelcomeActivity extends BaseActivity {
 		editor.commit();
 	}
 	
-	private void initDB() {
-		DBHelper helper = ((WLApplication)getApplication()).getHelper();
-		SQLiteDatabase db = helper.getReadableDatabase();
-		db.close();
-	}
-	
 	private void logoFinish() {
 		if (mNeedInit) {
 			showNewFeature();
@@ -126,7 +115,6 @@ public class WelcomeActivity extends BaseActivity {
 			try {
 				if (mNeedInit) {
 					long start = System.currentTimeMillis();
-					initDB();
 					saveVersion();
 					long time = System.currentTimeMillis() - start;
 					if (time < SLEEP_TIME) {
