@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <style name="WuLiu.TextAppearance">
+    <style name="TextAppearance">
         <item name="android:textSize">@dimen/text_size_middle</item>
         <item name="android:textColor">@color/text_color_white</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Small">
+    <style name="TextAppearance.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Small.DarkGray">
+    <style name="TextAppearance.Small.DarkGray">
         <item name="android:textColor">@color/text_color_dark_gray</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Small.LightGray">
+    <style name="TextAppearance.Small.LightGray">
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Middle">
+    <style name="TextAppearance.Middle">
         <item name="android:textSize">@dimen/text_size_middle</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Big">
+    <style name="TextAppearance.Big">
         <item name="android:textSize">@dimen/text_size_big</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Middle.LightGray">
+    <style name="TextAppearance.Middle.LightGray">
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Middle.White">
+    <style name="TextAppearance.Middle.White">
         <item name="android:textColor">@color/text_color_white</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Big.Yellow">
+    <style name="TextAppearance.Middle.Black">
+        <item name="android:textColor">@color/text_color_black</item>
+    </style>
+    
+    <style name="TextAppearance.Big.Yellow">
         <item name="android:textColor">@color/text_color_yellow</item>
     </style>
     
-    <style name="WuLiu.TextAppearance.Big.White">
+    <style name="TextAppearance.Big.White">
         <item name="android:textColor">@color/text_color_white</item>
     </style>
 </resources>

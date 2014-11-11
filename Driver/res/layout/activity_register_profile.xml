@@ -38,7 +38,7 @@
 
                 <Button
                     android:id="@+id/register_get_code"
-                    style="@style/WuLiu.TextAppearance.Middle.White"
+                    style="@style/TextAppearance.Middle.White"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -87,14 +87,14 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                    style="@style/TextAppearance.Middle.LightGray"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/label_driver_type" />
 
                 <TextView
                     android:id="@+id/register_driver_type"
-                    style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                    style="@style/TextAppearance.Middle.LightGray"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
@@ -121,20 +121,21 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                    style="@style/TextAppearance.Middle.LightGray"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/label_area_code" />
 
                 <TextView
                     android:id="@+id/register_area_code"
-                    style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                    style="@style/TextAppearance.Middle.LightGray"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:drawablePadding="5dp"
                     android:drawableRight="@drawable/arrow_right"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:text="@string/choose_city" />
             </LinearLayout>
 
             <cn.boweikeji.wuliu.driver.view.ClearEditText
@@ -154,7 +155,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                    style="@style/TextAppearance.Middle.LightGray"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
@@ -172,7 +173,7 @@
 
             <Button
                 android:id="@+id/next_step"
-                style="@style/WuLiu.TextAppearance.Big.White"
+                style="@style/TextAppearance.Big.White"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/btn_default_height"
                 android:layout_marginTop="20dp"

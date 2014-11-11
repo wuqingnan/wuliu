@@ -47,6 +47,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	
 	private static final int REQUEST_CODE_PICK = 1 << 0;
 	private static final int REQUEST_CODE_CAPTURE = 1 << 1;
+	private static final int REQUEST_CODE_CITYLIST = 1 << 2;
 	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
@@ -58,7 +59,7 @@ public class RegisterProfileActivity extends BaseActivity {
 			} else if (view == mDriverType) {
 				driverType();
 			} else if (view == mAreaCode) {
-
+				chooseCity();
 			} else if (view == mIDImage) {
 				chooseIDImage();
 			} else if (view == mNextStep) {
@@ -207,9 +208,6 @@ public class RegisterProfileActivity extends BaseActivity {
 		
 		mPhotoWidth = getResources().getDimensionPixelSize(R.dimen.id_image_width);
 		mPhotoHeight = getResources().getDimensionPixelSize(R.dimen.id_image_height);
-		
-		mCity = "北京市";
-		updateCity();
 	}
 
 	private void getVerifyCode() {
@@ -346,6 +344,11 @@ public class RegisterProfileActivity extends BaseActivity {
 		dialog.show();
 	}
 	
+	private void chooseCity() {
+		Intent intent = new Intent(this, CityListActivity.class);
+		startActivityForResult(intent, REQUEST_CODE_CITYLIST);
+	}
+	
 	private void chooseIDImage() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
 		.setItems(R.array.choose_image_from, new DialogInterface.OnClickListener() {
@@ -463,6 +466,10 @@ public class RegisterProfileActivity extends BaseActivity {
 				break;
 			case REQUEST_CODE_PICK:
 				loadImage(data.getData());
+				break;
+			case REQUEST_CODE_CITYLIST:
+				mCity = data.getStringExtra("city");
+				updateCity();
 				break;
 			}
 		} else {

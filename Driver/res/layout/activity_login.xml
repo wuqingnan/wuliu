@@ -34,7 +34,7 @@
 
             <Button
                 android:id="@+id/login_show_pass"
-                style="@style/WuLiu.TextAppearance.Small.LightGray"
+                style="@style/TextAppearance.Small.LightGray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -57,7 +57,7 @@
 
         <Button
             android:id="@+id/login_submit"
-            style="@style/WuLiu.TextAppearance.Big.White"
+            style="@style/TextAppearance.Big.White"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/btn_default_height"
             android:layout_marginTop="20dp"

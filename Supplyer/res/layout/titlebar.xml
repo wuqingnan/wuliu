@@ -14,7 +14,7 @@
 
     <Button
         android:id="@+id/titlebar_rightTxt"
-        style="@style/WuLiu.TextAppearance.Middle.LightGray"
+        style="@style/TextAppearance.Middle.LightGray"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/titlebar_title"
-        style="@style/WuLiu.TextAppearance.Big.Yellow"
+        style="@style/TextAppearance.Big.Yellow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"

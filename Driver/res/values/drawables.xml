@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="drawable" name="list_selector_normal">#ffffff</item>
+    <item type="drawable" name="list_selector_pressed">#e5e5e4</item>
+</resources>

@@ -26,14 +26,14 @@
             android:orientation="horizontal" >
 
             <TextView
-                style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                style="@style/TextAppearance.Middle.LightGray"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/label_truck_type" />
 
             <TextView
                 android:id="@+id/register_truck_type"
-                style="@style/WuLiu.TextAppearance.Middle.LightGray"
+                style="@style/TextAppearance.Middle.LightGray"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
@@ -81,7 +81,7 @@
 
         <Button
             android:id="@+id/register_submit"
-            style="@style/WuLiu.TextAppearance.Big.White"
+            style="@style/TextAppearance.Big.White"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/btn_default_height"
             android:layout_marginTop="20dp"

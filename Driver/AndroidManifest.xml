@@ -77,6 +77,13 @@
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         
+        <activity
+            android:name="cn.boweikeji.wuliu.driver.activity.CityListActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        
         <!--微信分享回调 -->
 		<activity
   			android:name=".wxapi.WXEntryActivity"
