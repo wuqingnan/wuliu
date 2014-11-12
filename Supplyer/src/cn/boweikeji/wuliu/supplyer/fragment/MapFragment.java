@@ -1,8 +1,5 @@
 ﻿package cn.boweikeji.wuliu.supplyer.fragment;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,17 +7,11 @@ import org.json.JSONObject;
 
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.WLApplication;
+import cn.boweikeji.wuliu.supplyer.activity.MainActivity;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
-import cn.boweikeji.wuliu.supplyer.bean.Driver;
-import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
-import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
-import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
-import cn.boweikeji.wuliu.supplyer.utils.Util;
+import cn.boweikeji.wuliu.supplyer.listener.ILocationListener;
 
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMap.OnMapClickListener;
 import com.baidu.mapapi.map.BaiduMap.OnMyLocationClickListener;
@@ -43,8 +34,8 @@ import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import cn.boweikeji.wuliu.supplyer.R;
 
+import cn.boweikeji.wuliu.supplyer.R;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -100,16 +91,9 @@ public class MapFragment extends BaseFragment {
 		}
 	};
 
-	private BDLocationListener mLocListener = new BDLocationListener() {
-
+	private ILocationListener mLocationListener = new ILocationListener() {
 		@Override
-		public void onReceivePoi(BDLocation poiLocation) {
-
-		}
-
-		@Override
-		public void onReceiveLocation(BDLocation location) {
-//			Log.d(TAG, "shizy---onReceiveLocation");
+		public void onLocation(BDLocation location) {
 			if (location == null || mMapView == null) {
 				return;
 			}
@@ -143,17 +127,21 @@ public class MapFragment extends BaseFragment {
 	private TextView mDriverName;
 	private TextView mDriverInfo;
 
-	private LocationClient mLocClient;
-
 	private boolean mIsFirstLoc;
-
-	private ScheduledThreadPoolExecutor mTimerTask;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mMapView = (MapView) inflater.inflate(R.layout.fragment_map, null);
 		return mMapView;
+	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		((MainActivity)getActivity()).setLocationListener(null);
+		mBaiduMap.setMyLocationEnabled(false);
+		mMapView.onDestroy();
 	}
 
 	@Override
@@ -174,24 +162,11 @@ public class MapFragment extends BaseFragment {
 		mMapView.onPause();
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		mTimerTask.shutdown();
-		mTimerTask.shutdownNow();
-		mLocClient.unRegisterLocationListener(mLocListener);
-		mLocClient.stop();
-		mBaiduMap.setMyLocationEnabled(false);
-		mMapView.onDestroy();
-	}
-
 	private void init() {
 		mIsFirstLoc = true;
 		initView();
 		initMap();
-		initLocation();
-		mTimerTask = new ScheduledThreadPoolExecutor(1);
-		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
+		((MainActivity)getActivity()).setLocationListener(mLocationListener);
 	}
 
 	private void initView() {
@@ -220,24 +195,10 @@ public class MapFragment extends BaseFragment {
 		mUiSettings.setScrollGesturesEnabled(true);
 		mUiSettings.setRotateGesturesEnabled(false);
 		mUiSettings.setOverlookingGesturesEnabled(false);
+		
+		mBaiduMap.setMyLocationEnabled(true);
 		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
 				LocationMode.NORMAL, true, null));
-	}
-
-	private void initLocation() {
-		mBaiduMap.setMyLocationEnabled(true);
-		mLocClient = new LocationClient(getActivity().getApplicationContext());
-		WLApplication.setLocationClient(mLocClient);
-		mLocClient.registerLocationListener(mLocListener);
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);
-		option.setCoorType("bd09ll");
-		option.setScanSpan(60 * 1000);
-		option.setIsNeedAddress(true);
-		option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-		mLocClient.setLocOption(option);
-		mLocClient.start();
-		mLocClient.requestLocation();
 	}
 
 	private void addMarker(JSONArray markers) {
@@ -270,7 +231,7 @@ public class MapFragment extends BaseFragment {
 	}
 
 	private void showMyLocInfo() {
-		BDLocation loc = mLocClient.getLastKnownLocation();
+		BDLocation loc = WLApplication.getLocationClient().getLastKnownLocation();
 		if (loc == null || loc.getAddrStr() == null) {
 			return;
 		}
@@ -331,44 +292,6 @@ public class MapFragment extends BaseFragment {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}
-	}
-	
-	private class PositionTask implements Runnable {
-		
-		AsyncHttpClient mHttpClient;
-		
-		public PositionTask() {
-			mHttpClient = new AsyncHttpClient();
-			mHttpClient.setURLEncodingEnabled(true);
-		}
-		
-		@Override
-		public void run() {
-			UserInfo info = LoginManager.getInstance().getUserInfo();
-			if (info == null) {
-				return;
-			}
-			
-			LocationClient client = WLApplication.getLocationClient();
-			if (client == null) { 
-				return;
-			}
-			
-			BDLocation location = client.getLastKnownLocation();
-			
-			BaseParams params = new BaseParams();
-			params.add("method", "collectSupplyInfos");
-			params.add("supplyer_cd", info.getSupplyer_cd());
-			params.add("gps_j", "" + location.getLongitude());
-			params.add("gps_w", "" + location.getLatitude());
-			params.add("speed", "" + location.getSpeed());
-			params.add("phone_type", "" + DeviceInfo.getModel());
-			params.add("operate_system", "" + DeviceInfo.getOSName());
-			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_POSITION_UPLOAD, params));
-			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
 		}
 	}
 }

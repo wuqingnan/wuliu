@@ -1,8 +1,5 @@
 package cn.boweikeji.wuliu.driver.fragment;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,15 +11,14 @@ import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.activity.LoginActivity;
+import cn.boweikeji.wuliu.driver.activity.MainActivity;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
-import cn.boweikeji.wuliu.driver.bean.UserInfo;
+import cn.boweikeji.wuliu.driver.event.LoginEvent;
+import cn.boweikeji.wuliu.driver.event.LogoutEvent;
+import cn.boweikeji.wuliu.driver.listener.ILocationListener;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
-import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -46,6 +42,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import de.greenrobot.event.EventBus;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -110,17 +107,10 @@ public class HomeFragment extends BaseFragment {
 			mBaiduMap.hideInfoWindow();
 		}
 	};
-
-	private BDLocationListener mLocListener = new BDLocationListener() {
-
+	
+	private ILocationListener mLocationListener = new ILocationListener() {
 		@Override
-		public void onReceivePoi(BDLocation poiLocation) {
-
-		}
-
-		@Override
-		public void onReceiveLocation(BDLocation location) {
-//			Log.d(TAG, "shizy---onReceiveLocation");
+		public void onLocation(BDLocation location) {
 			if (location == null || mMapView == null) {
 				return;
 			}
@@ -165,11 +155,7 @@ public class HomeFragment extends BaseFragment {
 	private TextView mDriverName;
 	private TextView mDriverInfo;
 
-	private LocationClient mLocClient;
-
 	private boolean mIsFirstLoc;
-
-	private ScheduledThreadPoolExecutor mTimerTask;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -178,6 +164,15 @@ public class HomeFragment extends BaseFragment {
 		return mRootView;
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		((MainActivity)getActivity()).setLocationListener(null);
+		mBaiduMap.setMyLocationEnabled(false);
+		mMapView.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -196,26 +191,14 @@ public class HomeFragment extends BaseFragment {
 		mMapView.onPause();
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		mTimerTask.shutdown();
-		mTimerTask.shutdownNow();
-		mLocClient.unRegisterLocationListener(mLocListener);
-		mLocClient.stop();
-		mBaiduMap.setMyLocationEnabled(false);
-		mMapView.onDestroy();
-	}
-
 	private void init() {
 		ButterKnife.inject(this, mRootView);
 		mIsFirstLoc = true;
 		initTitle();
 		initView();
 		initMap();
-		initLocation();
-		mTimerTask = new ScheduledThreadPoolExecutor(1);
-		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
+		EventBus.getDefault().register(this);
+		((MainActivity)getActivity()).setLocationListener(mLocationListener);
 	}
 
 	private void initTitle() {
@@ -224,6 +207,7 @@ public class HomeFragment extends BaseFragment {
 		mLogin.setVisibility(View.VISIBLE);
 		mLogin.setText(R.string.login);
 		mLogin.setOnClickListener(mOnClickListener);
+		updateLoginBtn();
 	}
 	
 	private void initView() {
@@ -246,30 +230,17 @@ public class HomeFragment extends BaseFragment {
 		mBaiduMap.setOnMapClickListener(mOnMapClickListener);
 		mBaiduMap.setOnMyLocationClickListener(mLocClickListener);
 		mBaiduMap.setOnMarkerClickListener(mOnMarkerClickListener);
+		
 		mUiSettings = mBaiduMap.getUiSettings();
 		mUiSettings.setCompassEnabled(false);
 		mUiSettings.setZoomGesturesEnabled(true);
 		mUiSettings.setScrollGesturesEnabled(true);
 		mUiSettings.setRotateGesturesEnabled(false);
 		mUiSettings.setOverlookingGesturesEnabled(false);
+		
+		mBaiduMap.setMyLocationEnabled(true);
 		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
 				LocationMode.NORMAL, true, null));
-	}
-
-	private void initLocation() {
-		mBaiduMap.setMyLocationEnabled(true);
-		mLocClient = new LocationClient(getActivity().getApplicationContext());
-		WLApplication.setLocationClient(mLocClient);
-		mLocClient.registerLocationListener(mLocListener);
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);
-		option.setCoorType("bd09ll");
-		option.setScanSpan(60 * 1000);
-		option.setIsNeedAddress(true);
-		option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-		mLocClient.setLocOption(option);
-		mLocClient.start();
-		mLocClient.requestLocation();
 	}
 
 	private void addMarker(JSONArray markers) {
@@ -302,7 +273,7 @@ public class HomeFragment extends BaseFragment {
 	}
 
 	private void showMyLocInfo() {
-		BDLocation loc = mLocClient.getLastKnownLocation();
+		BDLocation loc = WLApplication.getLocationClient().getLastKnownLocation();
 		if (loc == null || loc.getAddrStr() == null) {
 			return;
 		}
@@ -366,42 +337,17 @@ public class HomeFragment extends BaseFragment {
 		}
 	}
 	
-	private class PositionTask implements Runnable {
-		
-		AsyncHttpClient mHttpClient;
-		
-		public PositionTask() {
-			mHttpClient = new AsyncHttpClient();
-			mHttpClient.setURLEncodingEnabled(true);
+	private void updateLoginBtn() {
+		if (LoginManager.getInstance().hasLogin()) {
+			mLogin.setVisibility(View.GONE);
 		}
-		
-		@Override
-		public void run() {
-			UserInfo info = LoginManager.getInstance().getUserInfo();
-			if (info == null) {
-				return;
-			}
-			
-			LocationClient client = WLApplication.getLocationClient();
-			if (client == null) { 
-				return;
-			}
-			
-			BDLocation location = client.getLastKnownLocation();
-			
-			BaseParams params = new BaseParams();
-			params.add("method", "collectDriverInfos");
-			params.add("driver_cd", info.getDriver_cd());
-			params.add("gps_j", "" + location.getLongitude());
-			params.add("gps_w", "" + location.getLatitude());
-			params.add("speed", "" + location.getSpeed());
-			params.add("phone_type", "" + DeviceInfo.getModel());
-			params.add("operate_system", "" + DeviceInfo.getOSName());
-			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
-			params.add("app_version", "" + DeviceInfo.getAppVersion());
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_POSITION_UPLOAD, params));
-			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
-		}
+	}
+	
+	public void onEventMainThread(LoginEvent event) {
+		updateLoginBtn();
+	}
+	
+	public void onEventMainThread(LogoutEvent event) {
+		updateLoginBtn();
 	}
 }

@@ -1,9 +1,17 @@
 ﻿package cn.boweikeji.wuliu.supplyer.activity;
 
-import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.loopj.android.http.AsyncHttpClient;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
+import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.UpdateEvent;
 import cn.boweikeji.wuliu.supplyer.fragment.BaseFragment;
@@ -13,12 +21,15 @@ import cn.boweikeji.wuliu.supplyer.fragment.MapFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.OrderFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.ProfileFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.SetFragment;
+import cn.boweikeji.wuliu.supplyer.listener.ILocationListener;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
+import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
 import cn.boweikeji.wuliu.supplyer.utils.UpdateUtil;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 import cn.boweikeji.wuliu.supplyer.view.MenuView;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.R;
+import cn.boweikeji.wuliu.supplyer.WLApplication;
 import de.greenrobot.event.EventBus;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -27,7 +38,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -74,12 +84,33 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 	
+	private BDLocationListener mBDLocListener = new BDLocationListener() {
+
+		@Override
+		public void onReceivePoi(BDLocation poiLocation) {
+
+		}
+
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+//			Log.d(TAG, "shizy---onReceiveLocation");
+			if (mLocationListener != null) {
+				mLocationListener.onLocation(location);
+			}
+		}
+	};
+	
 	private MenuView mMenuView;
 	private MenuDrawer mMenuDrawer;
 	
 	private MapFragment mMapFragment;
 	private FragmentManager mFragmentManager;
 
+	private LocationClient mLocClient;
+	private ILocationListener mLocationListener;
+
+	private ScheduledThreadPoolExecutor mTimerTask;
+	
 	private long mExitTime;
 
 	private boolean mFirstCheckUpdate = true;
@@ -88,16 +119,17 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        initMenu();
-        initFragment();
-		LoginManager.getInstance().autoLogin();
-		EventBus.getDefault().register(this);
-		UpdateUtil.checkUpdate();
+		setContentView(R.layout.activity_main);
+        init();
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		mLocClient.unRegisterLocationListener(mBDLocListener);
+		mLocClient.stop();
+		mTimerTask.shutdown();
+		mTimerTask.shutdownNow();
 		EventBus.getDefault().unregister(this);
 		EventBus.getDefault().unregister(mMenuView);
 	}
@@ -160,6 +192,17 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 	}
+	
+	private void init() {
+		initMenu();
+        initFragment();
+        initLocation();
+		LoginManager.getInstance().autoLogin();
+		EventBus.getDefault().register(this);
+		UpdateUtil.checkUpdate();
+		mTimerTask = new ScheduledThreadPoolExecutor(1);
+		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300, TimeUnit.SECONDS);
+	}
 
 	private void initMenu() {
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, Position.LEFT, MenuDrawer.MENU_DRAG_WINDOW);
@@ -181,6 +224,21 @@ public class MainActivity extends BaseActivity {
 				.replace(R.id.mapLayout, mMapFragment).commit();
 		mFragmentManager.beginTransaction()
 				.replace(R.id.topLayout, new MainFragment()).commit();
+	}
+	
+	private void initLocation() {
+		mLocClient = new LocationClient(getApplicationContext());
+		WLApplication.setLocationClient(mLocClient);
+		mLocClient.registerLocationListener(mBDLocListener);
+		LocationClientOption option = new LocationClientOption();
+		option.setOpenGps(true);
+		option.setCoorType("bd09ll");
+		option.setScanSpan(60 * 1000);
+		option.setIsNeedAddress(true);
+		option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+		mLocClient.setLocOption(option);
+		mLocClient.start();
+		mLocClient.requestLocation();
 	}
 
 	public void showMenu() {
@@ -211,6 +269,10 @@ public class MainActivity extends BaseActivity {
 	private void exit() {
 		finish();
 		System.exit(0);
+	}
+	
+	public void setLocationListener(ILocationListener listener) {
+		mLocationListener = listener;
 	}
 	
 	public void onEventMainThread(UpdateEvent event) {
@@ -258,4 +320,41 @@ public class MainActivity extends BaseActivity {
 		}
 	}
 	
+	private class PositionTask implements Runnable {
+		
+		AsyncHttpClient mHttpClient;
+		
+		public PositionTask() {
+			mHttpClient = new AsyncHttpClient();
+			mHttpClient.setURLEncodingEnabled(true);
+		}
+		
+		@Override
+		public void run() {
+			UserInfo info = LoginManager.getInstance().getUserInfo();
+			if (info == null) {
+				return;
+			}
+			
+			LocationClient client = WLApplication.getLocationClient();
+			if (client == null) { 
+				return;
+			}
+			
+			BDLocation location = client.getLastKnownLocation();
+			
+			BaseParams params = new BaseParams();
+			params.add("method", "collectSupplyInfos");
+			params.add("supplyer_cd", info.getSupplyer_cd());
+			params.add("gps_j", "" + location.getLongitude());
+			params.add("gps_w", "" + location.getLatitude());
+			params.add("speed", "" + location.getSpeed());
+			params.add("phone_type", "" + DeviceInfo.getModel());
+			params.add("operate_system", "" + DeviceInfo.getOSName());
+			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
+			
+			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_POSITION_UPLOAD, params));
+			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
+		}
+	}
 }

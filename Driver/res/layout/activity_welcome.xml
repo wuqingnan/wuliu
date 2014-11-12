@@ -38,6 +38,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp"
             android:textColor="#0000FF"
-            android:text="©鄂尔多斯汇流科技有限公司" />
+            android:text="@string/developer" />
     </RelativeLayout>
 </RelativeLayout>
