@@ -57,6 +57,12 @@
     <string name="label_id_front">身份证正面：</string>
     <string name="label_area_code">所属地：</string>
     <string name="label_truck_type">车辆类型：</string>
+    <string name="label_goods_type">货物类型：</string>
+    <string name="label_message_free">信息公开：</string>
+    
+    <string name="all">全部</string>
+    <string name="free_yes">免费公开</string>
+    <string name="free_no">付费公开</string>
     
     <string name="phone_empty">手机号为空</string>
     <string name="vertify_code_empty">验证码为空</string>
@@ -74,5 +80,9 @@
     <string name="choose_id_image">请选择身份证正面照</string>
 
     <string name="upload_id_image_fail">身份证上传失败</string>
+    
+    <string name="choose_start">请选择起点</string>
+    <string name="choose_end">请选择终点</string>
+    <string name="must_choose_one_addr">发货地址和收货地址至少有一项不能为空</string>
     
 </resources>

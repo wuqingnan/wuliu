@@ -47,8 +47,8 @@ public class SendActivity extends BaseActivity {
 				showTypeChooseDialog();
 			} else if (view == mGoodsValidTime) {
 				showValidTimeChooseDialog();
-			} else if (view == mGoodsTraffic) {
-				showTrafficChooseDialog();
+			} else if (view == mTruckType) {
+				truckType();
 			} else if (view == mSwapAddress) {
 				swapAddress();
 			} else if (view == mNextStep) {
@@ -103,8 +103,8 @@ public class SendActivity extends BaseActivity {
 	EditText mGoodsPay;
 	@InjectView(R.id.goods_valid_time)
 	TextView mGoodsValidTime;
-	@InjectView(R.id.goods_traffic)
-	TextView mGoodsTraffic;
+	@InjectView(R.id.truck_type)
+	TextView mTruckType;
 	@InjectView(R.id.address_from)
 	TextView mAddressFrom;
 	@InjectView(R.id.address_to)
@@ -120,11 +120,11 @@ public class SendActivity extends BaseActivity {
 	private String[] mFromInfos = new String[4];
 	private String[] mToInfos = new String[4];
 	
-	private String[] mTypeList;
-	private String[] mTrafficList;
-	private String[] mValidTimeList;
-	private int mTypeIndex;
-	private int mTrafficIndex;
+	private String[] mGoodsTypes;
+	private String[] mTruckTypes;
+	private String[] mValidTimes;
+	private int mGoodsTypeIndex;
+	private int mTruckTypeIndex;
 	private int mValidTimeIndex;
 	private long mBespeakTime;
 	private boolean mBespeak;
@@ -175,7 +175,7 @@ public class SendActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		mGoodsType.setOnClickListener(mOnClickListener);
 		mGoodsValidTime.setOnClickListener(mOnClickListener);
-		mGoodsTraffic.setOnClickListener(mOnClickListener);
+		mTruckType.setOnClickListener(mOnClickListener);
 		mSwapAddress.setOnClickListener(mOnClickListener);
 		mNextStep.setOnClickListener(mOnClickListener);
 		mMenuBtn.setImageResource(R.drawable.btn_title_back);
@@ -191,17 +191,17 @@ public class SendActivity extends BaseActivity {
 	}
 
 	private void initData() {
-		mTypeIndex = 0;
-		mTrafficIndex = 0;
+		mGoodsTypeIndex = 0;
+		mTruckTypeIndex = 0;
 		mValidTimeIndex = 0;
 		
-		mTypeList = getResources().getStringArray(R.array.goods_type_list);
-		mTrafficList = getResources()
-				.getStringArray(R.array.goods_traffic_list);
-		mValidTimeList = getResources()
+		mGoodsTypes = getResources().getStringArray(R.array.goods_type_list);
+		mTruckTypes = getResources()
+				.getStringArray(R.array.truck_type_list);
+		mValidTimes = getResources()
 				.getStringArray(R.array.goods_valid_time_list);
-		updateType();
-		updateTraffic();
+		updateGoodsType();
+		updateTruckType();
 		updateValidTime();
 		mGoodsWeightUnit.check(R.id.goods_weight_unit_kg);
 	}
@@ -221,22 +221,22 @@ public class SendActivity extends BaseActivity {
 		}
 	}
 
-	private void updateType() {
-		mGoodsType.setText(mTypeList[mTypeIndex]);
+	private void updateGoodsType() {
+		mGoodsType.setText(mGoodsTypes[mGoodsTypeIndex]);
 	}
 
 	private void updateValidTime() {
-		mGoodsValidTime.setText(mValidTimeList[mValidTimeIndex]);
+		mGoodsValidTime.setText(mValidTimes[mValidTimeIndex]);
 	}
 	
-	private void updateTraffic() {
-		mGoodsTraffic.setText(mTrafficList[mTrafficIndex]);
+	private void updateTruckType() {
+		mTruckType.setText(mTruckTypes[mTruckTypeIndex]);
 	}
 	
 	private void sendDetail() {
 		if (checkValid()) {
 			Order order = new Order();
-			order.setGoodsType(mTypeIndex);
+			order.setGoodsType(mGoodsTypeIndex);
 			order.setGoodsName(mGoodsName.getText().toString());
 			if (mBespeak) {
 				order.setPickTime(mPickTime.getText().toString());
@@ -247,7 +247,7 @@ public class SendActivity extends BaseActivity {
 			order.setGoodsValue(Integer.parseInt(mGoodsValue.getText().toString()));
 			order.setPay(Integer.parseInt(mGoodsPay.getText().toString()));
 			order.setValidTime(mValidTimeIndex);
-			order.setTrunkType(mTrafficIndex);
+			order.setTrunkType(mTruckTypeIndex);
 			order.setToAddress(mAddressTo.getText().toString());
 			order.setFromAddress(mAddressFrom.getText().toString());
 			LocationClient client = WLApplication.getLocationClient();
@@ -273,15 +273,15 @@ public class SendActivity extends BaseActivity {
 	
 	private void showTypeChooseDialog() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
-				.setSingleChoiceItems(mTypeList, mTypeIndex,
+				.setSingleChoiceItems(mGoodsTypes, mGoodsTypeIndex,
 						new DialogInterface.OnClickListener() {
 
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								mTypeIndex = which;
+								mGoodsTypeIndex = which;
 								dialog.dismiss();
-								updateType();
+								updateGoodsType();
 							}
 						}).setTitle("物品类型").create();
 		dialog.show();
@@ -289,7 +289,7 @@ public class SendActivity extends BaseActivity {
 	
 	private void showValidTimeChooseDialog() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
-		.setSingleChoiceItems(mValidTimeList, mValidTimeIndex,
+		.setSingleChoiceItems(mValidTimes, mValidTimeIndex,
 				new DialogInterface.OnClickListener() {
 			
 			@Override
@@ -304,19 +304,19 @@ public class SendActivity extends BaseActivity {
 	}
 	
 	
-	private void showTrafficChooseDialog() {
+	private void truckType() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
-		.setSingleChoiceItems(mTrafficList, mTrafficIndex,
+		.setSingleChoiceItems(mTruckTypes, mTruckTypeIndex,
 				new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog,
 					int which) {
-				mTrafficIndex = which;
+				mTruckTypeIndex = which;
 				dialog.dismiss();
-				updateTraffic();
+				updateTruckType();
 			}
-		}).setTitle("交通工具").create();
+		}).setTitle("车辆类型").create();
 		dialog.show();
 	}
 	
@@ -379,7 +379,7 @@ public class SendActivity extends BaseActivity {
 			Util.showTips(this, getResources().getString(
 					R.string.address_to_empty));
 			return false;
-		} else if (mTrafficIndex == 0) {
+		} else if (mTruckTypeIndex == 0) {
 			Util.showTips(this, getResources().getString(
 					R.string.trunk_type_error));
 			return false;

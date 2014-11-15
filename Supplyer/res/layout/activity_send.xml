@@ -362,7 +362,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_goods_traffic" />
+                    android:text="@string/label_truck_type" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -372,7 +372,7 @@
                     android:visibility="invisible" />
 
                 <TextView
-                    android:id="@+id/goods_traffic"
+                    android:id="@+id/truck_type"
                     style="@style/Send_Item_Value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

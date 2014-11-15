@@ -45,7 +45,7 @@
     <string name="label_goods_type">物品类型：</string>
     <string name="label_goods_value">物品价值：</string>
     <string name="label_goods_weight">物品重量：</string>
-    <string name="label_goods_traffic">交通工具：</string>
+    <string name="label_truck_type">交通工具：</string>
     <string name="label_goods_pay">愿出金额：</string>
     <string name="label_goods_valid_time">有效时间：</string>
     <string name="label_send_from">发货人：</string>

@@ -145,7 +145,7 @@ public class RegisterTruckActivity extends BaseActivity {
 		mRegInfo = (RegisterInfo) intent.getSerializableExtra(KEY_INFO);
 		
 		mTruckTypeIndex = 0;
-		mTruckTypes = getResources().getStringArray(R.array.goods_traffic_list);
+		mTruckTypes = getResources().getStringArray(R.array.truck_type_list);
 		updateTruckType();
 	}
 

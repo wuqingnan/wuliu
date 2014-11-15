@@ -512,7 +512,7 @@ public class OrderDetailActivity extends BaseActivity {
 		private String[] mStateName;
 		private int[] mStateValue;
 		
-		private String[] mTrucks;
+		private String[] mTruckTypes;
 		
 		private int mOrderCnt;
 		private int mDriverCnt;
@@ -524,7 +524,7 @@ public class OrderDetailActivity extends BaseActivity {
 			mStars = context.getResources().getStringArray(R.array.driver_stars);
 			mStateName = context.getResources().getStringArray(R.array.order_state_name);
 			mStateValue = context.getResources().getIntArray(R.array.order_state_value);
-			mTrucks = context.getResources().getStringArray(R.array.goods_traffic_list);
+			mTruckTypes = context.getResources().getStringArray(R.array.truck_type_list);
 		}
 		
 		@Override
@@ -649,8 +649,8 @@ public class OrderDetailActivity extends BaseActivity {
 				break;
 			case R.string.label_driver_truck:
 				int truck = mDriver.getTrunk_type_code();
-				if (truck >= 0 && truck < mTrucks.length) {
-					value = mTrucks[truck];
+				if (truck >= 0 && truck < mTruckTypes.length) {
+					value = mTruckTypes[truck];
 				}
 				break;
 			case R.string.label_driver_level:

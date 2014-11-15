@@ -252,7 +252,7 @@ public class HomeFragment extends BaseFragment {
 				.fromResource(R.drawable.marker1);
 
 		JSONObject info = null;
-		String[] trucks = getResources().getStringArray(R.array.goods_traffic_list);
+		String[] truckTypes = getResources().getStringArray(R.array.truck_type_list);
 		for (int i = 0; i < markers.length(); i++) {
 			try {
 				info = markers.getJSONObject(i);
@@ -260,8 +260,8 @@ public class HomeFragment extends BaseFragment {
 				LatLng ll = new LatLng(info.optDouble("gps_w"), info.optDouble("gps_j"));
 				Bundle bundle = new Bundle();
 				bundle.putString("name", info.optString("driver_name"));
-				if (truck >= 0 && truck < trucks.length) {
-					bundle.putString("info", trucks[truck]);
+				if (truck >= 0 && truck < truckTypes.length) {
+					bundle.putString("info", truckTypes[truck]);
 				}
 				OverlayOptions option = new MarkerOptions().position(ll).icon(bitmap)
 						.extraInfo(bundle);

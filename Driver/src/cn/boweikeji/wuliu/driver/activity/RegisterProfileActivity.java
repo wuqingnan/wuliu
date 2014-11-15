@@ -45,9 +45,9 @@ public class RegisterProfileActivity extends BaseActivity {
 	private static final int MSG_SUBMIT_VERIFICATION_CODE_ERROR = 1 << 2;
 	private static final int MSG_SUBMIT_VERIFICATION_CODE_COMPLETE = 1 << 3;
 	
-	private static final int REQUEST_CODE_PICK = 1 << 0;
-	private static final int REQUEST_CODE_CAPTURE = 1 << 1;
-	private static final int REQUEST_CODE_CITYLIST = 1 << 2;
+	private static final int REQUESTCODE_PICK = 1 << 0;
+	private static final int REQUESTCODE_CAPTURE = 1 << 1;
+	private static final int REQUESTCODE_CITYLIST = 1 << 2;
 	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
@@ -346,7 +346,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	
 	private void chooseCity() {
 		Intent intent = new Intent(this, CityListActivity.class);
-		startActivityForResult(intent, REQUEST_CODE_CITYLIST);
+		startActivityForResult(intent, REQUESTCODE_CITYLIST);
 	}
 	
 	private void chooseIDImage() {
@@ -374,7 +374,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	private void pickImage() {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
-		startActivityForResult(intent, REQUEST_CODE_PICK);
+		startActivityForResult(intent, REQUESTCODE_PICK);
 	}
 	
 	/**
@@ -386,7 +386,7 @@ public class RegisterProfileActivity extends BaseActivity {
     		mPhotoUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
     		intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mPhotoUri);
     	} catch (Exception e) {}
-		startActivityForResult(intent, REQUEST_CODE_CAPTURE);
+		startActivityForResult(intent, REQUESTCODE_CAPTURE);
 	}
 	
 	private void showProgressDialog() {
@@ -461,26 +461,26 @@ public class RegisterProfileActivity extends BaseActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
-			case REQUEST_CODE_CAPTURE:
+			case REQUESTCODE_CAPTURE:
 				loadImage(mPhotoUri);
 				break;
-			case REQUEST_CODE_PICK:
+			case REQUESTCODE_PICK:
 				loadImage(data.getData());
 				break;
-			case REQUEST_CODE_CITYLIST:
+			case REQUESTCODE_CITYLIST:
 				mCity = data.getStringExtra("city");
 				updateCity();
 				break;
 			}
 		} else {
 			switch (requestCode) {
-			case REQUEST_CODE_CAPTURE:
+			case REQUESTCODE_CAPTURE:
 				Log.d(TAG, "onFailture Capture");
 				if (mPhotoUri != null) {
 					getContentResolver().delete(mPhotoUri, null, null);
 				}
 				break;
-			case REQUEST_CODE_PICK:
+			case REQUESTCODE_PICK:
 				break;
 			}
 		}

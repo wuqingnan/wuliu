@@ -17,7 +17,7 @@
         <item>其他</item>
     </string-array>
     
-    <string-array name="goods_traffic_list">
+    <string-array name="truck_type_list">
         <item>请选择</item>
         <item>货物运输车</item>
         <item>生鲜运输车</item>

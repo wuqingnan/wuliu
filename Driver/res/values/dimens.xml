@@ -17,6 +17,7 @@
     <dimen name="title_height">48dp</dimen>
     
     <dimen name="btn_default_height">40dp</dimen>
+    <dimen name="item_default_height">40dp</dimen>
     
     <dimen name="fragment_more_item_height">40dp</dimen>
     
