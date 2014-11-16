@@ -22,6 +22,7 @@
     </integer-array>
     
     <string-array name="goods_type_list">
+        <item>全部</item>
         <item>大宗货物</item>
         <item>普通货物</item>
         <item>生鲜果蔬</item>

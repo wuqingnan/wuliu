@@ -157,6 +157,9 @@ public class HomeFragment extends BaseFragment {
 
 	private boolean mIsFirstLoc;
 	
+	private String mMyLoc;
+	private String[] mTruckTypes;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -194,11 +197,17 @@ public class HomeFragment extends BaseFragment {
 	private void init() {
 		ButterKnife.inject(this, mRootView);
 		mIsFirstLoc = true;
+		initString();
 		initTitle();
 		initView();
 		initMap();
 		EventBus.getDefault().register(this);
 		((MainActivity)getActivity()).setLocationListener(mLocationListener);
+	}
+	
+	private void initString() {
+		mMyLoc = getResources().getString(R.string.myloc);
+		mTruckTypes = getResources().getStringArray(R.array.truck_type_list);
 	}
 
 	private void initTitle() {
@@ -252,7 +261,7 @@ public class HomeFragment extends BaseFragment {
 				.fromResource(R.drawable.marker1);
 
 		JSONObject info = null;
-		String[] truckTypes = getResources().getStringArray(R.array.truck_type_list);
+		String[] truckTypes = mTruckTypes;
 		for (int i = 0; i < markers.length(); i++) {
 			try {
 				info = markers.getJSONObject(i);
@@ -277,8 +286,7 @@ public class HomeFragment extends BaseFragment {
 		if (loc == null || loc.getAddrStr() == null) {
 			return;
 		}
-		mMyLocTitle.setText(String.format(
-				getResources().getString(R.string.myloc), loc.getStreet()));
+		mMyLocTitle.setText(String.format(mMyLoc, loc.getStreet()));
 		mMyLocInfo.setText(loc.getCity() + " " + loc.getDistrict());
 		MyLocationData data = mBaiduMap.getLocationData();
 		LatLng ll = new LatLng(data.latitude, data.longitude);

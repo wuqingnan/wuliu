@@ -14,6 +14,7 @@
 
     <string name="title_home">@string/app_name</string>
     <string name="title_choose_city">选择城市</string>
+    <string name="title_find_result">结果列表</string>
     
     <string name="login">登录</string>
     <string name="register">注册</string>
@@ -84,5 +85,7 @@
     <string name="choose_start">请选择起点</string>
     <string name="choose_end">请选择终点</string>
     <string name="must_choose_one_addr">发货地址和收货地址至少有一项不能为空</string>
+    
+    <string name="no_result">无内容</string>
     
 </resources>

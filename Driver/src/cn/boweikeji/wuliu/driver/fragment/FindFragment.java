@@ -19,6 +19,9 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.activity.CityListActivity;
+import cn.boweikeji.wuliu.driver.activity.FindResultActivity;
+import cn.boweikeji.wuliu.driver.bean.FindFilter;
+import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 
 public class FindFragment extends BaseFragment {
@@ -129,7 +132,7 @@ public class FindFragment extends BaseFragment {
 	}
 
 	private void initData() {
-		mTruckTypeIndex = 0;
+		mTruckTypeIndex = Integer.parseInt(LoginManager.getInstance().getUserInfo().getTruck_type_code());
 		mTruckTypes = getResources().getStringArray(R.array.truck_type_list);
 		updateTruckType();
 
@@ -171,7 +174,23 @@ public class FindFragment extends BaseFragment {
 	
 	private void find() {
 		if (validCheck()) {
-			
+			FindFilter filter = new FindFilter();
+			filter.setStart_addr(mStartAddr);
+			filter.setEnd_addr(mEndAddr);
+			filter.setGoods_type_code(mGoodsTypeIndex);
+			switch (mMessageFree.getCheckedRadioButtonId()) {
+			case R.id.message_free_all:
+				filter.setMess_fee(FindFilter.MESSAGE_FREE_ALL);
+				break;
+			case R.id.message_free_yes:
+				filter.setMess_fee(FindFilter.MESSAGE_FREE_YES);
+				break;
+			case R.id.message_free_no:
+				filter.setMess_fee(FindFilter.MESSAGE_FREE_NO);
+				break;
+			}
+			filter.setTrunk_type_code(mTruckTypeIndex);
+			FindResultActivity.startFindResultActivity(getActivity(), filter);
 		}
 	}
 	

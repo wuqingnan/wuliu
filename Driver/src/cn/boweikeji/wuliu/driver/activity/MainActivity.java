@@ -48,8 +48,9 @@ public class MainActivity extends BaseActivity {
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			for (int i = 0; i < TAB_IDS.length; i++) {
 				if (TAB_IDS[i] == checkedId) {
-					// mViewPager.setCurrentItem(i, false);
-					changeFragment(i);
+					if (!changeFragment(i)) {
+						mTabGroup.check(TAB_IDS[mTabIndex]);
+					}
 					break;
 				}
 			}
@@ -80,6 +81,8 @@ public class MainActivity extends BaseActivity {
 	private FragmentManager mFragmentManager;
 
 	private long mExitTime;
+	
+	private int mTabIndex;
 
 	private LocationClient mLocClient;
 	private ILocationListener mLocationListener;
@@ -134,7 +137,11 @@ public class MainActivity extends BaseActivity {
 		mTabGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
 	}
 
-	private void changeFragment(int index) {
+	private boolean changeFragment(int index) {
+		if (index != 0 && !LoginManager.getInstance().hasLogin()) {
+			LoginActivity.startLoginActivity(this);
+			return false;
+		}
 		Fragment fragment = null;
 		switch (index) {
 		case 0:
@@ -157,6 +164,8 @@ public class MainActivity extends BaseActivity {
 				.beginTransaction()
 				.replace(R.id.container, fragment,
 						fragment.getClass().getName()).commit();
+		mTabIndex = index;
+		return true;
 	}
 	
 	private void initLocation() {

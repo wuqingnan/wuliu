@@ -19,6 +19,7 @@ public class UserInfo implements Serializable {
 	private String credit_level;
 	private String phone;
 	private String passwd;
+	private String truck_type_code;
 	
 	public UserInfo () {
 		
@@ -39,6 +40,7 @@ public class UserInfo implements Serializable {
 			setCard_id(object.optString("card_id"));
 			setCredit_level(object.optString("credit_level"));
 			setPhone(object.optString("phone"));
+			setTruck_type_code(object.optString("trunk_type_code"));
 			if (object.has("passwd")) {
 				setPasswd(object.optString("passwd"));
 			}
@@ -125,6 +127,14 @@ public class UserInfo implements Serializable {
 		this.passwd = passwd;
 	}
 
+	public String getTruck_type_code() {
+		return truck_type_code;
+	}
+
+	public void setTruck_type_code(String truck_type_code) {
+		this.truck_type_code = truck_type_code;
+	}
+
 	@Override
 	public String toString() {
 		try {
@@ -137,6 +147,7 @@ public class UserInfo implements Serializable {
 			obj.put("state", state);
 			obj.put("card_id", card_id);
 			obj.put("credit_level", credit_level);
+			obj.put("trunk_type_code", truck_type_code);
 			obj.put("phone", phone);
 			obj.put("passwd", passwd);
 			return obj.toString();

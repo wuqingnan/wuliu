@@ -52,7 +52,7 @@ public class RegisterTruckActivity extends BaseActivity {
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
-			if (view == mMenuBtn) {
+			if (view == mBack) {
 				finish();
 			} else if (view == mTruckType) {
 				truckType();
@@ -96,7 +96,7 @@ public class RegisterTruckActivity extends BaseActivity {
 	};
 	
 	@InjectView(R.id.titlebar_leftBtn)
-	ImageView mMenuBtn;
+	ImageView mBack;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.register_truck_type)
@@ -135,7 +135,7 @@ public class RegisterTruckActivity extends BaseActivity {
 	private void initView() {
 		ButterKnife.inject(this);
 		mTitle.setText(R.string.register);
-		mMenuBtn.setOnClickListener(mOnClickListener);
+		mBack.setOnClickListener(mOnClickListener);
 		mTruckType.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);
 	}
