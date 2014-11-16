@@ -84,7 +84,7 @@
     
     <string name="choose_start">请选择起点</string>
     <string name="choose_end">请选择终点</string>
-    <string name="must_choose_one_addr">发货地址和收货地址至少有一项不能为空</string>
+    <string name="address_empty">地址不能为空</string>
     
     <string name="no_result">无内容</string>
     

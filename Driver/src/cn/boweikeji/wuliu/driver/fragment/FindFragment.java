@@ -196,7 +196,7 @@ public class FindFragment extends BaseFragment {
 	
 	private boolean validCheck() {
 		if (TextUtils.isEmpty(mStartAddr) && TextUtils.isEmpty(mEndAddr)) {
-			Util.showTips(getActivity(), getResources().getString(R.string.must_choose_one_addr));
+			Util.showTips(getActivity(), getResources().getString(R.string.address_empty));
 			return false;
 		} else if (mTruckTypeIndex == 0) {
 			Util.showTips(getActivity(), getResources().getString(R.string.choose_truck_type));
