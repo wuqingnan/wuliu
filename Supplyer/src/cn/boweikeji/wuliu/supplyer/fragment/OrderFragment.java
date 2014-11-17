@@ -60,8 +60,10 @@ public class OrderFragment extends BaseFragment {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Order order = (Order) mAdapter.getItem(position);
-			OrderDetailActivity.startOrderDetailActivity(getActivity(), order.getGoodsCD());
+			if (id >= 0) {
+				Order order = (Order) mAdapter.getItem((int)id);
+				OrderDetailActivity.startOrderDetailActivity(getActivity(), order.getGoodsCD());
+			}
 		}
 	};
 	
@@ -282,13 +284,13 @@ public class OrderFragment extends BaseFragment {
 		}
 
 		@Override
-		public Object getItem(int arg0) {
-			return mData.get(arg0);
+		public Object getItem(int position) {
+			return mData.get(position);
 		}
 
 		@Override
-		public long getItemId(int arg0) {
-			return arg0;
+		public long getItemId(int position) {
+			return position;
 		}
 
 		public void clear() {

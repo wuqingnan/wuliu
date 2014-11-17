@@ -29,6 +29,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
@@ -72,6 +74,30 @@ public class FindResultActivity extends BaseActivity {
 		};
 	};
 	
+	private AbsListView.OnScrollListener mOnScrollListener = new AbsListView.OnScrollListener() {
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			if (view.getLastVisiblePosition() == view.getCount() - 1) {
+				loadMore();
+			}
+		}
+		
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			
+		}
+	};
+	
+	private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			if (id >= 0) {
+				Order order = (Order) mAdapter.getItem((int)id);
+			}
+		}
+	};
+	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
 	@InjectView(R.id.titlebar_title)
@@ -88,7 +114,7 @@ public class FindResultActivity extends BaseActivity {
 	
 	private FindFilter mFilter;
 	
-	private boolean mMore = true;
+	private boolean mMore;
 	private boolean mLoading = false;
 	
 	@Override
@@ -117,14 +143,16 @@ public class FindResultActivity extends BaseActivity {
 		mSwipeRefreshLayout.setColorSchemeResources(R.color.color1, R.color.color2, R.color.color3,
                 R.color.color4);
 		mListView.addFooterView(mFooter);
+		mListView.setFooterDividersEnabled(false);
 		mAdapter = new FindAdapter(this);
 		mListView.setAdapter(mAdapter);
+		mListView.removeFooterView(mFooter);
+		mListView.setOnScrollListener(mOnScrollListener);
 	}
 	
 	private void initData() {
 		Intent intent = getIntent();
 		mFilter = (FindFilter) intent.getSerializableExtra(KEY_FILTER);
-		mSwipeRefreshLayout.setRefreshing(true);
 		refresh();
 	}
 	
@@ -132,9 +160,11 @@ public class FindResultActivity extends BaseActivity {
     	if (mLoading) {
     		return;
     	}
+    	mMore = true;
     	mFilter.setPage_num(1);
     	mEmptyView.setVisibility(View.GONE);
     	mSwipeRefreshLayout.setEnabled(false);
+    	mSwipeRefreshLayout.setRefreshing(true);
     	loadData();
     }
     
@@ -146,6 +176,16 @@ public class FindResultActivity extends BaseActivity {
 		
 		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_FIND, params));
 		client.get(Const.URL_FIND, params, mRequestHandler);
+    }
+    
+    private void loadMore() {
+    	if (!mMore) {
+    		return;
+    	}
+    	if (mLoading) {
+    		return;
+    	}
+    	loadData();
     }
 	
     private void requestResult(JSONObject response) {
@@ -172,10 +212,10 @@ public class FindResultActivity extends BaseActivity {
 						for (int i = 0; i < infos.length(); i++) {
 							temp = infos.optJSONObject(i);
 							order = new Order();
-//							order.setState(temp.optInt("state"));
-//							order.setGoodsCD(temp.optString("goods_cd"));
-//							order.setGoodsName(temp.optString("goods_name"));
-//							order.setCreateDate(temp.optString("create_date"));
+							order.setCreate_date(temp.optString("create_date"));
+							order.setGoods_cd(temp.optString("goods_cd"));
+							order.setGoods_name(temp.optString("goods_name"));
+							order.setIs_order(temp.optString("is_order"));
 							data.add(order);
 						}
 						if (mFilter.getPage_num() == 1) {
@@ -249,18 +289,45 @@ public class FindResultActivity extends BaseActivity {
 		}
 
 		@Override
-		public Order getItem(int arg0) {
-			return mData.get(arg0);
+		public Order getItem(int position) {
+			return mData.get(position);
 		}
 
 		@Override
-		public long getItemId(int arg0) {
-			return arg0;
+		public long getItemId(int position) {
+			return position;
 		}
 
 		@Override
-		public View getView(int arg0, View arg1, ViewGroup arg2) {
-			return null;
+		public View getView(int position, View convertView, ViewGroup viewGroup) {
+			ViewHolder holder = null;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.find_result_item, null);
+				holder = new ViewHolder(convertView);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			Order order = mData.get(position);
+			holder.refresh(order);
+			return convertView;
+		}
+		
+	}
+	
+	public static class ViewHolder {
+		
+		@InjectView(R.id.item_name)
+		TextView mOrderName;
+		
+		public ViewHolder(View parent) {
+			ButterKnife.inject(this, parent);
+		}
+		
+		public void refresh(Order order) {
+			if (order != null) {
+				mOrderName.setText(order.getGoods_name());
+			}
 		}
 		
 	}
