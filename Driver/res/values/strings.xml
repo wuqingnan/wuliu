@@ -25,6 +25,7 @@
     <string name="myloc">我在 %1$s 附近</string>
     
     <string name="requesting">正在请求，请等待…</string>
+    <string name="request_failed">请求失败，请重试</string>
     
     <string name="login_success">登录成功</string>
     <string name="login_failed">登录失败</string>

@@ -63,18 +63,20 @@ public class OrderFragment extends BaseFragment {
 	private void initView() {
 		mTabHost.setup();
 		mTabsAdapter = new TabsAdapter(getActivity(), mTabHost, mViewPager);
-		mTabsAdapter.addTab(mTabHost.newTabSpec("simple")
-				.setIndicator("Simple"),
-				OrderListFragment.class, null);
+		mTabsAdapter.addTab(mTabHost.newTabSpec("select")
+				.setIndicator("待选"),
+				OrderListFragment.class, OrderListFragment.TYPE_SELECT);
 		mTabsAdapter.addTab(
-				mTabHost.newTabSpec("contacts").setIndicator("Contacts"),
-				OrderListFragment.class, null);
-		mTabsAdapter.addTab(mTabHost.newTabSpec("custom")
-				.setIndicator("Custom"),
-				OrderListFragment.class, null);
+				mTabHost.newTabSpec("selected")
+				.setIndicator("已抢到"),
+				OrderListFragment.class, OrderListFragment.TYPE_SELECTED);
+		mTabsAdapter.addTab(mTabHost.newTabSpec("completed")
+				.setIndicator("已完成"),
+				OrderListFragment.class, OrderListFragment.TYPE_COMPLETED);
 		mTabsAdapter.addTab(
-				mTabHost.newTabSpec("throttle").setIndicator("Throttle"),
-				OrderListFragment.class, null);
+				mTabHost.newTabSpec("cancel")
+				.setIndicator("取消"),
+				OrderListFragment.class, OrderListFragment.TYPE_CANCEL);
 	}
 
 	public static class TabsAdapter extends FragmentPagerAdapter implements
@@ -95,10 +97,12 @@ public class OrderFragment extends BaseFragment {
 			mViewPager.setOnPageChangeListener(this);
 		}
 
-		public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
+		public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, int type) {
 			tabSpec.setContent(new DummyTabFactory(mContext));
 			String tag = tabSpec.getTag();
 
+			Bundle args = new Bundle();
+			args.putInt(OrderListFragment.KEY_TYPE, type);
 			TabInfo info = new TabInfo(tag, clss, args);
 			mTabs.add(info);
 			mTabHost.addTab(tabSpec);

@@ -32,7 +32,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -240,7 +239,7 @@ public class FindResultActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 		}
-		Util.showTips(this, getString(R.string.register_failed));
+		Util.showTips(this, getString(R.string.request_failed));
 	}
     
     private void loadFinish() {
