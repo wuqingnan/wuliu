@@ -228,6 +228,9 @@ public class OrderListFragment extends BaseFragment {
 	
     private void requestResult(JSONObject response) {
     	mLoading = false;
+    	if (!isAdded()) {
+    		return;
+    	}
 		if (response != null && response.length() > 0) {
 			Log.d(TAG, "shizy---response: " + response.toString());
 			try {
@@ -284,6 +287,9 @@ public class OrderListFragment extends BaseFragment {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+		}
+		if (mAdapter.getCount() <= 0) {
+			mEmptyView.setVisibility(View.VISIBLE);
 		}
 		Util.showTips(getActivity(), getString(R.string.request_failed));
 	}

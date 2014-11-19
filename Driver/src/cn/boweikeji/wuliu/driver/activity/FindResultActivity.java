@@ -239,6 +239,9 @@ public class FindResultActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 		}
+		if (mAdapter.getCount() <= 0) {
+			mEmptyView.setVisibility(View.VISIBLE);
+		}
 		Util.showTips(this, getString(R.string.request_failed));
 	}
     

@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     tools:context=".MapActivity" >
 
-    <FrameLayout
-        android:id="@+id/mapLayout"
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clickable="true" />
 
     <FrameLayout
         android:id="@+id/topLayout"
