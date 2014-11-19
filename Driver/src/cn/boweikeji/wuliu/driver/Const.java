@@ -10,8 +10,7 @@ public class Const {
 	
 	public static final String URL_LOGIN = "http://218.21.213.76:7201/bss/driverLoginCheck.action";
 	public static final String URL_REGISTER = "http://218.21.213.76:7201/bss/registerDriver.action";
-	public static final String URL_SEND_GOODS = "http://218.21.213.76:7201/bss/sendGoodInfos.action";
-	public static final String URL_ORDER_LIST = "http://218.21.213.76:7201/bss/getAllMySupplys.action";
+	public static final String URL_ORDER_LIST = "http://218.21.213.76:7201/bss/getMyRecords.action";
 	public static final String URL_ORDER_DETAIL = "http://218.21.213.76:7201/bss/getMySupplyCos.action";
 	public static final String URL_CANCEL_ORDER = "http://218.21.213.76:7201/bss/cancelMessage.action";
 	public static final String URL_CHANGE_ORDER = "http://218.21.213.76:7201/bss/changeCos.action";

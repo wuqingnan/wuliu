@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.baidu.location.BDLocation;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -15,10 +16,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.activity.FindResultActivity.FindAdapter;
 import cn.boweikeji.wuliu.driver.activity.FindResultActivity.ViewHolder;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
+import cn.boweikeji.wuliu.driver.bean.UserInfo;
+import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import android.content.Context;
 import android.os.Bundle;
@@ -115,6 +119,7 @@ public class OrderListFragment extends BaseFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d(TAG, "shizy---OrderListFragment.onCreate");
 		Bundle args = getArguments();
 		if (args != null) {
 			mType = args.getInt(KEY_TYPE, TYPE_SELECT);
@@ -131,7 +136,7 @@ public class OrderListFragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Log.d(TAG, "onActivityCreated");
+		Log.d(TAG, "shizy---OrderListFragment.onActivityCreated");
 		init();
 	}
 
@@ -147,8 +152,7 @@ public class OrderListFragment extends BaseFragment {
 		mSwipeRefreshLayout.setColorSchemeResources(R.color.color1, R.color.color2, R.color.color3,
                 R.color.color4);
 		mListView.addFooterView(mFooter);
-		mListView.setFooterDividersEnabled(false);
-		mAdapter = new OrderListAdapter(getActivity());
+		mAdapter = new OrderListAdapter(getActivity(), mType);
 		mListView.setAdapter(mAdapter);
 		mListView.removeFooterView(mFooter);
 		mListView.setOnScrollListener(mOnScrollListener);
@@ -174,10 +178,42 @@ public class OrderListFragment extends BaseFragment {
     	AsyncHttpClient client = new AsyncHttpClient();
 		client.setURLEncodingEnabled(true);
 		
+		BDLocation location = WLApplication.getLocationClient().getLastKnownLocation();
 		BaseParams params = new BaseParams();
+		params.add("method", "getMyRecords");
+		params.add("page_num", "" + mPage);
+		switch (mType) {
+		case TYPE_SELECT:
+			params.add("state", "0");
+			break;
+		case TYPE_SELECTED:
+			params.add("state", "1");
+			break;
+		case TYPE_COMPLETED:
+			params.add("state", "9");
+			break;
+		case TYPE_CANCEL:
+			params.add("state", "8");
+			break;
+		}
+		if (location == null) {
+			params.add("gps_j", BaseParams.PARAM_DEFAULT);
+			params.add("gps_w", BaseParams.PARAM_DEFAULT);
+		} else {
+			params.add("gps_j", "" + location.getLongitude());
+			params.add("gps_w", "" + location.getLatitude());
+		}
+		if (LoginManager.getInstance().hasLogin()) {
+			UserInfo info = LoginManager.getInstance().getUserInfo();
+			params.add("driver_cd", info.getDriver_cd());
+			params.add("passwd", info.getPasswd());
+		} else {
+			params.add("driver_cd", BaseParams.PARAM_DEFAULT);
+			params.add("passwd", BaseParams.PARAM_DEFAULT);
+		}
 		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_FIND, params));
-		client.get(Const.URL_FIND, params, mRequestHandler);
+		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ORDER_LIST, params));
+		client.get(Const.URL_ORDER_LIST, params, mRequestHandler);
     }
 	  
     private void loadMore() {
@@ -199,42 +235,49 @@ public class OrderListFragment extends BaseFragment {
 				String msg = response.getString("msg");
 				Util.showTips(getActivity(), msg);
 				if (res == 2) {//成功
-//					int pageCount = response.getInt("pagetotalnum");
-//					if (pageCount <= 0) {
-//						mEmptyView.setVisibility(View.VISIBLE);
-//					}
-//					if (mFilter.getPage_num() >= pageCount) {
-//						mMore = false;
-//					}
-//					JSONArray infos = response.optJSONArray("infos");
-//					if (infos != null && infos.length() > 0) {
-//						JSONObject temp = null;
-//						Order order = null;
-//						List<Order> data = new ArrayList<Order>();
-//						for (int i = 0; i < infos.length(); i++) {
-//							temp = infos.optJSONObject(i);
-//							order = new Order();
-//							order.setCreate_date(temp.optString("create_date"));
-//							order.setGoods_cd(temp.optString("goods_cd"));
-//							order.setGoods_name(temp.optString("goods_name"));
-//							order.setIs_order(temp.optString("is_order"));
-//							data.add(order);
-//						}
-//						if (mFilter.getPage_num() == 1) {
-//							mAdapter.setData(data);
-//						} else {
-//							mAdapter.addData(data);
-//						}
-//					}
-//					if (mMore) {
-//						if (mListView.getFooterViewsCount() <= 0) {
-//							mListView.addFooterView(mFooter, null, false);
-//						}
-//					} else {
-//						if (mListView.getFooterViewsCount() > 0) {
-//							mListView.removeFooterView(mFooter);
-//						}
-//					}
+					int pageCount = response.getInt("pagetotalnum");
+					if (pageCount <= 0) {
+						mEmptyView.setVisibility(View.VISIBLE);
+					}
+					if (mPage >= pageCount) {
+						mMore = false;
+					}
+					JSONArray infos = response.optJSONArray("infos");
+					if (infos != null && infos.length() > 0) {
+						JSONObject temp = null;
+						Order order = null;
+						List<Order> data = new ArrayList<Order>();
+						for (int i = 0; i < infos.length(); i++) {
+							temp = infos.optJSONObject(i);
+							order = new Order();
+							order.setCreate_date(temp.optString("create_date"));
+							order.setGoods_cd(temp.optString("goods_cd"));
+							order.setGoods_name(temp.optString("goods_name"));
+							if (mType == TYPE_SELECT) {
+								order.setIs_order(Integer.parseInt(temp.optString("is_order")));
+								order.setDistance(Double.parseDouble(temp.optString("distance")));
+							} else if (mType == TYPE_COMPLETED) {
+								order.setIs_ticked(Integer.parseInt(temp.optString("is_ticked")));
+							} else if (mType == TYPE_CANCEL) {
+								order.setState(Integer.parseInt(temp.optString("state")));
+							}
+							data.add(order);
+						}
+						if (mPage == 1) {
+							mAdapter.setData(data);
+						} else {
+							mAdapter.addData(data);
+						}
+					}
+					if (mMore) {
+						if (mListView.getFooterViewsCount() <= 0) {
+							mListView.addFooterView(mFooter, null, false);
+						}
+					} else {
+						if (mListView.getFooterViewsCount() > 0) {
+							mListView.removeFooterView(mFooter);
+						}
+					}
 					mPage++;;
 				}
 				return;
@@ -250,21 +293,15 @@ public class OrderListFragment extends BaseFragment {
     	mSwipeRefreshLayout.setRefreshing(false);
     }
 	
-	public static OrderListFragment newInstance(int type) {
-		OrderListFragment f = new OrderListFragment();
-		Bundle b = new Bundle();
-		b.putInt(KEY_TYPE, type);
-		f.setArguments(b);
-		return f;
-	}
-
 	public static class OrderListAdapter extends BaseAdapter {
 
 		private LayoutInflater mInflater;
 		private Context mContext;
 		private List<Order> mData;
+		private int mType;
 
-		public OrderListAdapter(Context context) {
+		public OrderListAdapter(Context context, int type) {
+			mType = type;
 			mContext = context;
 			mInflater = LayoutInflater.from(context);
 		}
@@ -307,14 +344,14 @@ public class OrderListFragment extends BaseFragment {
 			ViewHolder holder = null;
 			if (convertView == null) {
 				convertView = mInflater
-						.inflate(R.layout.find_result_item, null);
+						.inflate(R.layout.order_list_item, null);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			Order order = mData.get(position);
-			holder.refresh(order);
+			holder.refresh(order, mType);
 			return convertView;
 		}
 
@@ -324,14 +361,46 @@ public class OrderListFragment extends BaseFragment {
 
 		@InjectView(R.id.item_name)
 		TextView mOrderName;
+		@InjectView(R.id.item_code)
+		TextView mOrderCode;
+		@InjectView(R.id.item_date)
+		TextView mOrderDate;
+		@InjectView(R.id.item_info)
+		TextView mOrderInfo;
+		@InjectView(R.id.item_bespeak)
+		TextView mBespeak;
 
 		public ViewHolder(View parent) {
 			ButterKnife.inject(this, parent);
 		}
 
-		public void refresh(Order order) {
+		public void refresh(Order order, int type) {
 			if (order != null) {
 				mOrderName.setText(order.getGoods_name());
+				mOrderCode.setText(String.format("订单号：%s", order.getGoods_cd()));
+				mOrderDate.setText(order.getCreate_date());
+			}
+			switch (type) {
+			case TYPE_SELECT:
+				mBespeak.setVisibility(View.VISIBLE);
+				mOrderInfo.setVisibility(View.VISIBLE);
+				mBespeak.setText(order.isOrder() ? "预约单" : "实时单");
+				mOrderInfo.setText(String.format("距离\n%d米", (int)order.getDistance()));
+				break;
+			case TYPE_SELECTED:
+				mBespeak.setVisibility(View.GONE);
+				mOrderInfo.setVisibility(View.GONE);
+				break;
+			case TYPE_COMPLETED:
+				mBespeak.setVisibility(View.GONE);
+				mOrderInfo.setVisibility(View.VISIBLE);
+				mOrderInfo.setText(order.isTicked() ? "已评价" : "待评价");
+				break;
+			case TYPE_CANCEL:
+				mBespeak.setVisibility(View.GONE);
+				mOrderInfo.setVisibility(View.VISIBLE);
+				mOrderInfo.setText("" + order.getState());
+				break;
 			}
 		}
 

@@ -214,7 +214,7 @@ public class FindResultActivity extends BaseActivity {
 							order.setCreate_date(temp.optString("create_date"));
 							order.setGoods_cd(temp.optString("goods_cd"));
 							order.setGoods_name(temp.optString("goods_name"));
-							order.setIs_order(temp.optString("is_order"));
+							order.setIs_order(Integer.parseInt(temp.optString("is_order")));
 							data.add(order);
 						}
 						if (mFilter.getPage_num() == 1) {

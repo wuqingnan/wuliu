@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,8 +62,9 @@ public class OrderFragment extends BaseFragment {
 	}
 
 	private void initView() {
+		Log.d(TAG, "shizy---OrderFragment.initView");
 		mTabHost.setup();
-		mTabsAdapter = new TabsAdapter(getActivity(), mTabHost, mViewPager);
+		mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 		mTabsAdapter.addTab(mTabHost.newTabSpec("select")
 				.setIndicator("待选"),
 				OrderListFragment.class, OrderListFragment.TYPE_SELECT);
@@ -86,10 +88,10 @@ public class OrderFragment extends BaseFragment {
 		private final ViewPager mViewPager;
 		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-		public TabsAdapter(FragmentActivity activity, TabHost tabHost,
+		public TabsAdapter(Fragment fragment, TabHost tabHost,
 				ViewPager pager) {
-			super(activity.getSupportFragmentManager());
-			mContext = activity;
+			super(fragment.getChildFragmentManager());
+			mContext = fragment.getActivity();
 			mTabHost = tabHost;
 			mViewPager = pager;
 			mTabHost.setOnTabChangedListener(this);
