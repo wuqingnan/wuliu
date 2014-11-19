@@ -215,6 +215,7 @@ public class FindResultActivity extends BaseActivity {
 							order.setGoods_cd(temp.optString("goods_cd"));
 							order.setGoods_name(temp.optString("goods_name"));
 							order.setIs_order(Integer.parseInt(temp.optString("is_order")));
+							order.setDistance(Double.parseDouble(temp.optString("distance")));
 							data.add(order);
 						}
 						if (mFilter.getPage_num() == 1) {
@@ -304,7 +305,7 @@ public class FindResultActivity extends BaseActivity {
 		public View getView(int position, View convertView, ViewGroup viewGroup) {
 			ViewHolder holder = null;
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.find_result_item, null);
+				convertView = mInflater.inflate(R.layout.order_list_item, null);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			} else {
@@ -318,19 +319,31 @@ public class FindResultActivity extends BaseActivity {
 	}
 	
 	public static class ViewHolder {
-		
+
 		@InjectView(R.id.item_name)
 		TextView mOrderName;
-		
+		@InjectView(R.id.item_code)
+		TextView mOrderCode;
+		@InjectView(R.id.item_date)
+		TextView mOrderDate;
+		@InjectView(R.id.item_info)
+		TextView mOrderInfo;
+		@InjectView(R.id.item_bespeak)
+		TextView mBespeak;
+
 		public ViewHolder(View parent) {
 			ButterKnife.inject(this, parent);
 		}
-		
+
 		public void refresh(Order order) {
 			if (order != null) {
 				mOrderName.setText(order.getGoods_name());
+				mOrderCode.setText(String.format("订单号：%s", order.getGoods_cd()));
+				mOrderDate.setText(order.getCreate_date());
+				mBespeak.setText(order.isOrder() ? "预约单" : "实时单");
+				mOrderInfo.setText(String.format("距离\n%d米", (int)order.getDistance()));
 			}
 		}
-		
+
 	}
 }
