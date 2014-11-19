@@ -1,11 +1,19 @@
 package cn.boweikeji.wuliu.driver.bean.city;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class City implements ICityListItem {
+public class City implements ICityListItem, Serializable {
 
+	/**
+	 * 序列化
+	 */
+	private static final long serialVersionUID = -2044584787556920536L;
+	
 	private String mName;
 	private String mProvice;
+	private String mCode;
 	
 	public City() {
 		
@@ -15,6 +23,7 @@ public class City implements ICityListItem {
 		if (object != null) {
 			setName(object.optString("name"));
 			setProvice(object.optString("provice"));
+			setCode(object.optString("code"));
 		}
 	}
 	
@@ -32,6 +41,14 @@ public class City implements ICityListItem {
 	
 	public void setProvice(String provice) {
 		mProvice = provice;
+	}
+	
+	public String getCode() {
+		return mCode;
+	}
+	
+	public void setCode(String code) {
+		mCode = code;
 	}
 	
 	@Override

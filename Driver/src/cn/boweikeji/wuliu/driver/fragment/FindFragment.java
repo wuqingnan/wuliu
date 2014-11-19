@@ -21,6 +21,7 @@ import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.activity.CityListActivity;
 import cn.boweikeji.wuliu.driver.activity.FindResultActivity;
 import cn.boweikeji.wuliu.driver.bean.FindFilter;
+import cn.boweikeji.wuliu.driver.bean.city.City;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 
@@ -77,8 +78,8 @@ public class FindFragment extends BaseFragment {
 	private int mGoodsTypeIndex;
 	private String[] mGoodsTypes;
 	
-	private String mStartAddr;
-	private String mEndAddr;
+	private City mStartCity;
+	private City mEndCity;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,11 +100,11 @@ public class FindFragment extends BaseFragment {
 		if (resultCode == Activity.RESULT_OK) {
 			switch (requestCode) {
 			case REQUESTCODE_CHOOSE_START:
-				mStartAddr = data.getStringExtra("city");
+				mStartCity = (City) data.getSerializableExtra("city");
 				updateAddress();
 				break;
 			case REQUESTCODE_CHOOSE_END:
-				mEndAddr = data.getStringExtra("city");
+				mEndCity = (City) data.getSerializableExtra("city");
 				updateAddress();
 				break;
 			}
@@ -152,14 +153,18 @@ public class FindFragment extends BaseFragment {
 	}
 
 	private void updateAddress() {
-		mStart.setText(mStartAddr);
-		mEnd.setText(mEndAddr);
+		if (mStartCity != null) {
+			mStart.setText(mStartCity.getName());
+		}
+		if (mEndCity != null) {
+			mEnd.setText(mEndCity.getName());
+		}
 	}
 	
 	private void exchange() {
-		String addr = mStartAddr;
-		mStartAddr = mEndAddr;
-		mEndAddr = addr;
+		City temp = mStartCity;
+		mStartCity = mEndCity;
+		mEndCity = temp;
 		updateAddress();
 	}
 	
@@ -175,8 +180,8 @@ public class FindFragment extends BaseFragment {
 	private void find() {
 		if (validCheck()) {
 			FindFilter filter = new FindFilter();
-			filter.setStart_addr(mStartAddr);
-			filter.setEnd_addr(mEndAddr);
+			filter.setStart_addr(mStartCity.getName());
+			filter.setEnd_addr(mEndCity.getName());
 			filter.setGoods_type_code(mGoodsTypeIndex);
 			switch (mMessageFree.getCheckedRadioButtonId()) {
 			case R.id.message_free_all:
@@ -195,7 +200,7 @@ public class FindFragment extends BaseFragment {
 	}
 	
 	private boolean validCheck() {
-		if (TextUtils.isEmpty(mStartAddr) && TextUtils.isEmpty(mEndAddr)) {
+		if (mStartCity == null || mEndCity == null) {
 			Util.showTips(getActivity(), getResources().getString(R.string.address_empty));
 			return false;
 		} else if (mTruckTypeIndex == 0) {

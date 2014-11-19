@@ -5,6 +5,7 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.bean.RegisterInfo;
+import cn.boweikeji.wuliu.driver.bean.city.City;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import cn.boweikeji.wuliu.driver.view.ClearEditText;
 import cn.smssdk.EventHandler;
@@ -157,7 +158,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	private String[] mDriverTypes;
 	private int mDriverTypeIndex;
 	
-	private String mCity;
+	private City mCity;
 	
 	/** 照片Uri */
 	private Uri mPhotoUri;
@@ -266,7 +267,7 @@ public class RegisterProfileActivity extends BaseActivity {
 			Util.showTips(this,
 					getResources().getString(R.string.company_empty));
 			return false;
-		} else if (mCity == null || mCity.equals("")) {
+		} else if (mCity == null) {
 			Util.showTips(this,
 					getResources().getString(R.string.choose_city));
 			return false;
@@ -303,7 +304,7 @@ public class RegisterProfileActivity extends BaseActivity {
 			mRegInfo.setDriver_name(name);
 			mRegInfo.setDriver_type(mDriverTypeIndex);
 			mRegInfo.setComp_name(company);
-			mRegInfo.setArea_code(mCity);
+			mRegInfo.setArea_code(mCity.getCode());
 			mRegInfo.setCard_id(idNumber);
 			mRegInfo.setIDImagePath(mPhotoPath);
 		}
@@ -325,7 +326,9 @@ public class RegisterProfileActivity extends BaseActivity {
 	}
 
 	private void updateCity() {
-		mAreaCode.setText(mCity);
+		if (mCity != null) {
+			mAreaCode.setText(mCity.getName());
+		}
 	}
 	
 	private void driverType() {
@@ -468,7 +471,7 @@ public class RegisterProfileActivity extends BaseActivity {
 				loadImage(data.getData());
 				break;
 			case REQUESTCODE_CITYLIST:
-				mCity = data.getStringExtra("city");
+				mCity = (City) data.getSerializableExtra("city");
 				updateCity();
 				break;
 			}

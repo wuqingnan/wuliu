@@ -69,7 +69,7 @@ public class CityListActivity extends Activity {
 				ICityListItem item = mAdapter.getItem((int)id);
 				if (item.getType() == ICityListItem.TYPE_CITY) {
 					Intent intent = new Intent();
-					intent.putExtra("city", item.getTitle());
+					intent.putExtra("city", (City)item);
 					setResult(RESULT_OK, intent);
 					finish();
 				}
