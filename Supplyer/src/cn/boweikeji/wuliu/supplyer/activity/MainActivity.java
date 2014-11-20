@@ -35,8 +35,6 @@ import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import net.simonvt.menudrawer.MenuDrawer;
-import net.simonvt.menudrawer.Position;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.UpdateEvent;
@@ -63,9 +61,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -86,32 +86,8 @@ public class MainActivity extends BaseActivity {
 	private MenuView.OnMenuClickListener mOnMenuClickListener = new MenuView.OnMenuClickListener() {
 		@Override
 		public void onMenuClick(int menu) {
-			switch (menu) {
-			case MenuView.MENU_PROFILE:
-				changeFragment(new ProfileFragment());
-				break;
-			case MenuView.MENU_ORDER:
-				changeFragment(new OrderFragment());
-				break;
-			case MenuView.MENU_MESSAGE:
-				mMenuDrawer.closeMenu();
-				WebViewActivity.startWebViewActivity(MainActivity.this,
-						getString(R.string.title_system_msg),
-						Const.URL_SYSTEM_MSG);
-				break;
-			case MenuView.MENU_INVITE:
-				mMenuDrawer.closeMenu();
-				Util.sendMessage(MainActivity.this, null, getResources()
-						.getString(R.string.invite_msg));
-				break;
-			case MenuView.MENU_SHARE:
-				mMenuDrawer.closeMenu();
-				Util.showShare(MainActivity.this);
-				break;
-			case MenuView.MENU_SETTING:
-				changeFragment(new SetFragment());
-				break;
-			}
+			mMenuIndex = menu;
+			mDrawerLayout.closeDrawer(mMenuView);
 		}
 	};
 
@@ -190,7 +166,57 @@ public class MainActivity extends BaseActivity {
 			mBaiduMap.hideInfoWindow();
 		}
 	};
+	
+	private DrawerListener mDrawerListener = new DrawerListener() {
+		@Override
+		public void onDrawerStateChanged(int newState) {
+			
+		}
+		
+		@Override
+		public void onDrawerSlide(View drawerView, float slideOffset) {
+			
+		}
+		
+		@Override
+		public void onDrawerOpened(View drawerView) {
+			if (drawerView == mMenuView) {
+				mMenuIndex = Integer.MAX_VALUE;
+			}
+		}
+		
+		@Override
+		public void onDrawerClosed(View drawerView) {
+			if (drawerView == mMenuView && mMenuIndex != Integer.MAX_VALUE) {
+				switch (mMenuIndex) {
+				case MenuView.MENU_PROFILE:
+					changeFragment(new ProfileFragment());
+					break;
+				case MenuView.MENU_ORDER:
+					changeFragment(new OrderFragment());
+					break;
+				case MenuView.MENU_MESSAGE:
+					WebViewActivity.startWebViewActivity(MainActivity.this,
+							getString(R.string.title_system_msg),
+							Const.URL_SYSTEM_MSG);
+					break;
+				case MenuView.MENU_INVITE:
+					Util.sendMessage(MainActivity.this, null, getResources()
+							.getString(R.string.invite_msg));
+					break;
+				case MenuView.MENU_SHARE:
+					Util.showShare(MainActivity.this);
+					break;
+				case MenuView.MENU_SETTING:
+					changeFragment(new SetFragment());
+					break;
+				}
+			}
+		}
+	};
 
+	private DrawerLayout mDrawerLayout;
+	private MenuView mMenuView;
 	private MapView mMapView;
 	private BaiduMap mBaiduMap;
 	private UiSettings mUiSettings;
@@ -203,9 +229,6 @@ public class MainActivity extends BaseActivity {
 	private TextView mDriverName;
 	private TextView mDriverInfo;
 
-	private MenuView mMenuView;
-	private MenuDrawer mMenuDrawer;
-
 	private FragmentManager mFragmentManager;
 
 	private LocationClient mLocClient;
@@ -213,6 +236,7 @@ public class MainActivity extends BaseActivity {
 	private ScheduledThreadPoolExecutor mTimerTask;
 
 	private long mExitTime;
+	private int mMenuIndex;
 
 	private boolean mIsFirstLoc;
 	private boolean mFirstCheckUpdate = true;
@@ -253,10 +277,8 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			final int drawerState = mMenuDrawer.getDrawerState();
-			if (drawerState == MenuDrawer.STATE_OPEN
-					|| drawerState == MenuDrawer.STATE_OPENING) {
-				mMenuDrawer.closeMenu();
+			if (mDrawerLayout.isDrawerOpen(mMenuView)) {
+				mDrawerLayout.closeDrawer(mMenuView);
 				return true;
 			}
 			if (mFragmentManager.getBackStackEntryCount() == 0) {
@@ -272,7 +294,11 @@ public class MainActivity extends BaseActivity {
 		} else if (keyCode == KeyEvent.KEYCODE_MENU) {
 			if (mFragmentManager.getBackStackEntryCount() == 0
 					&& LoginManager.getInstance().hasLogin()) {
-				mMenuDrawer.toggleMenu();
+				if (mDrawerLayout.isDrawerOpen(mMenuView)) {
+					mDrawerLayout.closeDrawer(mMenuView);
+				} else {
+					mDrawerLayout.openDrawer(mMenuView);
+				}
 				return true;
 			}
 		}
@@ -315,8 +341,8 @@ public class MainActivity extends BaseActivity {
 
 	private void init() {
 		mIsFirstLoc = true;
-		initMenu();
 		initView();
+		initMenu();
 		initMap();
 		initFragment();
 		initLocation();
@@ -329,19 +355,17 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void initMenu() {
-		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND,
-				Position.LEFT, MenuDrawer.MENU_DRAG_WINDOW);
-		mMenuDrawer.setContentView(R.layout.activity_main);
-		mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_NONE);
-
-		mMenuView = new MenuView(this);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		mDrawerLayout.setDrawerTitle(GravityCompat.START, "MenuView");
+		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, mMenuView);
+		mDrawerLayout.setDrawerListener(mDrawerListener);
 		mMenuView.setOnMenuClickListener(mOnMenuClickListener);
 		EventBus.getDefault().register(mMenuView);
-
-		mMenuDrawer.setMenuView(mMenuView);
 	}
 
 	private void initView() {
+		mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+		mMenuView = (MenuView)findViewById(R.id.menuview);
 		mMapView = (MapView)findViewById(R.id.bmapView);
 		mMyLocLayout = getLayoutInflater().inflate(R.layout.popup_myloc, null);
 		mMyLocTitle = (TextView) mMyLocLayout.findViewById(R.id.myloc_title);
@@ -396,7 +420,7 @@ public class MainActivity extends BaseActivity {
 
 	public void showMenu() {
 		if (LoginManager.getInstance().hasLogin()) {
-			mMenuDrawer.openMenu();
+			mDrawerLayout.openDrawer(mMenuView);
 		} else {
 			changeFragment(new LoginFragment());
 		}
@@ -418,7 +442,7 @@ public class MainActivity extends BaseActivity {
 		trans.replace(R.id.topLayout, fragment, fragment.getClass().getName());
 		trans.addToBackStack(fragment.getClass().getSimpleName());
 		trans.commit();
-		mMenuDrawer.closeMenu();
+		mDrawerLayout.closeDrawer(mMenuView);
 	}
 
 	private void exit() {
