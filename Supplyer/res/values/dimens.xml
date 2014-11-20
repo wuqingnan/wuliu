@@ -31,8 +31,8 @@
     <dimen name="main_bottom_height">51.333dp</dimen>
     
     <dimen name="line_height">1dp</dimen>
-    
     <dimen name="title_height">48dp</dimen>
+    <dimen name="load_more_height">50dp</dimen>
     
     <dimen name="edittext_drawable_padding">10dp</dimen>
 </resources>

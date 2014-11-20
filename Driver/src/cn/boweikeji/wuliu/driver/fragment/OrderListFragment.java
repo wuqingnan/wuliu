@@ -156,6 +156,7 @@ public class OrderListFragment extends BaseFragment {
 		mListView.setAdapter(mAdapter);
 		mListView.removeFooterView(mFooter);
 		mListView.setOnScrollListener(mOnScrollListener);
+		mListView.setOnItemClickListener(mOnItemClickListener);
 	}
 	
 	private void initData() {
@@ -175,6 +176,7 @@ public class OrderListFragment extends BaseFragment {
     }
 	
 	private void loadData() {
+		mLoading = true;
     	AsyncHttpClient client = new AsyncHttpClient();
 		client.setURLEncodingEnabled(true);
 		
@@ -281,7 +283,7 @@ public class OrderListFragment extends BaseFragment {
 							mListView.removeFooterView(mFooter);
 						}
 					}
-					mPage++;;
+					mPage++;
 				}
 				return;
 			} catch (JSONException e) {

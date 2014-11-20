@@ -30,6 +30,10 @@
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>
     
+    <style name="TextAppearance.Middle.DarkGray">
+        <item name="android:textColor">@color/text_color_dark_gray</item>
+    </style>
+    
     <style name="TextAppearance.Middle.White">
         <item name="android:textColor">@color/text_color_white</item>
     </style>
@@ -44,5 +48,9 @@
     
     <style name="TextAppearance.Big.White">
         <item name="android:textColor">@color/text_color_white</item>
+    </style>
+    
+    <style name="TextAppearance.Big.Black">
+        <item name="android:textColor">@color/text_color_black</item>
     </style>
 </resources>

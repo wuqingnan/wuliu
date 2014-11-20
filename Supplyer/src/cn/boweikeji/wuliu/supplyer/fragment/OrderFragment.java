@@ -10,15 +10,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -33,11 +32,11 @@ import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.Order;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
-import cn.boweikeji.wuliu.supplyer.utils.EncryptUtil;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+
 import cn.boweikeji.wuliu.supplyer.R;
 
 public class OrderFragment extends BaseFragment {
@@ -55,6 +54,13 @@ public class OrderFragment extends BaseFragment {
 		}
 	};
 
+	private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+		@Override
+		public void onRefresh() {
+			 refresh();
+		}
+	};
+	
 	private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
 
 		@Override
@@ -70,8 +76,7 @@ public class OrderFragment extends BaseFragment {
 	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
 		
 		public void onFinish() {
-			hideProgressDialog();
-			mLoadView.setVisibility(View.GONE);
+			loadFinish();
 		};
 		
 		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -99,18 +104,22 @@ public class OrderFragment extends BaseFragment {
 		}
 	};
 	
+	private View mRootView;
+	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.order_count)
 	TextView mOrderCount;
-	@InjectView(R.id.order_list)
+	@InjectView(R.id.swiperefresh)
+	SwipeRefreshLayout mSwipeRefreshLayout;
+	@InjectView(R.id.listview)
 	ListView mListView;
+	@InjectView(R.id.emptyview)
+	TextView mEmptyView;
 	
-	private View mRootView;
-	private View mLoadView;
-	private ProgressDialog mProgressDialog;
+	private View mFooter;
 	
 	private int mPage;
 	private boolean mMore;
@@ -145,74 +154,65 @@ public class OrderFragment extends BaseFragment {
 	}
 
 	private void initView() {
-		initFooter();
+		mFooter = getActivity().getLayoutInflater().inflate(R.layout.load_layout, null);
+		mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
+		mSwipeRefreshLayout.setColorSchemeResources(R.color.color1, R.color.color2, R.color.color3,
+                R.color.color4);
+		mListView.addFooterView(mFooter);
 		mAdapter = new OrderAdapter(getActivity());
 		mListView.setAdapter(mAdapter);
+		mListView.removeFooterView(mFooter);
 		mListView.setOnScrollListener(mOnScrollListener);
 		mListView.setOnItemClickListener(mOnItemClickListener);
 	}
 	
-	private void initFooter() {
-		View view = getActivity().getLayoutInflater().inflate(R.layout.load_layout, null);
-		mLoadView = view.findViewById(R.id.loadView);
-		mLoadView.setVisibility(View.GONE);
-		mListView.addFooterView(view);
+	private void initData() {
+		refresh();
 	}
 	
-	private void initData() {
-		mPage = 1;
-		mMore = true;
-		showProgressDialog();
-		loadData();
-	}
+	private void refresh() {
+    	if (mLoading) {
+    		return;
+    	}
+    	mMore = true;
+    	mPage = 1;
+    	mEmptyView.setVisibility(View.GONE);
+    	mSwipeRefreshLayout.setEnabled(false);
+    	mSwipeRefreshLayout.setRefreshing(true);
+    	loadData();
+    }
 	
 	private void loadData() {
-		if (mMore && !mLoading) {
-			mLoading = true;
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.setURLEncodingEnabled(true);
-			
-			UserInfo info = LoginManager.getInstance().getUserInfo();
-			BaseParams params = new BaseParams();
-			params.add("method", "getAllMySupplys");
-			params.add("supplyer_cd", info.getSupplyer_cd());
-			params.add("passwd", info.getPasswd());
-			params.add("page_num", "" + mPage);
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ORDER_LIST, params));
-			client.get(Const.URL_ORDER_LIST, params, mRequestHandler);
-		}
+		mLoading = true;
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.setURLEncodingEnabled(true);
+		
+		UserInfo info = LoginManager.getInstance().getUserInfo();
+		BaseParams params = new BaseParams();
+		params.add("method", "getAllMySupplys");
+		params.add("supplyer_cd", info.getSupplyer_cd());
+		params.add("passwd", info.getPasswd());
+		params.add("page_num", "" + mPage);
+		
+		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ORDER_LIST, params));
+		client.get(Const.URL_ORDER_LIST, params, mRequestHandler);
 	}
 	
 	private void loadMore() {
-		if (mLoading) {
-			return;
-		}
 		if (!mMore) {
-			return;
-		}
-		mLoadView.setVisibility(View.VISIBLE);
-		loadData();
-	}
-	
-	private void showProgressDialog() {
-		if (mProgressDialog == null) {
-			mProgressDialog = new ProgressDialog(getActivity());
-			mProgressDialog.setMessage(getString(R.string.requesting));
-			mProgressDialog.setCancelable(false);
-		}
-		mProgressDialog.show();
-	}
-	
-	private void hideProgressDialog() {
-		if (mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
-		mProgressDialog = null;
+    		return;
+    	}
+    	if (mLoading) {
+    		return;
+    	}
+    	loadData();
 	}
 	
 	private void requestResult(JSONObject response) {
 		mLoading = false;
+		if (!isAdded()) {
+    		return;
+    	}
 		if (response != null && response.length() > 0) {
 			Log.d(TAG, "shizy---response: " + response.toString());
 			try {
@@ -220,9 +220,11 @@ public class OrderFragment extends BaseFragment {
 				String msg = response.getString("msg");
 				Util.showTips(getActivity(), msg);
 				if (res == 2) {//成功
-					mPage++;
 					int pageCount = response.getInt("pagetotalnum");
-					if (mPage > pageCount) {
+					if (pageCount <= 0) {
+						mEmptyView.setVisibility(View.VISIBLE);
+					}
+					if (mPage >= pageCount) {
 						mMore = false;
 					}
 					int totalnum = response.getInt("totalnum");
@@ -246,7 +248,11 @@ public class OrderFragment extends BaseFragment {
 								return rhs.getCreateDate().compareTo(lhs.getCreateDate());
 							}
 						});
-						mAdapter.addData(data);
+						if (mPage == 1) {
+							mAdapter.setData(data);
+						} else {
+							mAdapter.addData(data);
+						}
 						if (totalnum > 0) {
 							mOrderCount.setText("共有" + totalnum + "个订单");
 							mOrderCount.setVisibility(View.VISIBLE);
@@ -254,14 +260,33 @@ public class OrderFragment extends BaseFragment {
 							mOrderCount.setVisibility(View.GONE);
 						}
 					}
+					if (mMore) {
+						if (mListView.getFooterViewsCount() <= 0) {
+							mListView.addFooterView(mFooter, null, false);
+						}
+					} else {
+						if (mListView.getFooterViewsCount() > 0) {
+							mListView.removeFooterView(mFooter);
+						}
+					}
+					mPage++;
 				}
 				return;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
+		if (mAdapter.getCount() <= 0) {
+			mEmptyView.setVisibility(View.VISIBLE);
+			mOrderCount.setVisibility(View.GONE);
+		}
 		Util.showTips(getActivity(), getString(R.string.request_failed));
 	}
+	
+	private void loadFinish() {
+    	mSwipeRefreshLayout.setEnabled(true);
+    	mSwipeRefreshLayout.setRefreshing(false);
+    }
 	
 	public static class OrderAdapter extends BaseAdapter {
 		
@@ -293,13 +318,21 @@ public class OrderFragment extends BaseFragment {
 			return position;
 		}
 
-		public void clear() {
-			mData.clear();
+		public void setData(List<Order> data) {
+			if (mData != null) {
+				mData.clear();
+				mData = null;
+			}
+			mData = data;
 			notifyDataSetChanged();
 		}
-		
-		public void addData(List<Order> order) {
-			mData.addAll(order);
+
+		public void addData(List<Order> data) {
+			if (mData == null) {
+				mData = data;
+			} else {
+				mData.addAll(data);
+			}
 			notifyDataSetChanged();
 		}
 		
@@ -332,22 +365,25 @@ public class OrderFragment extends BaseFragment {
 	
 	public static class ViewHolder {
 		
-		@InjectView(R.id.order_list_item_name)
+		@InjectView(R.id.item_name)
 		TextView mOrderName;
-		@InjectView(R.id.order_list_item_date)
+		@InjectView(R.id.item_code)
+		TextView mOrderCode;
+		@InjectView(R.id.item_date)
 		TextView mOrderDate;
-		@InjectView(R.id.order_list_item_state)
-		TextView mState;
+		@InjectView(R.id.item_info)
+		TextView mOrderInfo;
 		
 		public ViewHolder(View parent) {
 			ButterKnife.inject(this, parent);
 		}
 		
-		public void refresh(Order order, String state) {
+		public void refresh(Order order, String info) {
 			if (order != null) {
-				mState.setText(state);
 				mOrderName.setText(order.getGoodsName());
+				mOrderCode.setText(String.format("订单号：%s", order.getGoodsCD()));
 				mOrderDate.setText(order.getCreateDate());
+				mOrderInfo.setText(info);
 			}
 		}
 		
