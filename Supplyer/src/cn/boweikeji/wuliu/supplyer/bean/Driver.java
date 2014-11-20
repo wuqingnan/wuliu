@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.bean;
+package cn.boweikeji.wuliu.supplyer.bean;
 
 public class Driver {
 

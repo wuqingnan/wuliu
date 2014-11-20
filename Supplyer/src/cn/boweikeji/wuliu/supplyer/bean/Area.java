@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.bean;
+package cn.boweikeji.wuliu.supplyer.bean;
 
 import cn.boweikeji.wuliu.supplyer.dao.AreaDao;
 

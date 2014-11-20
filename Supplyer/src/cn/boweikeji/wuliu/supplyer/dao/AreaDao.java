@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.dao;
+package cn.boweikeji.wuliu.supplyer.dao;
 
 import java.sql.SQLException;
 import java.util.List;

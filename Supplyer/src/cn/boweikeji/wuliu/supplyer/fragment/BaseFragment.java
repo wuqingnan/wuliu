@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.fragment;
+package cn.boweikeji.wuliu.supplyer.fragment;
 
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;

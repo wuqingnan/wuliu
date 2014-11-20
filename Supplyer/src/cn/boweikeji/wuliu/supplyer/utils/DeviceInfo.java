@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.utils;
+package cn.boweikeji.wuliu.supplyer.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.adapter;
+package cn.boweikeji.wuliu.supplyer.adapter;
 
 import cn.boweikeji.wuliu.supplyer.R;
 

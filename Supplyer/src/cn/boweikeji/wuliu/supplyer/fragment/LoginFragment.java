@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.fragment;
+package cn.boweikeji.wuliu.supplyer.fragment;
 
 import org.apache.http.Header;
 import org.json.JSONArray;

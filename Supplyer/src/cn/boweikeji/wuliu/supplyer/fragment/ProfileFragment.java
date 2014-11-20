@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.fragment;
+package cn.boweikeji.wuliu.supplyer.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

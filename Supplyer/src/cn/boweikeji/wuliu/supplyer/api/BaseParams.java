@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.api;
+package cn.boweikeji.wuliu.supplyer.api;
 
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
 

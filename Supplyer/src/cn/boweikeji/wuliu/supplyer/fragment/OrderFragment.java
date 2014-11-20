@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.fragment;
+package cn.boweikeji.wuliu.supplyer.fragment;
 
 import java.util.ArrayList;
 import java.util.Collections;

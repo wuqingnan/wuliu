@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.activity;
+package cn.boweikeji.wuliu.supplyer.activity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

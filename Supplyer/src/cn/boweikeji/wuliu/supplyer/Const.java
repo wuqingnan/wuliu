@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer;
+package cn.boweikeji.wuliu.supplyer;
 
 import android.content.Context;
 

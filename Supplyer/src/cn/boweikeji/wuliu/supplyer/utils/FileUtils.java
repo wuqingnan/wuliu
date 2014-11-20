@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.utils;
+package cn.boweikeji.wuliu.supplyer.utils;
 
 import android.os.Environment;
 import android.os.StatFs;

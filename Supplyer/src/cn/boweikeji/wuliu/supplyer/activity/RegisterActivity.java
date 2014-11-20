@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.activity;
+package cn.boweikeji.wuliu.supplyer.activity;
 
 
 import org.apache.http.Header;

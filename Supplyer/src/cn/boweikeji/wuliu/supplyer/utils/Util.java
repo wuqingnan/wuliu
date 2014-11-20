@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.utils;
+package cn.boweikeji.wuliu.supplyer.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

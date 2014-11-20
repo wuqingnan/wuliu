@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.db;
+package cn.boweikeji.wuliu.supplyer.db;
 
 import java.io.File;
 import java.io.InputStream;

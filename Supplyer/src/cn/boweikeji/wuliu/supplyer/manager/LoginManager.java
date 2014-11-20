@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.supplyer.manager;
+package cn.boweikeji.wuliu.supplyer.manager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
