@@ -91,8 +91,8 @@ public class SuggestActivity extends BaseActivity {
 			client.setURLEncodingEnabled(true);
 			
 			BaseParams params = new BaseParams();
-			params.add("method", "supplyerSuggest");
-			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getDriver_cd());
+			params.add("method", "driverSuggest");
+			params.add("driver_cd", LoginManager.getInstance().getUserInfo().getDriver_cd());
 			params.add("passwd", LoginManager.getInstance().getUserInfo().getPasswd());
 			params.add("content", content);
 			
