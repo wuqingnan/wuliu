@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.driver.bean;
+package cn.boweikeji.wuliu.driver.bean;
 
 import java.io.Serializable;
 

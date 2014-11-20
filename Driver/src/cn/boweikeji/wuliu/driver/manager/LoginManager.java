@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.driver.manager;
+package cn.boweikeji.wuliu.driver.manager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

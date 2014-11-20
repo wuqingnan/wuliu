@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.driver.utils;
+package cn.boweikeji.wuliu.driver.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

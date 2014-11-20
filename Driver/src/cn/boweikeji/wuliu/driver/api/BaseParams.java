@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.driver.api;
+package cn.boweikeji.wuliu.driver.api;
 
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 

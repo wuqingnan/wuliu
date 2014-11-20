@@ -1,4 +1,4 @@
-﻿package cn.boweikeji.wuliu.driver.utils;
+package cn.boweikeji.wuliu.driver.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
