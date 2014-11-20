@@ -68,7 +68,7 @@ public class OrderFragment extends BaseFragment {
 				long id) {
 			if (id >= 0) {
 				Order order = (Order) mAdapter.getItem((int)id);
-				OrderDetailActivity.startOrderDetailActivity(getActivity(), order.getGoodsCD());
+				OrderDetailActivity.startOrderDetailActivity(getActivity(), order.getGoods_cd());
 			}
 		}
 	};
@@ -237,15 +237,15 @@ public class OrderFragment extends BaseFragment {
 							temp = infos.optJSONObject(i);
 							order = new Order();
 							order.setState(temp.optInt("state"));
-							order.setGoodsCD(temp.optString("goods_cd"));
-							order.setGoodsName(temp.optString("goods_name"));
-							order.setCreateDate(temp.optString("create_date"));
+							order.setGoods_cd(temp.optString("goods_cd"));
+							order.setGoods_name(temp.optString("goods_name"));
+							order.setCreate_date(temp.optString("create_date"));
 							data.add(order);
 						}
 						Collections.sort(data, new Comparator<Order>() {
 							@Override
 							public int compare(Order lhs, Order rhs) {
-								return rhs.getCreateDate().compareTo(lhs.getCreateDate());
+								return rhs.getCreate_date().compareTo(lhs.getCreate_date());
 							}
 						});
 						if (mPage == 1) {
@@ -380,9 +380,9 @@ public class OrderFragment extends BaseFragment {
 		
 		public void refresh(Order order, String info) {
 			if (order != null) {
-				mOrderName.setText(order.getGoodsName());
-				mOrderCode.setText(String.format("订单号：%s", order.getGoodsCD()));
-				mOrderDate.setText(order.getCreateDate());
+				mOrderName.setText(order.getGoods_name());
+				mOrderCode.setText(String.format("订单号：%s", order.getGoods_cd()));
+				mOrderDate.setText(order.getCreate_date());
 				mOrderInfo.setText(info);
 			}
 		}

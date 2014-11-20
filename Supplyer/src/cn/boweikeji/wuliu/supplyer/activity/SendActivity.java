@@ -236,25 +236,25 @@ public class SendActivity extends BaseActivity {
 	private void sendDetail() {
 		if (checkValid()) {
 			Order order = new Order();
-			order.setGoodsType(mGoodsTypeIndex);
-			order.setGoodsName(mGoodsName.getText().toString());
+			order.setGoods_type_code(mGoodsTypeIndex);
+			order.setGoods_name(mGoodsName.getText().toString());
 			if (mBespeak) {
 				order.setPickTime(mPickTime.getText().toString());
 			}
 			boolean tons = mGoodsWeightUnit.getCheckedRadioButtonId() == R.id.goods_weight_unit_tons;
 			float weight = Float.parseFloat(mGoodsWeight.getText().toString());
 			order.setWeight((int)(weight * (tons ? 1000 : 1)));
-			order.setGoodsValue(Integer.parseInt(mGoodsValue.getText().toString()));
+			order.setGoods_value(Integer.parseInt(mGoodsValue.getText().toString()));
 			order.setPay(Integer.parseInt(mGoodsPay.getText().toString()));
-			order.setValidTime(mValidTimeIndex);
-			order.setTrunkType(mTruckTypeIndex);
-			order.setToAddress(mAddressTo.getText().toString());
-			order.setFromAddress(mAddressFrom.getText().toString());
+			order.setValid_type(mValidTimeIndex);
+			order.setTruck_type_code(mTruckTypeIndex);
+			order.setEnd_addr(mAddressTo.getText().toString());
+			order.setStart_addr(mAddressFrom.getText().toString());
 			LocationClient client = WLApplication.getLocationClient();
 			if (client != null) {
 				BDLocation location = client.getLastKnownLocation();
-				order.setLat(location.getLatitude());
-				order.setLon(location.getLongitude());
+				order.setGps_addr_w(location.getLatitude());
+				order.setGps_addr_j(location.getLongitude());
 			}
 			SendDetailActivity.startSendDetailActivity(this, order);
 		}

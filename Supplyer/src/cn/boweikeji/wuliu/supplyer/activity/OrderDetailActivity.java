@@ -275,25 +275,25 @@ public class OrderDetailActivity extends BaseActivity {
 	private void parseJson(JSONObject infos) {
 		Order order = new Order();
 		Driver driver = null;
-		order.setGoodsCD(infos.optString("goods_cd"));
-		order.setGoodsName(infos.optString("goods_name"));
-		order.setGoodsType(infos.optInt("goods_type_code"));
+		order.setGoods_cd(infos.optString("goods_cd"));
+		order.setGoods_name(infos.optString("goods_name"));
+		order.setGoods_type_code(infos.optInt("goods_type_code"));
 	
-		order.setFromName(infos.optString("supplyer_name"));
-		order.setFromPhone(infos.optString("supplyer_phone"));
-		order.setFromAddress(infos.optString("start_addr"));
-		order.setToName(infos.optString("reciver"));
-		order.setToPhone(infos.optString("reciver_phone"));
-		order.setToAddress(infos.optString("end_addr"));
+		order.setSupplyer_name(infos.optString("supplyer_name"));
+		order.setSupplyer_phone(infos.optString("supplyer_phone"));
+		order.setStart_addr(infos.optString("start_addr"));
+		order.setReciver(infos.optString("reciver"));
+		order.setReciver_phone(infos.optString("reciver_phone"));
+		order.setEnd_addr(infos.optString("end_addr"));
 		
 		order.setCredit(infos.optInt("credit"));
 		order.setStars(infos.optInt("stars"));
-		order.setFree(infos.optInt("mess_fee"));
+		order.setMess_fee(infos.optInt("mess_fee"));
 		order.setPay(infos.optInt("goods_cost"));
 		order.setState(infos.optInt("state"));
 		order.setPickTime(infos.optString("pick_time"));
-		order.setCreateDate(infos.optString("create_date"));
-		order.setRemarks(infos.optString("remark"));
+		order.setCreate_date(infos.optString("create_date"));
+		order.setRemark(infos.optString("remark"));
 
 		String driverCD = infos.optString("driver_cd");
 		if (driverCD != null && driverCD.length() > 0 && !driverCD.equals(BaseParams.PARAM_DEFAULT)) {
@@ -302,7 +302,7 @@ public class OrderDetailActivity extends BaseActivity {
 			driver.setDriver_name(infos.optString("driver_name"));
 			driver.setPhone(infos.optString("phone"));
 			driver.setCredit_level(infos.optString("credit_level"));
-			driver.setTrunk_type_code(infos.optInt("trunk_type_code"));
+			driver.setTruck_type_code(infos.optInt("trunk_type_code"));
 		}
 		updateFooter(order);
 		mAdapter.setData(order, driver);
@@ -585,7 +585,7 @@ public class OrderDetailActivity extends BaseActivity {
 			String value = null;
 			switch (name) {
 			case R.string.label_order_code:
-				value = mOrder.getGoodsCD();
+				value = mOrder.getGoods_cd();
 				break;
 			case R.string.label_order_state:
 				value = mStateName[getStateIndexByValue(mOrder.getState())];
@@ -594,7 +594,7 @@ public class OrderDetailActivity extends BaseActivity {
 				value = String.format(mContext.getString(R.string.value_yuan), mOrder.getPay());
 				break;
 			case R.string.label_message_free:
-				int free = mOrder.getFree();
+				int free = mOrder.getMess_fee();
 				if (free == 0) {
 					value = mContext.getString(R.string.free_no);
 				} else {
@@ -605,41 +605,41 @@ public class OrderDetailActivity extends BaseActivity {
 				value = mOrder.getPickTime();
 				break;
 			case R.string.label_create_time:
-				value = mOrder.getCreateDate();
+				value = mOrder.getCreate_date();
 				break;
 			case R.string.label_send_comment:
-				value = mOrder.getRemarks();
+				value = mOrder.getRemark();
 				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
 					value = null;
 				}
 				break;
 			case R.string.label_goods_name:
-				value = mOrder.getGoodsName();
+				value = mOrder.getGoods_name();
 				break;
 			case R.string.label_goods_type:
-				int type = mOrder.getGoodsType();
+				int type = mOrder.getGoods_type_code();
 				if (type >= 0 && type < mTypes.length) {
 					value = mTypes[type];
 				}
 				break;
 			case R.string.label_send_from:
-				value = mOrder.getFromName();
+				value = mOrder.getSupplyer_name();
 				break;
 			case R.string.label_send_phone:
 				if (position == 3) {
-					value = mOrder.getFromPhone();
+					value = mOrder.getSupplyer_phone();
 				} else {
-					value = mOrder.getToPhone();
+					value = mOrder.getReciver_phone();
 				}
 				break;
 			case R.string.label_send_to:
-				value = mOrder.getToName();
+				value = mOrder.getReciver();
 				break;
 			case R.string.label_address_from:
-				value = mOrder.getFromAddress();
+				value = mOrder.getStart_addr();
 				break;
 			case R.string.label_address_to:
-				value = mOrder.getToAddress();
+				value = mOrder.getEnd_addr();
 				break;
 			case R.string.label_driver_name:
 				value = mDriver.getDriver_name();
@@ -648,7 +648,7 @@ public class OrderDetailActivity extends BaseActivity {
 				value = mDriver.getPhone();
 				break;
 			case R.string.label_driver_truck:
-				int truck = mDriver.getTrunk_type_code();
+				int truck = mDriver.getTruck_type_code();
 				if (truck >= 0 && truck < mTruckTypes.length) {
 					value = mTruckTypes[truck];
 				}

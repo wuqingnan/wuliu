@@ -126,12 +126,12 @@ public class SendDetailActivity extends BaseActivity {
 	private void publish() {
 		if (checkValid()) {
 			showProgressDialog();
-			mOrder.setFromName(mSendFrom.getText().toString());
-			mOrder.setFromPhone(mSendFromPhone.getText().toString());
-			mOrder.setToName(mSendTo.getText().toString());
-			mOrder.setToPhone(mSendToPhone.getText().toString());
-			mOrder.setRemarks(mSendComment.getText().toString());
-			mOrder.setFree(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 0);
+			mOrder.setSupplyer_name(mSendFrom.getText().toString());
+			mOrder.setSupplyer_phone(mSendFromPhone.getText().toString());
+			mOrder.setReciver(mSendTo.getText().toString());
+			mOrder.setReciver_phone(mSendToPhone.getText().toString());
+			mOrder.setRemark(mSendComment.getText().toString());
+			mOrder.setMess_fee(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 2);
 			
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.setURLEncodingEnabled(true);
@@ -214,7 +214,7 @@ public class SendDetailActivity extends BaseActivity {
 						Intent intent = new Intent(SendDetailActivity.this, MainActivity.class);
 						intent.putExtra(MainActivity.KEY_REDIRECT, true);
 						intent.putExtra(MainActivity.KEY_REDIRECT_TO, MainActivity.REDIRECT_TO_ORDERDETAIL);
-						intent.putExtra("goods_cd", mOrder.getGoodsCD());
+						intent.putExtra("goods_cd", mOrder.getGoods_cd());
 						startActivity(intent);
 					}
 				})
@@ -232,7 +232,7 @@ public class SendDetailActivity extends BaseActivity {
 					JSONObject info = response.optJSONObject("infos");
 					if (info != null) {
 						String goods_cd = info.optString("goods_cd");
-						mOrder.setGoodsCD(goods_cd);
+						mOrder.setGoods_cd(goods_cd);
 					}
 					showPublishSuccessDialog();
 				}

@@ -16,272 +16,272 @@ public class Order implements Serializable {
 	private static final int SOURCE_ANDROID = 1;
 	private static final int SOURCE_BROWSER = 2;
 	
-	private String mGoodsCD;
-	private String mGoodsName;
-	private int mGoodsValue;
-	private int mGoodsType;
-	private int mWeight;
-	private int mTrunkType;
-	private int mPay;
-	private int mFree;
-	private int mSource;
+	private String goods_cd;
+	private String goods_name;
+	private int goods_value;
+	private int goods_type_code;
+	private int weight;
+	private int truck_type_code;
+	private int goods_cost;
+	private int mess_fee;
+	private int source_code;
 	
-	private double mLat;
-	private double mLon;
+	private double gps_addr_j;
+	private double gps_addr_w;
 	
-	private int mState;
-	private int mCredit;
-	private int mStars;
+	private int state;
+	private int credit;
+	private int stars;
 	
-	private String mFromName;
-	private String mFromPhone;
-	private String mFromAddress;
+	private String supplyer_name;
+	private String supplyer_phone;
+	private String start_addr;
 	
-	private String mToName;
-	private String mToPhone;
-	private String mToAddress;
+	private String reciver;
+	private String reciver_phone;
+	private String end_addr;
 	
-	private String mPickTime;
-	private int mValidTime;
+	private String pick_time;
+	private int valid_type;
 	
-	private String mRemarks;
+	private String remark;
 	
-	private String mCreateDate;
+	private String create_date;
 	
 	public Order() {
-		mSource = SOURCE_ANDROID;
-		mState = 0;
+		source_code = SOURCE_ANDROID;
+		state = 0;
 	}
 
-	public String getGoodsCD() {
-		return mGoodsCD;
+	public String getGoods_cd() {
+		return goods_cd;
 	}
 
-	public void setGoodsCD(String goodsCD) {
-		mGoodsCD = goodsCD;
+	public void setGoods_cd(String goods_cd) {
+		this.goods_cd = goods_cd;
 	}
 
-	public String getGoodsName() {
-		return mGoodsName;
+	public String getGoods_name() {
+		return goods_name;
 	}
 
-	public void setGoodsName(String goodsName) {
-		mGoodsName = goodsName;
+	public void setGoods_name(String goods_name) {
+		this.goods_name = goods_name;
 	}
 
-	public int getGoodsValue() {
-		return mGoodsValue;
+	public int getGoods_value() {
+		return goods_value;
 	}
 	
-	public void setGoodsValue(int goodsValue) {
-		mGoodsValue = goodsValue;
+	public void setGoods_value(int goods_value) {
+		this.goods_value = goods_value;
 	}
 	
-	public int getGoodsType() {
-		return mGoodsType;
+	public int getGoods_type_code() {
+		return goods_type_code;
 	}
 
-	public void setGoodsType(int goodsType) {
-		mGoodsType = goodsType;
+	public void setGoods_type_code(int goods_type_code) {
+		this.goods_type_code = goods_type_code;
 	}
 
 	public int getWeight() {
-		return mWeight;
+		return weight;
 	}
 
 	public void setWeight(int weight) {
-		mWeight = weight;
+		this.weight = weight;
 	}
 
-	public int getTrunkType() {
-		return mTrunkType;
+	public int getTruck_type_code() {
+		return truck_type_code;
 	}
 
-	public void setTrunkType(int trunkType) {
-		mTrunkType = trunkType;
+	public void setTruck_type_code(int truck_type_code) {
+		this.truck_type_code = truck_type_code;
 	}
 
 	public int getPay() {
-		return mPay;
+		return goods_cost;
 	}
 	
 	public void setPay(int pay) {
-		mPay = pay;
+		goods_cost = pay;
 	}
 
-	public int getFree() {
-		return mFree;
+	public int getMess_fee() {
+		return mess_fee;
 	}
 
-	public void setFree(int free) {
-		mFree = free;
+	public void setMess_fee(int mess_fee) {
+		this.mess_fee = mess_fee;
 	}
 
-	public int getSource() {
-		return mSource;
+	public int getSource_code() {
+		return source_code;
 	}
 
-	public void setSource(int source) {
-		mSource = source;
+	public void setSource_code(int source_code) {
+		this.source_code = source_code;
 	}
 
-	public double getLat() {
-		return mLat;
+	public double getGps_addr_w() {
+		return gps_addr_w;
 	}
 
-	public void setLat(double lat) {
-		mLat = lat;
+	public void setGps_addr_w(double gps_addr_w) {
+		this.gps_addr_w = gps_addr_w;
 	}
 
-	public double getLon() {
-		return mLon;
+	public double getGps_addr_j() {
+		return gps_addr_j;
 	}
 
-	public void setLon(double lon) {
-		mLon = lon;
+	public void setGps_addr_j(double gps_addr_j) {
+		this.gps_addr_j = gps_addr_j;
 	}
 
 	public int getState() {
-		return mState;
+		return state;
 	}
 
 	public void setState(int state) {
-		mState = state;
+		this.state = state;
 	}
 
 	public int getCredit() {
-		return mCredit;
+		return credit;
 	}
 
 	public void setCredit(int credit) {
-		mCredit = credit;
+		this.credit = credit;
 	}
 
 	public int getStars() {
-		return mStars;
+		return stars;
 	}
 
 	public void setStars(int stars) {
-		mStars = stars;
+		this.stars = stars;
 	}
 
-	public String getFromName() {
-		return mFromName;
+	public String getSupplyer_name() {
+		return supplyer_name;
 	}
 
-	public void setFromName(String fromName) {
-		mFromName = fromName;
+	public void setSupplyer_name(String supplyer_name) {
+		this.supplyer_name = supplyer_name;
 	}
 
-	public String getFromPhone() {
-		return mFromPhone;
+	public String getSupplyer_phone() {
+		return supplyer_phone;
 	}
 
-	public void setFromPhone(String fromPhone) {
-		mFromPhone = fromPhone;
+	public void setSupplyer_phone(String supplyer_phone) {
+		this.supplyer_phone = supplyer_phone;
 	}
 
-	public String getFromAddress() {
-		return mFromAddress;
+	public String getStart_addr() {
+		return start_addr;
 	}
 
-	public void setFromAddress(String fromAddress) {
-		mFromAddress = fromAddress;
+	public void setStart_addr(String start_addr) {
+		this.start_addr = start_addr;
 	}
 
-	public String getToName() {
-		return mToName;
+	public String getReciver() {
+		return reciver;
 	}
 
-	public void setToName(String toName) {
-		mToName = toName;
+	public void setReciver(String reciver) {
+		this.reciver = reciver;
 	}
 
-	public String getToPhone() {
-		return mToPhone;
+	public String getReciver_phone() {
+		return reciver_phone;
 	}
 
-	public void setToPhone(String toPhone) {
-		mToPhone = toPhone;
+	public void setReciver_phone(String reciver_phone) {
+		this.reciver_phone = reciver_phone;
 	}
 
-	public String getToAddress() {
-		return mToAddress;
+	public String getEnd_addr() {
+		return end_addr;
 	}
 
-	public void setToAddress(String toAddress) {
-		mToAddress = toAddress;
+	public void setEnd_addr(String end_addr) {
+		this.end_addr = end_addr;
 	}
 
 	public String getPickTime() {
-		return mPickTime;
+		return pick_time;
 	}
 
 	public void setPickTime(String pickTime) {
-		mPickTime = pickTime;
+		pick_time = pickTime;
 	}
 
-	public int getValidTime() {
-		return mValidTime;
+	public int getValid_type() {
+		return valid_type;
 	}
 
-	public void setValidTime(int validTime) {
-		mValidTime = validTime;
+	public void setValid_type(int valid_type) {
+		this.valid_type = valid_type;
 	}
 	
-	public String getRemarks() {
-		return mRemarks;
+	public String getRemark() {
+		return remark;
 	}
 	
-	public void setRemarks(String remarks) {
-		mRemarks = remarks;
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
-	public String getCreateDate() {
-		return mCreateDate;
+	public String getCreate_date() {
+		return create_date;
 	}
 
-	public void setCreateDate(String createDate) {
-		mCreateDate = createDate;
+	public void setCreate_date(String create_date) {
+		this.create_date = create_date;
 	}
 
 	public BaseParams getPublishParams() {
 		BaseParams params = new BaseParams();
-		params.add("goods_name", TextUtils.isEmpty(mGoodsName) ? BaseParams.PARAM_DEFAULT : mGoodsName);
-		params.add("goods_value", mGoodsValue >= 0 ? "" + mGoodsValue : BaseParams.PARAM_DEFAULT);
-		params.add("goods_type_code", "" + mGoodsType);
-		params.add("weight", mWeight >= 0 ? "" + mWeight : BaseParams.PARAM_DEFAULT);
-		params.add("trunk_type_code", "" + mTrunkType);
-		params.add("goods_cost", mPay >= 0 ? "" + mPay : BaseParams.PARAM_DEFAULT);
-		params.add("mess_fee", "" + mFree);
-		params.add("source_code", "" + mSource);
-		params.add("gps_addr_j", mLon > 0 ? "" + mLon : BaseParams.PARAM_DEFAULT);
-		params.add("gps_addr_w", mLat > 0 ? "" + mLat : BaseParams.PARAM_DEFAULT);
-		params.add("state", "" + mState);
-		params.add("start_addr", mFromAddress);
-		params.add("end_addr", mToAddress);
-		params.add("reciver", mToName);
-		params.add("reciver_phone", mToPhone);
-		params.add("remark", TextUtils.isEmpty(mRemarks) ? BaseParams.PARAM_DEFAULT : mRemarks);
-		params.add("pick_time", TextUtils.isEmpty(mPickTime) ? BaseParams.PARAM_DEFAULT : mPickTime);
-		params.add("valid_type", "" + mValidTime);
-		params.add("supplyer_name", mFromName);
-		params.add("supplyer_phone", mFromPhone);
+		params.add("goods_name", TextUtils.isEmpty(goods_name) ? BaseParams.PARAM_DEFAULT : goods_name);
+		params.add("goods_value", goods_value >= 0 ? "" + goods_value : BaseParams.PARAM_DEFAULT);
+		params.add("goods_type_code", "" + goods_type_code);
+		params.add("weight", weight >= 0 ? "" + weight : BaseParams.PARAM_DEFAULT);
+		params.add("trunk_type_code", "" + truck_type_code);
+		params.add("goods_cost", goods_cost >= 0 ? "" + goods_cost : BaseParams.PARAM_DEFAULT);
+		params.add("mess_fee", "" + mess_fee);
+		params.add("source_code", "" + source_code);
+		params.add("gps_addr_j", gps_addr_j > 0 ? "" + gps_addr_j : BaseParams.PARAM_DEFAULT);
+		params.add("gps_addr_w", gps_addr_w > 0 ? "" + gps_addr_w : BaseParams.PARAM_DEFAULT);
+		params.add("state", "" + state);
+		params.add("start_addr", start_addr);
+		params.add("end_addr", end_addr);
+		params.add("reciver", reciver);
+		params.add("reciver_phone", reciver_phone);
+		params.add("remark", TextUtils.isEmpty(remark) ? BaseParams.PARAM_DEFAULT : remark);
+		params.add("pick_time", TextUtils.isEmpty(pick_time) ? BaseParams.PARAM_DEFAULT : pick_time);
+		params.add("valid_type", "" + valid_type);
+		params.add("supplyer_name", supplyer_name);
+		params.add("supplyer_phone", supplyer_phone);
 		return params;
 	}
 	
 	public BaseParams getChangeParams() {
 		BaseParams params = new BaseParams();
-		params.add("goods_cd", mGoodsCD);
-		params.add("supplyer_name", mFromName);
-		params.add("supplyer_phone", mFromPhone);
-		params.add("start_addr", mFromAddress);
-		params.add("end_addr", mToAddress);
-		params.add("reciver_name", mToName);
-		params.add("reciver_phone", mToPhone);
-		params.add("mess_fee", "" + mFree);
-		params.add("goods_cost", mPay >= 0 ? "" + mPay : BaseParams.PARAM_DEFAULT);
-		params.add("remark", TextUtils.isEmpty(mRemarks) ? BaseParams.PARAM_DEFAULT : mRemarks);
+		params.add("goods_cd", goods_cd);
+		params.add("supplyer_name", supplyer_name);
+		params.add("supplyer_phone", supplyer_phone);
+		params.add("start_addr", start_addr);
+		params.add("end_addr", end_addr);
+		params.add("reciver_name", reciver);
+		params.add("reciver_phone", reciver_phone);
+		params.add("mess_fee", "" + mess_fee);
+		params.add("goods_cost", goods_cost >= 0 ? "" + goods_cost : BaseParams.PARAM_DEFAULT);
+		params.add("remark", TextUtils.isEmpty(remark) ? BaseParams.PARAM_DEFAULT : remark);
 		return params;
 	}
 }

@@ -7,7 +7,7 @@ public class Driver {
 	private String phone;
 	private String credit_level;
 	private int stars;
-	private int trunk_type_code;
+	private int truck_type_code;
 	
 	public int getStars() {
 		return stars;
@@ -40,11 +40,11 @@ public class Driver {
 		this.credit_level = credit_level;
 	}
 	
-	public int getTrunk_type_code() {
-		return trunk_type_code;
+	public int getTruck_type_code() {
+		return truck_type_code;
 	}
 	
-	public void setTrunk_type_code(int trunk_type_code) {
-		this.trunk_type_code = trunk_type_code;
+	public void setTruck_type_code(int trunk_type_code) {
+		this.truck_type_code = trunk_type_code;
 	}
 }

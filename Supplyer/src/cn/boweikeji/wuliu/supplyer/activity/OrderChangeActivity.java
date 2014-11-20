@@ -160,20 +160,20 @@ public class OrderChangeActivity extends BaseActivity {
 	private void initData() {
 		if (mOrder != null) {
 			mGoodsPay.setText(mOrder.getPay() + "");
-			mAddressFrom.setText(mOrder.getFromAddress());
-			mAddressTo.setText(mOrder.getToAddress());
+			mAddressFrom.setText(mOrder.getStart_addr());
+			mAddressTo.setText(mOrder.getEnd_addr());
 			
-			int free = mOrder.getFree();
+			int free = mOrder.getMess_fee();
 			if (free == 1) {
 				mMessageFree.check(R.id.message_free_yes);
 			} else {
 				mMessageFree.check(R.id.message_free_no);
 			}
-			mSendFrom.setText(mOrder.getFromName());
-			mSendFromPhone.setText(mOrder.getFromPhone());
-			mSendTo.setText(mOrder.getToName());
-			mSendToPhone.setText(mOrder.getToPhone());
-			String remarks = mOrder.getRemarks();
+			mSendFrom.setText(mOrder.getSupplyer_name());
+			mSendFromPhone.setText(mOrder.getSupplyer_phone());
+			mSendTo.setText(mOrder.getReciver());
+			mSendToPhone.setText(mOrder.getReciver_phone());
+			String remarks = mOrder.getRemark();
 			if (remarks != null && !remarks.equals(BaseParams.PARAM_DEFAULT)) {
 				mSendComment.setText(remarks);
 			}
@@ -194,15 +194,15 @@ public class OrderChangeActivity extends BaseActivity {
 	private void publish() {
 		if (checkValid()) {
 			showProgressDialog();
-			mOrder.setFromName(mSendFrom.getText().toString());
-			mOrder.setFromPhone(mSendFromPhone.getText().toString());
-			mOrder.setToName(mSendTo.getText().toString());
-			mOrder.setToPhone(mSendToPhone.getText().toString());
-			mOrder.setRemarks(mSendComment.getText().toString());
-			mOrder.setFree(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 0);
+			mOrder.setSupplyer_name(mSendFrom.getText().toString());
+			mOrder.setSupplyer_phone(mSendFromPhone.getText().toString());
+			mOrder.setReciver(mSendTo.getText().toString());
+			mOrder.setReciver_phone(mSendToPhone.getText().toString());
+			mOrder.setRemark(mSendComment.getText().toString());
+			mOrder.setMess_fee(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 2);
 			mOrder.setPay(Integer.parseInt(mGoodsPay.getText().toString()));
-			mOrder.setToAddress(mAddressTo.getText().toString());
-			mOrder.setFromAddress(mAddressFrom.getText().toString());
+			mOrder.setEnd_addr(mAddressTo.getText().toString());
+			mOrder.setStart_addr(mAddressFrom.getText().toString());
 			
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.setURLEncodingEnabled(true);
