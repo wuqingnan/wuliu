@@ -141,7 +141,7 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void about() {
-		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.title_about_app), WebViewActivity.URL_ABOUT);
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.title_about), WebViewActivity.URL_ABOUT);
 	}
 	
 	private void update() {

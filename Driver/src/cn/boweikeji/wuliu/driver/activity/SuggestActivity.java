@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.supplyer.activity;
+package cn.boweikeji.wuliu.driver.activity;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -6,14 +6,14 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import cn.boweikeji.wuliu.supplyer.Const;
-import cn.boweikeji.wuliu.supplyer.api.BaseParams;
-import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
-import cn.boweikeji.wuliu.supplyer.utils.Util;
+import cn.boweikeji.wuliu.driver.Const;
+import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.api.BaseParams;
+import cn.boweikeji.wuliu.driver.manager.LoginManager;
+import cn.boweikeji.wuliu.driver.utils.Util;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import cn.boweikeji.wuliu.supplyer.R;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -73,7 +73,7 @@ public class SuggestActivity extends BaseActivity {
 	
 	private void initView() {
 		ButterKnife.inject(this);
-		mTitle.setText(R.string.title_suggest);
+		mTitle.setText(R.string.suggestion);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);
 	}
@@ -92,7 +92,7 @@ public class SuggestActivity extends BaseActivity {
 			
 			BaseParams params = new BaseParams();
 			params.add("method", "supplyerSuggest");
-			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
+			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getDriver_cd());
 			params.add("passwd", LoginManager.getInstance().getUserInfo().getPasswd());
 			params.add("content", content);
 			
@@ -140,7 +140,7 @@ public class SuggestActivity extends BaseActivity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//�ɹ�
+				if (res == 2) {//成功
 					mSuggestion.setText(null);
 				}
 				return;

@@ -1,5 +1,6 @@
 package cn.boweikeji.wuliu.driver.fragment;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.activity.SuggestActivity;
+import cn.boweikeji.wuliu.driver.activity.WebViewActivity;
 
 public class MoreFragment extends BaseFragment {
 
@@ -22,7 +25,25 @@ public class MoreFragment extends BaseFragment {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			
+			switch ((int)id) {
+			case 0://我的资料
+				break;
+			case 1://承运指南
+				guide();
+				break;
+			case 2://邀请好友
+				break;
+			case 3://分享给好友
+				break;
+			case 4://反馈与建议
+				suggest();
+				break;
+			case 5://设置
+				break;
+			case 6://关于
+				about();
+				break;
+			}
 		}
 	};
 	
@@ -78,10 +99,30 @@ public class MoreFragment extends BaseFragment {
 	}
 	
 	private void initData() {
-		mListNames = getResources().getStringArray(R.array.more_list_name);
+		mListNames = new String[]{
+				getString(R.string.my_data),
+				getString(R.string.driver_guide),
+				getString(R.string.invite_firend),
+				getString(R.string.share_firend),
+				getString(R.string.suggestion),
+				getString(R.string.setting),
+				getString(R.string.about)
+		};
 		mListIcons = getResources().obtainTypedArray(R.array.more_list_icon);
 		mAdapter = new MoreAdapter();
 		mListView.setAdapter(mAdapter);
+	}
+
+	private void guide() {
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.driver_guide), WebViewActivity.URL_GUIDE);
+	}
+	
+	private void suggest() {
+		getActivity().startActivity(new Intent(getActivity(), SuggestActivity.class));
+	}
+	
+	private void about() {
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.about), WebViewActivity.URL_ABOUT);
 	}
 	
 	private class MoreAdapter extends BaseAdapter {
