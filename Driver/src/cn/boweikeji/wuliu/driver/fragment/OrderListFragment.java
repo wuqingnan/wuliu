@@ -23,8 +23,10 @@ import cn.boweikeji.wuliu.driver.activity.FindResultActivity.ViewHolder;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
+import cn.boweikeji.wuliu.driver.event.OrderEvent;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
+import de.greenrobot.event.EventBus;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -134,6 +136,12 @@ public class OrderListFragment extends BaseFragment {
 		mRootView = inflater.inflate(R.layout.fragment_order_list, null);
 		return mRootView;
 	}
+	
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		EventBus.getDefault().unregister(this);
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -146,6 +154,7 @@ public class OrderListFragment extends BaseFragment {
 		ButterKnife.inject(this, mRootView);
 		initView();
 		initData();
+		EventBus.getDefault().register(this);
 	}
 
 	private void initView() {
@@ -301,6 +310,10 @@ public class OrderListFragment extends BaseFragment {
     private void loadFinish() {
     	mSwipeRefreshLayout.setEnabled(true);
     	mSwipeRefreshLayout.setRefreshing(false);
+    }
+    
+    public void onEventMainThread(OrderEvent event) {
+    	refresh();
     }
 	
 	public static class OrderListAdapter extends BaseAdapter {

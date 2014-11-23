@@ -11,12 +11,14 @@ import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
+import cn.boweikeji.wuliu.driver.event.OrderEvent;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import de.greenrobot.event.EventBus;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -220,6 +222,7 @@ public class OrderDetailActivity extends BaseActivity {
 				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					refresh();
+					EventBus.getDefault().post(new OrderEvent(mGoodsCD));
 				}
 				return;
 			} catch (JSONException e) {
