@@ -159,7 +159,7 @@ public class OrderChangeActivity extends BaseActivity {
 	
 	private void initData() {
 		if (mOrder != null) {
-			mGoodsPay.setText(mOrder.getPay() + "");
+			mGoodsPay.setText(mOrder.getGoods_cost() + "");
 			mAddressFrom.setText(mOrder.getStart_addr());
 			mAddressTo.setText(mOrder.getEnd_addr());
 			
@@ -200,7 +200,7 @@ public class OrderChangeActivity extends BaseActivity {
 			mOrder.setReciver_phone(mSendToPhone.getText().toString());
 			mOrder.setRemark(mSendComment.getText().toString());
 			mOrder.setMess_fee(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 2);
-			mOrder.setPay(Integer.parseInt(mGoodsPay.getText().toString()));
+			mOrder.setGoods_cost(Integer.parseInt(mGoodsPay.getText().toString()));
 			mOrder.setEnd_addr(mAddressTo.getText().toString());
 			mOrder.setStart_addr(mAddressFrom.getText().toString());
 			

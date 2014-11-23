@@ -289,9 +289,9 @@ public class OrderDetailActivity extends BaseActivity {
 		order.setCredit(infos.optInt("credit"));
 		order.setStars(infos.optInt("stars"));
 		order.setMess_fee(infos.optInt("mess_fee"));
-		order.setPay(infos.optInt("goods_cost"));
+		order.setGoods_cost(infos.optInt("goods_cost"));
 		order.setState(infos.optInt("state"));
-		order.setPickTime(infos.optString("pick_time"));
+		order.setPick_time(infos.optString("pick_time"));
 		order.setCreate_date(infos.optString("create_date"));
 		order.setRemark(infos.optString("remark"));
 
@@ -591,7 +591,7 @@ public class OrderDetailActivity extends BaseActivity {
 				value = mStateName[getStateIndexByValue(mOrder.getState())];
 				break;
 			case R.string.label_goods_pay:
-				value = String.format(mContext.getString(R.string.value_yuan), mOrder.getPay());
+				value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
 				break;
 			case R.string.label_message_free:
 				int free = mOrder.getMess_fee();
@@ -602,7 +602,7 @@ public class OrderDetailActivity extends BaseActivity {
 				}
 				break;
 			case R.string.label_pick_time:
-				value = mOrder.getPickTime();
+				value = mOrder.getPick_time();
 				break;
 			case R.string.label_create_time:
 				value = mOrder.getCreate_date();
@@ -681,9 +681,9 @@ public class OrderDetailActivity extends BaseActivity {
 	
 	public static class ViewHolder {
 		
-		@InjectView(R.id.order_detail_item_name)
+		@InjectView(R.id.item_name)
 		TextView mName;
-		@InjectView(R.id.order_detail_item_value)
+		@InjectView(R.id.item_value)
 		TextView mValue;
 		
 		public ViewHolder(View parent) {

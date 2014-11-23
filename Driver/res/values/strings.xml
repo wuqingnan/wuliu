@@ -10,11 +10,14 @@
     <string name="home_tab_find">找货</string>
     <string name="home_tab_more">更多</string>
     
+    <string name="confirm">确 定</string>
+    
     <string name="quit_next_time">再按一次退出</string>
 
     <string name="title_home">@string/app_name</string>
     <string name="title_choose_city">选择城市</string>
     <string name="title_find_result">结果列表</string>
+    <string name="title_order_detail">订单详情</string>
     
   	<string name="my_data">我的资料</string>
   	<string name="driver_guide">承运指南</string>
@@ -31,6 +34,9 @@
     <string name="choose_image">选择照片</string>
     
     <string name="myloc">我在 %1$s 附近</string>
+    
+    <string name="value_yuan">%1$s 元</string>
+    <string name="value_kg">%1$s 千克</string>
     
     <string name="requesting">正在请求，请等待…</string>
     <string name="request_failed">请求失败，请重试</string>
@@ -66,9 +72,6 @@
     <string name="label_driver_type">类型：</string>
     <string name="label_id_front">身份证正面：</string>
     <string name="label_area_code">所属地：</string>
-    <string name="label_truck_type">车辆类型：</string>
-    <string name="label_goods_type">货物类型：</string>
-    <string name="label_message_free">信息公开：</string>
     
     <string name="all">全部</string>
     <string name="free_yes">免费公开</string>
@@ -98,5 +101,35 @@
     <string name="submit">提交</string>
     <string name="no_result">无内容</string>
     <string name="content_empty">内容不能为空</string>
+    
+    <string name="order_rob">抢单</string>
+    <string name="order_drop">退单</string>
+    
+    <string name="star_good">非常好</string>
+    <string name="star_normal">一般</string>
+    <string name="star_bad">差</string>
+    
+    <string name="order_drop_message">确认要退单吗，请先协商后再点击确定</string>
+    
+    <string name="label_order_code">订单编号：</string>
+    <string name="label_order_state">信息状态：</string>
+    <string name="label_create_time">订单创建时间：</string>
+    <string name="label_pick_time">取货时间：</string>
+    <string name="label_goods_name">物品名称：</string>
+    <string name="label_goods_type">物品类型：</string>
+    <string name="label_goods_value">物品价值：</string>
+    <string name="label_goods_weight">物品重量：</string>
+    <string name="label_truck_type">车辆类型：</string>
+    <string name="label_goods_pay">愿出金额：</string>
+    <string name="label_goods_valid_time">有效时间：</string>
+    <string name="label_message_phone">信息发送人电话：</string>
+    <string name="label_message_type">信息发送人类型：</string>
+    <string name="label_send_from">发货人：</string>
+    <string name="label_send_to">收货人：</string>
+    <string name="label_send_phone">手机号码：</string>
+    <string name="label_address_from">发货地：</string>
+    <string name="label_address_to">收货地：</string>
+    <string name="label_send_comment">重要说明：</string>
+    <string name="label_message_free">信息公开：</string>
     
 </resources>

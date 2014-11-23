@@ -51,6 +51,8 @@
     <string name="label_send_from">发货人：</string>
     <string name="label_send_to">收货人：</string>
     <string name="label_send_phone">手机号码：</string>
+   	<string name="label_address_from">发货地：</string>
+    <string name="label_address_to">收货地：</string>
     <string name="label_send_comment">重要说明：</string>
     <string name="label_message_free">信息公开：</string>
     
@@ -67,8 +69,6 @@
     <string name="label_driver_level">司机等级：</string>
     <string name="label_driver_score">打分分值：</string>
     
-    <string name="label_address_from">发货地：</string>
-    <string name="label_address_to">收货地：</string>
     <string name="next_step">下一步</string>
     <string name="publish">立即发布</string>
     
@@ -88,7 +88,6 @@
     <string name="search_hint">街道 门牌号</string>
     
     <string name="confirm">确 定</string>
-    <string name="cancel">取消</string>
     <string name="upgrade">升级</string>
     <string name="exit">退出</string>
     <string name="confirm_txt">确认</string>

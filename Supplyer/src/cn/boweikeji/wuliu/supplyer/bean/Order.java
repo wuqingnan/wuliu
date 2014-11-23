@@ -101,12 +101,12 @@ public class Order implements Serializable {
 		this.truck_type_code = truck_type_code;
 	}
 
-	public int getPay() {
+	public int getGoods_cost() {
 		return goods_cost;
 	}
 	
-	public void setPay(int pay) {
-		goods_cost = pay;
+	public void setGoods_cost(int goods_cost) {
+		this.goods_cost = goods_cost;
 	}
 
 	public int getMess_fee() {
@@ -213,12 +213,12 @@ public class Order implements Serializable {
 		this.end_addr = end_addr;
 	}
 
-	public String getPickTime() {
+	public String getPick_time() {
 		return pick_time;
 	}
 
-	public void setPickTime(String pickTime) {
-		pick_time = pickTime;
+	public void setPick_time(String pick_time) {
+		this.pick_time = pick_time;
 	}
 
 	public int getValid_type() {

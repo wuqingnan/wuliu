@@ -239,13 +239,13 @@ public class SendActivity extends BaseActivity {
 			order.setGoods_type_code(mGoodsTypeIndex);
 			order.setGoods_name(mGoodsName.getText().toString());
 			if (mBespeak) {
-				order.setPickTime(mPickTime.getText().toString());
+				order.setPick_time(mPickTime.getText().toString());
 			}
 			boolean tons = mGoodsWeightUnit.getCheckedRadioButtonId() == R.id.goods_weight_unit_tons;
 			float weight = Float.parseFloat(mGoodsWeight.getText().toString());
 			order.setWeight((int)(weight * (tons ? 1000 : 1)));
 			order.setGoods_value(Integer.parseInt(mGoodsValue.getText().toString()));
-			order.setPay(Integer.parseInt(mGoodsPay.getText().toString()));
+			order.setGoods_cost(Integer.parseInt(mGoodsPay.getText().toString()));
 			order.setValid_type(mValidTimeIndex);
 			order.setTruck_type_code(mTruckTypeIndex);
 			order.setEnd_addr(mAddressTo.getText().toString());

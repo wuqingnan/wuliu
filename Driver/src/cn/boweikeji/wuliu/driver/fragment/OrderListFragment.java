@@ -17,6 +17,7 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WLApplication;
+import cn.boweikeji.wuliu.driver.activity.OrderDetailActivity;
 import cn.boweikeji.wuliu.driver.activity.FindResultActivity.FindAdapter;
 import cn.boweikeji.wuliu.driver.activity.FindResultActivity.ViewHolder;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
@@ -94,6 +95,7 @@ public class OrderListFragment extends BaseFragment {
 				long id) {
 			if (id >= 0) {
 				Order order = (Order) mAdapter.getItem((int)id);
+				OrderDetailActivity.startOrderDetailActivity(getActivity(), order.getGoods_cd());
 			}
 		}
 	};
