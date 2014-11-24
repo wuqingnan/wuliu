@@ -34,6 +34,7 @@ import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.SyncHttpClient;
 
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
@@ -603,10 +604,16 @@ public class MainActivity extends BaseActivity {
 
 	private class PositionTask implements Runnable {
 
-		AsyncHttpClient mHttpClient;
+		private JsonHttpResponseHandler mHandler = new JsonHttpResponseHandler() {
+			public void onFinish() {
+				Log.d(TAG, "shizy---PositionTask.onFinish()");
+			};
+		};
+		
+		private SyncHttpClient mHttpClient;
 
 		public PositionTask() {
-			mHttpClient = new AsyncHttpClient();
+			mHttpClient = new SyncHttpClient();
 			mHttpClient.setURLEncodingEnabled(true);
 		}
 
@@ -638,7 +645,7 @@ public class MainActivity extends BaseActivity {
 					"URL: "
 							+ AsyncHttpClient.getUrlWithQueryString(true,
 									Const.URL_POSITION_UPLOAD, params));
-			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
+			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, mHandler);
 		}
 	}
 }
