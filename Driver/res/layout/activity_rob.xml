@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <Button
+        android:id="@+id/btn_detail"
+        style="@style/TextAppearance.Big.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/btn_default"
+        android:text="详情" />
+
+    <Button
+        android:id="@+id/btn_rob"
+        style="@style/TextAppearance.Big.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_default"
+        android:text="抢单" />
+    
+    <LinearLayout
+        android:id="@+id/info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_rob"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/distance"
+            style="@style/TextAppearance.Big.Black"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:background="@color/blue" />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+            
+            <TextView
+                android:id="@+id/name"
+                style="@style/TextAppearance.Middle.DarkGray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+            
+            <TextView
+                android:id="@+id/free"
+                style="@style/TextAppearance.Middle.DarkGray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+            
+            <TextView
+                android:id="@+id/picktime"
+                style="@style/TextAppearance.Middle.DarkGray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical" />
+            
+            <TextView
+                android:id="@+id/from"
+                style="@style/TextAppearance.Middle.DarkGray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_start"
+                android:gravity="center_vertical" />
+            
+            <TextView
+                android:id="@+id/to"
+                style="@style/TextAppearance.Middle.DarkGray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_end"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/bespeak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/info_layout"
+        android:layout_alignTop="@id/info_layout"
+        android:src="@drawable/bg_msg_num" />
+</RelativeLayout>

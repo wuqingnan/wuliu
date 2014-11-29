@@ -1,7 +1,14 @@
 package cn.boweikeji.wuliu.driver.bean;
 
-public class Order {
+import java.io.Serializable;
 
+public class Order implements Serializable {
+
+	/**
+	 * 序列化
+	 */
+	private static final long serialVersionUID = -5746465561829742849L;
+	
 	private String create_date;
 	private String pick_time;
 	private String goods_name;
