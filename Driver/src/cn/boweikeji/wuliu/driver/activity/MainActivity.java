@@ -34,6 +34,7 @@ import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.SyncHttpClient;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -54,7 +55,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -434,10 +434,16 @@ public class MainActivity extends BaseActivity {
 
 	private class PositionTask implements Runnable {
 
-		AsyncHttpClient mHttpClient;
+		private JsonHttpResponseHandler mHandler = new JsonHttpResponseHandler() {
+			public void onFinish() {
+				Log.d(TAG, "shizy---PositionTask.onFinish()");
+			};
+		};
+		
+		private SyncHttpClient mHttpClient;
 
 		public PositionTask() {
-			mHttpClient = new AsyncHttpClient();
+			mHttpClient = new SyncHttpClient();
 			mHttpClient.setURLEncodingEnabled(true);
 		}
 
@@ -470,7 +476,7 @@ public class MainActivity extends BaseActivity {
 					"URL: "
 							+ AsyncHttpClient.getUrlWithQueryString(true,
 									Const.URL_POSITION_UPLOAD, params));
-			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, null);
+			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, mHandler);
 		}
 	}
 }
