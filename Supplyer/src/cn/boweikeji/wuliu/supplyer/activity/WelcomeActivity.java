@@ -3,15 +3,15 @@ package cn.boweikeji.wuliu.supplyer.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.igexin.sdk.PushManager;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.WLApplication;
 import cn.boweikeji.wuliu.supplyer.WeakHandler;
 import cn.boweikeji.wuliu.supplyer.db.DBHelper;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
-
 import cn.boweikeji.wuliu.supplyer.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,7 +54,7 @@ public class WelcomeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome);
 		initView();
-		initData();
+		checkInit();
 		mHandler = new WelcomeHandler(this);
 		new Thread(new InitTask()).start();
 	}
@@ -71,7 +71,7 @@ public class WelcomeActivity extends BaseActivity {
 		ButterKnife.inject(this);
 	}
 	
-	private void initData() {
+	private void checkInit() {
 		SharedPreferences preference = getSharedPreferences(PREFERENCE_NAME, MODE_MULTI_PROCESS);
 		String lastVersion = preference.getString(KEY_VERSION, null);
 		String curVersion = DeviceInfo.getAppVersion();
@@ -80,6 +80,10 @@ public class WelcomeActivity extends BaseActivity {
 		} else {
 			mNeedInit = false;
 		}
+	}
+	
+	private void initData() {
+		PushManager.getInstance().initialize(this.getApplicationContext());
 	}
 	
 	private void saveVersion() {
@@ -124,6 +128,7 @@ public class WelcomeActivity extends BaseActivity {
 		@Override
 		public void run() {
 			try {
+				initData();
 				if (mNeedInit) {
 					long start = System.currentTimeMillis();
 					initDB();

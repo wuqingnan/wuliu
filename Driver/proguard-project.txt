@@ -23,3 +23,10 @@
 -keep class **$$ViewInjector { *; }
 -keepnames class * { @butterknife.InjectView *;}
 
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
+
+-dontwarn com.igexin.**
+-keep class com.igexin.**{*;}
+

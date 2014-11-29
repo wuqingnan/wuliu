@@ -26,3 +26,6 @@
 -keepclassmembers class ** {
     public void onEvent*(**);
 }
+
+-dontwarn com.igexin.**
+-keep class com.igexin.**{*;}

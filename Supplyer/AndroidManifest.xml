@@ -36,14 +36,23 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
-	<uses-permission android:name="android.permission.GET_TASKS" />
-    
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="getui.permission.GetuiService" />
+
+    <!-- 自定义权限 -->
+    <permission
+        android:name="getui.permission.GetuiService"
+        android:protectionLevel="normal" >
+    </permission>
+
     <application
         android:name="cn.boweikeji.wuliu.supplyer.WLApplication"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.WelcomeActivity"
             android:launchMode="singleTop"
@@ -55,14 +64,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.SendActivity"
             android:launchMode="singleTop"
@@ -77,71 +84,83 @@
             android:name="cn.boweikeji.wuliu.supplyer.activity.RuleActivity"
             android:launchMode="singleTop" >
         </activity>
-
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.SearchActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.RegisterActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.OrderDetailActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.OrderChangeActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.WebViewActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.ChangePasswordActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
-        
         <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.SuggestActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
-        
         <activity
-	  		android:name="cn.sharesdk.framework.ShareSDKUIShell"
-	  		android:theme="@android:style/Theme.Translucent.NoTitleBar"
-	  		android:configChanges="keyboardHidden|orientation|screenSize"
-	  		android:screenOrientation="portrait"
-	  		android:windowSoftInputMode="stateHidden|adjustResize" >
-	   		<intent-filter>
-	        	<data android:scheme="tencent100371282" />
-	        	<action android:name="android.intent.action.VIEW" />
-	        	<category android:name="android.intent.category.BROWSABLE" />
-	       	 	<category android:name="android.intent.category.DEFAULT" />
-	    	</intent-filter>
-		</activity>
-		
-        <!--微信分享回调 -->
-		<activity
-  			android:name="cn.boweikeji.wuliu.supplyer.wxapi.WXEntryActivity"
-  			android:theme="@android:style/Theme.Translucent.NoTitleBar"
-  			android:configChanges="keyboardHidden|orientation|screenSize"
-  			android:exported="true"
-  			android:screenOrientation="portrait" />
-        
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name="cn.boweikeji.wuliu.supplyer.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <!-- 配置弹框activity -->
+        <activity
+            android:name="com.igexin.getuiext.activity.GetuiExtActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="android.task.myServicetask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <!-- 公司：WR8SXhGtLnYUswxBN35L8cI1 -->
         <!-- 家里：HSTRY1vKn6MRKdmnTMZSPT5N -->
         <!-- 签名：T67sFbH90n6dvbQDu5IIZAgN -->
@@ -149,10 +168,64 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="T67sFbH90n6dvbQDu5IIZAgN" />
 
+        <!-- 个推SDK配置开始 -->
+        <!-- 配置第三方应用参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="rfoHYDBB4G9eF00bsJ3Ya5" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="UkEPVtGWit8kZHdxTLvvQ4" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="pyBYfB1YQm5nbPLJ5yOES1" />
+        <meta-data
+            android:name="PUSH_GROUPID"
+            android:value="" />
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice" >
+        </service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.igexin.sdk.PushManagerReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.pushmanager" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.igexin.getuiext.service.PayloadReceiver"
+            android:exported="false" >
+            <intent-filter>
+
+                <!-- 这个com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4固定，不能修改 -->
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <!-- android:name="com.igexin.sdk.action.第三方的appId" -->
+                <action android:name="com.igexin.sdk.action.rfoHYDBB4G9eF00bsJ3Ya5" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.igexin.getuiext.service.GetuiExtService"
+            android:process=":pushservice" />
     </application>
 
 </manifest>
