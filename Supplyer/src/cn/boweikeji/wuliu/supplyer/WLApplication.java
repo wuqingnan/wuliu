@@ -13,18 +13,12 @@ import android.content.Context;
 public class WLApplication extends Application {
 	
 	private static LocationClient mLocClient;
-	private static WLApplication mInstance;
 	
 	private DBHelper mDBHelper;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		// 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
-		SDKInitializer.initialize(this);
-		mInstance = this;
-		Const.init(this);
-		DeviceInfo.init(this);
 	}
 	
 	public DBHelper getHelper() {
@@ -40,10 +34,6 @@ public class WLApplication extends Application {
 	
 	public static LocationClient getLocationClient() {
 		return mLocClient;
-	}
-	
-	public static WLApplication getApplication() {
-		return mInstance;
 	}
 
 }

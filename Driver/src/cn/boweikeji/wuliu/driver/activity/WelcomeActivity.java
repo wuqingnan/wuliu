@@ -3,8 +3,10 @@ package cn.boweikeji.wuliu.driver.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.igexin.sdk.PushManager;
 
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
@@ -51,7 +53,6 @@ public class WelcomeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome);
 		initView();
-		checkInit();
 		mHandler = new WelcomeHandler(this);
 		new Thread(new InitTask()).start();
 	}
@@ -68,6 +69,14 @@ public class WelcomeActivity extends BaseActivity {
 		ButterKnife.inject(this);
 	}
 	
+	private void initialize() {
+		Const.init(this);
+		DeviceInfo.init(this);
+		// 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
+		SDKInitializer.initialize(getApplicationContext());
+		PushManager.getInstance().initialize(getApplicationContext());
+	}
+	
 	private void checkInit() {
 		SharedPreferences preference = getSharedPreferences(PREFERENCE_NAME, MODE_MULTI_PROCESS);
 		String lastVersion = preference.getString(KEY_VERSION, null);
@@ -77,10 +86,6 @@ public class WelcomeActivity extends BaseActivity {
 		} else {
 			mNeedInit = false;
 		}
-	}
-	
-	private void initData() {
-		PushManager.getInstance().initialize(this.getApplicationContext());
 	}
 	
 	private void saveVersion() {
@@ -119,9 +124,10 @@ public class WelcomeActivity extends BaseActivity {
 		@Override
 		public void run() {
 			try {
-				initData();
+				long start = System.currentTimeMillis();
+				initialize();
+				checkInit();
 				if (mNeedInit) {
-					long start = System.currentTimeMillis();
 					saveVersion();
 					long time = System.currentTimeMillis() - start;
 					if (time < SLEEP_TIME) {

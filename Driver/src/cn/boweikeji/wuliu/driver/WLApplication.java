@@ -1,25 +1,18 @@
 package cn.boweikeji.wuliu.driver;
 
-import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
-
 import com.baidu.location.LocationClient;
-import com.baidu.mapapi.SDKInitializer;
 
 import android.app.Application;
+import android.util.Log;
 
 public class WLApplication extends Application {
 
 	private static LocationClient mLocClient;
-	private static WLApplication mInstance;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		// 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
-		SDKInitializer.initialize(this);
-		mInstance = this;
-		Const.init(this);
-		DeviceInfo.init(this);
+		Log.d("", "WLApplication.onCreate: " + this);
 	}
 	
 	public static void setLocationClient(LocationClient client) {
@@ -30,7 +23,4 @@ public class WLApplication extends Application {
 		return mLocClient;
 	}
 	
-	public static WLApplication getApplication() {
-		return mInstance;
-	}
 }

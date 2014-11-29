@@ -3,10 +3,12 @@ package cn.boweikeji.wuliu.supplyer.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.igexin.sdk.PushManager;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.WLApplication;
 import cn.boweikeji.wuliu.supplyer.WeakHandler;
 import cn.boweikeji.wuliu.supplyer.db.DBHelper;
@@ -54,7 +56,6 @@ public class WelcomeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome);
 		initView();
-		checkInit();
 		mHandler = new WelcomeHandler(this);
 		new Thread(new InitTask()).start();
 	}
@@ -65,6 +66,14 @@ public class WelcomeActivity extends BaseActivity {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	private void initialize() {
+		Const.init(this);
+		DeviceInfo.init(this);
+		// 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
+		SDKInitializer.initialize(getApplicationContext());
+		PushManager.getInstance().initialize(getApplicationContext());
 	}
 	
 	private void initView() {
@@ -80,10 +89,6 @@ public class WelcomeActivity extends BaseActivity {
 		} else {
 			mNeedInit = false;
 		}
-	}
-	
-	private void initData() {
-		PushManager.getInstance().initialize(this.getApplicationContext());
 	}
 	
 	private void saveVersion() {
@@ -128,9 +133,10 @@ public class WelcomeActivity extends BaseActivity {
 		@Override
 		public void run() {
 			try {
-				initData();
+				long start = System.currentTimeMillis();
+				initialize();
+				checkInit();
 				if (mNeedInit) {
-					long start = System.currentTimeMillis();
 					initDB();
 					saveVersion();
 					long time = System.currentTimeMillis() - start;
