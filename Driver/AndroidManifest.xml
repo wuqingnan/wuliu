@@ -160,13 +160,13 @@
         <!-- 配置第三方应用参数属性 -->
         <meta-data
             android:name="PUSH_APPID"
-            android:value="0XcpGUyIpx6Sun3lKF8eM7" />
+            android:value="Ku32dFiYB08tev1WTuDIq9" />
         <meta-data
             android:name="PUSH_APPSECRET"
-            android:value="8GpaNftQzCAlR4igGuLvbA" />
+            android:value="iWaME9o1QFAY2gB84a6Pm7" />
         <meta-data
             android:name="PUSH_APPKEY"
-            android:value="cN3A6iZkqkAcfwPsmxHIM3" />
+            android:value="oKjGycugcP6OgrrWOrHoc4" />
         <meta-data
             android:name="PUSH_GROUPID"
             android:value="" />
@@ -207,7 +207,7 @@
                 <!-- 这个com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4固定，不能修改 -->
                 <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
                 <!-- android:name="com.igexin.sdk.action.第三方的appId" -->
-                <action android:name="com.igexin.sdk.action.0XcpGUyIpx6Sun3lKF8eM7" />
+                <action android:name="com.igexin.sdk.action.Ku32dFiYB08tev1WTuDIq9" />
             </intent-filter>
         </receiver>
 
