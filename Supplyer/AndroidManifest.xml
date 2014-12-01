@@ -222,6 +222,15 @@
                 <action android:name="com.igexin.sdk.action.bC0FolYNP09LOYHO2GAFj8" />
             </intent-filter>
         </receiver>
+        <!-- 配置第三方Receiver -->
+        <receiver
+            android:name="cn.boweikeji.wuliu.supplyer.receiver.SupplyerReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <!-- 替换为action android:name="com.igexin.sdk.action.第三方应用APPID" -->
+                <action android:name="com.igexin.sdk.action.bC0FolYNP09LOYHO2GAFj8" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name="com.igexin.getuiext.service.GetuiExtService"
