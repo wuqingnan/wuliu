@@ -21,6 +21,8 @@ import android.util.Log;
 
 public class DriverReceiver extends BroadcastReceiver {
 
+	public static final String TAG = DriverReceiver.class.getSimpleName();
+	
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Bundle bundle = intent.getExtras();
@@ -47,24 +49,21 @@ public class DriverReceiver extends BroadcastReceiver {
 			JSONObject obj = new JSONObject(data);
 			int type = obj.optInt("type");
 			String title = obj.optString("title");
-			sendNotify(context, type, title);
+			String infos = obj.optJSONObject("infos").toString();
+			sendNotify(context, type, title, infos);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void sendNotify(Context context, int type, String title) {
+	private void sendNotify(Context context, int type, String title, String infos) {
 		int id = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
-//		Intent intent = new Intent(context, MainActivity.class);
-//		intent.setAction(Intent.ACTION_MAIN);
-//		intent.addCategory(Intent.CATEGORY_LAUNCHER);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-//		intent.putExtra("type", type);
-		Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+		Intent intent = new Intent(context, DispatchReceiver.class);
+		intent.putExtra("type", type);
+		intent.putExtra("infos", infos);
+		intent.putExtras(intent);
 
-		PendingIntent pIntent = PendingIntent.getActivity(context, id, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Notification notification = new NotificationCompat.Builder(context)
 				.setTicker(title)

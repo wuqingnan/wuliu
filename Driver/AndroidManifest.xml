@@ -219,7 +219,10 @@
                 <action android:name="com.igexin.sdk.action.Ku32dFiYB08tev1WTuDIq9" />
             </intent-filter>
         </receiver>
-
+		<receiver
+		    android:name="cn.boweikeji.wuliu.driver.receiver.DispatchReceiver"
+		    android:exported="false" >
+		</receiver>
         <service
             android:name="com.igexin.getuiext.service.GetuiExtService"
             android:process=":pushservice" />

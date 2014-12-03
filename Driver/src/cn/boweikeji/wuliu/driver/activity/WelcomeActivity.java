@@ -112,6 +112,7 @@ public class WelcomeActivity extends BaseActivity {
 	
 	private void enterApp() {
 		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtras(getIntent());
 		startActivity(intent);
 		finish();
 	}

@@ -50,6 +50,7 @@ import cn.boweikeji.wuliu.driver.fragment.MoreFragment;
 import cn.boweikeji.wuliu.driver.fragment.OrderFragment;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -194,6 +195,7 @@ public class MainActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		init();
+		handleIntent(getIntent());
 	}
 
 	@Override
@@ -248,6 +250,19 @@ public class MainActivity extends BaseActivity {
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300,
 				TimeUnit.SECONDS);
+	}
+	
+	private void handleIntent(Intent intent) {
+		int type = intent.getIntExtra("type", -1);
+		if (type > 0) {
+			String infos = intent.getStringExtra("infos");
+			Log.d(TAG, "shizy---infos: " + infos);
+			switch (type) {
+			case 4:
+				
+				break;
+			}
+		}
 	}
 
 	private void initView() {
