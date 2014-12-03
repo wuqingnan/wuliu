@@ -42,6 +42,7 @@ import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
+import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.fragment.FindFragment;
 import cn.boweikeji.wuliu.driver.fragment.HomeFragment;
@@ -201,12 +202,14 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Log.d(TAG, "shizy---onResume");
 		mMapView.onResume();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Log.d(TAG, "shizy---onPause");
 		mMapView.onPause();
 	}
 
@@ -237,7 +240,25 @@ public class MainActivity extends BaseActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			if (requestCode == LoginActivity.REQUEST_CODE_REDIRECT) {
+				if (data != null) {
+					startActivity(data);
+				}
+			}
+		}
+	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		handleIntent(intent);
+	}
+	
 	private void init() {
 		ButterKnife.inject(this);
 		mFragmentManager = getSupportFragmentManager();
@@ -258,8 +279,17 @@ public class MainActivity extends BaseActivity {
 			String infos = intent.getStringExtra("infos");
 			Log.d(TAG, "shizy---infos: " + infos);
 			switch (type) {
-			case 4:
-				
+			case Const.PUSH_TYPE_DETAIL:
+				showDetail(intent);
+				break;
+			case Const.PUSH_TYPE_MSG:
+				showMessage(intent);
+				break;
+			case Const.PUSH_TYPE_PERSONAL:
+				showPersonal(intent);
+				break;
+			case Const.PUSH_TYPE_ROB:
+				showRob(intent);
 				break;
 			}
 		}
@@ -447,6 +477,43 @@ public class MainActivity extends BaseActivity {
 		System.exit(0);
 	}
 
+	private void showDetail(Intent intent) {
+		
+	}
+	
+	private void showMessage(Intent intent) {
+		
+	}
+	
+	private void showPersonal(Intent intent) {
+		
+	}
+	
+	private void showRob(Intent intent) {
+		try {
+			String infos = intent.getStringExtra("infos");
+			if (infos != null) {
+				JSONObject obj = new JSONObject(infos);
+				Order order = new Order();
+				order.setGoods_cd(obj.optString("good_cd"));
+				order.setGoods_name(obj.optString("goods_name"));
+				order.setIs_order(obj.optInt("is_order"));
+				order.setStart_addr(obj.optString("start_addr"));
+				order.setEnd_addr(obj.optString("end_addr"));
+				order.setDistance(obj.optDouble("distance"));
+				Intent rob = RobOrderActivity.robOrderIntent(this, order);
+				if (LoginManager.getInstance().hasLogin()) {
+					startActivity(rob);
+				} else {
+					LoginActivity.startLoginActivity(this, rob);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	private class PositionTask implements Runnable {
 
 		private JsonHttpResponseHandler mHandler = new JsonHttpResponseHandler() {

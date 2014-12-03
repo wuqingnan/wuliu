@@ -22,6 +22,10 @@ public class Const {
 	public static final String URL_UPLOAD_IMAGE = "http://218.21.213.76:7201/bss/doUpload.action";
 	public static final String URL_FIND = "http://218.21.213.76:7201/bss/qrySupplyRecords.action";
 	
+	public static final int PUSH_TYPE_DETAIL = 1;
+	public static final int PUSH_TYPE_MSG = 2;
+	public static final int PUSH_TYPE_PERSONAL = 3;
+	public static final int PUSH_TYPE_ROB = 4;
 	
 	private static String sFilePath = null;
 	private static String sExternalPath = null;

@@ -4,6 +4,7 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ public class LoginActivity extends BaseActivity {
 
 	private static final String TAG = LoginActivity.class.getSimpleName();
 	
+	public static final int REQUEST_CODE_REDIRECT = 999;
 	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
@@ -83,10 +85,13 @@ public class LoginActivity extends BaseActivity {
 	
 	private UserInfo mUserInfo;
 	
+	private Intent mRedirect;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		mRedirect = getIntent().getParcelableExtra("redirect");
 		init();
 	}
 
@@ -100,6 +105,12 @@ public class LoginActivity extends BaseActivity {
 		}
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		mRedirect = intent.getParcelableExtra("redirect");
+	}
+	
 	private void init() {
 		ButterKnife.inject(this);
 		initTitle();
@@ -224,6 +235,9 @@ public class LoginActivity extends BaseActivity {
 					mUserInfo.update(response.optJSONObject("infos"));
 					LoginManager.getInstance().setUserInfo(mUserInfo);
 					EventBus.getDefault().post(new LoginEvent());
+					if (mRedirect != null) {
+						setResult(RESULT_OK, mRedirect);
+					}
 					finish();
 				}
 				return;
@@ -236,5 +250,11 @@ public class LoginActivity extends BaseActivity {
 	
 	public static void startLoginActivity(Context context) {
 		context.startActivity(new Intent(context, LoginActivity.class));
+	}
+	
+	public static void startLoginActivity(Activity activity, Intent redirect) {
+		Intent intent = new Intent(activity, LoginActivity.class);
+		intent.putExtra("redirect", redirect);
+		activity.startActivityForResult(intent, REQUEST_CODE_REDIRECT);
 	}
 }

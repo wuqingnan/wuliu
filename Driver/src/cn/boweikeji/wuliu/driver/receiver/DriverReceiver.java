@@ -72,7 +72,7 @@ public class DriverReceiver extends BroadcastReceiver {
 				.setSmallIcon(R.drawable.icon)
 				.setLargeIcon(
 						BitmapFactory.decodeResource(context.getResources(),
-								R.drawable.portrait_default))
+								R.drawable.icon))
 				.setContentTitle("物流生意宝").setContentText(title)
 				.setContentIntent(pIntent).build();
 		
