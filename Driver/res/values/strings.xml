@@ -102,8 +102,8 @@
     <string name="no_result">无内容</string>
     <string name="content_empty">内容不能为空</string>
     
-    <string name="order_rob">抢单</string>
-    <string name="order_drop">退单</string>
+    <string name="rob_order">抢单</string>
+    <string name="drop_order">退单</string>
     
     <string name="star_good">非常好</string>
     <string name="star_normal">一般</string>

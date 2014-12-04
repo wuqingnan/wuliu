@@ -1,76 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray" >
-    
-    <Button
-        android:id="@+id/btn_detail"
-        style="@style/TextAppearance.Big.White"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/btn_default"
-        android:text="详情" />
+    android:background="@color/gray"
+    android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/btn_rob"
-        style="@style/TextAppearance.Big.White"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/btn_default"
-        android:text="抢单" />
-    
+    <include layout="@layout/titlebar" />
+
     <LinearLayout
-        android:id="@+id/info_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_rob"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_margin="20dp"
         android:background="@color/white"
         android:orientation="vertical" >
-        
-        <TextView
-            android:id="@+id/distance"
-            style="@style/TextAppearance.Big.Black"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:background="@color/blue" />
-        
+            android:layout_height="50dp" >
+
+            <TextView
+                android:id="@+id/distance"
+                style="@style/TextAppearance.Big.Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:id="@+id/bespeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/bg_msg_num" />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
             android:gravity="center_vertical"
             android:orientation="vertical" >
-            
+
             <TextView
                 android:id="@+id/name"
-                style="@style/TextAppearance.Middle.DarkGray"
+                style="@style/TextAppearance.Big.Black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical" />
-            
-            <TextView
-                android:id="@+id/free"
-                style="@style/TextAppearance.Middle.DarkGray"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical" />
-            
-            <TextView
-                android:id="@+id/picktime"
-                style="@style/TextAppearance.Middle.DarkGray"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical" />
-            
+                android:gravity="center" />
+
             <TextView
                 android:id="@+id/from"
                 style="@style/TextAppearance.Middle.DarkGray"
@@ -78,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/icon_start"
                 android:gravity="center_vertical" />
-            
+
             <TextView
                 android:id="@+id/to"
                 style="@style/TextAppearance.Middle.DarkGray"
@@ -87,13 +64,42 @@
                 android:drawableLeft="@drawable/icon_end"
                 android:gravity="center_vertical" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom" >
+
+            <Button
+                android:id="@+id/btn_rob"
+                style="@style/TextAppearance.Big.White"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_default"
+                android:text="抢单" />
+
+            <Button
+                android:id="@+id/btn_close"
+                style="@style/TextAppearance.Big.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/btn_rob"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_default"
+                android:text="关闭" />
+            
+            <Button
+                android:id="@+id/btn_detail"
+                style="@style/TextAppearance.Big.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/btn_rob"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_default"
+                android:text="详情" />
+        </RelativeLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/bespeak"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/info_layout"
-        android:layout_alignTop="@id/info_layout"
-        android:src="@drawable/bg_msg_num" />
-</RelativeLayout>
+</LinearLayout>

@@ -536,8 +536,7 @@ public class MainActivity extends BaseActivity {
 					order.setStart_addr(obj.optString("start_addr"));
 					order.setEnd_addr(obj.optString("end_addr"));
 					order.setDistance(obj.optDouble("distance"));
-					Intent rob = RobOrderActivity.robOrderIntent(this, order);
-					startActivity(rob);
+					RobOrderActivity.startRobOrderActivity(this, order);
 				}
 			} else {
 				LoginActivity.startLoginActivity(this, intent);

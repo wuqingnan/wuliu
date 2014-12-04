@@ -291,7 +291,7 @@ public class OrderDetailActivity extends BaseActivity {
 	
 	private void showDropDialog() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
-		.setTitle(R.string.order_drop)
+		.setTitle(R.string.drop_order)
 		.setMessage(R.string.order_drop_message)
 		.setCancelable(true)
 		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
