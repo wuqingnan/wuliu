@@ -96,25 +96,7 @@ public class MainActivity extends BaseActivity {
 
 		@Override
 		public void onReceiveLocation(BDLocation location) {
-			// Log.d(TAG, "shizy---onReceiveLocation");
-			if (location == null || mMapView == null) {
-				return;
-			}
-			MyLocationData locData = new MyLocationData.Builder()
-					.accuracy(location.getRadius())
-					.direction(location.getDirection())
-					.latitude(location.getLatitude())
-					.longitude(location.getLongitude()).build();
-			mBaiduMap.setMyLocationData(locData);
-			if (mIsFirstLoc) {
-				mIsFirstLoc = false;
-				LatLng ll = new LatLng(location.getLatitude(),
-						location.getLongitude());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				mBaiduMap.animateMapStatus(u);
-				showMyLocInfo();
-				requestDriver(location);
-			}
+			updateMap();
 		}
 	};
 
@@ -179,7 +161,9 @@ public class MainActivity extends BaseActivity {
 	private TextView mDriverName;
 	private TextView mDriverInfo;
 
+	private boolean mMapShowing;
 	private boolean mIsFirstLoc;
+	private boolean mHasDriver;
 
 	private FragmentManager mFragmentManager;
 
@@ -202,15 +186,16 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.d(TAG, "shizy---onResume");
 		mMapView.onResume();
+		mMapShowing = true;
+		updateMap();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.d(TAG, "shizy---onPause");
 		mMapView.onPause();
+		mMapShowing = false;
 	}
 
 	@Override
@@ -240,7 +225,7 @@ public class MainActivity extends BaseActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -258,11 +243,12 @@ public class MainActivity extends BaseActivity {
 		super.onNewIntent(intent);
 		handleIntent(intent);
 	}
-	
+
 	private void init() {
 		ButterKnife.inject(this);
 		mFragmentManager = getSupportFragmentManager();
 		mIsFirstLoc = true;
+		mHasDriver = false;
 		initView();
 		initMap();
 		changeFragment(0);
@@ -272,7 +258,7 @@ public class MainActivity extends BaseActivity {
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300,
 				TimeUnit.SECONDS);
 	}
-	
+
 	private void handleIntent(Intent intent) {
 		int type = intent.getIntExtra("type", -1);
 		if (type > 0) {
@@ -326,6 +312,33 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap.setMyLocationEnabled(true);
 		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
 				LocationMode.NORMAL, true, null));
+	}
+
+	private void updateMap() {
+		BDLocation location = WLApplication.getLocationClient().getLastKnownLocation();
+		if (location == null || mMapView == null) {
+			return;
+		}
+		if (!mMapShowing) {
+			return;
+		}
+		MyLocationData locData = new MyLocationData.Builder()
+				.accuracy(location.getRadius())
+				.direction(location.getDirection())
+				.latitude(location.getLatitude())
+				.longitude(location.getLongitude()).build();
+		mBaiduMap.setMyLocationData(locData);
+		if (mIsFirstLoc) {
+			mIsFirstLoc = false;
+			LatLng ll = new LatLng(location.getLatitude(),
+					location.getLongitude());
+			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+			mBaiduMap.animateMapStatus(u);
+			showMyLocInfo();
+		}
+		if (!mHasDriver) {
+			requestDriver(location);
+		}
 	}
 
 	private boolean changeFragment(int index) {
@@ -383,7 +396,8 @@ public class MainActivity extends BaseActivity {
 				.fromResource(R.drawable.marker1);
 
 		JSONObject info = null;
-		String[] truckTypes = getResources().getStringArray(R.array.truck_type_list);
+		String[] truckTypes = getResources().getStringArray(
+				R.array.truck_type_list);
 		for (int i = 0; i < markers.length(); i++) {
 			try {
 				info = markers.getJSONObject(i);
@@ -410,7 +424,8 @@ public class MainActivity extends BaseActivity {
 		if (loc == null || loc.getAddrStr() == null) {
 			return;
 		}
-		mMyLocTitle.setText(String.format(getString(R.string.myloc), loc.getStreet()));
+		mMyLocTitle.setText(String.format(getString(R.string.myloc),
+				loc.getStreet()));
 		mMyLocInfo.setText(loc.getCity() + " " + loc.getDistrict());
 		MyLocationData data = mBaiduMap.getLocationData();
 		LatLng ll = new LatLng(data.latitude, data.longitude);
@@ -463,7 +478,10 @@ public class MainActivity extends BaseActivity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				if (res == 2) {// 成功
-					addMarker(response.optJSONArray("info"));
+					if (mMapShowing) {
+						addMarker(response.optJSONArray("info"));
+						mHasDriver = true;
+					}
 				}
 				return;
 			} catch (JSONException e) {
@@ -478,17 +496,17 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void showDetail(Intent intent) {
-		
+
 	}
-	
+
 	private void showMessage(Intent intent) {
-		
+
 	}
-	
+
 	private void showPersonal(Intent intent) {
-		
+
 	}
-	
+
 	private void showRob(Intent intent) {
 		try {
 			String infos = intent.getStringExtra("infos");
@@ -511,9 +529,9 @@ public class MainActivity extends BaseActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private class PositionTask implements Runnable {
 
 		private JsonHttpResponseHandler mHandler = new JsonHttpResponseHandler() {
@@ -521,7 +539,7 @@ public class MainActivity extends BaseActivity {
 				Log.d(TAG, "shizy---PositionTask.onFinish()");
 			};
 		};
-		
+
 		private SyncHttpClient mHttpClient;
 
 		public PositionTask() {

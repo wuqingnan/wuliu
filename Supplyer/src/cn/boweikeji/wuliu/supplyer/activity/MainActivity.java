@@ -101,25 +101,7 @@ public class MainActivity extends BaseActivity {
 
 		@Override
 		public void onReceiveLocation(BDLocation location) {
-			// Log.d(TAG, "shizy---onReceiveLocation");
-			if (location == null || mMapView == null) {
-				return;
-			}
-			MyLocationData locData = new MyLocationData.Builder()
-					.accuracy(location.getRadius())
-					.direction(location.getDirection())
-					.latitude(location.getLatitude())
-					.longitude(location.getLongitude()).build();
-			mBaiduMap.setMyLocationData(locData);
-			if (mIsFirstLoc) {
-				mIsFirstLoc = false;
-				LatLng ll = new LatLng(location.getLatitude(),
-						location.getLongitude());
-				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-				mBaiduMap.animateMapStatus(u);
-				showMyLocInfo();
-				requestDriver(location);
-			}
+			updateMap();
 		}
 	};
 
@@ -239,7 +221,9 @@ public class MainActivity extends BaseActivity {
 	private long mExitTime;
 	private int mMenuIndex;
 
+	private boolean mMapShowing;
 	private boolean mIsFirstLoc;
+	private boolean mHasDriver;
 	private boolean mFirstCheckUpdate = true;
 	private boolean mShowUpdateDialog = false;
 
@@ -254,12 +238,15 @@ public class MainActivity extends BaseActivity {
 	public void onResume() {
 		super.onResume();
 		mMapView.onResume();
+		mMapShowing = true;
+		updateMap();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 		mMapView.onPause();
+		mMapShowing = false;
 	}
 
 	@Override
@@ -342,6 +329,7 @@ public class MainActivity extends BaseActivity {
 
 	private void init() {
 		mIsFirstLoc = true;
+		mHasDriver = false;
 		initView();
 		initMenu();
 		initMap();
@@ -398,6 +386,33 @@ public class MainActivity extends BaseActivity {
 				LocationMode.NORMAL, true, null));
 	}
 
+	private void updateMap() {
+		BDLocation location = WLApplication.getLocationClient().getLastKnownLocation();
+		if (location == null || mMapView == null) {
+			return;
+		}
+		if (!mMapShowing) {
+			return;
+		}
+		MyLocationData locData = new MyLocationData.Builder()
+				.accuracy(location.getRadius())
+				.direction(location.getDirection())
+				.latitude(location.getLatitude())
+				.longitude(location.getLongitude()).build();
+		mBaiduMap.setMyLocationData(locData);
+		if (mIsFirstLoc) {
+			mIsFirstLoc = false;
+			LatLng ll = new LatLng(location.getLatitude(),
+					location.getLongitude());
+			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+			mBaiduMap.animateMapStatus(u);
+			showMyLocInfo();
+		}
+		if (!mHasDriver) {
+			requestDriver(location);
+		}
+	}
+	
 	private void initFragment() {
 		mFragmentManager = getSupportFragmentManager();
 		mFragmentManager.beginTransaction()
@@ -542,7 +557,10 @@ public class MainActivity extends BaseActivity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				if (res == 2) {// 成功
-					addMarker(response.optJSONArray("info"));
+					if (mMapShowing) {
+						addMarker(response.optJSONArray("info"));
+						mHasDriver = true;
+					}
 				}
 				return;
 			} catch (JSONException e) {
