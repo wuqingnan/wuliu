@@ -24,6 +24,8 @@ public class Const {
 	public static final String URL_UPDATE = "http://218.21.213.76:7201/bss/updateAPP.action";
 	public static final String URL_NEAR_DRIVER = "http://218.21.213.76:7201/bss/getNearDrivers.action";
 	
+	public static String clientid = NULL;
+	
 	private static String sFilePath = null;
 	private static String sExternalPath = null;
 	

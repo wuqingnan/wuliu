@@ -1,5 +1,7 @@
 package cn.boweikeji.wuliu.supplyer.receiver;
 
+import cn.boweikeji.wuliu.supplyer.Const;
+
 import com.igexin.sdk.PushConsts;
 
 import android.content.BroadcastReceiver;
@@ -25,8 +27,9 @@ public class SupplyerReceiver extends BroadcastReceiver {
                     // TODO:接收处理透传（payload）数据
                 }
                 break;
-            //添加其他case
-            //......... 
+            case PushConsts.GET_CLIENTID:
+            	Const.clientid = bundle.getString("clientid");
+            	break;
             default:
                 break;
         }

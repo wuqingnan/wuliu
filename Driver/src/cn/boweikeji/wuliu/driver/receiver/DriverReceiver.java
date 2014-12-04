@@ -3,6 +3,7 @@ package cn.boweikeji.wuliu.driver.receiver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.activity.MainActivity;
 
@@ -36,6 +37,8 @@ public class DriverReceiver extends BroadcastReceiver {
 				parseData(context, data);
 			}
 			break;
+		case PushConsts.GET_CLIENTID:
+			Const.clientid = bundle.getString("clientid");
 		default:
 			break;
 		}

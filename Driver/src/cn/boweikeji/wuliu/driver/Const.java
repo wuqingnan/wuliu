@@ -27,6 +27,8 @@ public class Const {
 	public static final int PUSH_TYPE_PERSONAL = 3;
 	public static final int PUSH_TYPE_ROB = 4;
 	
+	public static String clientid = NULL;
+	
 	private static String sFilePath = null;
 	private static String sExternalPath = null;
 	

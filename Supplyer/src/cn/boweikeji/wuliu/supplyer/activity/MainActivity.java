@@ -657,6 +657,8 @@ public class MainActivity extends BaseActivity {
 			params.add("phone_type", "" + DeviceInfo.getModel());
 			params.add("operate_system", "" + DeviceInfo.getOSName());
 			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
+			params.add("app_version", "" + DeviceInfo.getAppVersion());
+			params.add("clientid", "" + Const.clientid);
 
 			Log.d(TAG,
 					"URL: "
