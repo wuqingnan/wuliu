@@ -24,6 +24,6 @@ public abstract class WeakHandler<T> extends Handler {
 		handleMessage(t, msg);
 	}
 	
-	public abstract void handleMessage(T t, Message msg);
+	public abstract void handleMessage(T reference, Message msg);
 	
 }
