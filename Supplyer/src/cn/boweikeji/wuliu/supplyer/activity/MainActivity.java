@@ -335,7 +335,6 @@ public class MainActivity extends BaseActivity {
 		initMap();
 		initFragment();
 		initLocation();
-		LoginManager.getInstance().autoLogin();
 		EventBus.getDefault().register(this);
 		UpdateUtil.checkUpdate();
 		mTimerTask = new ScheduledThreadPoolExecutor(1);

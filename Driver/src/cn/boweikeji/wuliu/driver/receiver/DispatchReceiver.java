@@ -17,6 +17,7 @@ public class DispatchReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.d(TAG, "shizy---DispatchReceiver");
+		intent.putExtra("push", true);
 		if (isAppRunning(context)) {
 			
 		} else {

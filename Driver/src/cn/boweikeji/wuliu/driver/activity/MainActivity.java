@@ -41,6 +41,7 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WLApplication;
+import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
@@ -53,6 +54,7 @@ import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -68,6 +70,8 @@ public class MainActivity extends BaseActivity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
 
+	private static final int MSG_PUSH = 1 << 0;
+	
 	private static final int EXIT_TIME = 2000;
 
 	public static final int[] TAB_IDS = { R.id.home_tab_home,
@@ -175,12 +179,14 @@ public class MainActivity extends BaseActivity {
 
 	private ScheduledThreadPoolExecutor mTimerTask;
 
+	private MainHandler mHandler;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		init();
-		handleIntent(getIntent());
+		pageJump(getIntent());
 	}
 
 	@Override
@@ -232,7 +238,7 @@ public class MainActivity extends BaseActivity {
 		if (resultCode == RESULT_OK) {
 			if (requestCode == LoginActivity.REQUEST_CODE_REDIRECT) {
 				if (data != null) {
-					startActivity(data);
+					pageJump(data);
 				}
 			}
 		}
@@ -241,29 +247,39 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		handleIntent(intent);
+		pageJump(intent);
 	}
 
 	private void init() {
 		ButterKnife.inject(this);
 		mFragmentManager = getSupportFragmentManager();
+		mHandler = new MainHandler(this);
 		mIsFirstLoc = true;
 		mHasDriver = false;
 		initView();
 		initMap();
 		changeFragment(0);
 		initLocation();
-		LoginManager.getInstance().autoLogin();
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300,
 				TimeUnit.SECONDS);
 	}
 
-	private void handleIntent(Intent intent) {
+	private void pageJump(Intent intent) {
+		Log.d(TAG, "shizy---pageJump");
+		boolean push = intent.getBooleanExtra("push", false);
+		if (push) {
+			mHandler.removeMessages(MSG_PUSH);
+			Message msg = Message.obtain();
+			msg.what = MSG_PUSH;
+			msg.obj = intent;
+			mHandler.sendMessage(msg);
+		}
+	}
+	
+	private void pushIntent(Intent intent) {
 		int type = intent.getIntExtra("type", -1);
 		if (type > 0) {
-			String infos = intent.getStringExtra("infos");
-			Log.d(TAG, "shizy---infos: " + infos);
 			switch (type) {
 			case Const.PUSH_TYPE_DETAIL:
 				showDetail(intent);
@@ -509,22 +525,22 @@ public class MainActivity extends BaseActivity {
 
 	private void showRob(Intent intent) {
 		try {
-			String infos = intent.getStringExtra("infos");
-			if (infos != null) {
-				JSONObject obj = new JSONObject(infos);
-				Order order = new Order();
-				order.setGoods_cd(obj.optString("good_cd"));
-				order.setGoods_name(obj.optString("goods_name"));
-				order.setIs_order(obj.optInt("is_order"));
-				order.setStart_addr(obj.optString("start_addr"));
-				order.setEnd_addr(obj.optString("end_addr"));
-				order.setDistance(obj.optDouble("distance"));
-				Intent rob = RobOrderActivity.robOrderIntent(this, order);
-				if (LoginManager.getInstance().hasLogin()) {
+			if (LoginManager.getInstance().hasLogin()) {
+				String infos = intent.getStringExtra("infos");
+				if (infos != null) {
+					JSONObject obj = new JSONObject(infos);
+					Order order = new Order();
+					order.setGoods_cd(obj.optString("good_cd"));
+					order.setGoods_name(obj.optString("goods_name"));
+					order.setIs_order(obj.optInt("is_order"));
+					order.setStart_addr(obj.optString("start_addr"));
+					order.setEnd_addr(obj.optString("end_addr"));
+					order.setDistance(obj.optDouble("distance"));
+					Intent rob = RobOrderActivity.robOrderIntent(this, order);
 					startActivity(rob);
-				} else {
-					LoginActivity.startLoginActivity(this, rob);
 				}
+			} else {
+				LoginActivity.startLoginActivity(this, intent);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -578,5 +594,23 @@ public class MainActivity extends BaseActivity {
 									Const.URL_POSITION_UPLOAD, params));
 			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, mHandler);
 		}
+	}
+	
+	public static class MainHandler extends WeakHandler<MainActivity> {
+
+		public MainHandler(MainActivity reference) {
+			super(reference);
+		}
+
+		@Override
+		public void handleMessage(MainActivity reference, Message msg) {
+			switch (msg.what) {
+			case MSG_PUSH:
+				Intent intent = (Intent) msg.obj;
+				reference.pushIntent(intent);
+				break;
+			}
+		}
+		
 	}
 }

@@ -12,6 +12,7 @@ import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.WLApplication;
 import cn.boweikeji.wuliu.supplyer.WeakHandler;
 import cn.boweikeji.wuliu.supplyer.db.DBHelper;
+import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
 import cn.boweikeji.wuliu.supplyer.R;
 import android.content.Context;
@@ -58,6 +59,7 @@ public class WelcomeActivity extends BaseActivity {
 		initView();
 		mHandler = new WelcomeHandler(this);
 		new Thread(new InitTask()).start();
+		LoginManager.getInstance().autoLogin();
 	}
 	
 	@Override

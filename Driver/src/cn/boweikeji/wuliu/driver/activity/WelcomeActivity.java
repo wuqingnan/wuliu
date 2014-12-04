@@ -9,6 +9,7 @@ import com.igexin.sdk.PushManager;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WeakHandler;
+import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -55,6 +56,7 @@ public class WelcomeActivity extends BaseActivity {
 		initView();
 		mHandler = new WelcomeHandler(this);
 		new Thread(new InitTask()).start();
+		LoginManager.getInstance().autoLogin();
 	}
 	
 	@Override

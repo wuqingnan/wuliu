@@ -85,13 +85,13 @@ public class LoginActivity extends BaseActivity {
 	
 	private UserInfo mUserInfo;
 	
-	private Intent mRedirect;
+	private Intent mIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		mRedirect = getIntent().getParcelableExtra("redirect");
+		mIntent = getIntent();
 		init();
 	}
 
@@ -108,7 +108,7 @@ public class LoginActivity extends BaseActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		mRedirect = intent.getParcelableExtra("redirect");
+		mIntent = intent;
 	}
 	
 	private void init() {
@@ -235,8 +235,8 @@ public class LoginActivity extends BaseActivity {
 					mUserInfo.update(response.optJSONObject("infos"));
 					LoginManager.getInstance().setUserInfo(mUserInfo);
 					EventBus.getDefault().post(new LoginEvent());
-					if (mRedirect != null) {
-						setResult(RESULT_OK, mRedirect);
+					if (getCallingActivity() != null) {
+						setResult(RESULT_OK, mIntent);
 					}
 					finish();
 				}
@@ -252,9 +252,9 @@ public class LoginActivity extends BaseActivity {
 		context.startActivity(new Intent(context, LoginActivity.class));
 	}
 	
-	public static void startLoginActivity(Activity activity, Intent redirect) {
+	public static void startLoginActivity(Activity activity, Intent extras) {
 		Intent intent = new Intent(activity, LoginActivity.class);
-		intent.putExtra("redirect", redirect);
+		intent.putExtras(extras);
 		activity.startActivityForResult(intent, REQUEST_CODE_REDIRECT);
 	}
 }

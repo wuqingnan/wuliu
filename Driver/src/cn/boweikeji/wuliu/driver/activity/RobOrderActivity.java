@@ -65,13 +65,13 @@ public class RobOrderActivity extends BaseActivity {
 	TextView mDistance;
 	@InjectView(R.id.name)
 	TextView mName;
-	@InjectView(R.id.distance)
+	@InjectView(R.id.free)
 	TextView mFree;
-	@InjectView(R.id.distance)
+	@InjectView(R.id.picktime)
 	TextView mPickTime;
-	@InjectView(R.id.distance)
+	@InjectView(R.id.from)
 	TextView mFrom;
-	@InjectView(R.id.distance)
+	@InjectView(R.id.to)
 	TextView mTo;
 	@InjectView(R.id.btn_detail)
 	Button mDetailBtn;
@@ -85,7 +85,7 @@ public class RobOrderActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_citylist);
+		setContentView(R.layout.activity_rob);
 		init();
 	}
 	
@@ -157,8 +157,9 @@ public class RobOrderActivity extends BaseActivity {
 				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					EventBus.getDefault().post(new OrderEvent(mOrder.getGoods_cd()));
+					OrderDetailActivity.startOrderDetailActivity(this, mOrder.getGoods_cd());
+					finish();
 				}
-				finish();
 				return;
 			} catch (JSONException e) {
 				e.printStackTrace();
