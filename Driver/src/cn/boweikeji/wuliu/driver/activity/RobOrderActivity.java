@@ -168,8 +168,12 @@ public class RobOrderActivity extends BaseActivity {
 	}
 	
 	public static void startRobOrderActivity(Context context, Order order) {
+		context.startActivity(robOrderIntent(context, order));
+	}
+	
+	public static Intent robOrderIntent(Context context, Order order) {
 		Intent intent = new Intent(context, RobOrderActivity.class);
 		intent.putExtra(KEY_ORDER, order);
-		context.startActivity(intent);
+		return intent;
 	}
 }
