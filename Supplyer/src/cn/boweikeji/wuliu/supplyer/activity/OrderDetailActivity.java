@@ -11,13 +11,14 @@ import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.Driver;
 import cn.boweikeji.wuliu.supplyer.bean.Order;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
+import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import cn.boweikeji.wuliu.supplyer.R;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import cn.boweikeji.wuliu.supplyer.R;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -201,19 +202,13 @@ public class OrderDetailActivity extends BaseActivity {
 	
 	private void loadDetail() {
 		showProgressDialog();
-		
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "getMySupplyCos");
 		params.add("supplyer_cd", info.getSupplyer_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mGoodsCD);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ORDER_DETAIL, params));
-		client.get(Const.URL_ORDER_DETAIL, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_ORDER_DETAIL, params, mRequestHandler);
 	}
 	
 	private void refresh() {
@@ -310,17 +305,13 @@ public class OrderDetailActivity extends BaseActivity {
 	
 	private void cancelOrder() {
 		showProgressDialog();
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "cancelMessage");
 		params.add("supplyer_cd", info.getSupplyer_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mGoodsCD);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_CANCEL_ORDER, params));
-		client.get(Const.URL_CANCEL_ORDER, params, mOperateHandler);
+		AsyncHttp.get(Const.URL_CANCEL_ORDER, params, mOperateHandler);
 	}
 	
 	private void changeOrder() {
@@ -329,38 +320,28 @@ public class OrderDetailActivity extends BaseActivity {
 	
 	private void consultOrder() {
 		showProgressDialog();
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "supplyerDropMessage");
 		params.add("supplyer_cd", info.getSupplyer_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mGoodsCD);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_CONSULT_ORDER, params));
-		client.get(Const.URL_CONSULT_ORDER, params, mOperateHandler);
+		AsyncHttp.get(Const.URL_CONSULT_ORDER, params, mOperateHandler);
 	}
 	
 	private void confirmOrder() {
 		showProgressDialog();
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "supplyerCompleteMessage");
 		params.add("supplyer_cd", info.getSupplyer_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mGoodsCD);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_CONFIRM_ORDER, params));
-		client.get(Const.URL_CONFIRM_ORDER, params, mOperateHandler);
+		AsyncHttp.get(Const.URL_CONFIRM_ORDER, params, mOperateHandler);
 	}
 	
 	private void commentOrder() {
 		showProgressDialog();
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
 		String comment = mCommentContent.getText().toString();
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
@@ -370,9 +351,7 @@ public class OrderDetailActivity extends BaseActivity {
 		params.add("goods_cd", "" + mGoodsCD);
 		params.add("stars", "" + mStar);
 		params.add("remark", comment == null ? BaseParams.PARAM_DEFAULT : comment);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_COMMENT_ORDER, params));
-		client.get(Const.URL_COMMENT_ORDER, params, mOperateHandler);
+		AsyncHttp.get(Const.URL_COMMENT_ORDER, params, mOperateHandler);
 	}
 	
 	private void showCancelDialog() {

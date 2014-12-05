@@ -19,11 +19,12 @@ import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.RegisterInfo;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.LoginEvent;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import cn.boweikeji.wuliu.driver.view.ClearEditText;
 
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import de.greenrobot.event.EventBus;
@@ -164,14 +165,10 @@ public class RegisterTruckActivity extends BaseActivity {
 		Log.d(TAG, "shizy---path: " + path);
 		try {
 			if (path != null) {
-				AsyncHttpClient client = new AsyncHttpClient();
-				client.setURLEncodingEnabled(true);
-				
 				BaseParams params = new BaseParams();
 				params.put("myFile", new File(path));
 				params.add("remark", Const.NULL);
-				Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_UPLOAD_IMAGE, params));
-				client.post(Const.URL_UPLOAD_IMAGE, params, mUploadHandler);
+				AsyncHttp.post(Const.URL_UPLOAD_IMAGE, params, mUploadHandler);
 				return;
 			}
 		} catch (FileNotFoundException e) {
@@ -185,13 +182,8 @@ public class RegisterTruckActivity extends BaseActivity {
 	 * 提交注册信息
 	 */
 	private void register() {
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
 		BaseParams params = mRegInfo.getRegisterParams();
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
-		client.get(Const.URL_REGISTER, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_REGISTER, params, mRequestHandler);
 	}
 	
 	private boolean validCheck() {

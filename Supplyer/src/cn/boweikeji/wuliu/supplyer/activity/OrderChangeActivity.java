@@ -9,13 +9,14 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.Order;
+import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import cn.boweikeji.wuliu.supplyer.R;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import cn.boweikeji.wuliu.supplyer.R;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -203,16 +204,10 @@ public class OrderChangeActivity extends BaseActivity {
 			mOrder.setGoods_cost(Integer.parseInt(mGoodsPay.getText().toString()));
 			mOrder.setEnd_addr(mAddressTo.getText().toString());
 			mOrder.setStart_addr(mAddressFrom.getText().toString());
-			
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.setURLEncodingEnabled(true);
-			
 			BaseParams params = mOrder.getChangeParams();
 			params.add("method", "changeCos");
 			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(false, Const.URL_CHANGE_ORDER, params));
-			client.get(Const.URL_CHANGE_ORDER, params, mRequestHandler);
+			AsyncHttp.get(Const.URL_CHANGE_ORDER, params, mRequestHandler);
 		}
 	}
 	

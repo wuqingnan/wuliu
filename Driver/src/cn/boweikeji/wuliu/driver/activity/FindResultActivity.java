@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import butterknife.ButterKnife;
@@ -20,6 +20,7 @@ import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.FindFilter;
 import cn.boweikeji.wuliu.driver.bean.Order;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import android.content.Context;
 import android.content.Intent;
@@ -168,13 +169,8 @@ public class FindResultActivity extends BaseActivity {
     }
     
     private void loadData() {
-    	AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
 		BaseParams params = mFilter.getFindParams();
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_FIND, params));
-		client.get(Const.URL_FIND, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_FIND, params, mRequestHandler);
     }
     
     private void loadMore() {

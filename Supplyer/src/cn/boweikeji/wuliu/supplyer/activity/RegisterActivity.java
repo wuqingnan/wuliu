@@ -11,16 +11,17 @@ import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.WeakHandler;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
+import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.utils.EncryptUtil;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 import cn.boweikeji.wuliu.supplyer.view.ClearEditText;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import cn.boweikeji.wuliu.supplyer.R;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import cn.boweikeji.wuliu.supplyer.R;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -230,10 +231,6 @@ public class RegisterActivity extends BaseActivity {
 		String phone = mPhone.getText().toString();
 		String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
 		String id = mIDNumber.getText().toString();
-		
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
 		BaseParams params = new BaseParams();
 		params.add("method", "registerGoodSupplyer");
 		params.add("supplyer_type", "" + mUserTypeIndex);
@@ -242,9 +239,7 @@ public class RegisterActivity extends BaseActivity {
 		params.add("state", "0");
 		params.add("card_id", (id == null || id.equals("")) ? BaseParams.PARAM_DEFAULT : id);
 		params.add("passwd", password);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_REGISTER, params));
-		client.get(Const.URL_REGISTER, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_REGISTER, params, mRequestHandler);
 	}
 	
 	private void login() {

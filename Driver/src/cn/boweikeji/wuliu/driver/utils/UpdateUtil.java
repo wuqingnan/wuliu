@@ -7,8 +7,9 @@ import org.json.JSONObject;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.event.UpdateEvent;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import de.greenrobot.event.EventBus;
@@ -27,17 +28,11 @@ public class UpdateUtil {
 		}
 		sChecking = true;
 		String appVersion = DeviceInfo.getAppVersion();
-		
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
 		BaseParams params = new BaseParams();
 		params.add("method", "updateAPP");
 		params.add("app_name", "ANDSUP");
 		params.add("now_version", appVersion);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_UPDATE, params));
-		client.get(Const.URL_UPDATE, params, new JsonHttpResponseHandler() {
+		AsyncHttp.get(Const.URL_UPDATE, params, new JsonHttpResponseHandler() {
 			
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				requestResult(response);

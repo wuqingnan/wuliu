@@ -8,19 +8,19 @@ public class Const {
 	
 	public static final String URL_SYSTEM_MSG = "http://style177.sinaapp.com/logistics/mobile/actList.html";
 	
-	public static final String URL_LOGIN = "http://218.21.213.76:7201/bss/driverLoginCheck.action";
-	public static final String URL_REGISTER = "http://218.21.213.76:7201/bss/registerDriver.action";
-	public static final String URL_ORDER_LIST = "http://218.21.213.76:7201/bss/getMyRecords.action";
-	public static final String URL_ORDER_DETAIL = "http://218.21.213.76:7201/bss/getCoDetails.action";
-	public static final String URL_ROB_ORDER = "http://218.21.213.76:7201/bss/robMessage.action";
-	public static final String URL_DROP_ORDER = "http://218.21.213.76:7201/bss/driverDropMessage.action";
-	public static final String URL_POSITION_UPLOAD = "http://218.21.213.76:7201/bss/collectDriverInfos.action";
-	public static final String URL_CHANGE_PASSWORD = "http://218.21.213.76:7201/bss/changeSupplyerPwd.action";
-	public static final String URL_SUGGEST = "http://218.21.213.76:7201/bss/driverSuggest.action";
-	public static final String URL_UPDATE = "http://218.21.213.76:7201/bss/updateAPP.action";
-	public static final String URL_NEAR_DRIVER = "http://218.21.213.76:7201/bss/getNearDriversByDrv.action";
-	public static final String URL_UPLOAD_IMAGE = "http://218.21.213.76:7201/bss/doUpload.action";
-	public static final String URL_FIND = "http://218.21.213.76:7201/bss/qrySupplyRecords.action";
+	public static final String URL_LOGIN = "bss/driverLoginCheck.action";
+	public static final String URL_REGISTER = "bss/registerDriver.action";
+	public static final String URL_ORDER_LIST = "bss/getMyRecords.action";
+	public static final String URL_ORDER_DETAIL = "bss/getCoDetails.action";
+	public static final String URL_ROB_ORDER = "bss/robMessage.action";
+	public static final String URL_DROP_ORDER = "bss/driverDropMessage.action";
+	public static final String URL_POSITION_UPLOAD = "bss/collectDriverInfos.action";
+	public static final String URL_CHANGE_PASSWORD = "bss/changeSupplyerPwd.action";
+	public static final String URL_SUGGEST = "bss/driverSuggest.action";
+	public static final String URL_UPDATE = "bss/updateAPP.action";
+	public static final String URL_NEAR_DRIVER = "bss/getNearDriversByDrv.action";
+	public static final String URL_UPLOAD_IMAGE = "bss/doUpload.action";
+	public static final String URL_FIND = "bss/qrySupplyRecords.action";
 	
 	public static final int PUSH_TYPE_DETAIL = 1;
 	public static final int PUSH_TYPE_MSG = 2;

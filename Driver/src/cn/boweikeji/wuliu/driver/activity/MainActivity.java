@@ -32,7 +32,7 @@ import com.baidu.mapapi.map.BaiduMap.OnMyLocationClickListener;
 import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
 
@@ -50,6 +50,7 @@ import cn.boweikeji.wuliu.driver.fragment.HomeFragment;
 import cn.boweikeji.wuliu.driver.fragment.MessageFragment;
 import cn.boweikeji.wuliu.driver.fragment.MoreFragment;
 import cn.boweikeji.wuliu.driver.fragment.OrderFragment;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 import android.content.Intent;
@@ -471,20 +472,12 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void requestDriver(BDLocation location) {
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-
 		BaseParams params = new BaseParams();
 		params.add("method", "getNearDriversByDrv");
 		params.add("radius", "5000");
 		params.add("gps_j", "" + location.getLongitude());
 		params.add("gps_w", "" + location.getLatitude());
-
-		Log.d(TAG,
-				"URL: "
-						+ AsyncHttpClient.getUrlWithQueryString(true,
-								Const.URL_NEAR_DRIVER, params));
-		client.get(Const.URL_NEAR_DRIVER, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_NEAR_DRIVER, params, mRequestHandler);
 	}
 
 	private void requestResult(JSONObject response) {
@@ -587,12 +580,7 @@ public class MainActivity extends BaseActivity {
 			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
 			params.add("app_version", "" + DeviceInfo.getAppVersion());
 			params.add("clientid", "" + Const.clientid);
-
-			Log.d(TAG,
-					"URL: "
-							+ AsyncHttpClient.getUrlWithQueryString(true,
-									Const.URL_POSITION_UPLOAD, params));
-			mHttpClient.get(Const.URL_POSITION_UPLOAD, params, mHandler);
+			mHttpClient.get(AsyncHttp.getAbsoluteUrl(Const.URL_POSITION_UPLOAD), params, mHandler);
 		}
 	}
 	

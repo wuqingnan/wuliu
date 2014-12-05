@@ -9,15 +9,16 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
+import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.EncryptUtil;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 import cn.boweikeji.wuliu.supplyer.view.ClearEditText;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import cn.boweikeji.wuliu.supplyer.R;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import cn.boweikeji.wuliu.supplyer.R;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.InputType;
@@ -101,18 +102,12 @@ public class ChangePasswordActivity extends BaseActivity {
 			showProgressDialog();
 			String oldPass = EncryptUtil.encrypt(mOldPassword.getText().toString(), EncryptUtil.MD5);
 			String newPass = EncryptUtil.encrypt(mNewPassword.getText().toString(), EncryptUtil.MD5);
-			
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.setURLEncodingEnabled(true);
-			
 			BaseParams params = new BaseParams();
 			params.add("method", "changeSupplyerPwd");
 			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
 			params.add("old_pwd", oldPass);
 			params.add("new_pwd", newPass);
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_CHANGE_PASSWORD, params));
-			client.get(Const.URL_CHANGE_PASSWORD, params, mRequestHandler);
+			AsyncHttp.get(Const.URL_CHANGE_PASSWORD, params, mRequestHandler);
 		}
 	}
 	

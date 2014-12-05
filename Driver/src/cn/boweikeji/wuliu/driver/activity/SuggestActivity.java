@@ -9,10 +9,11 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import android.app.ProgressDialog;
@@ -84,20 +85,13 @@ public class SuggestActivity extends BaseActivity {
 	private void submit() {
 		if (validCheck()) {
 			showProgressDialog();
-			
 			String content = mSuggestion.getText().toString();
-			
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.setURLEncodingEnabled(true);
-			
 			BaseParams params = new BaseParams();
 			params.add("method", "driverSuggest");
 			params.add("driver_cd", LoginManager.getInstance().getUserInfo().getDriver_cd());
 			params.add("passwd", LoginManager.getInstance().getUserInfo().getPasswd());
 			params.add("content", content);
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_SUGGEST, params));
-			client.get(Const.URL_SUGGEST, params, mRequestHandler);
+			AsyncHttp.get(Const.URL_SUGGEST, params, mRequestHandler);
 		}
 	}
 	

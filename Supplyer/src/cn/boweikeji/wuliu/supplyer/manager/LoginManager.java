@@ -17,10 +17,12 @@ import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.LoginEvent;
 import cn.boweikeji.wuliu.supplyer.event.LogoutEvent;
+import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
 import cn.boweikeji.wuliu.supplyer.utils.FileUtils;
 
-import com.loopj.android.http.AsyncHttpClient;
+
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.ResponseHandlerInterface;
 
@@ -76,17 +78,12 @@ public class LoginManager {
 		mHasLogin = hasLogin;
 	}
 	
-	public void login(String supplyer_cd, String passwd, ResponseHandlerInterface handler) {
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
+	public void login(String supplyer_cd, String passwd, AsyncHttpResponseHandler handler) {
 		BaseParams params = new BaseParams();
 		params.add("method", "loginCheck2");
 		params.add("supplyer_cd", supplyer_cd);
 		params.add("passwd", passwd);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_LOGIN, params));
-		client.get(Const.URL_LOGIN, params, handler);
+		AsyncHttp.get(Const.URL_LOGIN, params, handler);
 	}
 	
 	public void autoLogin() {

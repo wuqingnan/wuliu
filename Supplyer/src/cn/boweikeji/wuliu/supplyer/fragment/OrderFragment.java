@@ -31,10 +31,11 @@ import cn.boweikeji.wuliu.supplyer.activity.OrderDetailActivity;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.Order;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
+import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import cn.boweikeji.wuliu.supplyer.R;
@@ -184,18 +185,13 @@ public class OrderFragment extends BaseFragment {
 	
 	private void loadData() {
 		mLoading = true;
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "getAllMySupplys");
 		params.add("supplyer_cd", info.getSupplyer_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("page_num", "" + mPage);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ORDER_LIST, params));
-		client.get(Const.URL_ORDER_LIST, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_ORDER_LIST, params, mRequestHandler);
 	}
 	
 	private void loadMore() {

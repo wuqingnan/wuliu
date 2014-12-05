@@ -9,13 +9,14 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.Order;
+import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import cn.boweikeji.wuliu.supplyer.R;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import cn.boweikeji.wuliu.supplyer.R;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -132,16 +133,10 @@ public class SendDetailActivity extends BaseActivity {
 			mOrder.setReciver_phone(mSendToPhone.getText().toString());
 			mOrder.setRemark(mSendComment.getText().toString());
 			mOrder.setMess_fee(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 2);
-			
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.setURLEncodingEnabled(true);
-			
 			BaseParams params = mOrder.getPublishParams();
 			params.add("method", "sendGoodInfos");
 			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(false, Const.URL_SEND_GOODS, params));
-			client.get(Const.URL_SEND_GOODS, params, mRequestHandler);
+			AsyncHttp.get(Const.URL_SEND_GOODS, params, mRequestHandler);
 		}
 	}
 

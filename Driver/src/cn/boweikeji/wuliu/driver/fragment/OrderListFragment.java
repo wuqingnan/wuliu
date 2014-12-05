@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.baidu.location.BDLocation;
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import butterknife.ButterKnife;
@@ -24,6 +24,7 @@ import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.OrderEvent;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import de.greenrobot.event.EventBus;
@@ -188,9 +189,6 @@ public class OrderListFragment extends BaseFragment {
 	
 	private void loadData() {
 		mLoading = true;
-    	AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
 		BDLocation location = WLApplication.getLocationClient().getLastKnownLocation();
 		BaseParams params = new BaseParams();
 		params.add("method", "getMyRecords");
@@ -224,9 +222,7 @@ public class OrderListFragment extends BaseFragment {
 			params.add("driver_cd", BaseParams.PARAM_DEFAULT);
 			params.add("passwd", BaseParams.PARAM_DEFAULT);
 		}
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ORDER_LIST, params));
-		client.get(Const.URL_ORDER_LIST, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_ORDER_LIST, params, mRequestHandler);
     }
 	  
     private void loadMore() {

@@ -8,13 +8,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
+import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import cn.boweikeji.wuliu.supplyer.R;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import cn.boweikeji.wuliu.supplyer.R;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -84,20 +85,13 @@ public class SuggestActivity extends BaseActivity {
 	private void submit() {
 		if (validCheck()) {
 			showProgressDialog();
-			
 			String content = mSuggestion.getText().toString();
-			
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.setURLEncodingEnabled(true);
-			
 			BaseParams params = new BaseParams();
 			params.add("method", "supplyerSuggest");
 			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
 			params.add("passwd", LoginManager.getInstance().getUserInfo().getPasswd());
 			params.add("content", content);
-			
-			Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_SUGGEST, params));
-			client.get(Const.URL_SUGGEST, params, mRequestHandler);
+			AsyncHttp.get(Const.URL_SUGGEST, params, mRequestHandler);
 		}
 	}
 	

@@ -12,10 +12,11 @@ import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.OrderEvent;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import de.greenrobot.event.EventBus;
@@ -160,19 +161,13 @@ public class OrderDetailActivity extends BaseActivity {
 	
 	private void loadDetail() {
 		showProgressDialog();
-		
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "getCoDetails");
 		params.add("driver_cd", info.getDriver_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mGoodsCD);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ORDER_DETAIL, params));
-		client.get(Const.URL_ORDER_DETAIL, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_ORDER_DETAIL, params, mRequestHandler);
 	}
 	
 	private void refresh() {
@@ -261,32 +256,24 @@ public class OrderDetailActivity extends BaseActivity {
 	
 	private void robOrder() {
 		showProgressDialog();
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "robMessage");
 		params.add("driver_cd", info.getDriver_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mGoodsCD);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_ROB_ORDER, params));
-		client.get(Const.URL_ROB_ORDER, params, mOperateHandler);
+		AsyncHttp.get(Const.URL_ROB_ORDER, params, mOperateHandler);
 	}
 	
 	private void dropOrder() {
 		showProgressDialog();
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "driverDropMessage");
 		params.add("driver_cd", info.getDriver_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mGoodsCD);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_DROP_ORDER, params));
-		client.get(Const.URL_DROP_ORDER, params, mOperateHandler);
+		AsyncHttp.get(Const.URL_DROP_ORDER, params, mOperateHandler);
 	}
 	
 	private void showDropDialog() {

@@ -4,7 +4,7 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.loopj.android.http.AsyncHttpClient;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import butterknife.ButterKnife;
@@ -15,6 +15,7 @@ import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.OrderEvent;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import de.greenrobot.event.EventBus;
@@ -149,20 +150,13 @@ public class RobOrderActivity extends BaseActivity {
 
 	private void robOrder() {
 		showProgressDialog();
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "robMessage");
 		params.add("driver_cd", info.getDriver_cd());
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mOrder.getGoods_cd());
-
-		Log.d(TAG,
-				"URL: "
-						+ AsyncHttpClient.getUrlWithQueryString(true,
-								Const.URL_ROB_ORDER, params));
-		client.get(Const.URL_ROB_ORDER, params, mRequestHandler);
+		AsyncHttp.get(Const.URL_ROB_ORDER, params, mRequestHandler);
 	}
 
 	private void requestResult(JSONObject response) {

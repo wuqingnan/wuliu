@@ -17,9 +17,11 @@ import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.LoginEvent;
 import cn.boweikeji.wuliu.driver.event.LogoutEvent;
+import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.utils.FileUtils;
 
-import com.loopj.android.http.AsyncHttpClient;
+
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.ResponseHandlerInterface;
 
@@ -75,17 +77,12 @@ public class LoginManager {
 		mHasLogin = hasLogin;
 	}
 	
-	public void login(String driver_cd, String passwd, ResponseHandlerInterface handler) {
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.setURLEncodingEnabled(true);
-		
+	public void login(String driver_cd, String passwd, AsyncHttpResponseHandler handler) {
 		BaseParams params = new BaseParams();
 		params.add("method", "driverLoginCheck");
 		params.add("driver_cd", driver_cd);
 		params.add("passwd", passwd);
-		
-		Log.d(TAG, "URL: " + AsyncHttpClient.getUrlWithQueryString(true, Const.URL_LOGIN, params));
-		client.get(Const.URL_LOGIN, params, handler);
+		AsyncHttp.get(Const.URL_LOGIN, params, handler);
 	}
 	
 	public void autoLogin() {
