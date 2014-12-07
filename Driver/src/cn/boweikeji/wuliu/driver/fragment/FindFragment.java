@@ -267,12 +267,9 @@ public class FindFragment extends BaseFragment {
         	return null;
         }
         StringBuilder b = new StringBuilder();
-        for (int i = 0; ; i++) {
+        for (int i = 0; i < array.length; i++) {
             b.append(String.valueOf(array[i]));
-            if (i == iMax) {
-            	return b.toString();
-            }
-            b.append(", ");
         }
+        return b.toString();
 	}
 }
