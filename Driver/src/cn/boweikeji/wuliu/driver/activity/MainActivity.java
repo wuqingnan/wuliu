@@ -269,7 +269,9 @@ public class MainActivity extends BaseActivity {
 	private void pageJump(Intent intent) {
 		Log.d(TAG, "shizy---pageJump");
 		boolean push = intent.getBooleanExtra("push", false);
-		if (push) {
+		int type = intent.getIntExtra("type", -1);
+		if (push && type == Const.PUSH_TYPE_ROB) {
+			//目前只有抢单须路转页面
 			mHandler.removeMessages(MSG_PUSH);
 			Message msg = Message.obtain();
 			msg.what = MSG_PUSH;

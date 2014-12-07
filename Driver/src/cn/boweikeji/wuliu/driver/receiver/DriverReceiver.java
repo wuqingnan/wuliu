@@ -64,7 +64,6 @@ public class DriverReceiver extends BroadcastReceiver {
 		Intent intent = new Intent(context, DispatchReceiver.class);
 		intent.putExtra("type", type);
 		intent.putExtra("infos", infos);
-		intent.putExtras(intent);
 
 		PendingIntent pIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
