@@ -425,8 +425,9 @@ public class MainActivity extends BaseActivity {
 						info.optDouble("gps_j"));
 				Bundle bundle = new Bundle();
 				bundle.putString("name", info.optString("driver_name"));
+				bundle.putString("phone", info.optString("phone"));
 				if (truck >= 0 && truck < truckTypes.length) {
-					bundle.putString("info", truckTypes[truck]);
+					bundle.putString("truck", truckTypes[truck]);
 				}
 				OverlayOptions option = new MarkerOptions().position(ll)
 						.icon(bitmap).extraInfo(bundle);
@@ -458,19 +459,27 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void showMarkerInfo(final Marker marker) {
+		mBaiduMap.hideInfoWindow();
 		Bundle bundle = marker.getExtraInfo();
 		if (bundle != null) {
-			mDriverName.setText(bundle.getString("name"));
-			mDriverInfo.setText(bundle.getString("info"));
+//			mDriverName.setText(bundle.getString("name"));
+//			mDriverInfo.setText(bundle.getString("info"));
+			Fragment fragment = mFragmentManager.findFragmentByTag(HomeFragment.class.getName());
+			if (fragment != null && fragment.isAdded()) {
+				String name = bundle.getString("name");
+				String phone = bundle.getString("phone");
+				String truck = bundle.getString("truck");
+				((HomeFragment)fragment).showPopupLayout(name, phone, truck);
+			}
 		}
-		LatLng ll = marker.getPosition();
-		InfoWindow infoWindow = new InfoWindow(mDriverLayout, ll,
-				new OnInfoWindowClickListener() {
-					public void onInfoWindowClick() {
-						mBaiduMap.hideInfoWindow();
-					}
-				});
-		mBaiduMap.showInfoWindow(infoWindow);
+//		LatLng ll = marker.getPosition();
+//		InfoWindow infoWindow = new InfoWindow(mDriverLayout, ll,
+//				new OnInfoWindowClickListener() {
+//					public void onInfoWindowClick() {
+//						mBaiduMap.hideInfoWindow();
+//					}
+//				});
+//		mBaiduMap.showInfoWindow(infoWindow);
 	}
 
 	private void requestDriver(BDLocation location) {

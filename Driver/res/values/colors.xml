@@ -12,6 +12,8 @@
     <color name="blue">#ff209ae4</color>
     <color name="gray">#ffbbbbb1</color>
     
+    <color name="dim_background">#80323232</color>
+    
     <color name="home_tab_normal">#ff8798a3</color>
     
     <color name="text_color_yellow">#ffff8b01</color>
