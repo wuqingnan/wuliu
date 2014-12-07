@@ -226,4 +226,12 @@ public class Order implements Serializable {
 	public boolean isTicked() {
 		return getIs_ticked() > 0;
 	}
+	
+	/**
+	 * 是否免费
+	 * @return
+	 */
+	public boolean isFree() {
+		return getMess_fee() == 1;
+	}
 }

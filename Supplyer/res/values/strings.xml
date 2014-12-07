@@ -138,7 +138,9 @@
     <string name="goods_value_error">物品价值格式错误</string>
     <string name="goods_weight_error">物品重量格式错误</string>
     <string name="goods_pay_error">愿出金额格式错误</string>
+    <string name="goods_type_error">请选择货物类型</string>
     <string name="trunk_type_error">请选择车辆类型</string>
+    <string name="valid_time_error">请选择有效时间</string>
     
     <string name="send_from_empty">发货人不能为空</string>
     <string name="send_to_empty">收货人不能为空</string>

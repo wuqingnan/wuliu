@@ -379,6 +379,14 @@ public class SendActivity extends BaseActivity {
 			Util.showTips(this, getResources().getString(
 					R.string.address_to_empty));
 			return false;
+		} else if (mValidTimeIndex == 0) {
+			Util.showTips(this, getResources().getString(
+					R.string.valid_time_error));
+			return false;
+		} else if (mGoodsTypeIndex == 0) {
+			Util.showTips(this, getResources().getString(
+					R.string.goods_type_error));
+			return false;
 		} else if (mTruckTypeIndex == 0) {
 			Util.showTips(this, getResources().getString(
 					R.string.trunk_type_error));

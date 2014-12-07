@@ -13,11 +13,15 @@
     
     <string-array name="goods_type_list">
         <item>全部</item>
-        <item>大宗货物</item>
         <item>普通货物</item>
+        <item>大件货物</item>
+        <item>大宗物资</item>
         <item>生鲜果蔬</item>
-        <item>小货物</item>
-        <item>其他</item>
+        <item>保温冷藏</item>
+        <item>贵重货物</item>
+        <item>危险货物</item>
+        <item>特殊货物</item>
+        <item>拼装货物</item>
     </string-array>
     
     <string-array name="truck_type_list">
@@ -28,19 +32,27 @@
         <item>集装车</item>
         <item>高栏车</item>
         <item>低栏车</item>
+        <item>平板车</item>
+        <item>单桥车</item>
+        <item>双桥车</item>
         <item>拖车</item>
         <item>罐式车</item>
         <item>自卸车</item>
-        <item>危险品运输车</item>
+        <item>厢式车</item>
+        <item>棉被车</item>
+        <item>危险品车</item>
+        <item>轿车（可运小件）</item>
         <item>其他</item>
     </string-array>
    	   
     <string-array name="goods_valid_time_list">
-        <item>10分钟</item>
-        <item>30分钟</item>
-        <item>一小时</item>
-        <item>半天</item>
+        <item>请选择</item>
+        <item>长期</item>
         <item>当天</item>
+        <item>半天</item>
+        <item>一小时</item>
+        <item>半小时</item>
+        <item>10分钟</item>
     </string-array>
     
     <string-array name="time_days">
@@ -58,19 +70,18 @@
     
     <string-array name="driver_types">
         <item>个人</item>
-        <item>企业</item>
-        <item>其他</item>
+        <item>企业或组织</item>
     </string-array>
     
     <string-array name="order_state_name">
-        <item>发送了消息</item>
-        <item>被抢单</item>
-        <item>修改订单</item>
-        <item>司机退单</item>
-        <item>发货人退单</item>
-        <item>后台退单</item>
-        <item>发货人取消订单</item>
-        <item>发货人确认收货</item>
+        <item>等待运输</item>
+        <item>已被抢</item>
+        <item>等待运输</item>
+        <item>等待运输</item>
+        <item>等待运输</item>
+        <item>后台取消</item>
+        <item>订单取消</item>
+        <item>确认收货</item>
     </string-array>
 	
     <integer-array name="order_state_value" >
@@ -85,13 +96,29 @@
     </integer-array>
     
     <string-array name="driver_stars">
-        <item>差</item>
-        <item>一般</item>
         <item>非常好</item>
+        <item>一般</item>
+        <item>差</item>
     </string-array>
     
     <string-array name="choose_image_from">
         <item>相册</item>
         <item>拍照</item>
     </string-array>
+    
+    <string-array name="driver_status">
+        <item>待审核</item>
+        <item>图片尺寸不合规，请重新上传</item>
+        <item>图片信息与要求不符，请重新上传</item>
+        <item>图片非法，请重新上传</item>
+        <item>图片信息与个人信息不符，请重新上传</item>
+        <item>图片信息与车俩信息不符，请重新上传</item>
+        <item>图片模糊，请重新上传</item>
+        <item>个人信息有误，请核对</item>
+        <item>车俩信息有误，请核对</item>
+        <item>其他错误，请核对</item>
+        <item>审核已通过</item>
+        <item>暂停使用</item>
+    </string-array>
+    
 </resources>

@@ -97,13 +97,13 @@ public class OrderDetailActivity extends BaseActivity {
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			switch (checkedId) {
 			case R.id.comment_driver_star_good:
-				mStar = 2;
+				mStar = 0;
 				break;
 			case R.id.comment_driver_star_normal:
 				mStar = 1;
 				break;
 			case R.id.comment_driver_star_bad:
-				mStar = 0;
+				mStar = 2;
 				break;
 			}
 		}

@@ -389,10 +389,9 @@ public class OrderDetailActivity extends BaseActivity {
 				value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
 				break;
 			case R.string.label_message_free:
-				int free = mOrder.getMess_fee();
-				if (free == 1) {
+				if (mOrder.isFree()) {
 					value = mContext.getString(R.string.free_yes);
-				} else if (free == 2) {
+				} else {
 					value = mContext.getString(R.string.free_no);
 				}
 				break;
