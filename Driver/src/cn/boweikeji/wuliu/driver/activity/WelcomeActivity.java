@@ -8,7 +8,9 @@ import com.igexin.sdk.PushManager;
 
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.WeakHandler;
+import cn.boweikeji.wuliu.driver.db.DBHelper;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 import butterknife.ButterKnife;
@@ -17,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -96,6 +99,12 @@ public class WelcomeActivity extends BaseActivity {
 		editor.putString(KEY_VERSION, DeviceInfo.getAppVersion());
 		editor.commit();
 	}
+
+	private void initDB() {
+		DBHelper helper = ((WLApplication)getApplication()).getHelper();
+		SQLiteDatabase db = helper.getReadableDatabase();
+		db.close();
+	}
 	
 	private void logoFinish() {
 		if (mNeedInit) {
@@ -131,6 +140,7 @@ public class WelcomeActivity extends BaseActivity {
 				initialize();
 				checkInit();
 				if (mNeedInit) {
+					initDB();
 					saveVersion();
 					long time = System.currentTimeMillis() - start;
 					if (time < SLEEP_TIME) {

@@ -1,12 +1,11 @@
 package cn.boweikeji.wuliu.driver.fragment;
 
-import m.framework.utils.Utils;
-import android.app.Activity;
+import java.sql.SQLException;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +17,16 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.R;
-import cn.boweikeji.wuliu.driver.activity.CityListActivity;
+import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.activity.FindResultActivity;
+import cn.boweikeji.wuliu.driver.bean.Area;
 import cn.boweikeji.wuliu.driver.bean.FindFilter;
-import cn.boweikeji.wuliu.driver.bean.city.City;
+import cn.boweikeji.wuliu.driver.db.DBHelper;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
+import cn.boweikeji.wuliu.driver.window.AreaWheel;
+import cn.boweikeji.wuliu.driver.window.IWheel;
+import cn.boweikeji.wuliu.driver.window.WheelWindow;
 
 public class FindFragment extends BaseFragment {
 
@@ -38,9 +41,9 @@ public class FindFragment extends BaseFragment {
 			if (view == mExchangeBtn) {
 				exchange();
 			} else if (view == mStart) {
-				chooseCity(true);
+				showAreaPicker(true);
 			} else if (view == mEnd) {
-				chooseCity(false);
+				showAreaPicker(false);
 			} else if (view == mTruckType) {
 				truckType();
 			} else if (view == mGoodsType) {
@@ -51,6 +54,26 @@ public class FindFragment extends BaseFragment {
 		}
 	};
 
+	private WheelWindow.OnConfirmListener mConfirmListener = new WheelWindow.OnConfirmListener() {
+
+		@Override
+		public void onConfirm(String result) {
+			Log.d(TAG, "shizy---result: " + result);
+			mWheelWindow = null;
+			String[] str = result.split("###");
+			if (str == null || str.length < 3) {
+				return;
+			}
+			if (mIsStart) {
+				mStartInfos = str;
+			} else {
+				mEndInfos = str;
+			}
+			updateAddress();
+		}
+		
+	};
+	
 	private View mRootView;
 
 	@InjectView(R.id.titlebar_leftBtn)
@@ -71,6 +94,8 @@ public class FindFragment extends BaseFragment {
 	RadioGroup mMessageFree;
 	@InjectView(R.id.btn_find)
 	Button mFindBtn;
+	
+	private WheelWindow mWheelWindow;
 
 	private int mTruckTypeIndex;
 	private String[] mTruckTypes;
@@ -78,9 +103,10 @@ public class FindFragment extends BaseFragment {
 	private int mGoodsTypeIndex;
 	private String[] mGoodsTypes;
 	
-	private City mStartCity;
-	private City mEndCity;
-
+	private String[] mStartInfos;
+	private String[] mEndInfos;
+	private boolean mIsStart;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -94,23 +120,6 @@ public class FindFragment extends BaseFragment {
 		init();
 	}
 	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == Activity.RESULT_OK) {
-			switch (requestCode) {
-			case REQUESTCODE_CHOOSE_START:
-				mStartCity = (City) data.getSerializableExtra("city");
-				updateAddress();
-				break;
-			case REQUESTCODE_CHOOSE_END:
-				mEndCity = (City) data.getSerializableExtra("city");
-				updateAddress();
-				break;
-			}
-		}
-	}
-
 	private void init() {
 		ButterKnife.inject(this, mRootView);
 		initTitle();
@@ -153,35 +162,26 @@ public class FindFragment extends BaseFragment {
 	}
 
 	private void updateAddress() {
-		if (mStartCity != null) {
-			mStart.setText(mStartCity.getName());
+		if (mStartInfos != null) {
+			mStart.setText(arrayToString(mStartInfos));
 		}
-		if (mEndCity != null) {
-			mEnd.setText(mEndCity.getName());
+		if (mEndInfos != null) {
+			mEnd.setText(arrayToString(mEndInfos));
 		}
 	}
 	
 	private void exchange() {
-		City temp = mStartCity;
-		mStartCity = mEndCity;
-		mEndCity = temp;
+		String[] temp = mStartInfos;
+		mStartInfos = mEndInfos;
+		mEndInfos = temp;
 		updateAddress();
-	}
-	
-	private void chooseCity(boolean start) {
-		Intent intent = new Intent(getActivity(), CityListActivity.class);
-		if (start) {
-			startActivityForResult(intent, REQUESTCODE_CHOOSE_START);
-		} else {
-			startActivityForResult(intent, REQUESTCODE_CHOOSE_END);
-		}
 	}
 	
 	private void find() {
 		if (validCheck()) {
 			FindFilter filter = new FindFilter();
-			filter.setStart_addr(mStartCity.getName());
-			filter.setEnd_addr(mEndCity.getName());
+			filter.setStart_addr(mStart.getText().toString());
+			filter.setEnd_addr(mEnd.getText().toString());
 			filter.setGoods_type_code(mGoodsTypeIndex);
 			switch (mMessageFree.getCheckedRadioButtonId()) {
 			case R.id.message_free_all:
@@ -200,7 +200,7 @@ public class FindFragment extends BaseFragment {
 	}
 	
 	private boolean validCheck() {
-		if (mStartCity == null || mEndCity == null) {
+		if (mStartInfos == null || mEndInfos == null) {
 			Util.showTips(getActivity(), getResources().getString(R.string.address_empty));
 			return false;
 		} else if (mTruckTypeIndex == 0) {
@@ -240,5 +240,39 @@ public class FindFragment extends BaseFragment {
 							}
 						}).setTitle("货物类型").create();
 		dialog.show();
+	}
+	
+	private void showAreaPicker(boolean start) {
+		mIsStart = start;
+		if (mWheelWindow == null) {
+			IWheel<Area> wheel = null;
+			try {
+				DBHelper helper = ((WLApplication)getActivity().getApplication()).getHelper();
+				wheel = new AreaWheel(getActivity(), helper.getAreaDao());
+				mWheelWindow = new WheelWindow(getActivity().getWindow().getDecorView(), mConfirmListener, wheel);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		mWheelWindow.show();
+		mWheelWindow.updateByInfo(start ? mStartInfos : mEndInfos);
+	}
+	
+	private String arrayToString(String[] array) {
+		if (array == null) {
+			return null;
+		}
+        int iMax = array.length - 1;
+        if (iMax == -1) {
+        	return null;
+        }
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; ; i++) {
+            b.append(String.valueOf(array[i]));
+            if (i == iMax) {
+            	return b.toString();
+            }
+            b.append(", ");
+        }
 	}
 }

@@ -13,6 +13,7 @@
     <color name="gray">#ffbbbbb1</color>
     
     <color name="dim_background">#80323232</color>
+    <color name="bg_popup_window">#80000000</color>
     
     <color name="home_tab_normal">#ff8798a3</color>
     

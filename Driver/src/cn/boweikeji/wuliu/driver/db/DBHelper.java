@@ -1,13 +1,15 @@
-package cn.boweikeji.wuliu.supplyer.db;
+package cn.boweikeji.wuliu.driver.db;
 
+import java.io.File;
+import java.io.InputStream;
 import java.sql.SQLException;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import cn.boweikeji.wuliu.supplyer.bean.Area;
-import cn.boweikeji.wuliu.supplyer.dao.AreaDao;
-import cn.boweikeji.wuliu.supplyer.manager.AreaManager;
+import cn.boweikeji.wuliu.driver.bean.Area;
+import cn.boweikeji.wuliu.driver.dao.AreaDao;
+import cn.boweikeji.wuliu.driver.manager.AreaManager;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
