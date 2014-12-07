@@ -32,7 +32,6 @@ import com.baidu.mapapi.map.BaiduMap.OnMyLocationClickListener;
 import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
 
@@ -63,6 +62,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -504,6 +504,10 @@ public class MainActivity extends BaseActivity {
 	private void exit() {
 		finish();
 		System.exit(0);
+	}
+	
+	public void goHome() {
+		((RadioButton)mTabGroup.findViewById(R.id.home_tab_home)).setChecked(true);
 	}
 
 	private void showDetail(Intent intent) {

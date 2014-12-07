@@ -8,14 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.activity.MainActivity;
 import cn.boweikeji.wuliu.driver.activity.SuggestActivity;
 import cn.boweikeji.wuliu.driver.activity.WebViewActivity;
+import cn.boweikeji.wuliu.driver.manager.LoginManager;
 
 public class MoreFragment extends BaseFragment {
 
@@ -47,6 +50,15 @@ public class MoreFragment extends BaseFragment {
 		}
 	};
 	
+	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View view) {
+			if (view == mLogout) {
+				logout();
+			}
+		}
+	};
+	
 	private View mRootView;
 
 	@InjectView(R.id.titlebar_leftBtn)
@@ -55,6 +67,8 @@ public class MoreFragment extends BaseFragment {
 	TextView mTitle;
 	@InjectView(R.id.fragment_more_list)
 	ListView mListView;
+	
+	private Button mLogout;
 	
 	private MoreAdapter mAdapter;
 
@@ -95,6 +109,10 @@ public class MoreFragment extends BaseFragment {
 	}
 
 	private void initView() {
+		View footer = LayoutInflater.from(getActivity()).inflate(R.layout.logout, null);
+		mListView.addFooterView(footer);
+		mLogout = (Button) footer.findViewById(R.id.logout);
+		mLogout.setOnClickListener(mOnClickListener);
 		mListView.setOnItemClickListener(mOnItemClickListener);
 	}
 	
@@ -123,6 +141,11 @@ public class MoreFragment extends BaseFragment {
 	
 	private void about() {
 		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.about), WebViewActivity.URL_ABOUT);
+	}
+	
+	private void logout() {
+		LoginManager.getInstance().logout();
+		((MainActivity)getActivity()).goHome();
 	}
 	
 	private class MoreAdapter extends BaseAdapter {
