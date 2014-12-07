@@ -182,7 +182,7 @@ public class MainActivity extends BaseActivity {
 				case MenuView.MENU_MESSAGE:
 					WebViewActivity.startWebViewActivity(MainActivity.this,
 							getString(R.string.title_system_msg),
-							Const.URL_SYSTEM_MSG);
+							Const.getMsgUrl());
 					break;
 				case MenuView.MENU_INVITE:
 					Util.sendMessage(MainActivity.this, null, getResources()

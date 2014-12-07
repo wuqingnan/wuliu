@@ -1,12 +1,13 @@
 package cn.boweikeji.wuliu.supplyer;
 
+import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import android.content.Context;
 
 public class Const {
 	
 	public static final String NULL = "-9";
 	
-	public static final String URL_SYSTEM_MSG = "http://style177.sinaapp.com/logistics/mobile/actList.html";
+	private static final String URL_SYSTEM_MSG = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=7&user_cd=%1$s&user_type=SUPPLYER";
 	
 	public static final String URL_LOGIN = "bss/loginCheck2.action";
 	public static final String URL_REGISTER = "bss/registerGoodSupplyer.action";
@@ -40,5 +41,13 @@ public class Const {
 	
 	public static String getExternalPath() {
 		return sExternalPath;
+	}
+	
+	public static String getMsgUrl() {
+		String user_cd = NULL;
+		if (LoginManager.getInstance().hasLogin()) {
+			user_cd = LoginManager.getInstance().getUserInfo().getSupplyer_cd();
+		}
+		return String.format(URL_SYSTEM_MSG, user_cd);
 	}
 }

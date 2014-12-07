@@ -93,7 +93,7 @@ public class MessageFragment extends BaseFragment {
 	}
 	
 	private void initData() {
-		mWebView.loadUrl(Const.URL_SYSTEM_MSG);
+		mWebView.loadUrl(Const.getMsgUrl());
 	}
 	
 }
