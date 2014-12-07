@@ -8,7 +8,7 @@ public class Const {
 	
 	public static final String NULL = "-9";
 	
-	private static final String URL_SYSTEM_MSG = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=7&user_cd=%1$s&user_type=DRIVER";
+	private static final String URL_SYSTEM_MSG = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=24&user_cd=%1$s&user_type=DRIVER";
 	
 	public static final String URL_LOGIN = "bss/driverLoginCheck.action";
 	public static final String URL_REGISTER = "bss/registerDriver.action";
