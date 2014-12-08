@@ -219,6 +219,10 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mTabIndex != 0) {
+				goHome();
+				return true;
+			}
 			if (mFragmentManager.getBackStackEntryCount() == 0) {
 				if (System.currentTimeMillis() - mExitTime > EXIT_TIME) {
 					Toast.makeText(this, R.string.quit_next_time,

@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import butterknife.ButterKnife;
@@ -94,6 +95,7 @@ public class FindResultActivity extends BaseActivity {
 				long id) {
 			if (id >= 0) {
 				Order order = (Order) mAdapter.getItem((int)id);
+				OrderDetailActivity.startOrderDetailActivity(FindResultActivity.this, order.getGoods_cd());
 			}
 		}
 	};
@@ -148,6 +150,7 @@ public class FindResultActivity extends BaseActivity {
 		mListView.setAdapter(mAdapter);
 		mListView.removeFooterView(mFooter);
 		mListView.setOnScrollListener(mOnScrollListener);
+		mListView.setOnItemClickListener(mOnItemClickListener);
 	}
 	
 	private void initData() {

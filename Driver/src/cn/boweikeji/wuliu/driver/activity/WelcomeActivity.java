@@ -44,7 +44,7 @@ public class WelcomeActivity extends BaseActivity {
 	@InjectView(R.id.new_feature)
 	ViewPager mNewFeature;
 	@InjectView(R.id.logo_layout)
-	RelativeLayout mLogoLayout;
+	View mLogoLayout;
 	
 	private WelcomeHandler mHandler = null;
 	
