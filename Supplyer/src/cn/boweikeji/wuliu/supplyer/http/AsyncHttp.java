@@ -12,7 +12,7 @@ public class AsyncHttp {
 
 	private static final String TAG = AsyncHttp.class.getSimpleName();
 
-	private static final String BASE_URL = "http://123.57.65.90:80/";
+	private static final String BASE_URL = "http://interface.boweikeji.cn/";
 
 	private static AsyncHttpClient client = new AsyncHttpClient();
 
