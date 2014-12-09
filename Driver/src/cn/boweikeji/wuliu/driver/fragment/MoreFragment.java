@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.activity.MainActivity;
 import cn.boweikeji.wuliu.driver.activity.SuggestActivity;
@@ -132,7 +133,7 @@ public class MoreFragment extends BaseFragment {
 	}
 
 	private void guide() {
-		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.driver_guide), WebViewActivity.URL_GUIDE);
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.driver_guide), Const.URL_GUIDE);
 	}
 	
 	private void suggest() {
@@ -140,7 +141,7 @@ public class MoreFragment extends BaseFragment {
 	}
 	
 	private void about() {
-		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.about), WebViewActivity.URL_ABOUT);
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.about), Const.URL_ABOUT);
 	}
 	
 	private void logout() {

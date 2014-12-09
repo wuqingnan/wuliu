@@ -11,9 +11,8 @@ import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
 import cn.boweikeji.wuliu.supplyer.utils.UpdateUtil;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
-
+import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.R;
-
 import de.greenrobot.event.EventBus;
 import android.content.Intent;
 import android.os.Bundle;
@@ -133,7 +132,7 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void guide() {
-		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.title_send_guide), WebViewActivity.URL_GUIDE);
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.title_send_guide), Const.URL_GUIDE);
 	}
 	
 	private void suggest() {
@@ -141,7 +140,7 @@ public class SetFragment extends BaseFragment {
 	}
 	
 	private void about() {
-		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.title_about), WebViewActivity.URL_ABOUT);
+		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.title_about), Const.URL_ABOUT);
 	}
 	
 	private void update() {

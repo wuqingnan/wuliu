@@ -17,9 +17,6 @@ public class WebViewActivity extends BaseActivity {
 
 	private static final String TAG = WebViewActivity.class.getSimpleName();
 	
-	public static final String URL_ABOUT = "http://interface.rrkd.cn/RRKDInterface/More/summary.htm";
-	public static final String URL_GUIDE = "http://interface.rrkd.cn/RRKDInterface/More/help.htm";
-	
 	private static final String KEY_TITLE = "title";
 	private static final String KEY_URL = "url";
 	

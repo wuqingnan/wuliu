@@ -81,10 +81,6 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
-            android:name="cn.boweikeji.wuliu.supplyer.activity.RuleActivity"
-            android:launchMode="singleTop" >
-        </activity>
-        <activity
             android:name="cn.boweikeji.wuliu.supplyer.activity.SearchActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >

@@ -120,8 +120,7 @@ public class SendDetailActivity extends BaseActivity {
 	}
 
 	private void showRule() {
-		Intent intent = new Intent(this, RuleActivity.class);
-		startActivity(intent);
+		WebViewActivity.startWebViewActivity(this, getString(R.string.title_rule), Const.URL_RULES);
 	}
 	
 	private void publish() {
@@ -169,6 +168,10 @@ public class SendDetailActivity extends BaseActivity {
 		} else if (!Util.isPhoneNumber(sendToPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
+			return false;
+		} else if (!mSendAccept.isChecked()) {
+			Util.showTips(this, getResources().getString(
+					R.string.accept_rules));
 			return false;
 		}
 		return true;

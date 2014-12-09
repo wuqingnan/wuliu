@@ -23,8 +23,6 @@ import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.utils.Util;
 import cn.boweikeji.wuliu.driver.view.ClearEditText;
-
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import de.greenrobot.event.EventBus;
@@ -37,19 +35,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class RegisterTruckActivity extends BaseActivity {
-	
-	private static final String TAG = RegisterTruckActivity.class.getSimpleName();
-	
+
+	private static final String TAG = RegisterTruckActivity.class
+			.getSimpleName();
+
 	private static final String KEY_INFO = "info";
-	
+
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
@@ -57,45 +56,51 @@ public class RegisterTruckActivity extends BaseActivity {
 				finish();
 			} else if (view == mTruckType) {
 				truckType();
+			} else if (view == mRule) {
+				showRule();
 			} else if (view == mSubmit) {
 				submit();
 			}
 		}
 	};
-	
+
 	private JsonHttpResponseHandler mUploadHandler = new JsonHttpResponseHandler() {
-		
+
 		public void onFinish() {
-			
+
 		};
-		
-		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
 			Log.d(TAG, "shizy---onSuccess");
 			uploadResult(response);
 		};
-		
-		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+
+		public void onFailure(int statusCode, Header[] headers,
+				Throwable throwable, JSONObject errorResponse) {
 			uploadResult(null);
 			Log.d(TAG, "shizy---onFailure");
 		};
-		
+
 	};
 
 	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
-		
+
 		public void onFinish() {
 			hideProgressDialog();
 		};
-		
-		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
 			requestResult(response);
 		};
-		
-		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+
+		public void onFailure(int statusCode, Header[] headers,
+				Throwable throwable, JSONObject errorResponse) {
 			requestResult(null);
 		};
 	};
-	
+
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
 	@InjectView(R.id.titlebar_title)
@@ -110,16 +115,20 @@ public class RegisterTruckActivity extends BaseActivity {
 	ClearEditText mRecommendNumber;
 	@InjectView(R.id.register_remark)
 	ClearEditText mRemark;
+	@InjectView(R.id.register_accept)
+	CheckBox mAccept;
+	@InjectView(R.id.register_rule)
+	TextView mRule;
 	@InjectView(R.id.register_submit)
 	Button mSubmit;
 
 	private int mTruckTypeIndex;
 	private String[] mTruckTypes;
-	
+
 	private ProgressDialog mProgressDialog;
-	
+
 	private RegisterInfo mRegInfo;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -127,7 +136,7 @@ public class RegisterTruckActivity extends BaseActivity {
 		initView();
 		initData();
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -138,13 +147,14 @@ public class RegisterTruckActivity extends BaseActivity {
 		mTitle.setText(R.string.register);
 		mBack.setOnClickListener(mOnClickListener);
 		mTruckType.setOnClickListener(mOnClickListener);
+		mRule.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);
 	}
 
 	private void initData() {
 		Intent intent = getIntent();
 		mRegInfo = (RegisterInfo) intent.getSerializableExtra(KEY_INFO);
-		
+
 		mTruckTypeIndex = 0;
 		mTruckTypes = getResources().getStringArray(R.array.truck_type_list);
 		updateTruckType();
@@ -154,13 +164,18 @@ public class RegisterTruckActivity extends BaseActivity {
 		mTruckType.setText(mTruckTypes[mTruckTypeIndex]);
 	}
 
+	private void showRule() {
+		WebViewActivity.startWebViewActivity(this,
+				getString(R.string.title_rule), Const.URL_RULES);
+	}
+
 	private void submit() {
 		if (validCheck()) {
 			showProgressDialog();
 			new ImageTask(this, mRegInfo.getIDImagePath()).execute();
 		}
 	}
-	
+
 	private void uploadImage(String path) {
 		Log.d(TAG, "shizy---path: " + path);
 		try {
@@ -175,9 +190,10 @@ public class RegisterTruckActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 		hideProgressDialog();
-		Util.showTips(this, getResources().getString(R.string.upload_id_image_fail));
+		Util.showTips(this,
+				getResources().getString(R.string.upload_id_image_fail));
 	}
-	
+
 	/**
 	 * 提交注册信息
 	 */
@@ -185,41 +201,46 @@ public class RegisterTruckActivity extends BaseActivity {
 		BaseParams params = mRegInfo.getRegisterParams();
 		AsyncHttp.get(Const.URL_REGISTER, params, mRequestHandler);
 	}
-	
+
 	private boolean validCheck() {
 		String tNumber = mTruckNumber.getText().toString();
 		String tLoad = mTruckLoad.getText().toString();
 		String rNumber = mRecommendNumber.getText().toString();
 		String remark = mRemark.getText().toString();
-		
+
 		if (mTruckTypeIndex == 0) {
-			Util.showTips(this, getResources().getString(
-					R.string.choose_truck_type));
+			Util.showTips(this,
+					getResources().getString(R.string.choose_truck_type));
 			return false;
 		} else if (tNumber == null || tNumber.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.truck_number_empty));
+			Util.showTips(this,
+					getResources().getString(R.string.truck_number_empty));
 			return false;
 		} else if (tLoad == null || tLoad.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.truck_load_empty));
+			Util.showTips(this,
+					getResources().getString(R.string.truck_load_empty));
 			return false;
 		}
-		
+
 		if (!(Util.isInteger(tLoad) || Util.isDecimal(tLoad))) {
-			Util.showTips(this, getResources().getString(
-					R.string.truck_load_invalid));
+			Util.showTips(this,
+					getResources().getString(R.string.truck_load_invalid));
 			return false;
 		}
-		
+
+		if (!mAccept.isChecked()) {
+			Util.showTips(this, getResources().getString(R.string.accept_rules));
+			return false;
+		}
+
 		mRegInfo.setTrunk_no(tNumber);
 		mRegInfo.setLoad_weight(Float.parseFloat(tLoad));
 		mRegInfo.setAttract_no(rNumber);
 		mRegInfo.setRemark(remark);
-		
+
 		return true;
 	}
-	
+
 	private void truckType() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
 				.setSingleChoiceItems(mTruckTypes, mTruckTypeIndex,
@@ -235,7 +256,7 @@ public class RegisterTruckActivity extends BaseActivity {
 						}).setTitle("车辆类型").create();
 		dialog.show();
 	}
-	
+
 	private void showProgressDialog() {
 		if (mProgressDialog == null) {
 			mProgressDialog = new ProgressDialog(this);
@@ -244,14 +265,14 @@ public class RegisterTruckActivity extends BaseActivity {
 		}
 		mProgressDialog.show();
 	}
-	
+
 	private void hideProgressDialog() {
 		if (mProgressDialog != null) {
 			mProgressDialog.dismiss();
 		}
 		mProgressDialog = null;
 	}
-	
+
 	private void registerSuccess(JSONObject infos) {
 		LoginManager.getInstance().setLogin(true);
 		UserInfo userInfo = new UserInfo(infos);
@@ -260,7 +281,7 @@ public class RegisterTruckActivity extends BaseActivity {
 		EventBus.getDefault().post(new LoginEvent());
 		startActivity(new Intent(this, MainActivity.class));
 	}
-	
+
 	private void requestResult(JSONObject response) {
 		if (response != null && response.length() > 0) {
 			Log.d(TAG, "shizy---response: " + response.toString());
@@ -268,7 +289,7 @@ public class RegisterTruckActivity extends BaseActivity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//成功
+				if (res == 2) {// 成功
 					registerSuccess(response.optJSONObject("infos"));
 				}
 				return;
@@ -278,7 +299,7 @@ public class RegisterTruckActivity extends BaseActivity {
 		}
 		Util.showTips(this, getString(R.string.register_failed));
 	}
-	
+
 	private void uploadResult(JSONObject response) {
 		Log.d(TAG, "shizy---uploadResult");
 		if (response != null && response.length() > 0) {
@@ -287,7 +308,7 @@ public class RegisterTruckActivity extends BaseActivity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
-				if (res == 2) {//成功
+				if (res == 2) {// 成功
 					mRegInfo.setCard_photo(response.optString("attachment_id"));
 					register();
 				} else {
@@ -301,47 +322,48 @@ public class RegisterTruckActivity extends BaseActivity {
 		hideProgressDialog();
 		Util.showTips(this, getString(R.string.upload_id_image_fail));
 	}
-	
-	public static void startRegisterInfoActivity(Context context, RegisterInfo info) {
+
+	public static void startRegisterInfoActivity(Context context,
+			RegisterInfo info) {
 		Intent intent = new Intent(context, RegisterTruckActivity.class);
 		intent.putExtra(KEY_INFO, info);
 		context.startActivity(intent);
 	}
-	
+
 	public static class ImageTask extends AsyncTask<Void, Integer, String> {
-		
+
 		private static final int WIDTH = 960;
 		private static final int HEIGHT = 640;
-		
+
 		private WeakReference<RegisterTruckActivity> mReference;
 		private String mPath;
-		
+
 		public ImageTask(RegisterTruckActivity activity, String path) {
 			mReference = new WeakReference<RegisterTruckActivity>(activity);
 			mPath = path;
 		}
-		
+
 		@Override
 		protected String doInBackground(Void... arg0) {
 			BitmapFactory.Options op = new BitmapFactory.Options();
-	        op.inJustDecodeBounds = true;
-	        BitmapFactory.decodeFile(mPath, op);
-	        int xScale = op.outWidth / WIDTH;
-	        int yScale = op.outHeight / HEIGHT;
-	        op.inSampleSize = xScale > yScale ? xScale : yScale;
-	        op.inJustDecodeBounds = false;
-	        Bitmap bitmap = BitmapFactory.decodeFile(mPath, op);
-	        byte[] data = compressImage(bitmap);
-	        String filePath = saveImage(data);
-	        if (bitmap != null) {
-	        	if (!bitmap.isRecycled()) {
-	        		bitmap.recycle();
-	        	}
-	        	bitmap = null;
-	        }
+			op.inJustDecodeBounds = true;
+			BitmapFactory.decodeFile(mPath, op);
+			int xScale = op.outWidth / WIDTH;
+			int yScale = op.outHeight / HEIGHT;
+			op.inSampleSize = xScale > yScale ? xScale : yScale;
+			op.inJustDecodeBounds = false;
+			Bitmap bitmap = BitmapFactory.decodeFile(mPath, op);
+			byte[] data = compressImage(bitmap);
+			String filePath = saveImage(data);
+			if (bitmap != null) {
+				if (!bitmap.isRecycled()) {
+					bitmap.recycle();
+				}
+				bitmap = null;
+			}
 			return filePath;
 		}
-		
+
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
@@ -350,7 +372,7 @@ public class RegisterTruckActivity extends BaseActivity {
 				activity.uploadImage(result);
 			}
 		}
-		
+
 		private byte[] compressImage(Bitmap image) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -358,7 +380,7 @@ public class RegisterTruckActivity extends BaseActivity {
 			while (baos.toByteArray().length / 1024 > 100) {
 				baos.reset();
 				image.compress(Bitmap.CompressFormat.JPEG, options, baos);
-				options -= 10;//每次都减少10
+				options -= 10;// 每次都减少10
 			}
 			Log.d(TAG, "shizy---options: " + options);
 			byte[] data = null;
@@ -371,12 +393,13 @@ public class RegisterTruckActivity extends BaseActivity {
 			}
 			return data;
 		}
-		
+
 		private String saveImage(byte[] data) {
 			try {
 				Context context = mReference.get();
 				if (context != null) {
-					String filePath = context.getFilesDir().getPath() + "/card.jpg";
+					String filePath = context.getFilesDir().getPath()
+							+ "/card.jpg";
 					FileOutputStream fos = new FileOutputStream(filePath);
 					fos.write(data);
 					fos.close();
@@ -391,5 +414,5 @@ public class RegisterTruckActivity extends BaseActivity {
 			return null;
 		}
 	}
-	
+
 }

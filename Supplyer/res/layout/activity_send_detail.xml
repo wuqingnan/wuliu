@@ -280,7 +280,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:button="@null"
-                    android:checked="true"
+                    android:checked="false"
                     android:drawableLeft="@drawable/checkbox_accept"
                     android:text="@string/agree_and_accept"
                     android:textColor="@color/black" />

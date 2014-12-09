@@ -19,6 +19,7 @@
     <string name="title_choose_city">选择城市</string>
     <string name="title_find_result">结果列表</string>
     <string name="title_order_detail">订单详情</string>
+    <string name="title_rule">平台服务使用规则</string>
     
   	<string name="my_data">我的资料</string>
   	<string name="driver_guide">承运指南</string>
@@ -28,6 +29,10 @@
   	<string name="setting">设置</string>
     <string name="about">关于</string>
     <string name="logout">退出登录</string>
+    
+    <string name="agree_and_accept">同意并接受</string>
+    <string name="platform_rule">《平台服务使用规则》</string>
+    <string name="accept_rules">请同意并接受《平台服务使用规则》</string>
     
     <string name="login">登录</string>
     <string name="register">注册</string>

@@ -9,6 +9,9 @@ public class Const {
 	public static final String NULL = "-9";
 	
 	private static final String URL_SYSTEM_MSG = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=24&user_cd=%1$s&user_type=DRIVER";
+	public static final String URL_ABOUT = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=2";
+	public static final String URL_GUIDE = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=17";
+	public static final String URL_RULES = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=28";
 	
 	public static final String URL_LOGIN = "bss/driverLoginCheck.action";
 	public static final String URL_REGISTER = "bss/registerDriver.action";

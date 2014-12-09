@@ -79,6 +79,32 @@
             android:hint="@string/remark"
             android:maxLength="18" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp" >
+
+            <CheckBox
+                android:id="@+id/register_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@null"
+                android:checked="false"
+                android:drawableLeft="@drawable/checkbox_accept"
+                android:text="@string/agree_and_accept"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/register_rule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/platform_rule" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/register_submit"
             style="@style/TextAppearance.Big.White"
