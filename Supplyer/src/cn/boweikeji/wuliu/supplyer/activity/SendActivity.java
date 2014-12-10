@@ -178,7 +178,7 @@ public class SendActivity extends BaseActivity {
 		mTruckType.setOnClickListener(mOnClickListener);
 		mSwapAddress.setOnClickListener(mOnClickListener);
 		mNextStep.setOnClickListener(mOnClickListener);
-		mMenuBtn.setImageResource(R.drawable.btn_title_back);
+		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 		mAddressFrom.setOnClickListener(mOnClickListener);
 		mAddressTo.setOnClickListener(mOnClickListener);

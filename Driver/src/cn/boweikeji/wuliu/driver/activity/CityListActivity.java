@@ -154,7 +154,7 @@ public class CityListActivity extends Activity {
 	
 	private void initTitle() {
 		mTitle.setText(R.string.title_choose_city);
-		mBack.setImageResource(R.drawable.btn_title_back);
+		mBack.setImageResource(R.drawable.ic_navi_back);
 		mBack.setOnClickListener(mOnClickListener);
 	}
 	

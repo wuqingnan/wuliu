@@ -20,9 +20,10 @@
 
             <TextView
                 android:id="@+id/distance"
-                style="@style/TextAppearance.Big.Black"
+                style="@style/TextAppearance.Small.RobDistance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_distance"
                 android:layout_centerVertical="true" />
 
             <ImageView
@@ -43,25 +44,25 @@
 
             <TextView
                 android:id="@+id/name"
-                style="@style/TextAppearance.Big.Black"
+                style="@style/TextAppearance.Big.DarkGray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center" />
 
             <TextView
                 android:id="@+id/from"
-                style="@style/TextAppearance.Middle.DarkGray"
+                style="@style/TextAppearance.Small.DarkGray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_start"
+                android:drawableLeft="@drawable/ic_start"
                 android:gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/to"
-                style="@style/TextAppearance.Middle.DarkGray"
+                style="@style/TextAppearance.Small.DarkGray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_end"
+                android:drawableLeft="@drawable/ic_end"
                 android:gravity="center_vertical" />
         </LinearLayout>
 
@@ -73,32 +74,32 @@
             <Button
                 android:id="@+id/btn_rob"
                 style="@style/TextAppearance.Big.White"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/btn_default"
-                android:text="抢单" />
+                android:background="@drawable/btn_rob"
+                android:text="@string/rob_order" />
 
             <Button
                 android:id="@+id/btn_close"
-                style="@style/TextAppearance.Big.White"
+                style="@style/TextAppearance.Micro.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/btn_rob"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/btn_default"
-                android:text="关闭" />
+                android:background="@drawable/btn_close"
+                android:text="@string/close" />
             
             <Button
                 android:id="@+id/btn_detail"
-                style="@style/TextAppearance.Big.White"
+                style="@style/TextAppearance.Micro.White"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/btn_rob"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/btn_default"
-                android:text="详情" />
+                android:background="@drawable/btn_detail"
+                android:text="@string/detail" />
         </RelativeLayout>
     </LinearLayout>
 

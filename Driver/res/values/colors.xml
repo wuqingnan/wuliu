@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_title">#F1F0F0</color>
+    <color name="bg_title">#3E8BD8</color>
 
     <color name="line_dark">#000000</color>
     <color name="line_light">#CCCCCC</color>
@@ -12,10 +12,10 @@
     <color name="blue">#ff209ae4</color>
     <color name="gray">#ffbbbbb1</color>
     
+    <color name="color_tab_text">#AAAAAA</color>
+    <color name="color_rob_distance">#A88877</color>
     <color name="dim_background">#80323232</color>
     <color name="bg_popup_window">#80000000</color>
-    
-    <color name="home_tab_normal">#ff8798a3</color>
     
     <color name="text_color_yellow">#ffff8b01</color>
     <color name="text_color_orange">#ffff7000</color>

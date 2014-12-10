@@ -113,7 +113,7 @@ public class SetFragment extends BaseFragment {
 
 	private void initTitle() {
 		mTitle.setText(R.string.title_set);
-		mMenuBtn.setImageResource(R.drawable.btn_title_back);
+		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 	}
 

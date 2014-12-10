@@ -124,7 +124,7 @@ public class LoginFragment extends BaseFragment {
 		mTitle.setText(R.string.title_login);
 		mRegister.setVisibility(View.VISIBLE);
 		mRegister.setText(R.string.register);
-		mBack.setImageResource(R.drawable.btn_title_back);
+		mBack.setImageResource(R.drawable.ic_navi_back);
 		mBack.setOnClickListener(mOnClickListener);
 		mRegister.setOnClickListener(mOnClickListener);
 	}

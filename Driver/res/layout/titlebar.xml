@@ -10,13 +10,13 @@
         android:id="@+id/titlebar_leftBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/btn_title_back" />
+        android:src="@drawable/ic_navi_back" />
 
     <Button
         android:id="@+id/titlebar_rightTxt"
-        style="@style/TextAppearance.Middle.LightGray"
-        android:textStyle="bold"
+        style="@style/TextAppearance.Middle.White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -28,15 +28,11 @@
 
     <TextView
         android:id="@+id/titlebar_title"
-        style="@style/TextAppearance.Big.Yellow"
+        style="@style/TextAppearance.Big.White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:shadowColor="@color/text_color_dark_gray"
-        android:shadowDx="1"
-        android:shadowDy="1"
         android:layout_centerInParent="true"
-        android:paddingBottom="5.0dip" />
+        android:paddingBottom="5dp" />
 
     <View
         android:layout_width="match_parent"

@@ -46,7 +46,7 @@ import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.fragment.FindFragment;
 import cn.boweikeji.wuliu.driver.fragment.HomeFragment;
-import cn.boweikeji.wuliu.driver.fragment.MessageFragment;
+import cn.boweikeji.wuliu.driver.fragment.ActivityFragment;
 import cn.boweikeji.wuliu.driver.fragment.MoreFragment;
 import cn.boweikeji.wuliu.driver.fragment.OrderFragment;
 import cn.boweikeji.wuliu.driver.http.AsyncHttp;
@@ -72,11 +72,11 @@ public class MainActivity extends BaseActivity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 
 	private static final int MSG_PUSH = 1 << 0;
-	
+
 	private static final int EXIT_TIME = 2000;
 
 	public static final int[] TAB_IDS = { R.id.home_tab_home,
-			R.id.home_tab_msg, R.id.home_tab_order, R.id.home_tab_find,
+			R.id.home_tab_activity, R.id.home_tab_find, R.id.home_tab_order,
 			R.id.home_tab_more };
 
 	private RadioGroup.OnCheckedChangeListener mOnCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
@@ -181,7 +181,7 @@ public class MainActivity extends BaseActivity {
 	private ScheduledThreadPoolExecutor mTimerTask;
 
 	private MainHandler mHandler;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -275,7 +275,7 @@ public class MainActivity extends BaseActivity {
 		boolean push = intent.getBooleanExtra("push", false);
 		int type = intent.getIntExtra("type", -1);
 		if (push && type == Const.PUSH_TYPE_ROB) {
-			//目前只有抢单须路转页面
+			// 目前只有抢单须路转页面
 			mHandler.removeMessages(MSG_PUSH);
 			Message msg = Message.obtain();
 			msg.what = MSG_PUSH;
@@ -283,7 +283,7 @@ public class MainActivity extends BaseActivity {
 			mHandler.sendMessage(msg);
 		}
 	}
-	
+
 	private void pushIntent(Intent intent) {
 		int type = intent.getIntExtra("type", -1);
 		if (type > 0) {
@@ -338,7 +338,8 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void updateMap() {
-		BDLocation location = WLApplication.getLocationClient().getLastKnownLocation();
+		BDLocation location = WLApplication.getLocationClient()
+				.getLastKnownLocation();
 		if (location == null || mMapView == null) {
 			return;
 		}
@@ -375,7 +376,7 @@ public class MainActivity extends BaseActivity {
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			fragment = new MessageFragment();
+			fragment = new ActivityFragment();
 			break;
 		case 2:
 			fragment = new OrderFragment();
@@ -466,24 +467,25 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap.hideInfoWindow();
 		Bundle bundle = marker.getExtraInfo();
 		if (bundle != null) {
-//			mDriverName.setText(bundle.getString("name"));
-//			mDriverInfo.setText(bundle.getString("info"));
-			Fragment fragment = mFragmentManager.findFragmentByTag(HomeFragment.class.getName());
+			// mDriverName.setText(bundle.getString("name"));
+			// mDriverInfo.setText(bundle.getString("info"));
+			Fragment fragment = mFragmentManager
+					.findFragmentByTag(HomeFragment.class.getName());
 			if (fragment != null && fragment.isAdded()) {
 				String name = bundle.getString("name");
 				String phone = bundle.getString("phone");
 				String truck = bundle.getString("truck");
-				((HomeFragment)fragment).showPopupLayout(name, phone, truck);
+				((HomeFragment) fragment).showPopupLayout(name, phone, truck);
 			}
 		}
-//		LatLng ll = marker.getPosition();
-//		InfoWindow infoWindow = new InfoWindow(mDriverLayout, ll,
-//				new OnInfoWindowClickListener() {
-//					public void onInfoWindowClick() {
-//						mBaiduMap.hideInfoWindow();
-//					}
-//				});
-//		mBaiduMap.showInfoWindow(infoWindow);
+		// LatLng ll = marker.getPosition();
+		// InfoWindow infoWindow = new InfoWindow(mDriverLayout, ll,
+		// new OnInfoWindowClickListener() {
+		// public void onInfoWindowClick() {
+		// mBaiduMap.hideInfoWindow();
+		// }
+		// });
+		// mBaiduMap.showInfoWindow(infoWindow);
 	}
 
 	private void requestDriver(BDLocation location) {
@@ -518,9 +520,10 @@ public class MainActivity extends BaseActivity {
 		finish();
 		System.exit(0);
 	}
-	
+
 	public void goHome() {
-		((RadioButton)mTabGroup.findViewById(R.id.home_tab_home)).setChecked(true);
+		((RadioButton) mTabGroup.findViewById(R.id.home_tab_home))
+				.setChecked(true);
 	}
 
 	private void showDetail(Intent intent) {
@@ -599,10 +602,12 @@ public class MainActivity extends BaseActivity {
 			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
 			params.add("app_version", "" + DeviceInfo.getAppVersion());
 			params.add("clientid", "" + Const.clientid);
-			mHttpClient.get(AsyncHttp.getAbsoluteUrl(Const.URL_POSITION_UPLOAD), params, mHandler);
+			mHttpClient.get(
+					AsyncHttp.getAbsoluteUrl(Const.URL_POSITION_UPLOAD),
+					params, mHandler);
 		}
 	}
-	
+
 	public static class MainHandler extends WeakHandler<MainActivity> {
 
 		public MainHandler(MainActivity reference) {
@@ -618,6 +623,6 @@ public class MainActivity extends BaseActivity {
 				break;
 			}
 		}
-		
+
 	}
 }

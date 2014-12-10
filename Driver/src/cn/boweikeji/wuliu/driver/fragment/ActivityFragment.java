@@ -16,9 +16,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MessageFragment extends BaseFragment {
+public class ActivityFragment extends BaseFragment {
 
-	public static final String TAG = MessageFragment.class.getSimpleName();
+	public static final String TAG = ActivityFragment.class.getSimpleName();
 	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
@@ -63,7 +63,7 @@ public class MessageFragment extends BaseFragment {
 	}
 
 	private void initTitle() {
-		mTitle.setText(R.string.home_tab_msg);
+		mTitle.setText(R.string.home_tab_activity);
 		mBack.setVisibility(View.GONE);
 	}
 

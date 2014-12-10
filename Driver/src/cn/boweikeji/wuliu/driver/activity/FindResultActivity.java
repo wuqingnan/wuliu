@@ -135,7 +135,7 @@ public class FindResultActivity extends BaseActivity {
 	
 	private void initTitle() {
 		mTitle.setText(R.string.title_find_result);
-		mBack.setImageResource(R.drawable.btn_title_back);
+		mBack.setImageResource(R.drawable.ic_navi_back);
 		mBack.setOnClickListener(mOnClickListener);
 	}
 	

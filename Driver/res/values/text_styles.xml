@@ -6,8 +6,24 @@
         <item name="android:textColor">@color/text_color_white</item>
     </style>
     
+    <style name="TextAppearance.Micro">
+        <item name="android:textSize">@dimen/text_size_micro</item>
+    </style>
+    
     <style name="TextAppearance.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+        
+    <style name="TextAppearance.Middle">
+        <item name="android:textSize">@dimen/text_size_middle</item>
+    </style>
+    
+    <style name="TextAppearance.Big">
+        <item name="android:textSize">@dimen/text_size_big</item>
+    </style>
+    
+    <style name="TextAppearance.Micro.White">
+        <item name="android:textColor">@color/text_color_white</item>
     </style>
     
     <style name="TextAppearance.Small.DarkGray">
@@ -18,12 +34,12 @@
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>
     
-    <style name="TextAppearance.Middle">
-        <item name="android:textSize">@dimen/text_size_middle</item>
+    <style name="TextAppearance.Small.White">
+        <item name="android:textColor">@color/text_color_white</item>
     </style>
     
-    <style name="TextAppearance.Big">
-        <item name="android:textSize">@dimen/text_size_big</item>
+    <style name="TextAppearance.Small.RobDistance">
+        <item name="android:textColor">@color/color_rob_distance</item>
     </style>
     
     <style name="TextAppearance.Middle.LightGray">
@@ -52,5 +68,9 @@
     
     <style name="TextAppearance.Big.Black">
         <item name="android:textColor">@color/text_color_black</item>
+    </style>
+    
+    <style name="TextAppearance.Big.DarkGray">
+        <item name="android:textColor">@color/text_color_dark_gray</item>
     </style>
 </resources>

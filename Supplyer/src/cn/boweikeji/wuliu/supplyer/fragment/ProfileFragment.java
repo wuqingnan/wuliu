@@ -72,7 +72,7 @@ public class ProfileFragment extends BaseFragment {
 
 	private void initTitle() {
 		mTitle.setText(R.string.title_profile);
-		mMenuBtn.setImageResource(R.drawable.btn_title_back);
+		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 	}
 

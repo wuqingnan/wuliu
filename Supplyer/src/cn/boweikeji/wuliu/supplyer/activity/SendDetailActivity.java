@@ -111,7 +111,7 @@ public class SendDetailActivity extends BaseActivity {
 		mPublish.setOnClickListener(mOnClickListener);
 		mSendRule.setOnClickListener(mOnClickListener);
 		mTitle.setText(R.string.title_send);
-		mMenuBtn.setImageResource(R.drawable.btn_title_back);
+		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 	}
 	

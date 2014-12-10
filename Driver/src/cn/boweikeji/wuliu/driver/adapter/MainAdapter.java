@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import cn.boweikeji.wuliu.driver.activity.MainActivity;
 import cn.boweikeji.wuliu.driver.fragment.FindFragment;
 import cn.boweikeji.wuliu.driver.fragment.HomeFragment;
-import cn.boweikeji.wuliu.driver.fragment.MessageFragment;
+import cn.boweikeji.wuliu.driver.fragment.ActivityFragment;
 import cn.boweikeji.wuliu.driver.fragment.MoreFragment;
 import cn.boweikeji.wuliu.driver.fragment.OrderFragment;
 
@@ -24,7 +24,7 @@ public class MainAdapter extends FragmentPagerAdapter {
 			fragment = new HomeFragment();
 			break;
 		case 1:
-			fragment = new MessageFragment();
+			fragment = new ActivityFragment();
 			break;
 		case 2:
 			fragment = new OrderFragment();

@@ -121,7 +121,7 @@ public class LoginActivity extends BaseActivity {
 		mTitle.setText(R.string.login);
 		mRegister.setVisibility(View.VISIBLE);
 		mRegister.setText(R.string.register);
-		mBack.setImageResource(R.drawable.btn_title_back);
+		mBack.setImageResource(R.drawable.ic_navi_back);
 		mBack.setOnClickListener(mOnClickListener);
 		mRegister.setOnClickListener(mOnClickListener);
 	}

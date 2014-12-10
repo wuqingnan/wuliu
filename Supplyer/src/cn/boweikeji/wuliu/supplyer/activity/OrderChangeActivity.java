@@ -151,7 +151,7 @@ public class OrderChangeActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		mSwapAddress.setOnClickListener(mOnClickListener);
 		mPublish.setOnClickListener(mOnClickListener);
-		mMenuBtn.setImageResource(R.drawable.btn_title_back);
+		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 		mAddressFrom.setOnClickListener(mOnClickListener);
 		mAddressTo.setOnClickListener(mOnClickListener);

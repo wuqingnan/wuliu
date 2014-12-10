@@ -56,7 +56,7 @@ public class WebViewActivity extends BaseActivity {
 	
 	private void initView() {
 		ButterKnife.inject(this);
-		mMenuBtn.setImageResource(R.drawable.btn_title_back);
+		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 		initWebView();
 	}

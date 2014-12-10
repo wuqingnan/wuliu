@@ -5,13 +5,14 @@
     <string name="developer">©鄂尔多斯博为科技有限公司</string>
 
     <string name="home_tab_home">首页</string>
-    <string name="home_tab_msg">消息</string>
-    <string name="home_tab_order">订单</string>
+    <string name="home_tab_activity">活动</string>
     <string name="home_tab_find">找货</string>
+    <string name="home_tab_order">订单</string>
     <string name="home_tab_more">更多</string>
     
     <string name="confirm">确 定</string>
     <string name="close">关闭</string>
+    <string name="detail">详情</string>
     
     <string name="quit_next_time">再按一次退出</string>
 
