@@ -387,7 +387,7 @@ public class OrderListFragment extends BaseFragment {
 		@InjectView(R.id.item_info)
 		TextView mOrderInfo;
 		@InjectView(R.id.item_bespeak)
-		TextView mBespeak;
+		ImageView mBespeak;
 
 		public ViewHolder(View parent) {
 			ButterKnife.inject(this, parent);
@@ -403,8 +403,8 @@ public class OrderListFragment extends BaseFragment {
 			case TYPE_SELECT:
 				mBespeak.setVisibility(View.VISIBLE);
 				mOrderInfo.setVisibility(View.VISIBLE);
-				mBespeak.setText(order.isOrder() ? "预约单" : "实时单");
-				mOrderInfo.setText(String.format("距离\n%d米", (int)order.getDistance()));
+				mBespeak.setImageResource(order.isOrder() ? R.drawable.ic_bespeak : R.drawable.ic_actual);
+				mOrderInfo.setText(String.format("距离%d米", (int)order.getDistance()));
 				break;
 			case TYPE_SELECTED:
 				mBespeak.setVisibility(View.GONE);

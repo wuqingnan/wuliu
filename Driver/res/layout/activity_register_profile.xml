@@ -44,7 +44,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="3dp"
-                    android:background="@drawable/btn_default"
+                    android:background="@drawable/btn_vertify"
                     android:enabled="false"
                     android:text="@string/get_verify_code" />
 

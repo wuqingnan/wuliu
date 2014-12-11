@@ -9,13 +9,19 @@
         android:layout_height="match_parent"
         android:clickable="true" />
 
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="50dp" />
+    
     <LinearLayout
         android:id="@+id/bottom_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:background="@null"
+        android:background="@drawable/btn_tab_n"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -58,11 +64,5 @@
                 android:text="@string/home_tab_more" />
         </RadioGroup>
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/bottom_layout" />
 
 </RelativeLayout>

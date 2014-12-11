@@ -379,10 +379,10 @@ public class MainActivity extends BaseActivity {
 			fragment = new ActivityFragment();
 			break;
 		case 2:
-			fragment = new OrderFragment();
+			fragment = new FindFragment();
 			break;
 		case 3:
-			fragment = new FindFragment();
+			fragment = new OrderFragment();
 			break;
 		case 4:
 			fragment = new MoreFragment();

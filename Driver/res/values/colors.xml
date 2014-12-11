@@ -12,8 +12,11 @@
     <color name="blue">#ff209ae4</color>
     <color name="gray">#ffbbbbb1</color>
     
+    <color name="color_a88877">#A88877</color>
+    <color name="color_474747">#474747</color>
+    <color name="color_9a9a9a">#9a9a9a</color>
+    
     <color name="color_tab_text">#AAAAAA</color>
-    <color name="color_rob_distance">#A88877</color>
     <color name="dim_background">#80323232</color>
     <color name="bg_popup_window">#80000000</color>
     

@@ -26,6 +26,14 @@
         <item name="android:textColor">@color/text_color_white</item>
     </style>
     
+    <style name="TextAppearance.Micro.9a9a9a">
+        <item name="android:textColor">@color/color_9a9a9a</item>
+    </style>
+    
+    <style name="TextAppearance.Micro.474747">
+        <item name="android:textColor">@color/color_474747</item>
+    </style>
+    
     <style name="TextAppearance.Small.DarkGray">
         <item name="android:textColor">@color/text_color_dark_gray</item>
     </style>
@@ -39,7 +47,11 @@
     </style>
     
     <style name="TextAppearance.Small.RobDistance">
-        <item name="android:textColor">@color/color_rob_distance</item>
+        <item name="android:textColor">@color/color_a88877</item>
+    </style>
+    
+    <style name="TextAppearance.Small.474747">
+        <item name="android:textColor">@color/color_474747</item>
     </style>
     
     <style name="TextAppearance.Middle.LightGray">
