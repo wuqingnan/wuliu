@@ -118,8 +118,8 @@ public class RobOrderActivity extends BaseActivity {
 	private void initData() {
 		Intent intent = getIntent();
 		mOrder = (Order) intent.getSerializableExtra(KEY_ORDER);
-		mBespeak.setImageResource(mOrder.isOrder() ? R.drawable.bg_msg_num
-				: R.drawable.bg_msg_num);
+		mBespeak.setImageResource(mOrder.isOrder() ? R.drawable.ic_bespeak_rob
+				: R.drawable.ic_actual_rob);
 		mDistance.setText("距您" + mOrder.getDistance() + "公里");
 		mName.setText(mOrder.getGoods_name());
 		mFrom.setText(mOrder.getStart_addr());
