@@ -44,6 +44,7 @@ import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
+import cn.boweikeji.wuliu.driver.fragment.BaseFragment;
 import cn.boweikeji.wuliu.driver.fragment.FindFragment;
 import cn.boweikeji.wuliu.driver.fragment.HomeFragment;
 import cn.boweikeji.wuliu.driver.fragment.ActivityFragment;
@@ -171,6 +172,7 @@ public class MainActivity extends BaseActivity {
 	private boolean mHasDriver;
 
 	private FragmentManager mFragmentManager;
+	private BaseFragment mCurFragment;
 
 	private long mExitTime;
 
@@ -219,6 +221,11 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mCurFragment != null) {
+				if (mCurFragment.onKeyDown(keyCode, event)) {
+					return true;
+				}
+			}
 			if (mTabIndex != 0) {
 				goHome();
 				return true;
@@ -370,7 +377,7 @@ public class MainActivity extends BaseActivity {
 			LoginActivity.startLoginActivity(this);
 			return false;
 		}
-		Fragment fragment = null;
+		BaseFragment fragment = null;
 		switch (index) {
 		case 0:
 			fragment = new HomeFragment();
@@ -393,6 +400,7 @@ public class MainActivity extends BaseActivity {
 				.replace(R.id.container, fragment,
 						fragment.getClass().getName()).commit();
 		mTabIndex = index;
+		mCurFragment = fragment;
 		return true;
 	}
 

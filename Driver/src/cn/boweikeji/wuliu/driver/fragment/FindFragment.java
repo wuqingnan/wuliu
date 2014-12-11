@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,6 +121,18 @@ public class FindFragment extends BaseFragment {
 		init();
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mWheelWindow != null && mWheelWindow.isShowing()) {
+				mWheelWindow.dismiss();
+				mWheelWindow = null;
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
 	private void init() {
 		ButterKnife.inject(this, mRootView);
 		initTitle();
@@ -162,12 +175,8 @@ public class FindFragment extends BaseFragment {
 	}
 
 	private void updateAddress() {
-		if (mStartInfos != null) {
-			mStart.setText(arrayToString(mStartInfos));
-		}
-		if (mEndInfos != null) {
-			mEnd.setText(arrayToString(mEndInfos));
-		}
+		mStart.setText(mStartInfos == null ? null : arrayToString(mStartInfos));
+		mEnd.setText(mEndInfos == null ? null : arrayToString(mEndInfos));
 	}
 	
 	private void exchange() {

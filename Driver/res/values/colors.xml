@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="bg_back">#ecf3f8</color>
     <color name="bg_title">#3E8BD8</color>
 
     <color name="line_dark">#000000</color>
-    <color name="line_light">#CCCCCC</color>
+    <color name="line_light">#d0d0d0</color>
     
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>
@@ -25,7 +26,7 @@
     <color name="text_color_white">#ffffffff</color>
     <color name="text_color_black">#ff000000</color>
     <color name="text_color_lighter_gray">#ffababab</color>
-    <color name="text_color_light_gray">#ff888888</color>
+    <color name="text_color_light_gray">#ff666666</color>
     <color name="text_color_dark_gray">#ff333333</color>
     
     <color name="bg_citylist_section">#fff1f0f0</color>

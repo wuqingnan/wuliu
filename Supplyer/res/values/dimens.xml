@@ -2,9 +2,10 @@
 
     <dimen name="text_size_title">18sp</dimen>
     
-    <dimen name="text_size_small">14sp</dimen>
-    <dimen name="text_size_middle">16sp</dimen>
-    <dimen name="text_size_big">18sp</dimen>
+    <dimen name="text_size_micro">12dp</dimen>
+    <dimen name="text_size_small">15dp</dimen>
+    <dimen name="text_size_middle">18dp</dimen>
+    <dimen name="text_size_big">22dp</dimen>
     <dimen name="text_size_edittext">16sp</dimen>
     
     <dimen name="text_size_login_tips">15sp</dimen>

@@ -10,16 +10,17 @@
     <dimen name="default_marginBottom">20dp</dimen>
     
     <dimen name="text_size_micro">12dp</dimen>
-    <dimen name="text_size_small">14dp</dimen>
+    <dimen name="text_size_small">15dp</dimen>
     <dimen name="text_size_middle">18dp</dimen>
     <dimen name="text_size_big">22dp</dimen>
     
+    <dimen name="line_width">1dp</dimen>
     <dimen name="line_height">1dp</dimen>
     <dimen name="title_height">48dp</dimen>
     <dimen name="load_more_height">50dp</dimen>
     
     <dimen name="btn_default_height">50dp</dimen>
-    <dimen name="item_default_height">40dp</dimen>
+    <dimen name="item_default_height">48dp</dimen>
     
     <dimen name="fragment_more_item_height">40dp</dimen>
     
