@@ -46,7 +46,7 @@
         <item name="android:textColor">@color/text_color_white</item>
     </style>
     
-    <style name="TextAppearance.Small.RobDistance">
+    <style name="TextAppearance.Small.a88877">
         <item name="android:textColor">@color/color_a88877</item>
     </style>
     
