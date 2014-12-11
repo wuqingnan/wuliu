@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/bg_back"
     android:orientation="vertical" >
 
     <include layout="@layout/titlebar" />
@@ -11,34 +11,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:background="@color/white"
         android:orientation="vertical" >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp" >
+            android:layout_height="72dp"
+            android:background="@drawable/bg_rob_top" >
 
             <TextView
                 android:id="@+id/distance"
                 style="@style/TextAppearance.Small.RobDistance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_distance"
-                android:layout_centerVertical="true" />
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="21dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="20dp"
+                android:drawableLeft="@drawable/ic_distance" />
 
             <ImageView
                 android:id="@+id/bespeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/bg_msg_num" />
+                android:layout_marginBottom="1dp"
+                android:layout_marginRight="17dp"
+                android:src="@drawable/ic_bespeak_rob" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/black" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.0"
+            android:background="@drawable/bg_rob_bottom"
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
@@ -89,7 +102,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/btn_close"
                 android:text="@string/close" />
-            
+
             <Button
                 android:id="@+id/btn_detail"
                 style="@style/TextAppearance.Micro.White"
