@@ -34,6 +34,10 @@
         <item name="android:textColor">@color/color_474747</item>
     </style>
     
+    <style name="TextAppearance.Micro.cccccc">
+        <item name="android:textColor">@color/color_cccccc</item>
+    </style>
+    
     <style name="TextAppearance.Micro.LightGray">
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>

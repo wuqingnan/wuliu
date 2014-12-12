@@ -23,7 +23,7 @@
     <dimen name="item_default_height">48dp</dimen>
     <dimen name="edittext_height">51dp</dimen>
     
-    <dimen name="fragment_more_item_height">40dp</dimen>
+    <dimen name="fragment_more_item_height">65dp</dimen>
     
     <dimen name="edittext_drawable_padding">7dp</dimen>
     

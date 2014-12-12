@@ -19,6 +19,7 @@ import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.activity.MainActivity;
 import cn.boweikeji.wuliu.driver.activity.SuggestActivity;
 import cn.boweikeji.wuliu.driver.activity.WebViewActivity;
+import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 
 public class MoreFragment extends BaseFragment {
@@ -30,21 +31,21 @@ public class MoreFragment extends BaseFragment {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			switch ((int)id) {
-			case 0://我的资料
+			case -1://我的资料
 				break;
-			case 1://承运指南
+			case 0://承运指南
 				guide();
 				break;
-			case 2://邀请好友
+			case 1://邀请好友
 				break;
-			case 3://分享给好友
+			case 2://分享给好友
 				break;
-			case 4://反馈与建议
+			case 3://反馈与建议
 				suggest();
 				break;
-			case 5://设置
+			case 4://设置
 				break;
-			case 6://关于
+			case 5://关于
 				about();
 				break;
 			}
@@ -110,16 +111,30 @@ public class MoreFragment extends BaseFragment {
 	}
 
 	private void initView() {
+		initHeader();
+		initFooter();
+		mListView.setOnItemClickListener(mOnItemClickListener);
+	}
+	
+	private void initHeader() {
+		View header = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_more_header, null);
+		mListView.addHeaderView(header);
+		TextView name = (TextView) header.findViewById(R.id.name);
+		TextView phone = (TextView) header.findViewById(R.id.phone);
+		UserInfo userInfo = LoginManager.getInstance().getUserInfo();
+		name.setText(userInfo.getDriver_name());
+		phone.setText(userInfo.getPhone());
+	}
+	
+	private void initFooter() {
 		View footer = LayoutInflater.from(getActivity()).inflate(R.layout.logout, null);
 		mListView.addFooterView(footer);
 		mLogout = (Button) footer.findViewById(R.id.logout);
 		mLogout.setOnClickListener(mOnClickListener);
-		mListView.setOnItemClickListener(mOnItemClickListener);
 	}
 	
 	private void initData() {
 		mListNames = new String[]{
-				getString(R.string.my_data),
 				getString(R.string.driver_guide),
 				getString(R.string.invite_firend),
 				getString(R.string.share_firend),

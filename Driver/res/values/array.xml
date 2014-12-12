@@ -2,7 +2,6 @@
 <resources>
     
     <integer-array name="more_list_icon">
-        <item>@drawable/icon</item>
         <item>@drawable/ic_guide</item>
         <item>@drawable/ic_invite</item>
         <item>@drawable/ic_share</item>
