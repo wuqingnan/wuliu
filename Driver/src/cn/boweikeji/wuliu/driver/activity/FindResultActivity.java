@@ -328,7 +328,7 @@ public class FindResultActivity extends BaseActivity {
 		@InjectView(R.id.item_info)
 		TextView mOrderInfo;
 		@InjectView(R.id.item_bespeak)
-		TextView mBespeak;
+		ImageView mBespeak;
 
 		public ViewHolder(View parent) {
 			ButterKnife.inject(this, parent);
@@ -339,7 +339,8 @@ public class FindResultActivity extends BaseActivity {
 				mOrderName.setText(order.getGoods_name());
 				mOrderCode.setText(String.format("订单号：%s", order.getGoods_cd()));
 				mOrderDate.setText(order.getCreate_date());
-				mBespeak.setText(order.isOrder() ? "预约单" : "实时单");
+				mBespeak.setImageResource(order.isOrder() ? R.drawable.ic_bespeak
+						: R.drawable.ic_actual);
 				mOrderInfo.setText(String.format("距离\n%d米", (int)order.getDistance()));
 			}
 		}
