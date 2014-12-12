@@ -2,117 +2,138 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bg_back"
     android:orientation="vertical" >
 
     <include layout="@layout/titlebar" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_marginLeft"
         android:layout_marginRight="@dimen/default_marginRight"
         android:layout_marginTop="@dimen/default_marginTop"
+        android:background="@drawable/bg_item"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical" >
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/edit_text_holo_light"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
             <TextView
-                style="@style/TextAppearance.Middle.LightGray"
+                style="@style/ItemLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_mark_truck"
                 android:text="@string/label_truck_type" />
 
             <TextView
                 android:id="@+id/register_truck_type"
-                style="@style/TextAppearance.Middle.LightGray"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.0"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/arrow_right"
-                android:gravity="center" />
+                style="@style/ItemValueWithArrow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:background="@color/line_d6dae0" />
 
         <cn.boweikeji.wuliu.driver.view.ClearEditText
             android:id="@+id/register_truck_no"
-            style="@style/ClearEditText.Light"
+            style="@style/EditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/edittext_height"
+            android:drawableLeft="@drawable/ic_mark_truck_no"
             android:hint="@string/truck_no"
             android:maxLength="10" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:background="@color/line_d6dae0" />
+
         <cn.boweikeji.wuliu.driver.view.ClearEditText
             android:id="@+id/register_truck_load"
-            style="@style/ClearEditText.Light"
+            style="@style/EditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/edittext_height"
+            android:drawableLeft="@drawable/ic_mark_load"
             android:hint="@string/truck_load"
             android:inputType="numberDecimal"
             android:maxLength="3" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:background="@color/line_d6dae0" />
+
         <cn.boweikeji.wuliu.driver.view.ClearEditText
             android:id="@+id/register_recommend_no"
-            style="@style/ClearEditText.Light"
+            style="@style/EditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/edittext_height"
+            android:drawableLeft="@drawable/ic_mark_recommend"
             android:hint="@string/recommend_no"
             android:maxLength="10" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:background="@color/line_d6dae0" />
+
         <cn.boweikeji.wuliu.driver.view.ClearEditText
             android:id="@+id/register_remark"
-            style="@style/ClearEditText.Light"
+            style="@style/EditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_height="@dimen/edittext_height"
+            android:drawableLeft="@drawable/ic_mark_remark"
             android:hint="@string/remark"
             android:maxLength="18" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp" >
-
-            <CheckBox
-                android:id="@+id/register_accept"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:button="@null"
-                android:checked="false"
-                android:drawableLeft="@drawable/checkbox_accept"
-                android:text="@string/agree_and_accept"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/register_rule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/platform_rule" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/register_submit"
-            style="@style/TextAppearance.Big.White"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/btn_default_height"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_default"
-            android:text="@string/register" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_marginLeft"
+        android:layout_marginRight="@dimen/default_marginRight"
+        android:layout_marginTop="@dimen/default_marginTop"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/register_accept"
+            style="@style/TextAppearance.Small.DarkGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:button="@null"
+            android:checked="false"
+            android:drawableLeft="@drawable/cb_accept"
+            android:text="@string/agree_and_accept"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/register_rule"
+            style="@style/TextAppearance.Small.LightGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/platform_rule" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register_submit"
+        style="@style/TextAppearance.Big.White"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/btn_default_height"
+        android:layout_marginLeft="@dimen/default_marginLeft"
+        android:layout_marginRight="@dimen/default_marginRight"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_default"
+        android:text="@string/register" />
 
 </LinearLayout>

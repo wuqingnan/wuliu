@@ -144,7 +144,7 @@ public class RegisterTruckActivity extends BaseActivity {
 
 	private void initView() {
 		ButterKnife.inject(this);
-		mTitle.setText(R.string.register);
+		mTitle.setText(R.string.title_register2);
 		mBack.setOnClickListener(mOnClickListener);
 		mTruckType.setOnClickListener(mOnClickListener);
 		mRule.setOnClickListener(mOnClickListener);

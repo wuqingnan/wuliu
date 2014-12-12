@@ -409,6 +409,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	private void hideCountDown() {
 		mIsCountDown = false;
 		mCountDown.setVisibility(View.GONE);
+		mCountDownTimer.cancel();
 		String phone = mPhone.getText().toString();
 		if (phone != null && Util.isPhoneNumber(phone)) {
 			mGetCode.setEnabled(true);
@@ -536,6 +537,7 @@ public class RegisterProfileActivity extends BaseActivity {
 			switch (msg.what) {
 			case MSG_GET_VERIFICATION_CODE_ERROR:
 				Util.showTips(t, "获取失败");
+				t.hideCountDown();
 				break;
 			case MSG_GET_VERIFICATION_CODE_COMPLETE:
 				Util.showTips(t, "获取成功，请等待短信");
