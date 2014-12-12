@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
+    android:background="@color/bg_back"
     android:orientation="vertical" >
 
     <include layout="@layout/titlebar" />
@@ -24,151 +24,231 @@
 
             <cn.boweikeji.wuliu.driver.view.ClearEditText
                 android:id="@+id/register_phone"
-                style="@style/ClearEditText.Light"
+                style="@style/EditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/bg_item"
+                android:drawableLeft="@drawable/ic_mark_phone"
                 android:hint="@string/phone"
                 android:inputType="phone"
                 android:maxLength="11" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" >
-
-                <Button
-                    android:id="@+id/register_get_code"
-                    style="@style/TextAppearance.Middle.White"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="3dp"
-                    android:background="@drawable/btn_vertify"
-                    android:enabled="false"
-                    android:text="@string/get_verify_code" />
+                android:layout_marginTop="9dp" >
 
                 <cn.boweikeji.wuliu.driver.view.ClearEditText
                     android:id="@+id/register_code"
-                    style="@style/ClearEditText.Light"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/register_get_code"
+                    style="@style/EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/edittext_height"
+                    android:layout_marginRight="9dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_item"
+                    android:drawableLeft="@drawable/ic_mark_sms"
                     android:hint="@string/vertify_code"
                     android:inputType="number"
                     android:maxLength="4" />
-            </RelativeLayout>
 
-            <cn.boweikeji.wuliu.driver.view.ClearEditText
-                android:id="@+id/register_password"
-                style="@style/ClearEditText.Light"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:maxLength="16" />
+                <LinearLayout
+                    android:id="@+id/register_get_code"
+                    android:layout_width="140dp"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/btn_vertify"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
 
-            <cn.boweikeji.wuliu.driver.view.ClearEditText
-                android:id="@+id/register_name"
-                style="@style/ClearEditText.Light"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="@string/name"
-                android:maxLength="8" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_holo_light"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <TextView
-                    style="@style/TextAppearance.Middle.LightGray"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/label_driver_type" />
-
-                <TextView
-                    android:id="@+id/register_driver_type"
-                    style="@style/TextAppearance.Middle.LightGray"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/arrow_right"
-                    android:gravity="center" />
+                    <TextView
+                        style="@style/TextAppearance.Small.White"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/get_verify_code" />
+                    <TextView
+                        android:id="@+id/register_countdown"
+                        style="@style/TextAppearance.Micro.White"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center"
+                        android:text="@string/vertify_code_countdown"
+                        android:visibility="gone" />
+                </LinearLayout>
             </LinearLayout>
 
-            <cn.boweikeji.wuliu.driver.view.ClearEditText
-                android:id="@+id/register_company"
-                style="@style/ClearEditText.Light"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="@string/company"
-                android:maxLength="20" />
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_item"
+                android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/edit_text_holo_light"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                <cn.boweikeji.wuliu.driver.view.ClearEditText
+                    android:id="@+id/register_name"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:drawableLeft="@drawable/ic_mark_name"
+                    android:hint="@string/name"
+                    android:maxLength="8" />
 
-                <TextView
-                    style="@style/TextAppearance.Middle.LightGray"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="@string/label_area_code" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:background="@color/line_d6dae0" />
 
-                <TextView
-                    android:id="@+id/register_area_code"
-                    style="@style/TextAppearance.Middle.LightGray"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/arrow_right"
-                    android:gravity="center"
-                    android:text="@string/choose_city" />
+                <cn.boweikeji.wuliu.driver.view.ClearEditText
+                    android:id="@+id/register_password"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:drawableLeft="@drawable/ic_mark_pass"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:maxLength="16" />
             </LinearLayout>
 
-            <cn.boweikeji.wuliu.driver.view.ClearEditText
-                android:id="@+id/register_id"
-                style="@style/ClearEditText.Light"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="@string/id_number"
-                android:maxLength="18" />
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_item"
+                android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
 
-                <TextView
-                    style="@style/TextAppearance.Middle.LightGray"
-                    android:layout_width="0dp"
+                    <TextView
+                        style="@style/ItemLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/ic_mark_type"
+                        android:text="@string/label_driver_type" />
+
+                    <TextView
+                        android:id="@+id/register_driver_type"
+                        style="@style/ItemValueWithArrow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/register_company_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_height"
+                        android:background="@color/line_d6dae0" />
+
+                    <cn.boweikeji.wuliu.driver.view.ClearEditText
+                        android:id="@+id/register_company"
+                        style="@style/EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height"
+                        android:drawableLeft="@drawable/ic_mark_company"
+                        android:hint="@string/company"
+                        android:maxLength="20" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:background="@color/line_d6dae0" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/bg_item"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ItemLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/ic_mark_city"
+                        android:text="@string/label_area_code" />
+
+                    <TextView
+                        android:id="@+id/register_area_code"
+                        style="@style/ItemValueWithArrow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/choose_city" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:background="@color/line_d6dae0" />
+
+                <cn.boweikeji.wuliu.driver.view.ClearEditText
+                    android:id="@+id/register_id"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:drawableLeft="@drawable/ic_mark_id"
+                    android:hint="@string/id_number"
+                    android:maxLength="18" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="112dp"
                     android:layout_weight="1.0"
-                    android:layout_marginLeft="12dp"
-                    android:text="@string/label_id_front" />
+                    android:background="@drawable/bg_item"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <TextView
+                        style="@style/TextAppearance.Big"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:drawableLeft="@drawable/ic_warn"
+                        android:drawablePadding="3dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/prompt"
+                        android:textColor="#555555" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_height"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#3c8cd8" />
+
+                    <TextView
+                        style="@style/TextAppearance.Micro.LightGray"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/choose_register_image" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/register_id_front"
-                    android:layout_width="@dimen/id_image_width"
-                    android:layout_height="@dimen/id_image_height"
-                    android:layout_marginLeft="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="112dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/register_img"
+                    android:layout_weight="1.0"
                     android:scaleType="centerInside"
-                    android:src="@drawable/id_img1" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_camera" />
             </LinearLayout>
 
             <Button

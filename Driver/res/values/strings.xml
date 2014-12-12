@@ -17,6 +17,8 @@
     <string name="quit_next_time">再按一次退出</string>
 
     <string name="title_home">@string/app_name</string>
+    <string name="title_register1">注册（1/2）</string>
+    <string name="title_register2">注册（2/2）</string>
     <string name="title_choose_city">选择城市</string>
     <string name="title_find_result">结果列表</string>
     <string name="title_order_detail">订单详情</string>
@@ -38,6 +40,7 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="next_step">下一步</string>
+    <string name="prompt">提示</string>
     
     <string name="choose_image">选择照片</string>
     
@@ -66,6 +69,7 @@
     <string name="register_failed">注册失败</string>
     
     <string name="get_verify_code">获取验证码</string>
+    <string name="vertify_code_countdown">(%1$d秒后重发)</string>
     <string name="vertify_code">验证码</string>
     <string name="phone">手机号</string>
     <string name="password">密码</string>
@@ -77,9 +81,8 @@
     <string name="recommend_no">推荐码</string>
     <string name="remark">个人说明</string>
     
-    <string name="label_driver_type">类型：</string>
-    <string name="label_id_front">身份证正面：</string>
-    <string name="label_area_code">所属地：</string>
+    <string name="label_driver_type">用户类型：</string>
+    <string name="label_area_code">所属城市：</string>
     
     <string name="all">全部</string>
     <string name="free_yes">免费公开</string>
@@ -98,7 +101,7 @@
     <string name="truck_load_invalid">载重吨位格式错误</string>
     <string name="choose_truck_type">请选择车辆类型</string>
     <string name="choose_city">请选择所在城市</string>
-    <string name="choose_id_image">请选择身份证正面照</string>
+    <string name="choose_register_image">请将您的驾驶证与行驶证对齐放置并拍照上传！</string>
 
     <string name="upload_id_image_fail">身份证上传失败</string>
     

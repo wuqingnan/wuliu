@@ -19,8 +19,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -30,6 +32,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RegisterProfileActivity extends BaseActivity {
@@ -39,7 +42,8 @@ public class RegisterProfileActivity extends BaseActivity {
 
 	private static final String COUNTRY_CODE = "86";
 
-	private static final long COOLDOWN_TIME = 60 * 1000;
+	private static final long COOLDOWN_INTERVAL = 1000;
+	private static final long COOLDOWN_TIME = 60 * COOLDOWN_INTERVAL;
 
 	private static final int MSG_GET_VERIFICATION_CODE_ERROR = 1 << 0;
 	private static final int MSG_GET_VERIFICATION_CODE_COMPLETE = 1 << 1;
@@ -55,7 +59,7 @@ public class RegisterProfileActivity extends BaseActivity {
 		public void onClick(View view) {
 			if (view == mBack) {
 				finish();
-			} else if (view == mCodeBtn) {
+			} else if (view == mGetCode) {
 				getVerifyCode();
 			} else if (view == mDriverType) {
 				driverType();
@@ -73,10 +77,10 @@ public class RegisterProfileActivity extends BaseActivity {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			if (s != null && Util.isPhoneNumber(s.toString()) && !mCoolDown) {
-				mCodeBtn.setEnabled(true);
+			if (s != null && Util.isPhoneNumber(s.toString()) && !mIsCountDown) {
+				mGetCode.setEnabled(true);
 			} else {
-				mCodeBtn.setEnabled(false);
+				mGetCode.setEnabled(false);
 			}
 		}
 
@@ -121,7 +125,20 @@ public class RegisterProfileActivity extends BaseActivity {
 			Log.d(TAG, "shizy---beforeEvent: " + data);
 		}
 	};
-
+	
+	private CountDownTimer mCountDownTimer = new CountDownTimer(COOLDOWN_TIME, COOLDOWN_INTERVAL) {
+		
+		@Override
+		public void onTick(long millisUntilFinished) {
+			updateCountDown(millisUntilFinished);
+		}
+		
+		@Override
+		public void onFinish() {
+			hideCountDown();
+		}
+	};
+	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
 	@InjectView(R.id.titlebar_title)
@@ -131,13 +148,17 @@ public class RegisterProfileActivity extends BaseActivity {
 	@InjectView(R.id.register_code)
 	ClearEditText mCode;
 	@InjectView(R.id.register_get_code)
-	Button mCodeBtn;
+	LinearLayout mGetCode;
+	@InjectView(R.id.register_countdown)
+	TextView mCountDown;
 	@InjectView(R.id.register_password)
 	ClearEditText mPasswd;
 	@InjectView(R.id.register_name)
 	ClearEditText mName;
 	@InjectView(R.id.register_driver_type)
 	TextView mDriverType;
+	@InjectView(R.id.register_company_layout)
+	LinearLayout mCompanyLayout;
 	@InjectView(R.id.register_company)
 	ClearEditText mCompany;
 	@InjectView(R.id.register_area_code)
@@ -149,7 +170,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	@InjectView(R.id.next_step)
 	Button mNextStep;
 
-	private boolean mCoolDown = false;
+	private boolean mIsCountDown = false;
 
 	private RegisterHandler mHandler = null;
 
@@ -164,9 +185,6 @@ public class RegisterProfileActivity extends BaseActivity {
 	private Uri mPhotoUri;
 	private String mPhotoPath;
 	private Bitmap mPhoto;
-	
-	private int mPhotoWidth;
-	private int mPhotoHeight;
 	
 	private RegisterInfo mRegInfo;
 
@@ -190,9 +208,9 @@ public class RegisterProfileActivity extends BaseActivity {
 
 	private void initView() {
 		ButterKnife.inject(this);
-		mTitle.setText(R.string.register);
+		mTitle.setText(R.string.title_register1);
 		mBack.setOnClickListener(mOnClickListener);
-		mCodeBtn.setOnClickListener(mOnClickListener);
+		mGetCode.setOnClickListener(mOnClickListener);
 		mDriverType.setOnClickListener(mOnClickListener);
 		mAreaCode.setOnClickListener(mOnClickListener);
 		mIDImage.setOnClickListener(mOnClickListener);
@@ -200,31 +218,18 @@ public class RegisterProfileActivity extends BaseActivity {
 		mPhone.addTextChangedListener(mTextWatcher);
 		mPasswd.setInputType(InputType.TYPE_CLASS_TEXT
 				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		mGetCode.setEnabled(false);
 	}
 
 	private void initData() {
 		mDriverTypeIndex = 0;
 		mDriverTypes = getResources().getStringArray(R.array.driver_types);
 		updateDriverType();
-		
-		mPhotoWidth = getResources().getDimensionPixelSize(R.dimen.id_image_width);
-		mPhotoHeight = getResources().getDimensionPixelSize(R.dimen.id_image_height);
 	}
 
 	private void getVerifyCode() {
-		mCoolDown = true;
-		mCodeBtn.setEnabled(false);
+		showCountDown();
 		SMSSDK.getVerificationCode(COUNTRY_CODE, mPhone.getText().toString());
-		mHandler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mCoolDown = false;
-				String phone = mPhone.getText().toString();
-				if (phone != null && Util.isPhoneNumber(phone)) {
-					mCodeBtn.setEnabled(true);
-				}
-			}
-		}, COOLDOWN_TIME);
 	}
 
 	private void vertify() {
@@ -277,7 +282,7 @@ public class RegisterProfileActivity extends BaseActivity {
 			return false;
 		} else if (mPhotoPath == null || mPhotoPath.equals("")) {
 			Util.showTips(this,
-					getResources().getString(R.string.choose_id_image));
+					getResources().getString(R.string.choose_register_image));
 			return false;
 		} else if (!Util.isPhoneNumber(phone)) {
 			Util.showTips(this, getResources()
@@ -317,10 +322,10 @@ public class RegisterProfileActivity extends BaseActivity {
 		switch (mDriverTypeIndex) {
 		case 0:
 		case 2:
-			mCompany.setVisibility(View.GONE);
+			mCompanyLayout.setVisibility(View.GONE);
 			break;
 		case 1:
-			mCompany.setVisibility(View.VISIBLE);
+			mCompanyLayout.setVisibility(View.VISIBLE);
 			break;
 		}
 	}
@@ -392,6 +397,29 @@ public class RegisterProfileActivity extends BaseActivity {
 		startActivityForResult(intent, REQUESTCODE_CAPTURE);
 	}
 	
+	private void showCountDown() {
+		mIsCountDown = true;
+		mGetCode.setEnabled(false);
+		updateCountDown(COOLDOWN_TIME);
+		mCountDown.setVisibility(View.VISIBLE);
+		mCountDownTimer.cancel();
+		mCountDownTimer.start();
+	}
+	
+	private void hideCountDown() {
+		mIsCountDown = false;
+		mCountDown.setVisibility(View.GONE);
+		String phone = mPhone.getText().toString();
+		if (phone != null && Util.isPhoneNumber(phone)) {
+			mGetCode.setEnabled(true);
+		}
+	}
+	
+	private void updateCountDown(long millisUntilFinished) {
+		String txt = String.format(getResources().getString(R.string.vertify_code_countdown), (int)(millisUntilFinished / 1000));
+		mCountDown.setText(txt);
+	}
+	
 	private void showProgressDialog() {
 		if (mProgressDialog == null) {
 			mProgressDialog = new ProgressDialog(this);
@@ -412,20 +440,23 @@ public class RegisterProfileActivity extends BaseActivity {
 	 * 加载图片
 	 * @param uri	图片本地路径
 	 */
+	@SuppressWarnings("deprecation")
 	private void loadImage(Uri uri) {
 		mPhotoPath = uri2path(uri);
 		if (mPhotoPath == null) {
 			return;
 		}
+		int pWidth = mIDImage.getWidth();
+		int pHeight = mIDImage.getHeight();
 		BitmapFactory.Options op = new BitmapFactory.Options();
         op.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mPhotoPath, op);
-        int xScale = op.outWidth / mPhotoWidth;
-        int yScale = op.outHeight / mPhotoHeight;
+        int xScale = op.outWidth / pWidth;
+        int yScale = op.outHeight / pHeight;
         op.inSampleSize = xScale > yScale ? xScale : yScale;
         op.inJustDecodeBounds = false;
         Bitmap bitmap = BitmapFactory.decodeFile(mPhotoPath, op);
-        mIDImage.setImageBitmap(bitmap);
+        mIDImage.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
         recyclePhoto();
         mPhoto = bitmap;
 	}

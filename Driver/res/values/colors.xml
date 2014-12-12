@@ -5,6 +5,7 @@
 
     <color name="line_dark">#000000</color>
     <color name="line_light">#d0d0d0</color>
+    <color name="line_d6dae0">#d6dae0</color>
     
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>
@@ -16,6 +17,7 @@
     <color name="color_a88877">#A88877</color>
     <color name="color_474747">#474747</color>
     <color name="color_9a9a9a">#9a9a9a</color>
+    <color name="color_bababa">#bababa</color>
     
     <color name="color_tab_text">#AAAAAA</color>
     <color name="dim_background">#80323232</color>

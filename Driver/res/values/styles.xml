@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="WuLiu"/>
     
@@ -36,6 +36,37 @@
     <style name="Popup_Driver_Info">
         <item name="android:textColor">@color/text_color_light_gray</item>
         <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+    
+    <style name="EditText">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/color_bababa</item>
+        <item name="android:textColorHint">@color/color_bababa</item>
+        <item name="android:drawablePadding">@dimen/edittext_drawable_padding</item>
+        <item name="android:drawableRight">@drawable/input_edit_clear</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    
+    <style name="ItemLabel">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/color_bababa</item>
+        <item name="android:textColorHint">@color/color_bababa</item>
+        <item name="android:drawablePadding">@dimen/edittext_drawable_padding</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    
+    <style name="ItemValueWithArrow" parent="@style/TextAppearance.Small.LightGray">
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:drawableRight">@drawable/arrow_right</item>
+        <item name="android:drawablePadding">@dimen/edittext_drawable_padding</item>
+        <item name="android:gravity">center_vertical|right</item>
     </style>
     
     <style name="ClearEditText">
