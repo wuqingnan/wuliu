@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">物流生意宝</string>
+    <string name="app_subtitle">覆盖全国的智能找货/找车软件</string>
     <string name="developer">©鄂尔多斯博为科技有限公司</string>
 
     <string name="home_tab_home">首页</string>
@@ -41,6 +42,8 @@
     <string name="register">注册</string>
     <string name="next_step">下一步</string>
     <string name="prompt">提示</string>
+    <string name="auto_login">自动登录</string>
+    <string name="forget_pass">忘记密码</string>
     
     <string name="choose_image">选择照片</string>
     

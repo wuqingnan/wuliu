@@ -8,21 +8,26 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.LoginEvent;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
+import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 import cn.boweikeji.wuliu.driver.utils.EncryptUtil;
 import cn.boweikeji.wuliu.driver.utils.Util;
 
@@ -43,8 +48,6 @@ public class LoginActivity extends BaseActivity {
 				finish();
 			} else if (view == mRegister) {
 				RegisterProfileActivity.startRegisterPhoneActivity(LoginActivity.this);
-			} else if (view == mShowPass) {
-				showPassword(mPassword.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 			} else if (view == mLoginSubmit) {
 				login();
 			}
@@ -69,15 +72,17 @@ public class LoginActivity extends BaseActivity {
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
 	@InjectView(R.id.titlebar_rightTxt)
-	Button mRegister;
+	TextView mRegister;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.login_username)
 	EditText mUserName;
 	@InjectView(R.id.login_password)
 	EditText mPassword;
-	@InjectView(R.id.login_show_pass)
-	Button mShowPass;
+	@InjectView(R.id.autologin)
+	CheckBox mAutoLogin;
+	@InjectView(R.id.forget_pass)
+	TextView mForgetPass;
 	@InjectView(R.id.login_submit)
 	TextView mLoginSubmit;
 
@@ -130,7 +135,6 @@ public class LoginActivity extends BaseActivity {
 		mUserName.setText(getLastUserName());
 		mPassword.setInputType(InputType.TYPE_CLASS_TEXT
 				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
-		mShowPass.setOnClickListener(mOnClickListener);
 		mLoginSubmit.setOnClickListener(mOnClickListener);
 	}
 
@@ -143,28 +147,6 @@ public class LoginActivity extends BaseActivity {
 		return null;
 	}
 
-	/**
-	 * 显示密码
-	 * 
-	 * @param bShow
-	 */
-	public void showPassword(boolean bShow) {
-		String text = mPassword.getText().toString();
-		if (bShow) {
-			mPassword
-					.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-			mShowPass.setText(getResources().getString(R.string.hide));
-		} else {
-			mPassword.setInputType(InputType.TYPE_CLASS_TEXT
-					| InputType.TYPE_TEXT_VARIATION_PASSWORD);
-			mShowPass.setText(getResources().getString(R.string.show));
-		}
-		mPassword.postInvalidate();
-		if (text != null) {
-			mPassword.setSelection(text.length());
-		}
-	}
-	
 	/**
 	 * 登录
 	 */
@@ -206,6 +188,13 @@ public class LoginActivity extends BaseActivity {
 		}
 		return bRes;
 	}
+	
+	private void saveAutoLogin(boolean autoLogin) {
+		SharedPreferences preference = getSharedPreferences(Const.PREFERENCE_NAME, MODE_MULTI_PROCESS);
+		Editor editor = preference.edit();
+		editor.putBoolean(Const.KEY_AUTO_LOGIN, autoLogin);
+		editor.commit();
+	}
 
 	private void showProgressDialog() {
 		if (mProgressDialog == null) {
@@ -238,6 +227,7 @@ public class LoginActivity extends BaseActivity {
 					if (getCallingActivity() != null) {
 						setResult(RESULT_OK, mIntent);
 					}
+					saveAutoLogin(mAutoLogin.isChecked());
 					finish();
 				}
 				return;

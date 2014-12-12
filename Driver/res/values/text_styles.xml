@@ -58,6 +58,10 @@
         <item name="android:textColor">@color/color_474747</item>
     </style>
     
+    <style name="TextAppearance.Small.7c7c7c">
+        <item name="android:textColor">@color/color_7c7c7c</item>
+    </style>
+    
     <style name="TextAppearance.Middle.LightGray">
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>

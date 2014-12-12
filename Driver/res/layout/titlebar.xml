@@ -14,15 +14,14 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_navi_back" />
 
-    <Button
+    <TextView
         android:id="@+id/titlebar_rightTxt"
-        style="@style/TextAppearance.Middle.White"
+        style="@style/TextAppearance.Small.White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="6dp"
-        android:background="@null"
+        android:layout_marginRight="13dp"
         android:gravity="center"
         android:visibility="gone" />
 

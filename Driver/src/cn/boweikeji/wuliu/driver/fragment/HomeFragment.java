@@ -35,12 +35,10 @@ public class HomeFragment extends BaseFragment {
 	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
-	@InjectView(R.id.titlebar_rightTxt)
-	Button mRegister;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.titlebar_rightTxt)
-	Button mLogin;
+	TextView mLogin;
 	@InjectView(R.id.popup_layout)
 	View mPopupLayout;
 	@InjectView(R.id.name)
