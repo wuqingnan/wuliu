@@ -32,9 +32,9 @@ import com.baidu.mapapi.map.BaiduMap.OnMyLocationClickListener;
 import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
+import com.umeng.analytics.MobclickAgent;
 
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
@@ -232,6 +232,7 @@ public class MainActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		MobclickAgent.openActivityDurationTrack(false);
 		init();
 	}
 
@@ -462,6 +463,7 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void exit() {
+		MobclickAgent.onKillProcess(this);
 		finish();
 		System.exit(0);
 	}

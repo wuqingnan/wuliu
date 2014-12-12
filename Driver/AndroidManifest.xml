@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 这个权限用于进行网络定位 -->
@@ -215,17 +214,27 @@
             android:name="cn.boweikeji.wuliu.driver.receiver.DriverReceiver"
             android:exported="false" >
             <intent-filter>
+
                 <!-- 替换为action android:name="com.igexin.sdk.action.第三方应用APPID" -->
                 <action android:name="com.igexin.sdk.action.Ku32dFiYB08tev1WTuDIq9" />
             </intent-filter>
         </receiver>
-		<receiver
-		    android:name="cn.boweikeji.wuliu.driver.receiver.DispatchReceiver"
-		    android:exported="false" >
-		</receiver>
+        <receiver
+            android:name="cn.boweikeji.wuliu.driver.receiver.DispatchReceiver"
+            android:exported="false" >
+        </receiver>
+
         <service
             android:name="com.igexin.getuiext.service.GetuiExtService"
             android:process=":pushservice" />
+
+        <!-- 有盟统计 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="548af927fd98c51b6b00166a" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Official" />
     </application>
 
 </manifest>

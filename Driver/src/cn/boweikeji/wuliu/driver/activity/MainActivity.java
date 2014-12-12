@@ -34,6 +34,7 @@ import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -188,6 +189,7 @@ public class MainActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		MobclickAgent.openActivityDurationTrack(false);
 		init();
 		pageJump(getIntent());
 	}
@@ -525,6 +527,7 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void exit() {
+		MobclickAgent.onKillProcess(this);
 		finish();
 		System.exit(0);
 	}
