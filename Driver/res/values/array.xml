@@ -3,12 +3,12 @@
     
     <integer-array name="more_list_icon">
         <item>@drawable/icon</item>
-        <item>@drawable/icon</item>
-        <item>@drawable/icon</item>
-        <item>@drawable/icon</item>
-        <item>@drawable/icon</item>
-        <item>@drawable/icon</item>
-        <item>@drawable/icon</item>
+        <item>@drawable/ic_guide</item>
+        <item>@drawable/ic_invite</item>
+        <item>@drawable/ic_share</item>
+        <item>@drawable/ic_suggest</item>
+        <item>@drawable/ic_set</item>
+        <item>@drawable/ic_about</item>
     </integer-array>
     
     <string-array name="goods_type_list">

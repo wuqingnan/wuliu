@@ -8,4 +8,15 @@
         android:layout_height="match_parent"
         android:background="@drawable/new_feature1" />
 
+    <Button
+        android:id="@+id/feature_enter"
+        style="@style/TextAppearance.Big.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:onClick="onClick"
+        android:background="@drawable/btn_enter"
+        android:text="@string/enter_now" />
 </RelativeLayout>

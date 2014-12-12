@@ -181,8 +181,7 @@ public class WelcomeActivity extends BaseActivity {
 		
 		private final int[] VIEWS = {
 			R.layout.new_feature0,
-			R.layout.new_feature1,
-			R.layout.new_feature2
+			R.layout.new_feature1
 		};
 		
 		private List<View> mViews = new ArrayList<View>();

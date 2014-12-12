@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:button="@null"
-                android:checked="false"
+                android:checked="true"
                 android:drawableLeft="@drawable/cb_accept"
                 android:drawablePadding="10dp"
                 android:text="@string/auto_login" />
