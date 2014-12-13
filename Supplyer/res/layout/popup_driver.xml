@@ -4,32 +4,29 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_driver_popup"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/driver_portrait"
+    <TextView
+        android:id="@+id/driver_name"
+        style="@style/TextAppearance.Small.DarkGray"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/portrait_default" />
+        android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_height"
+        android:background="@color/line_d6dae0" />
+    
+    <TextView
+        android:id="@+id/driver_phone"
+        style="@style/TextAppearance.Micro.LightGray"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/driver_name"
-            style="@style/Popup_Driver_Name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/driver_info"
-            style="@style/Popup_Driver_Info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/driver_truck"
+        style="@style/TextAppearance.Micro.LightGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

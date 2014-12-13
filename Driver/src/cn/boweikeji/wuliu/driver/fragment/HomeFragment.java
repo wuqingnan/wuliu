@@ -25,8 +25,6 @@ public class HomeFragment extends BaseFragment {
 		public void onClick(View view) {
 			if (view == mLogin) {
 				LoginActivity.startLoginActivity(getActivity());
-			} else if (view == mClose) {
-				hidePopupLayout();
 			}
 		}
 	};
@@ -39,16 +37,6 @@ public class HomeFragment extends BaseFragment {
 	TextView mTitle;
 	@InjectView(R.id.titlebar_rightTxt)
 	TextView mLogin;
-	@InjectView(R.id.popup_layout)
-	View mPopupLayout;
-	@InjectView(R.id.name)
-	TextView mName;
-	@InjectView(R.id.phone)
-	TextView mPhone;
-	@InjectView(R.id.truck)
-	TextView mTruck;
-	@InjectView(R.id.close)
-	Button mClose;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +60,6 @@ public class HomeFragment extends BaseFragment {
 	private void init() {
 		ButterKnife.inject(this, mRootView);
 		initTitle();
-		initView();
 		EventBus.getDefault().register(this);
 	}
 	
@@ -85,25 +72,10 @@ public class HomeFragment extends BaseFragment {
 		updateLoginBtn();
 	}
 	
-	private void initView() {
-		mClose.setOnClickListener(mOnClickListener);
-	}
-	
 	private void updateLoginBtn() {
 		if (LoginManager.getInstance().hasLogin()) {
 			mLogin.setVisibility(View.GONE);
 		}
-	}
-	
-	public void showPopupLayout(String name, String phone, String truck) {
-		mName.setText(name);
-		mPhone.setText(phone);
-		mTruck.setText(truck);
-		mPopupLayout.setVisibility(View.VISIBLE);
-	}
-	
-	public void hidePopupLayout() {
-		mPopupLayout.setVisibility(View.GONE);
 	}
 	
 	public void onEventMainThread(LoginEvent event) {

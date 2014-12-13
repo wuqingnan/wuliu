@@ -208,5 +208,8 @@
     <string name="latest_version">当前已经是最新版本</string>
     
     <string name="no_result">无内容</string>
+        
+    <string name="format_phone">电话：</string>
+    <string name="format_truck_type">车辆类型：</string>
 
 </resources>

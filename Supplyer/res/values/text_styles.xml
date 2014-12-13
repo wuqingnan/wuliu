@@ -6,8 +6,40 @@
         <item name="android:textColor">@color/text_color_white</item>
     </style>
     
+    <style name="TextAppearance.Micro">
+        <item name="android:textSize">@dimen/text_size_micro</item>
+    </style>
+    
     <style name="TextAppearance.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+        
+    <style name="TextAppearance.Middle">
+        <item name="android:textSize">@dimen/text_size_middle</item>
+    </style>
+    
+    <style name="TextAppearance.Big">
+        <item name="android:textSize">@dimen/text_size_big</item>
+    </style>
+    
+    <style name="TextAppearance.Micro.White">
+        <item name="android:textColor">@color/text_color_white</item>
+    </style>
+    
+    <style name="TextAppearance.Micro.9a9a9a">
+        <item name="android:textColor">@color/color_9a9a9a</item>
+    </style>
+    
+    <style name="TextAppearance.Micro.474747">
+        <item name="android:textColor">@color/color_474747</item>
+    </style>
+    
+    <style name="TextAppearance.Micro.cccccc">
+        <item name="android:textColor">@color/color_cccccc</item>
+    </style>
+    
+    <style name="TextAppearance.Micro.LightGray">
+        <item name="android:textColor">@color/text_color_light_gray</item>
     </style>
     
     <style name="TextAppearance.Small.DarkGray">
@@ -18,12 +50,20 @@
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>
     
-    <style name="TextAppearance.Middle">
-        <item name="android:textSize">@dimen/text_size_middle</item>
+    <style name="TextAppearance.Small.White">
+        <item name="android:textColor">@color/text_color_white</item>
     </style>
     
-    <style name="TextAppearance.Big">
-        <item name="android:textSize">@dimen/text_size_big</item>
+    <style name="TextAppearance.Small.a88877">
+        <item name="android:textColor">@color/color_a88877</item>
+    </style>
+    
+    <style name="TextAppearance.Small.474747">
+        <item name="android:textColor">@color/color_474747</item>
+    </style>
+    
+    <style name="TextAppearance.Small.7c7c7c">
+        <item name="android:textColor">@color/color_7c7c7c</item>
     </style>
     
     <style name="TextAppearance.Middle.LightGray">
@@ -52,5 +92,9 @@
     
     <style name="TextAppearance.Big.Black">
         <item name="android:textColor">@color/text_color_black</item>
+    </style>
+    
+    <style name="TextAppearance.Big.DarkGray">
+        <item name="android:textColor">@color/text_color_dark_gray</item>
     </style>
 </resources>

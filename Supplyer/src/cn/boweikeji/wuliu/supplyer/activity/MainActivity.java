@@ -209,9 +209,9 @@ public class MainActivity extends BaseActivity {
 	private TextView mMyLocTitle;
 	private TextView mMyLocInfo;
 	private View mDriverLayout;
-	private ImageView mDriverPortrait;
 	private TextView mDriverName;
-	private TextView mDriverInfo;
+	private TextView mDriverPhone;
+	private TextView mDriverTruck;
 
 	private FragmentManager mFragmentManager;
 
@@ -363,10 +363,9 @@ public class MainActivity extends BaseActivity {
 
 		mDriverLayout = getLayoutInflater()
 				.inflate(R.layout.popup_driver, null);
-		mDriverPortrait = (ImageView) mDriverLayout
-				.findViewById(R.id.driver_portrait);
 		mDriverName = (TextView) mDriverLayout.findViewById(R.id.driver_name);
-		mDriverInfo = (TextView) mDriverLayout.findViewById(R.id.driver_info);
+		mDriverPhone = (TextView) mDriverLayout.findViewById(R.id.driver_phone);
+		mDriverTruck = (TextView) mDriverLayout.findViewById(R.id.driver_truck);
 	}
 
 	private void initMap() {
@@ -523,7 +522,8 @@ public class MainActivity extends BaseActivity {
 		Bundle bundle = marker.getExtraInfo();
 		if (bundle != null) {
 			mDriverName.setText(bundle.getString("name"));
-			mDriverInfo.setText(bundle.getString("info"));
+			mDriverPhone.setText(bundle.getString("phone"));
+			mDriverTruck.setText(bundle.getString("truck"));
 		}
 		LatLng ll = marker.getPosition();
 		InfoWindow infoWindow = new InfoWindow(mDriverLayout, ll,

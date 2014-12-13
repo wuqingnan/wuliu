@@ -14,7 +14,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textColorHint">@color/text_color_hint</item>
+        <item name="android:textColorHint">@color/text_color_lighter_gray</item>
         <item name="android:textSize">@dimen/text_size_login_number</item>
     </style>
 
@@ -38,13 +38,13 @@
 
     <style name="WuLiu.Menu.Phone">
         <item name="android:drawableLeft">@drawable/people</item>
-        <item name="android:textColor">@color/text_color_menu</item>
+        <item name="android:textColor">@color/text_color_dark_gray</item>
         <item name="android:textSize">@dimen/text_size_menu</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="WuLiu.Menu.Item.Title">
-        <item name="android:textColor">@color/text_color_menu</item>
+        <item name="android:textColor">@color/text_color_dark_gray</item>
         <item name="android:textSize">@dimen/text_size_menu</item>
     </style>
 
@@ -81,26 +81,6 @@
     <style name="WuLiu.Label">
         <item name="android:textColor">@color/text_color_dark_gray</item>
         <item name="android:textSize">@dimen/text_size_middle</item>
-    </style>
-    
-    <style name="Popup_My_Title">
-        <item name="android:textColor">@color/text_color_orange</item>
-        <item name="android:textSize">@dimen/text_size_middle</item>
-    </style>
-
-    <style name="Popup_My_Info">
-        <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-    
-    <style name="Popup_Driver_Name">
-        <item name="android:textColor">@color/text_color_orange</item>
-        <item name="android:textSize">@dimen/text_size_middle</item>
-    </style>
-
-    <style name="Popup_Driver_Info">
-        <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
     </style>
     
     <style name="Send_Item_Name">

@@ -8,13 +8,13 @@
 
     <TextView
         android:id="@+id/myloc_title"
-        style="@style/Popup_My_Title"
+        style="@style/TextAppearance.Small.DarkGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/myloc_info"
-        style="@style/Popup_My_Info"
+        style="@style/TextAppearance.Micro.LightGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

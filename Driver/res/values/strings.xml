@@ -145,4 +145,7 @@
     <string name="label_send_comment">重要说明：</string>
     <string name="label_message_free">信息公开：</string>
     
+    <string name="format_phone">电话：</string>
+    <string name="format_truck_type">车辆类型：</string>
+    
 </resources>

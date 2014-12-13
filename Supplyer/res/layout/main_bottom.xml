@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/main_bottom_height"
     android:layout_alignParentBottom="true"
-    android:background="@color/bg_main_bottom"
+    android:background="@color/bg_back"
     android:clickable="true"
     android:gravity="center"
     android:orientation="horizontal" >
