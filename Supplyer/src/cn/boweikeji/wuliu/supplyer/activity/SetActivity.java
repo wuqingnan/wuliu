@@ -1,20 +1,31 @@
 package cn.boweikeji.wuliu.supplyer.activity;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.activity.ChangePasswordActivity;
 import cn.boweikeji.wuliu.supplyer.activity.SuggestActivity;
 import cn.boweikeji.wuliu.supplyer.activity.WebViewActivity;
-import cn.boweikeji.wuliu.supplyer.event.UpdateEvent;
+import cn.boweikeji.wuliu.supplyer.bean.UpdateInfo;
+import cn.boweikeji.wuliu.supplyer.event.ExitEvent;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
+import cn.boweikeji.wuliu.supplyer.manager.UpdateManager;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
-import cn.boweikeji.wuliu.supplyer.utils.UpdateUtil;
+import cn.boweikeji.wuliu.supplyer.utils.Util;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.R;
 import de.greenrobot.event.EventBus;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -50,11 +61,25 @@ public class SetActivity extends BaseActivity {
 
 	private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
 		@Override
-		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-			
+		public void onCheckedChanged(CompoundButton buttonView,
+				boolean isChecked) {
+
 		}
 	};
-	
+
+	private JsonHttpResponseHandler mResponseHandler = new JsonHttpResponseHandler() {
+
+		public void onSuccess(int statusCode, Header[] headers,
+				JSONObject response) {
+			requestResult(response);
+		};
+
+		public void onFailure(int statusCode, Header[] headers,
+				Throwable throwable, JSONObject errorResponse) {
+			requestResult(null);
+		};
+	};
+
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
@@ -86,11 +111,8 @@ public class SetActivity extends BaseActivity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (EventBus.getDefault().isRegistered(this)) {
-			EventBus.getDefault().unregister(this);
-		}
 	}
-	
+
 	private void init() {
 		ButterKnife.inject(this);
 		initTitle();
@@ -105,9 +127,9 @@ public class SetActivity extends BaseActivity {
 	}
 
 	private void initData() {
-		mVersion.setText(DeviceInfo.getAppVersion());
+		mVersion.setText(DeviceInfo.getVersionName());
 	}
-	
+
 	private void initView() {
 		mVoice.setOnCheckedChangeListener(mOnCheckedChangeListener);
 		mGuide.setOnClickListener(mOnClickListener);
@@ -117,42 +139,83 @@ public class SetActivity extends BaseActivity {
 		mChangePasswd.setOnClickListener(mOnClickListener);
 		mLogout.setOnClickListener(mOnClickListener);
 	}
-	
+
 	private void guide() {
-		WebViewActivity.startWebViewActivity(this, getResources().getString(R.string.title_send_guide), Const.URL_GUIDE);
+		WebViewActivity.startWebViewActivity(this,
+				getResources().getString(R.string.title_send_guide),
+				Const.URL_GUIDE);
 	}
-	
+
 	private void suggest() {
 		startActivity(new Intent(this, SuggestActivity.class));
 	}
-	
+
 	private void about() {
-		WebViewActivity.startWebViewActivity(this, getResources().getString(R.string.title_about), Const.URL_ABOUT);
+		WebViewActivity
+				.startWebViewActivity(this,
+						getResources().getString(R.string.title_about),
+						Const.URL_ABOUT);
 	}
-	
+
 	private void update() {
-		if (!EventBus.getDefault().isRegistered(this)) {
-			EventBus.getDefault().register(this);
-		}
-		UpdateUtil.checkUpdate();
+		UpdateManager.checkUpdate(mResponseHandler);
 	}
-	
+
 	private void changePasswd() {
 		startActivity(new Intent(this, ChangePasswordActivity.class));
 	}
-	
+
 	private void logout() {
 		LoginManager.getInstance().logout();
 		finish();
 	}
-	
-	public void onEventMainThread(UpdateEvent event) {
-//		((MainActivity)getActivity()).showUpdateDialog(event);
-//		if (event == null || !event.isNeedUpdate()) {
-//			Util.showTips(getActivity(), getString(R.string.latest_version));
-//		}
+
+	private void requestResult(JSONObject response) {
+		if (response != null && response.length() > 0) {
+			Log.d(TAG, "shizy---response: " + response.toString());
+			try {
+				int res = response.getInt("res");
+				if (res == 2) {// 成功
+					JSONObject infos = response.optJSONObject("infos");
+					UpdateManager.saveUpdateInfo(infos);
+					final UpdateInfo updateInfo = new UpdateInfo(infos);
+					if (updateInfo.isNeedUpdate()) {
+						showUpdateDialog(updateInfo);
+					} else {
+						Util.showTips(
+								this,
+								getResources().getString(
+										R.string.lastest_version));
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-	
+
+	private void showUpdateDialog(final UpdateInfo info) {
+		UpdateManager.showUpdateDialog(this, info,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse(info.getUrl()));
+						startActivity(intent);
+					}
+				}, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						if (info.isForce()) {
+							finish();
+							EventBus.getDefault().post(new ExitEvent());
+						}
+					}
+				});
+	}
+
 	public static void startSetActivity(Context context) {
 		context.startActivity(new Intent(context, SetActivity.class));
 	}

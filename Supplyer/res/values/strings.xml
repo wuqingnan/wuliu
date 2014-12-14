@@ -5,6 +5,8 @@
     <string name="app_subtitle">覆盖全国的智能找货/找车软件</string>
     <string name="enter_now">立即体验</string>
     
+    <string name="lastest_version">当前已经是最新版本！</string>
+    
     <string name="login">登录</string>
     <string name="auto_login">自动登录</string>
     <string name="forget_pass">忘记密码</string>

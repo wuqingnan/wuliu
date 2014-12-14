@@ -13,6 +13,7 @@ import cn.boweikeji.wuliu.supplyer.WLApplication;
 import cn.boweikeji.wuliu.supplyer.WeakHandler;
 import cn.boweikeji.wuliu.supplyer.db.DBHelper;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
+import cn.boweikeji.wuliu.supplyer.manager.UpdateManager;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
 import cn.boweikeji.wuliu.supplyer.R;
 import android.content.Context;
@@ -35,7 +36,7 @@ public class WelcomeActivity extends BaseActivity {
 	private static final String TAG = WelcomeActivity.class.getSimpleName();
 	
 	private static final String PREFERENCE_NAME = "preference";
-	private static final String KEY_VERSION = "version";
+	private static final String KEY_VERSION_NAME = "version_name";
 	
 	private static final int SLEEP_TIME = 1000;
 	
@@ -60,6 +61,7 @@ public class WelcomeActivity extends BaseActivity {
 		mHandler = new WelcomeHandler(this);
 		new Thread(new InitTask()).start();
 		autoLogin();
+		UpdateManager.checkUpdate();
 	}
 	
 	@Override
@@ -84,8 +86,8 @@ public class WelcomeActivity extends BaseActivity {
 	
 	private void checkInit() {
 		SharedPreferences preference = getSharedPreferences(PREFERENCE_NAME, MODE_MULTI_PROCESS);
-		String lastVersion = preference.getString(KEY_VERSION, null);
-		String curVersion = DeviceInfo.getAppVersion();
+		String lastVersion = preference.getString(KEY_VERSION_NAME, null);
+		String curVersion = DeviceInfo.getVersionName();
 		if (lastVersion == null || !lastVersion.equals(curVersion)) {
 			mNeedInit = true;
 		} else {
@@ -96,7 +98,7 @@ public class WelcomeActivity extends BaseActivity {
 	private void saveVersion() {
 		SharedPreferences preference = getSharedPreferences(PREFERENCE_NAME, MODE_MULTI_PROCESS);
 		Editor editor = preference.edit();
-		editor.putString(KEY_VERSION, DeviceInfo.getAppVersion());
+		editor.putString(KEY_VERSION_NAME, DeviceInfo.getVersionName());
 		editor.commit();
 	}
 	

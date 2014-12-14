@@ -81,8 +81,8 @@ public class WelcomeActivity extends BaseActivity {
 	
 	private void checkInit() {
 		SharedPreferences preference = getSharedPreferences(Const.PREFERENCE_NAME, MODE_MULTI_PROCESS);
-		String lastVersion = preference.getString(Const.KEY_VERSION, null);
-		String curVersion = DeviceInfo.getAppVersion();
+		String lastVersion = preference.getString(Const.KEY_VERSION_NAME, null);
+		String curVersion = DeviceInfo.getVersionName();
 		if (lastVersion == null || !lastVersion.equals(curVersion)) {
 			mNeedInit = true;
 		} else {
@@ -93,7 +93,7 @@ public class WelcomeActivity extends BaseActivity {
 	private void saveVersion() {
 		SharedPreferences preference = getSharedPreferences(Const.PREFERENCE_NAME, MODE_MULTI_PROCESS);
 		Editor editor = preference.edit();
-		editor.putString(Const.KEY_VERSION, DeviceInfo.getAppVersion());
+		editor.putString(Const.KEY_VERSION_NAME, DeviceInfo.getVersionName());
 		editor.commit();
 	}
 

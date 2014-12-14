@@ -40,12 +40,13 @@ import com.loopj.android.http.SyncHttpClient;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
+import cn.boweikeji.wuliu.supplyer.bean.UpdateInfo;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
-import cn.boweikeji.wuliu.supplyer.event.UpdateEvent;
+import cn.boweikeji.wuliu.supplyer.event.ExitEvent;
 import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
+import cn.boweikeji.wuliu.supplyer.manager.UpdateManager;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
-import cn.boweikeji.wuliu.supplyer.utils.UpdateUtil;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 import cn.boweikeji.wuliu.supplyer.view.MenuView;
 import cn.boweikeji.wuliu.supplyer.Const;
@@ -249,8 +250,7 @@ public class MainActivity extends BaseActivity {
 	private boolean mMapShowing;
 	private boolean mIsFirstLoc;
 	private boolean mHasDriver;
-	private boolean mFirstCheckUpdate = true;
-	private boolean mShowUpdateDialog = false;
+	private boolean mHasCheckUpdate;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -266,6 +266,7 @@ public class MainActivity extends BaseActivity {
 		mMapView.onResume();
 		mMapShowing = true;
 		updateMap();
+		checkUpdate();
 	}
 
 	@Override
@@ -335,12 +336,12 @@ public class MainActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		mIsFirstLoc = true;
 		mHasDriver = false;
+		mHasCheckUpdate = false;
 		initView();
 		initMenu();
 		initMap();
 		initLocation();
 		EventBus.getDefault().register(this);
-		UpdateUtil.checkUpdate();
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300,
 				TimeUnit.SECONDS);
@@ -429,6 +430,17 @@ public class MainActivity extends BaseActivity {
 		}
 		if (!mHasDriver) {
 			requestDriver(location);
+		}
+	}
+
+	private void checkUpdate() {
+		if (mHasCheckUpdate) {
+			return;
+		}
+		mHasCheckUpdate = true;
+		UpdateInfo updateInfo = UpdateManager.readUpdateInfo();
+		if (updateInfo != null && updateInfo.isNeedUpdate()) {
+			showUpdateDialog(updateInfo);
 		}
 	}
 
@@ -557,55 +569,29 @@ public class MainActivity extends BaseActivity {
 		}
 	}
 
-	public void onEventMainThread(UpdateEvent event) {
-		if (mFirstCheckUpdate) {
-			mFirstCheckUpdate = false;
-			showUpdateDialog(event);
-		}
+	public void showUpdateDialog(final UpdateInfo info) {
+		UpdateManager.showUpdateDialog(this, info,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse(info.getUrl()));
+						startActivity(intent);
+					}
+				}, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						if (info.isForce()) {
+							exit();
+						}
+					}
+				});
 	}
-
-	public synchronized void showUpdateDialog(final UpdateEvent event) {
-		if (event != null) {
-			if (event.isNeedUpdate()) {
-				if (mShowUpdateDialog) {
-					return;
-				}
-				mShowUpdateDialog = true;
-
-				AlertDialog dialog = new AlertDialog.Builder(this)
-						.setTitle(event.getVersion())
-						.setMessage(event.getContent())
-						.setCancelable(false)
-						.setPositiveButton(R.string.upgrade,
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										dialog.dismiss();
-										mShowUpdateDialog = false;
-										Intent intent = new Intent(
-												Intent.ACTION_VIEW);
-										intent.setData(Uri.parse(event.getUrl()));
-										startActivity(intent);
-									}
-								})
-						.setNegativeButton(
-								event.isForce() ? R.string.exit
-										: R.string.cancel,
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										dialog.dismiss();
-										mShowUpdateDialog = false;
-										if (event.isForce()) {
-											exit();
-										}
-									}
-								}).create();
-				dialog.show();
-			}
-		}
+	
+	public void onEventMainThread(ExitEvent event) {
+		exit();
 	}
 
 	private class PositionTask implements Runnable {
@@ -646,7 +632,7 @@ public class MainActivity extends BaseActivity {
 			params.add("phone_type", "" + DeviceInfo.getModel());
 			params.add("operate_system", "" + DeviceInfo.getOSName());
 			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
-			params.add("app_version", "" + DeviceInfo.getAppVersion());
+			params.add("app_version", "" + DeviceInfo.getVersionName());
 			params.add("clientid", "" + Const.clientid);
 			mHttpClient.get(
 					AsyncHttp.getAbsoluteUrl(Const.URL_POSITION_UPLOAD),
