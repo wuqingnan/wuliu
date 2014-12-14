@@ -41,8 +41,6 @@ import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.UpdateEvent;
 import cn.boweikeji.wuliu.supplyer.fragment.BaseFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.MainFragment;
-import cn.boweikeji.wuliu.supplyer.fragment.ProfileFragment;
-import cn.boweikeji.wuliu.supplyer.fragment.SetFragment;
 import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
@@ -170,7 +168,7 @@ public class MainActivity extends BaseActivity {
 			if (drawerView == mMenuView && mMenuIndex != Integer.MAX_VALUE) {
 				switch (mMenuIndex) {
 				case MenuView.MENU_PROFILE:
-					changeFragment(new ProfileFragment());
+					ProfileActivity.startProfileActivity(MainActivity.this);
 					break;
 				case MenuView.MENU_ORDER:
 					OrderActivity.startOrderActivity(MainActivity.this);
@@ -188,7 +186,7 @@ public class MainActivity extends BaseActivity {
 					Util.showShare(MainActivity.this);
 					break;
 				case MenuView.MENU_SETTING:
-					changeFragment(new SetFragment());
+					SetActivity.startSetActivity(MainActivity.this);
 					break;
 				}
 			}

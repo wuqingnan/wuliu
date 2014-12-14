@@ -1,38 +1,32 @@
-package cn.boweikeji.wuliu.supplyer.fragment;
+package cn.boweikeji.wuliu.supplyer.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.Const;
-import cn.boweikeji.wuliu.supplyer.activity.MainActivity;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
-
 import cn.boweikeji.wuliu.supplyer.R;
 
-public class ProfileFragment extends BaseFragment {
+public class ProfileActivity extends BaseActivity {
 
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
-			if (view == mMenuBtn) {
-				if (getActivity() instanceof MainActivity) {
-					((MainActivity) getActivity()).back();
-				}
+			if (view == mBack) {
+				finish();
 			}
 		}
 	};
 
-	private View mRootView;
-
 	@InjectView(R.id.titlebar_leftBtn)
-	ImageView mMenuBtn;
+	ImageView mBack;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.profile_portrait)
@@ -49,22 +43,16 @@ public class ProfileFragment extends BaseFragment {
 	TextView mRegisterTime;
 
 	private UserInfo mUserInfo;
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		mRootView = inflater.inflate(R.layout.fragment_profile, null);
-		return mRootView;
-	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_profile);
 		init();
 	}
 
 	private void init() {
-		ButterKnife.inject(this, mRootView);
+		ButterKnife.inject(this);
 		initTitle();
 		initView();
 		initData();
@@ -72,8 +60,8 @@ public class ProfileFragment extends BaseFragment {
 
 	private void initTitle() {
 		mTitle.setText(R.string.title_profile);
-		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
-		mMenuBtn.setOnClickListener(mOnClickListener);
+		mBack.setImageResource(R.drawable.ic_navi_back);
+		mBack.setOnClickListener(mOnClickListener);
 	}
 
 	private void initView() {
@@ -95,5 +83,9 @@ public class ProfileFragment extends BaseFragment {
 			}
 			mRegisterTime.setText("2020-02-20 20:20:20");
 		}
+	}
+	
+	public static void startProfileActivity(Context context) {
+		context.startActivity(new Intent(context, ProfileActivity.class));
 	}
 }

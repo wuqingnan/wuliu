@@ -27,7 +27,6 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.Const;
-import cn.boweikeji.wuliu.supplyer.activity.MainActivity;
 import cn.boweikeji.wuliu.supplyer.activity.OrderDetailActivity;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.Order;
