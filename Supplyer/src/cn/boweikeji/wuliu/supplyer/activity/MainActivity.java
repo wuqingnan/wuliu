@@ -8,6 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -39,8 +42,6 @@ import com.umeng.analytics.MobclickAgent;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.UpdateEvent;
-import cn.boweikeji.wuliu.supplyer.fragment.BaseFragment;
-import cn.boweikeji.wuliu.supplyer.fragment.MainFragment;
 import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
@@ -56,15 +57,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +77,27 @@ public class MainActivity extends BaseActivity {
 	public static final String KEY_REDIRECT = "redirect";
 	public static final String KEY_REDIRECT_TO = "redirect_to";
 	public static final int REDIRECT_TO_ORDERDETAIL = 1 << 0;
+
+	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View view) {
+			if (view == mMenuBtn) {
+				showMenu();
+			} else if (view == mMainSend) {
+				if (LoginManager.getInstance().hasLogin()) {
+					SendActivity.startSendActivity(MainActivity.this, false);
+				} else {
+					LoginActivity.startLoginActivity(MainActivity.this);
+				}
+			} else if (view == mMainBook) {
+				if (LoginManager.getInstance().hasLogin()) {
+					SendActivity.startSendActivity(MainActivity.this, true);
+				} else {
+					LoginActivity.startLoginActivity(MainActivity.this);
+				}
+			}
+		}
+	};
 
 	private MenuView.OnMenuClickListener mOnMenuClickListener = new MenuView.OnMenuClickListener() {
 		@Override
@@ -144,25 +164,25 @@ public class MainActivity extends BaseActivity {
 			mBaiduMap.hideInfoWindow();
 		}
 	};
-	
+
 	private DrawerListener mDrawerListener = new DrawerListener() {
 		@Override
 		public void onDrawerStateChanged(int newState) {
-			
+
 		}
-		
+
 		@Override
 		public void onDrawerSlide(View drawerView, float slideOffset) {
-			
+
 		}
-		
+
 		@Override
 		public void onDrawerOpened(View drawerView) {
 			if (drawerView == mMenuView) {
 				mMenuIndex = Integer.MAX_VALUE;
 			}
 		}
-		
+
 		@Override
 		public void onDrawerClosed(View drawerView) {
 			if (drawerView == mMenuView && mMenuIndex != Integer.MAX_VALUE) {
@@ -193,9 +213,21 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private DrawerLayout mDrawerLayout;
-	private MenuView mMenuView;
-	private MapView mMapView;
+	@InjectView(R.id.drawer_layout)
+	DrawerLayout mDrawerLayout;
+	@InjectView(R.id.menuview)
+	MenuView mMenuView;
+	@InjectView(R.id.bmapView)
+	MapView mMapView;
+	@InjectView(R.id.titlebar_leftBtn)
+	ImageView mMenuBtn;
+	@InjectView(R.id.titlebar_title)
+	TextView mTitle;
+	@InjectView(R.id.main_send)
+	Button mMainSend;
+	@InjectView(R.id.main_book)
+	Button mMainBook;
+
 	private BaiduMap mBaiduMap;
 	private UiSettings mUiSettings;
 
@@ -206,8 +238,6 @@ public class MainActivity extends BaseActivity {
 	private TextView mDriverName;
 	private TextView mDriverPhone;
 	private TextView mDriverTruck;
-
-	private FragmentManager mFragmentManager;
 
 	private LocationClient mLocClient;
 
@@ -265,19 +295,17 @@ public class MainActivity extends BaseActivity {
 				mDrawerLayout.closeDrawer(mMenuView);
 				return true;
 			}
-			if (mFragmentManager.getBackStackEntryCount() == 0) {
-				if (System.currentTimeMillis() - mExitTime > EXIT_TIME) {
-					Toast.makeText(this, R.string.quit_next_time,
-							Toast.LENGTH_SHORT).show();
-					mExitTime = System.currentTimeMillis();
-				} else {
-					exit();
-				}
+			if (System.currentTimeMillis() - mExitTime > EXIT_TIME) {
+				Toast.makeText(this, R.string.quit_next_time,
+						Toast.LENGTH_SHORT).show();
+				mExitTime = System.currentTimeMillis();
+				return true;
+			} else {
+				exit();
 				return true;
 			}
 		} else if (keyCode == KeyEvent.KEYCODE_MENU) {
-			if (mFragmentManager.getBackStackEntryCount() == 0
-					&& LoginManager.getInstance().hasLogin()) {
+			if (LoginManager.getInstance().hasLogin()) {
 				if (mDrawerLayout.isDrawerOpen(mMenuView)) {
 					mDrawerLayout.closeDrawer(mMenuView);
 				} else {
@@ -300,20 +328,16 @@ public class MainActivity extends BaseActivity {
 						intent.getStringExtra("goods_cd"));
 				break;
 			}
-		} else {
-			if (mFragmentManager.getBackStackEntryCount() > 0) {
-				back();
-			}
 		}
 	}
 
 	private void init() {
+		ButterKnife.inject(this);
 		mIsFirstLoc = true;
 		mHasDriver = false;
 		initView();
 		initMenu();
 		initMap();
-		initFragment();
 		initLocation();
 		EventBus.getDefault().register(this);
 		UpdateUtil.checkUpdate();
@@ -323,18 +347,34 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void initMenu() {
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
+				GravityCompat.START);
 		mDrawerLayout.setDrawerTitle(GravityCompat.START, "MenuView");
-		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, mMenuView);
+		mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED,
+				mMenuView);
 		mDrawerLayout.setDrawerListener(mDrawerListener);
 		mMenuView.setOnMenuClickListener(mOnMenuClickListener);
 		EventBus.getDefault().register(mMenuView);
 	}
 
 	private void initView() {
-		mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-		mMenuView = (MenuView)findViewById(R.id.menuview);
-		mMapView = (MapView)findViewById(R.id.bmapView);
+		initTitle();
+		initBottom();
+		initPopup();
+	}
+
+	private void initTitle() {
+		mTitle.setText(R.string.app_name);
+		mMenuBtn.setImageResource(R.drawable.btn_title_menu);
+		mMenuBtn.setOnClickListener(mOnClickListener);
+	}
+
+	private void initBottom() {
+		mMainSend.setOnClickListener(mOnClickListener);
+		mMainBook.setOnClickListener(mOnClickListener);
+	}
+
+	private void initPopup() {
 		mMyLocLayout = getLayoutInflater().inflate(R.layout.popup_myloc, null);
 		mMyLocTitle = (TextView) mMyLocLayout.findViewById(R.id.myloc_title);
 		mMyLocInfo = (TextView) mMyLocLayout.findViewById(R.id.myloc_info);
@@ -365,7 +405,8 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void updateMap() {
-		BDLocation location = WLApplication.getLocationClient().getLastKnownLocation();
+		BDLocation location = WLApplication.getLocationClient()
+				.getLastKnownLocation();
 		if (location == null || mMapView == null) {
 			return;
 		}
@@ -390,12 +431,6 @@ public class MainActivity extends BaseActivity {
 			requestDriver(location);
 		}
 	}
-	
-	private void initFragment() {
-		mFragmentManager = getSupportFragmentManager();
-		mFragmentManager.beginTransaction()
-				.replace(R.id.topLayout, new MainFragment()).commit();
-	}
 
 	private void initLocation() {
 		mLocClient = new LocationClient(getApplicationContext());
@@ -418,20 +453,6 @@ public class MainActivity extends BaseActivity {
 		} else {
 			LoginActivity.startLoginActivity(this);
 		}
-	}
-
-	public void back() {
-		mFragmentManager.popBackStack();
-	}
-
-	public void changeFragment(BaseFragment fragment) {
-		FragmentTransaction trans = mFragmentManager.beginTransaction();
-		trans.setCustomAnimations(R.anim.push_in, R.anim.push_out,
-				R.anim.pop_in, R.anim.pop_out);
-		trans.replace(R.id.topLayout, fragment, fragment.getClass().getName());
-		trans.addToBackStack(fragment.getClass().getSimpleName());
-		trans.commit();
-		mDrawerLayout.closeDrawer(mMenuView);
 	}
 
 	private void exit() {
@@ -594,7 +615,7 @@ public class MainActivity extends BaseActivity {
 				Log.d(TAG, "shizy---PositionTask.onFinish()");
 			};
 		};
-		
+
 		private SyncHttpClient mHttpClient;
 
 		public PositionTask() {
@@ -627,7 +648,9 @@ public class MainActivity extends BaseActivity {
 			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
 			params.add("app_version", "" + DeviceInfo.getAppVersion());
 			params.add("clientid", "" + Const.clientid);
-			mHttpClient.get(AsyncHttp.getAbsoluteUrl(Const.URL_POSITION_UPLOAD), params, mHandler);
+			mHttpClient.get(
+					AsyncHttp.getAbsoluteUrl(Const.URL_POSITION_UPLOAD),
+					params, mHandler);
 		}
 	}
 }

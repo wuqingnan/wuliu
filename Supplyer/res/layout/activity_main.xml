@@ -15,10 +15,15 @@
             android:layout_height="match_parent"
             android:clickable="true" />
 
-        <FrameLayout
-            android:id="@+id/topLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <include layout="@layout/titlebar" />
+
+            <include layout="@layout/main_bottom" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <cn.boweikeji.wuliu.supplyer.view.MenuView

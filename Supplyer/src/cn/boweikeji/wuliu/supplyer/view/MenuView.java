@@ -83,7 +83,7 @@ public class MenuView extends RelativeLayout {
 
 	private void initHeader() {
 		View view = LayoutInflater.from(getContext()).inflate(
-				R.layout.fragment_menu_header, null);
+				R.layout.menu_header, null);
 		mMenuPhone = (TextView) view.findViewById(R.id.menu_phone);
 		mListView.addHeaderView(view);
 	}

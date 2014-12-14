@@ -49,7 +49,7 @@ public class MenuAdapter extends BaseAdapter {
 		if (convertView != null) {
 			holder = (ViewHolder) convertView.getTag();
 		} else {
-			convertView = mInflater.inflate(R.layout.fragment_menu_item, null);
+			convertView = mInflater.inflate(R.layout.menu_item, null);
 			holder = new ViewHolder(convertView);
 			convertView.setTag(holder);
 		}
