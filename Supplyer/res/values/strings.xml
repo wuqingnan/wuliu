@@ -31,6 +31,9 @@
     <string name="register_success">注册成功</string>
     <string name="register_failed">注册失败</string>
     
+    <string name="confirm">确 定</string>
+    <string name="upgrade">升级</string>
+    <string name="exit">退出</string>
     
     <string name="title_set">设置</string>
     <string name="title_profile">我的资料</string>
@@ -110,9 +113,6 @@
     <string name="area_hint">地区</string>
     <string name="search_hint">街道 门牌号</string>
     
-    <string name="confirm">确 定</string>
-    <string name="upgrade">升级</string>
-    <string name="exit">退出</string>
     <string name="confirm_txt">确认</string>
     <string name="request_success">请求成功</string>
     <string name="request_failed">请求失败</string>

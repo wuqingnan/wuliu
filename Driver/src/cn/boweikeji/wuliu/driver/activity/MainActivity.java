@@ -44,6 +44,7 @@ import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
+import cn.boweikeji.wuliu.driver.bean.UpdateInfo;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.fragment.BaseFragment;
 import cn.boweikeji.wuliu.driver.fragment.FindFragment;
@@ -53,8 +54,11 @@ import cn.boweikeji.wuliu.driver.fragment.MoreFragment;
 import cn.boweikeji.wuliu.driver.fragment.OrderFragment;
 import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
+import cn.boweikeji.wuliu.driver.manager.UpdateManager;
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -171,6 +175,7 @@ public class MainActivity extends BaseActivity {
 	private boolean mMapShowing;
 	private boolean mIsFirstLoc;
 	private boolean mHasDriver;
+	private boolean mHasCheckUpdate;
 
 	private FragmentManager mFragmentManager;
 	private BaseFragment mCurFragment;
@@ -270,6 +275,7 @@ public class MainActivity extends BaseActivity {
 		mHandler = new MainHandler(this);
 		mIsFirstLoc = true;
 		mHasDriver = false;
+		mHasCheckUpdate = false;
 		initView();
 		initMap();
 		changeFragment(0);
@@ -405,6 +411,17 @@ public class MainActivity extends BaseActivity {
 		return true;
 	}
 
+	private void checkUpdate() {
+		if (mHasCheckUpdate) {
+			return;
+		}
+		mHasCheckUpdate = true;
+		UpdateInfo updateInfo = UpdateManager.readUpdateInfo();
+		if (updateInfo != null && updateInfo.isNeedUpdate()) {
+			showUpdateDialog(updateInfo);
+		}
+	}
+	
 	private void initLocation() {
 		mLocClient = new LocationClient(getApplicationContext());
 		WLApplication.setLocationClient(mLocClient);
@@ -516,6 +533,27 @@ public class MainActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void showUpdateDialog(final UpdateInfo info) {
+		UpdateManager.showUpdateDialog(this, info,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setData(Uri.parse(info.getUrl()));
+						startActivity(intent);
+					}
+				}, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						if (info.isForce()) {
+							exit();
+						}
+					}
+				});
 	}
 
 	private void exit() {

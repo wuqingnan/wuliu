@@ -12,6 +12,7 @@ import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.db.DBHelper;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
+import cn.boweikeji.wuliu.driver.manager.UpdateManager;
 import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -57,6 +58,7 @@ public class WelcomeActivity extends BaseActivity {
 		mHandler = new WelcomeHandler(this);
 		new Thread(new InitTask()).start();
 		autoLogin();
+		UpdateManager.checkUpdate();
 	}
 	
 	@Override
