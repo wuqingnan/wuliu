@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/new_feature1"
+    android:gravity="center_horizontal|bottom"
+    android:orientation="vertical" >
     
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/new_feature1" />
-
-</RelativeLayout>
+    <Button
+        android:id="@+id/feature_enter"
+        style="@style/TextAppearance.Big.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:onClick="onClick"
+        android:background="@drawable/btn_enter"
+        android:text="@string/enter_now" />
+</LinearLayout>
