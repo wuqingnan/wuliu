@@ -40,7 +40,6 @@ import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.UpdateEvent;
 import cn.boweikeji.wuliu.supplyer.fragment.BaseFragment;
-import cn.boweikeji.wuliu.supplyer.fragment.LoginFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.MainFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.OrderFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.ProfileFragment;
@@ -78,8 +77,6 @@ public class MainActivity extends BaseActivity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 
 	private static final int EXIT_TIME = 2000;
-
-	private static final int REQUEST_CODE_REGISTER = 1 << 0;
 
 	public static final String KEY_REDIRECT = "redirect";
 	public static final String KEY_REDIRECT_TO = "redirect_to";
@@ -296,22 +293,6 @@ public class MainActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUEST_CODE_REGISTER) {
-			if (resultCode == RESULT_OK) {
-				Fragment fragment = mFragmentManager
-						.findFragmentByTag(LoginFragment.class.getName());
-				if (fragment != null) {
-					UserInfo info = (UserInfo) data
-							.getSerializableExtra("userinfo");
-					((LoginFragment) fragment).login(info);
-				}
-			}
-		}
-	}
-
-	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		if (intent.getBooleanExtra(KEY_REDIRECT, false)) {
@@ -438,17 +419,12 @@ public class MainActivity extends BaseActivity {
 		if (LoginManager.getInstance().hasLogin()) {
 			mDrawerLayout.openDrawer(mMenuView);
 		} else {
-			changeFragment(new LoginFragment());
+			LoginActivity.startLoginActivity(this);
 		}
 	}
 
 	public void back() {
 		mFragmentManager.popBackStack();
-	}
-
-	public void register() {
-		startActivityForResult(new Intent(this, RegisterActivity.class),
-				REQUEST_CODE_REGISTER);
 	}
 
 	public void changeFragment(BaseFragment fragment) {

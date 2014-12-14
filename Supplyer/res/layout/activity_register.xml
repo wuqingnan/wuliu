@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/bg_back" >
+    android:layout_height="match_parent"
+    android:background="@color/bg_back"
+    android:orientation="vertical" >
 
     <include
         android:id="@+id/titlebar"
@@ -11,7 +12,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/titlebar"
         android:layout_marginTop="@dimen/default_marginTop"
         android:layout_marginLeft="@dimen/default_marginLeft"
         android:layout_marginRight="@dimen/default_marginRight"
@@ -21,84 +21,116 @@
 
         <cn.boweikeji.wuliu.supplyer.view.ClearEditText
             android:id="@+id/register_phone"
-            style="@style/ClearEditText.Light"
+            style="@style/EditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/hint_register_username"
+            android:layout_height="@dimen/edittext_height"
+            android:background="@drawable/bg_item"
+            android:drawableLeft="@drawable/ic_mark_phone"
+            android:hint="@string/phone_number"
             android:inputType="phone"
             android:maxLength="11" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" >
-            
-            <Button
-                android:id="@+id/register_get_code"
-                style="@style/TextAppearance.Middle.White"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:background="@drawable/btn_default"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="@string/get_verify_code"
-                android:enabled="false" />
+            android:layout_marginTop="9dp" >
 
             <cn.boweikeji.wuliu.supplyer.view.ClearEditText
                 android:id="@+id/register_code"
-                style="@style/ClearEditText.Light"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/register_get_code"
-                android:hint="@string/hint_register_code"
+                style="@style/EditText"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edittext_height"
+                android:layout_marginRight="9dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_item"
+                android:drawableLeft="@drawable/ic_mark_sms"
+                android:hint="@string/vertify_code"
                 android:inputType="number"
                 android:maxLength="4" />
-        </RelativeLayout>
 
-        <cn.boweikeji.wuliu.supplyer.view.ClearEditText
-            android:id="@+id/register_password"
-            style="@style/ClearEditText.Light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:hint="@string/hint_register_password"
-            android:inputType="textPassword"
-            android:maxLength="16" />
+            <LinearLayout
+                android:id="@+id/register_get_code"
+                android:layout_width="140dp"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/btn_vertify"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
 
-        <cn.boweikeji.wuliu.supplyer.view.ClearEditText
-            android:id="@+id/register_id"
-            style="@style/ClearEditText.Light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:hint="@string/hint_register_id"
-            android:maxLength="18" />
+                <TextView
+                    style="@style/TextAppearance.Small.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/get_verify_code" />
+
+                <TextView
+                    android:id="@+id/register_countdown"
+                    style="@style/TextAppearance.Micro.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:text="@string/vertify_code_countdown"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edit_text_holo_light"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:layout_marginTop="9dp"
+            android:background="@drawable/bg_item"
+            android:orientation="vertical" >
 
-            <TextView
-                style="@style/TextAppearance.Middle.LightGray"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/label_user_type" />
+            <cn.boweikeji.wuliu.supplyer.view.ClearEditText
+                android:id="@+id/register_password"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:drawableLeft="@drawable/ic_mark_pass"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLength="16" />
 
-            <TextView
-                android:id="@+id/register_user_type"
-                style="@style/TextAppearance.Middle.LightGray"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.0"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/arrow_right"
-                android:gravity="center" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/line_d6dae0" />
+
+            <cn.boweikeji.wuliu.supplyer.view.ClearEditText
+                android:id="@+id/register_id"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:drawableLeft="@drawable/ic_mark_id"
+                android:hint="@string/id_number"
+                android:maxLength="18" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/line_d6dae0" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/bg_item"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/ItemLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/ic_mark_type"
+                    android:text="@string/label_user_type" />
+
+                <TextView
+                    android:id="@+id/register_user_type"
+                    style="@style/ItemValueWithArrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
         </LinearLayout>
 
         <Button
@@ -111,4 +143,4 @@
             android:text="@string/register" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

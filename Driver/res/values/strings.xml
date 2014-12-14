@@ -83,7 +83,7 @@
     <string name="recommend_no">推荐码</string>
     <string name="remark">个人说明</string>
     
-    <string name="label_driver_type">用户类型：</string>
+    <string name="label_user_type">用户类型：</string>
     <string name="label_area_code">所属城市：</string>
     
     <string name="all">全部</string>

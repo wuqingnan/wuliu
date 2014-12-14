@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/titlebar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_height"
     android:background="@color/bg_title"
@@ -9,19 +10,18 @@
         android:id="@+id/titlebar_leftBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_navi_back" />
 
-    <Button
+    <TextView
         android:id="@+id/titlebar_rightTxt"
-        style="@style/TextAppearance.Middle.White"
+        style="@style/TextAppearance.Small.White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="6dp"
-        android:background="@null"
+        android:layout_marginRight="13dp"
         android:gravity="center"
         android:visibility="gone" />
 

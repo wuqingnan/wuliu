@@ -2,12 +2,11 @@ package cn.boweikeji.wuliu.supplyer.fragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.boweikeji.wuliu.supplyer.activity.LoginActivity;
 import cn.boweikeji.wuliu.supplyer.activity.MainActivity;
 import cn.boweikeji.wuliu.supplyer.activity.SendActivity;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
-
 import cn.boweikeji.wuliu.supplyer.R;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,14 +34,14 @@ public class MainFragment extends BaseFragment {
 				if (LoginManager.getInstance().hasLogin()) {
 					SendActivity.startSendActivity(getActivity(), false);
 				} else {
-					((MainActivity)getActivity()).changeFragment(new LoginFragment());
+					LoginActivity.startLoginActivity(getActivity());
 				}
 			}
 			else if (view == mMainBook) {
 				if (LoginManager.getInstance().hasLogin()) {
 					SendActivity.startSendActivity(getActivity(), true);
 				} else {
-					((MainActivity)getActivity()).changeFragment(new LoginFragment());
+					LoginActivity.startLoginActivity(getActivity());
 				}
 			}
 		}

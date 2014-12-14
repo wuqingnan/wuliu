@@ -62,7 +62,7 @@ public class RegisterProfileActivity extends BaseActivity {
 			} else if (view == mGetCode) {
 				getVerifyCode();
 			} else if (view == mDriverType) {
-				driverType();
+				userType();
 			} else if (view == mAreaCode) {
 				chooseCity();
 			} else if (view == mIDImage) {
@@ -202,6 +202,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		hideCountDown();
 		SMSSDK.unregisterAllEventHandler();
 		recyclePhoto();
 	}
@@ -336,7 +337,7 @@ public class RegisterProfileActivity extends BaseActivity {
 		}
 	}
 	
-	private void driverType() {
+	private void userType() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
 				.setSingleChoiceItems(mDriverTypes, mDriverTypeIndex,
 						new DialogInterface.OnClickListener() {

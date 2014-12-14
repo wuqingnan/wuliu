@@ -11,7 +11,9 @@ import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.WeakHandler;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
+import cn.boweikeji.wuliu.supplyer.event.LoginEvent;
 import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
+import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.EncryptUtil;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 import cn.boweikeji.wuliu.supplyer.view.ClearEditText;
@@ -19,14 +21,22 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 
+
+
+
+
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import cn.boweikeji.wuliu.supplyer.R;
+import de.greenrobot.event.EventBus;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
@@ -35,6 +45,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RegisterActivity extends BaseActivity {
@@ -43,7 +54,8 @@ public class RegisterActivity extends BaseActivity {
 	
 	private static final String COUNTRY_CODE = "86";
 	
-	private static final long COOLDOWN_TIME = 60 * 1000;
+	private static final long COOLDOWN_INTERVAL = 1000;
+	private static final long COOLDOWN_TIME = 60 * COOLDOWN_INTERVAL;
 	
 	private static final int MSG_GET_VERIFICATION_CODE_ERROR = 1 << 0;
 	private static final int MSG_GET_VERIFICATION_CODE_COMPLETE = 1 << 1;
@@ -56,8 +68,8 @@ public class RegisterActivity extends BaseActivity {
 			if (view == mMenuBtn) {
 				finish();
 			} else if (view == mUserType) {
-				showTypeChooseDialog();
-			} else if (view == mCodeBtn) {
+				userType();
+			} else if (view == mGetCode) {
 				getVerifyCode();
 			} else if (view == mSubmit) {
 				register();
@@ -83,11 +95,11 @@ public class RegisterActivity extends BaseActivity {
 	private TextWatcher mTextWatcher = new TextWatcher() {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
-			if (s != null && Util.isPhoneNumber(s.toString()) && !mCoolDown) {
-				mCodeBtn.setEnabled(true);
+			if (s != null && Util.isPhoneNumber(s.toString()) && !mIsCountDown) {
+				mGetCode.setEnabled(true);
 			}
 			else {
-				mCodeBtn.setEnabled(false);
+				mGetCode.setEnabled(false);
 			}
 		}
 		
@@ -133,6 +145,19 @@ public class RegisterActivity extends BaseActivity {
 		}
 	};
 	
+	private CountDownTimer mCountDownTimer = new CountDownTimer(COOLDOWN_TIME, COOLDOWN_INTERVAL) {
+		
+		@Override
+		public void onTick(long millisUntilFinished) {
+			updateCountDown(millisUntilFinished);
+		}
+		
+		@Override
+		public void onFinish() {
+			hideCountDown();
+		}
+	};
+	
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
@@ -142,7 +167,9 @@ public class RegisterActivity extends BaseActivity {
 	@InjectView(R.id.register_code)
 	ClearEditText mCode;
 	@InjectView(R.id.register_get_code)
-	Button mCodeBtn;
+	LinearLayout mGetCode;
+	@InjectView(R.id.register_countdown)
+	TextView mCountDown;
 	@InjectView(R.id.register_password)
 	ClearEditText mPassword;
 	@InjectView(R.id.register_id)
@@ -155,7 +182,7 @@ public class RegisterActivity extends BaseActivity {
 	private int mUserTypeIndex;
 	private String[] mUserTypes;
 	
-	private boolean mCoolDown = false;
+	private boolean mIsCountDown = false;
 	
 	private RegisterHandler mHandler = null;
 	
@@ -175,6 +202,7 @@ public class RegisterActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		hideCountDown();
 		SMSSDK.unregisterAllEventHandler();
 	}
 
@@ -182,12 +210,13 @@ public class RegisterActivity extends BaseActivity {
 		ButterKnife.inject(this);
 		mTitle.setText(R.string.register);
 		mMenuBtn.setOnClickListener(mOnClickListener);
-		mCodeBtn.setOnClickListener(mOnClickListener);
+		mGetCode.setOnClickListener(mOnClickListener);
 		mUserType.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);
 		mPassword.setInputType(InputType.TYPE_CLASS_TEXT
 				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		mPhone.addTextChangedListener(mTextWatcher);
+		mGetCode.setEnabled(false);
 	}
 
 	private void initData() {
@@ -201,20 +230,8 @@ public class RegisterActivity extends BaseActivity {
 	}
 
 	private void getVerifyCode() {
-		Log.d(TAG, "shizy---getVerifyCode");
-		mCoolDown = true;
-		mCodeBtn.setEnabled(false);
+		showCountDown();
 		SMSSDK.getVerificationCode(COUNTRY_CODE, mPhone.getText().toString());
-		mHandler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mCoolDown = false;
-				String phone = mPhone.getText().toString();
-				if (phone != null && Util.isPhoneNumber(phone)) {
-					mCodeBtn.setEnabled(true);
-				}
-			}
-		}, COOLDOWN_TIME);
 	}
 	
 	private void register() {
@@ -242,17 +259,13 @@ public class RegisterActivity extends BaseActivity {
 		AsyncHttp.get(Const.URL_REGISTER, params, mRequestHandler);
 	}
 	
-	private void login() {
-		hideProgressDialog();
-		Intent intent = new Intent();
-		UserInfo info = new UserInfo();
-		String phone = mPhone.getText().toString();
-		String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
-		info.setSupplyer_cd(phone);
-		info.setPasswd(password);
-		intent.putExtra("userinfo", info);
-		setResult(RESULT_OK, intent);
-		finish();
+	private void registerSuccess(JSONObject infos) {
+		LoginManager.getInstance().setLogin(true);
+		UserInfo userInfo = new UserInfo(infos);
+		userInfo.setPasswd(EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5));
+		LoginManager.getInstance().setUserInfo(userInfo);
+		EventBus.getDefault().post(new LoginEvent());
+		startActivity(new Intent(this, MainActivity.class));
 	}
 	
 	private boolean validCheck() {
@@ -294,7 +307,7 @@ public class RegisterActivity extends BaseActivity {
 		return true;
 	}
 	
-	private void showTypeChooseDialog() {
+	private void userType() {
 		AlertDialog dialog = new AlertDialog.Builder(this)
 				.setSingleChoiceItems(mUserTypes, mUserTypeIndex,
 						new DialogInterface.OnClickListener() {
@@ -308,6 +321,30 @@ public class RegisterActivity extends BaseActivity {
 							}
 						}).setTitle("货源").create();
 		dialog.show();
+	}
+
+	private void showCountDown() {
+		mIsCountDown = true;
+		mGetCode.setEnabled(false);
+		updateCountDown(COOLDOWN_TIME);
+		mCountDown.setVisibility(View.VISIBLE);
+		mCountDownTimer.cancel();
+		mCountDownTimer.start();
+	}
+	
+	private void hideCountDown() {
+		mIsCountDown = false;
+		mCountDown.setVisibility(View.GONE);
+		mCountDownTimer.cancel();
+		String phone = mPhone.getText().toString();
+		if (phone != null && Util.isPhoneNumber(phone)) {
+			mGetCode.setEnabled(true);
+		}
+	}
+	
+	private void updateCountDown(long millisUntilFinished) {
+		String txt = String.format(getResources().getString(R.string.vertify_code_countdown), (int)(millisUntilFinished / 1000));
+		mCountDown.setText(txt);
 	}
 	
 	private void showProgressDialog() {
@@ -334,7 +371,7 @@ public class RegisterActivity extends BaseActivity {
 				String msg = response.getString("msg");
 				Util.showTips(this, msg);
 				if (res == 2) {//成功
-					login();
+					registerSuccess(response.optJSONObject("supplyer"));
 				}
 				return;
 			} catch (JSONException e) {
@@ -368,5 +405,9 @@ public class RegisterActivity extends BaseActivity {
 				break;
 			}
 		}
+	}
+	
+	public static void startRegisterActivity(Context context) {
+		context.startActivity(new Intent(context, RegisterActivity.class));
 	}
 }

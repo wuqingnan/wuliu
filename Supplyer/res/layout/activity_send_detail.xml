@@ -281,7 +281,7 @@
                     android:background="@null"
                     android:button="@null"
                     android:checked="false"
-                    android:drawableLeft="@drawable/checkbox_accept"
+                    android:drawableLeft="@drawable/cb_accept"
                     android:text="@string/agree_and_accept"
                     android:textColor="@color/black" />
 

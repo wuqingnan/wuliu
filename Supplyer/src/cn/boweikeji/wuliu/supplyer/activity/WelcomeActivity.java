@@ -59,7 +59,7 @@ public class WelcomeActivity extends BaseActivity {
 		initView();
 		mHandler = new WelcomeHandler(this);
 		new Thread(new InitTask()).start();
-		LoginManager.getInstance().autoLogin();
+		autoLogin();
 	}
 	
 	@Override
@@ -131,6 +131,12 @@ public class WelcomeActivity extends BaseActivity {
 		enterApp();
 	}
 	
+	private void autoLogin() {
+		SharedPreferences preference = getSharedPreferences(Const.PREFERENCE_NAME, MODE_MULTI_PROCESS);
+		if (preference.getBoolean(Const.KEY_AUTO_LOGIN, false)) {
+			LoginManager.getInstance().autoLogin();
+		}
+	}
 	private class InitTask implements Runnable {
 		@Override
 		public void run() {
