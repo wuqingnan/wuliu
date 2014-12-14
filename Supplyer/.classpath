@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="cn/boweikeji/wuliu/supplyer/fragment/LoginFragment.java" kind="src" path="src"/>
+	<classpathentry excluding="cn/boweikeji/wuliu/supplyer/fragment/LoginFragment.java|cn/boweikeji/wuliu/supplyer/fragment/OrderFragment.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>

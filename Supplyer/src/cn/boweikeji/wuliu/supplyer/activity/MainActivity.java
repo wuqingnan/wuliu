@@ -41,7 +41,6 @@ import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.UpdateEvent;
 import cn.boweikeji.wuliu.supplyer.fragment.BaseFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.MainFragment;
-import cn.boweikeji.wuliu.supplyer.fragment.OrderFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.ProfileFragment;
 import cn.boweikeji.wuliu.supplyer.fragment.SetFragment;
 import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
@@ -174,7 +173,7 @@ public class MainActivity extends BaseActivity {
 					changeFragment(new ProfileFragment());
 					break;
 				case MenuView.MENU_ORDER:
-					changeFragment(new OrderFragment());
+					OrderActivity.startOrderActivity(MainActivity.this);
 					break;
 				case MenuView.MENU_MESSAGE:
 					WebViewActivity.startWebViewActivity(MainActivity.this,
