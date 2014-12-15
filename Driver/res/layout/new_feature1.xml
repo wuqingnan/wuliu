@@ -8,10 +8,10 @@
     
     <Button
         android:id="@+id/feature_enter"
-        style="@style/TextAppearance.Big.White"
+        style="@style/TextAppearance.Micro.White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="25dp"
         android:onClick="onClick"
         android:background="@drawable/btn_enter"
         android:text="@string/enter_now" />
