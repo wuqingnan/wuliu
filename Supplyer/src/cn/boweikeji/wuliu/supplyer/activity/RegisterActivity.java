@@ -68,7 +68,7 @@ public class RegisterActivity extends BaseActivity {
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
-			if (view == mMenuBtn) {
+			if (view == mBack) {
 				finish();
 			} else if (view == mUserType) {
 				userType();
@@ -162,7 +162,7 @@ public class RegisterActivity extends BaseActivity {
 	};
 	
 	@InjectView(R.id.titlebar_leftBtn)
-	ImageView mMenuBtn;
+	ImageView mBack;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.register_phone)
@@ -175,8 +175,6 @@ public class RegisterActivity extends BaseActivity {
 	TextView mCountDown;
 	@InjectView(R.id.register_password)
 	ClearEditText mPassword;
-	@InjectView(R.id.register_id)
-	ClearEditText mIDNumber;
 	@InjectView(R.id.register_user_type)
 	TextView mUserType;
 	@InjectView(R.id.register_submit)
@@ -212,7 +210,7 @@ public class RegisterActivity extends BaseActivity {
 	private void initView() {
 		ButterKnife.inject(this);
 		mTitle.setText(R.string.register);
-		mMenuBtn.setOnClickListener(mOnClickListener);
+		mBack.setOnClickListener(mOnClickListener);
 		mGetCode.setOnClickListener(mOnClickListener);
 		mUserType.setOnClickListener(mOnClickListener);
 		mSubmit.setOnClickListener(mOnClickListener);
@@ -250,14 +248,13 @@ public class RegisterActivity extends BaseActivity {
 	private void submit() {
 		String phone = mPhone.getText().toString();
 		String password = EncryptUtil.encrypt(mPassword.getText().toString(), EncryptUtil.MD5);
-		String id = mIDNumber.getText().toString();
 		BaseParams params = new BaseParams();
 		params.add("method", "registerGoodSupplyer");
 		params.add("supplyer_type", "" + mUserTypeIndex);
 		params.add("phone", phone);
 		params.add("credit_level", "0");
 		params.add("state", "0");
-		params.add("card_id", (id == null || id.equals("")) ? BaseParams.PARAM_DEFAULT : id);
+		params.add("card_id", BaseParams.PARAM_DEFAULT);
 		params.add("passwd", password);
 		AsyncHttp.get(Const.URL_REGISTER, params, mRequestHandler);
 	}
@@ -275,19 +272,18 @@ public class RegisterActivity extends BaseActivity {
 		String phone = mPhone.getText().toString();
 		String code = mCode.getText().toString();
 		String password = mPassword.getText().toString();
-		String id = mIDNumber.getText().toString();
 		
 		if (phone == null || phone.equals("")) {
 			Util.showTips(this, getResources().getString(
-					R.string.register_username_empty));
+					R.string.phone_empty));
 			return false;
 		} else if (code == null || code.equals("")) {
 			Util.showTips(this, getResources().getString(
-					R.string.register_code_empty));
+					R.string.vertify_code_empty));
 			return false;
 		} else if (password == null || password.equals("")) {
 			Util.showTips(this, getResources().getString(
-					R.string.register_password_empty));
+					R.string.password_empty));
 			return false;
 		} else if (!Util.isPhoneNumber(phone)) {
 			Util.showTips(this, getResources().getString(
@@ -295,15 +291,11 @@ public class RegisterActivity extends BaseActivity {
 			return false;
 		} else if (!Util.isCodeValid(code)) {
 			Util.showTips(this, getResources().getString(
-					R.string.register_code_invalid));
+					R.string.vertify_code_invalid));
 			return false;
 		} else if (!Util.isPasswordValid(password)) {
 			Util.showTips(this, getResources().getString(
 					R.string.password_invalid));
-			return false;
-		} else if (id != null && !id.equals("") && !Util.isIDNumberValid(id)) {
-			Util.showTips(this, getResources().getString(
-					R.string.register_id_invalid));
 			return false;
 		}
 		

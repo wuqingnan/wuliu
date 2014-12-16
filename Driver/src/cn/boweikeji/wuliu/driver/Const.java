@@ -25,7 +25,7 @@ public class Const {
 	public static final String URL_ROB_ORDER = "bss/robMessage.action";
 	public static final String URL_DROP_ORDER = "bss/driverDropMessage.action";
 	public static final String URL_POSITION_UPLOAD = "bss/collectDriverInfos.action";
-	public static final String URL_CHANGE_PASSWORD = "bss/changeSupplyerPwd.action";
+	public static final String URL_CHANGE_PASSWORD = "bss/changeDriverPwd.action";
 	public static final String URL_SUGGEST = "bss/driverSuggest.action";
 	public static final String URL_UPDATE = "bss/updateAPP.action";
 	public static final String URL_NEAR_DRIVER = "bss/getNearDriversByDrv.action";

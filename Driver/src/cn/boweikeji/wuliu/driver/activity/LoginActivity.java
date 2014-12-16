@@ -48,6 +48,8 @@ public class LoginActivity extends BaseActivity {
 				finish();
 			} else if (view == mRegister) {
 				RegisterProfileActivity.startRegisterPhoneActivity(LoginActivity.this);
+			} else if (view == mForgetPass) {
+				ForgetPasswdActivity.startForgetPasswdActivity(LoginActivity.this);
 			} else if (view == mLoginSubmit) {
 				login();
 			}
@@ -129,6 +131,7 @@ public class LoginActivity extends BaseActivity {
 		mBack.setImageResource(R.drawable.ic_navi_back);
 		mBack.setOnClickListener(mOnClickListener);
 		mRegister.setOnClickListener(mOnClickListener);
+		mForgetPass.setOnClickListener(mOnClickListener);
 	}
 
 	private void initView() {

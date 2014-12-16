@@ -108,6 +108,7 @@ public class ChangePasswordActivity extends BaseActivity {
 			BaseParams params = new BaseParams();
 			params.add("method", "changeSupplyerPwd");
 			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
+			params.add("is_need", "1");
 			params.add("old_pwd", oldPass);
 			params.add("new_pwd", newPass);
 			AsyncHttp.get(Const.URL_CHANGE_PASSWORD, params, mRequestHandler);

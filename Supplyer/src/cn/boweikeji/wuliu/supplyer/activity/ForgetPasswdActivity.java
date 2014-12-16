@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.driver.activity;
+package cn.boweikeji.wuliu.supplyer.activity;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -24,11 +24,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import cn.boweikeji.wuliu.driver.Const;
-import cn.boweikeji.wuliu.driver.R;
-import cn.boweikeji.wuliu.driver.WeakHandler;
-import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.http.AsyncHttp;
+import cn.boweikeji.wuliu.supplyer.Const;
+import cn.boweikeji.wuliu.supplyer.R;
+import cn.boweikeji.wuliu.supplyer.WeakHandler;
+import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.utils.EncryptUtil;
 import cn.boweikeji.wuliu.utils.Util;
 import cn.boweikeji.wuliu.view.ClearEditText;

@@ -20,18 +20,17 @@
     <string name="label_user_type">用户类型：</string>
     
     <string name="register">注册</string>
-    <string name="phone_number">手机号</string>
+    <string name="phone">手机号</string>
     <string name="vertify_code">验证码</string>
     <string name="get_verify_code">获取验证码</string>
     <string name="vertify_code_countdown">(%1$d秒后重发)</string>
     <string name="password">密码</string>
-    <string name="id_number">身份证号码</string>
+    <string name="password_again">再次输入密码</string>
     
-    <string name="register_username_empty">手机号为空</string>
-    <string name="register_code_empty">验证码为空</string>
-    <string name="register_password_empty">密码为空</string>
-    <string name="register_code_invalid">验证码格式错误</string>
-    <string name="register_id_invalid">身份证号码格式错误</string>
+    <string name="phone_empty">手机号为空</string>
+    <string name="vertify_code_empty">验证码为空</string>
+    <string name="password_empty">密码为空</string>
+    <string name="vertify_code_invalid">验证码格式错误</string>
     <string name="register_success">注册成功</string>
     <string name="register_failed">注册失败</string>
     
@@ -107,7 +106,6 @@
     <string name="label_name">姓名：</string>
     <string name="label_phone">手机号：</string>
     <string name="label_credit">信用等级：</string>
-    <string name="label_id_number">身份证：</string>
     <string name="label_register_time">注册时间：</string>
     
     <string name="agree_and_accept">同意并接受</string>
@@ -131,6 +129,7 @@
     <string name="login_input_password_empty">密码为空</string>
     <string name="phone_invalid">手机号码格式错误</string>
     <string name="password_invalid">密码格式错误，（6-16）位字母、数字、下划线</string>
+    <string name="password_not_same">两次输入密码不同</string>
     <string name="hint_login_username">请输入手机号码</string>
     <string name="hint_login_password">请输入密码</string>
     <string name="show">显示</string>

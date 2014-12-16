@@ -50,6 +50,7 @@
     <string name="prompt">提示</string>
     <string name="auto_login">自动登录</string>
     <string name="forget_pass">忘记密码</string>
+    <string name="change_passwd">修改密码</string>
     
     <string name="choose_image">选择照片</string>
     
@@ -83,6 +84,7 @@
     <string name="vertify_code">验证码</string>
     <string name="phone">手机号</string>
     <string name="password">密码</string>
+    <string name="password_again">再次输入密码</string>
     <string name="name">姓名</string>
     <string name="company">所属企业</string>
     <string name="id_number">身份证号码</string>
@@ -101,6 +103,7 @@
     <string name="phone_empty">手机号为空</string>
     <string name="vertify_code_empty">验证码为空</string>
     <string name="password_empty">密码为空</string>
+    <string name="password_not_same">两次输入密码不同</string>
     <string name="name_empty">姓名为空</string>
     <string name="company_empty">所属企业为空</string>
     <string name="id_number_empty">身份证号码为空</string>

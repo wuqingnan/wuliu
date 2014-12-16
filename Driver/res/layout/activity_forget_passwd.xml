@@ -20,7 +20,7 @@
         android:orientation="vertical" >
 
         <cn.boweikeji.wuliu.view.ClearEditText
-            android:id="@+id/register_phone"
+            android:id="@+id/phone"
             style="@style/EditText"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_height"
@@ -36,7 +36,7 @@
             android:layout_marginTop="9dp" >
 
             <cn.boweikeji.wuliu.view.ClearEditText
-                android:id="@+id/register_code"
+                android:id="@+id/code"
                 style="@style/EditText"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edittext_height"
@@ -49,7 +49,7 @@
                 android:maxLength="4" />
 
             <LinearLayout
-                android:id="@+id/register_get_code"
+                android:id="@+id/get_code"
                 android:layout_width="140dp"
                 android:layout_height="@dimen/edittext_height"
                 android:background="@drawable/btn_vertify"
@@ -64,7 +64,7 @@
                     android:text="@string/get_verify_code" />
 
                 <TextView
-                    android:id="@+id/register_countdown"
+                    android:id="@+id/countdown"
                     style="@style/TextAppearance.Micro.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             android:orientation="vertical" >
 
             <cn.boweikeji.wuliu.view.ClearEditText
-                android:id="@+id/register_password"
+                android:id="@+id/password1"
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
@@ -97,36 +97,25 @@
                 android:layout_height="@dimen/line_height"
                 android:background="@color/line_d6dae0" />
 
-            <LinearLayout
-                android:layout_width="fill_parent"
+            <cn.boweikeji.wuliu.view.ClearEditText
+                android:id="@+id/password2"
+                style="@style/EditText"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                android:background="@drawable/bg_item"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <TextView
-                    style="@style/ItemLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/ic_mark_type"
-                    android:text="@string/label_user_type" />
-
-                <TextView
-                    android:id="@+id/register_user_type"
-                    style="@style/ItemValueWithArrow"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+                android:drawableLeft="@drawable/ic_mark_pass"
+                android:hint="@string/password_again"
+                android:inputType="textPassword"
+                android:maxLength="16" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/register_submit"
+            android:id="@+id/submit"
             style="@style/TextAppearance.Big.White"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/btn_default_height"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_default"
-            android:text="@string/register" />
+            android:text="@string/change_passwd" />
     </LinearLayout>
 
 </LinearLayout>

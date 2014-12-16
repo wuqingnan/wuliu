@@ -76,6 +76,12 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
+            android:name="cn.boweikeji.wuliu.driver.activity.ForgetPasswdActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
+        </activity>
+        <activity
             android:name="cn.boweikeji.wuliu.driver.activity.RegisterProfileActivity"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Black.NoTitleBar"
