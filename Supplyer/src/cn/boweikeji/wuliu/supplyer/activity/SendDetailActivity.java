@@ -146,13 +146,17 @@ public class SendDetailActivity extends BaseActivity {
 	private boolean checkValid() {
 		String fromPhone = mFromPhone.getText().toString();
 		String toPhone = mToPhone.getText().toString();
-		if (!TextUtils.isEmpty(fromPhone) && !Util.isPhoneNumber(fromPhone)) {
+		if (TextUtils.isEmpty(fromPhone)) {
+			Util.showTips(this, getResources().getString(
+					R.string.send_phone_empty));
+			return false;
+		} else if (!Util.isPhoneNumber(fromPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;
 		} else if (!TextUtils.isEmpty(toPhone) && !Util.isPhoneNumber(toPhone)) {
 			Util.showTips(this, getResources().getString(
-					R.string.send_phone_error));
+					R.string.to_phone_error));
 			return false;
 		} else if (!mSendAccept.isChecked()) {
 			Util.showTips(this, getResources().getString(

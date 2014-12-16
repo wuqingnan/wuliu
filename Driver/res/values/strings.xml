@@ -122,7 +122,7 @@
     
     <string name="choose_start">请选择起点</string>
     <string name="choose_end">请选择终点</string>
-    <string name="address_empty">地址不能为空</string>
+    <string name="must_have_one_address">至少有一个地址不为空</string>
     
     <string name="submit">提交</string>
     <string name="no_result">无内容</string>

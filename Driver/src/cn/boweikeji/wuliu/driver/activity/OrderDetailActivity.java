@@ -417,6 +417,9 @@ public class OrderDetailActivity extends BaseActivity {
 				break;
 			case R.string.label_pick_time:
 				value = mOrder.getPick_time();
+				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+					value = mContext.getString(R.string.unknown);
+				}
 				break;
 			case R.string.label_create_time:
 				value = mOrder.getCreate_date();
@@ -484,9 +487,15 @@ public class OrderDetailActivity extends BaseActivity {
 				break;
 			case R.string.label_from_address:
 				value = mOrder.getStart_addr();
+				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+					value = mContext.getString(R.string.unknown);
+				}
 				break;
 			case R.string.label_to_address:
 				value = mOrder.getEnd_addr();
+				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+					value = mContext.getString(R.string.unknown);
+				}
 				break;
 			}
 			holder.refresh(name, value);

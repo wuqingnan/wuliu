@@ -209,8 +209,8 @@ public class FindFragment extends BaseFragment {
 	}
 	
 	private boolean validCheck() {
-		if (mStartInfos == null || mEndInfos == null) {
-			Util.showTips(getActivity(), getResources().getString(R.string.address_empty));
+		if (mStartInfos == null && mEndInfos == null) {
+			Util.showTips(getActivity(), getResources().getString(R.string.must_have_one_address));
 			return false;
 		} else if (mTruckTypeIndex == 0) {
 			Util.showTips(getActivity(), getResources().getString(R.string.choose_truck_type));

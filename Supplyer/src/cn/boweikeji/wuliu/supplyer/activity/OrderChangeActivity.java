@@ -207,7 +207,7 @@ public class OrderChangeActivity extends BaseActivity {
 			mOrder.setReciver_phone(mToPhone.getText().toString());
 			mOrder.setRemark(mSendComment.getText().toString());
 			mOrder.setMess_fee(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 2);
-			mOrder.setGoods_cost(pay == null ? -9 : Integer.parseInt(pay));
+			mOrder.setGoods_cost(TextUtils.isEmpty(pay) ? -9 : Integer.parseInt(pay));
 			mOrder.setEnd_addr(mToAddress.getText().toString());
 			mOrder.setStart_addr(mFromAddress.getText().toString());
 			BaseParams params = mOrder.getChangeParams();
@@ -221,22 +221,21 @@ public class OrderChangeActivity extends BaseActivity {
 		String fromPhone = mFromPhone.getText().toString();
 		String toPhone = mToPhone.getText().toString();
 		String fromAddress = mFromAddress.getText().toString();
-		String toAddress = mToAddress.getText().toString();
-		if (!TextUtils.isEmpty(fromPhone) && !Util.isPhoneNumber(fromPhone)) {
+		if (TextUtils.isEmpty(fromPhone)) {
+			Util.showTips(this, getResources().getString(
+					R.string.send_phone_empty));
+			return false;
+		} else if (!Util.isPhoneNumber(fromPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;
 		} else if (!TextUtils.isEmpty(toPhone) && !Util.isPhoneNumber(toPhone)) {
 			Util.showTips(this, getResources().getString(
-					R.string.send_phone_error));
+					R.string.to_phone_error));
 			return false;
 		} else if (TextUtils.isEmpty(fromAddress)) {
 			Util.showTips(this, getResources().getString(
 					R.string.address_from_empty));
-			return false;
-		} else if (TextUtils.isEmpty(toAddress)) {
-			Util.showTips(this, getResources().getString(
-					R.string.address_to_empty));
 			return false;
 		}
 		return true;

@@ -233,8 +233,8 @@ public class SendActivity extends BaseActivity {
 			String value = mGoodsValue.getText().toString();
 			String pay = mGoodsPay.getText().toString();
 			order.setWeight(weight);
-			order.setGoods_value(value == null ? -9 : Integer.parseInt(value));
-			order.setGoods_cost(pay == null ? -9 : Integer.parseInt(pay));
+			order.setGoods_value(TextUtils.isEmpty(value) ? -9 : Integer.parseInt(value));
+			order.setGoods_cost(TextUtils.isEmpty(pay) ? -9 : Integer.parseInt(pay));
 			order.setValid_type(mValidTimeIndex);
 			order.setTruck_type_code(mTruckTypeIndex);
 			order.setEnd_addr(mToAddress.getText().toString());
@@ -343,7 +343,6 @@ public class SendActivity extends BaseActivity {
 		String goodsName = mGoodsName.getText().toString();
 		String goodsWeight = mGoodsWeight.getText().toString();
 		String fromAddress = mFromAddress.getText().toString();
-		String toAddress = mToAddress.getText().toString();
 		if (mBespeak && (TextUtils.isEmpty(pickTime))) {
 			Util.showTips(this, getResources().getString(
 					R.string.pick_time_empty));
@@ -359,10 +358,6 @@ public class SendActivity extends BaseActivity {
 		} else if (TextUtils.isEmpty(fromAddress)) {
 			Util.showTips(this, getResources().getString(
 					R.string.address_from_empty));
-			return false;
-		} else if (TextUtils.isEmpty(toAddress)) {
-			Util.showTips(this, getResources().getString(
-					R.string.address_to_empty));
 			return false;
 		} else if (mValidTimeIndex == 0) {
 			Util.showTips(this, getResources().getString(
