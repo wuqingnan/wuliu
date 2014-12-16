@@ -28,6 +28,7 @@ import cn.boweikeji.wuliu.driver.bean.UpdateInfo;
 import cn.boweikeji.wuliu.driver.event.ExitEvent;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.manager.UpdateManager;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
 import cn.boweikeji.wuliu.utils.Util;
 import de.greenrobot.event.EventBus;
 
@@ -98,6 +99,7 @@ public class SetActivity extends BaseActivity {
 	}
 
 	private void initView() {
+		mVersion.setText(DeviceInfo.getVersionName());
 		mUpdate.setOnClickListener(mOnClickListener);
 		mAbout.setOnClickListener(mOnClickListener);
 		mLogout.setOnClickListener(mOnClickListener);

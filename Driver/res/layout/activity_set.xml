@@ -20,16 +20,19 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
-            android:drawableLeft="@drawable/ic_about"
+            android:drawableLeft="@drawable/ic_push"
             android:drawablePadding="20dp"
             android:gravity="center_vertical"
             android:text="@string/push_switch" />
 
-        <Button
+        <ToggleButton
             android:id="@+id/push_switch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
+            android:layout_height="38dp"
+            android:background="@drawable/btn_toggle"
+            android:checked="true"
+            android:textOff=""
+            android:textOn="" />
     </LinearLayout>
 
     <View
@@ -50,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
-            android:drawableLeft="@drawable/ic_about"
+            android:drawableLeft="@drawable/ic_update"
             android:drawablePadding="20dp"
             android:gravity="center_vertical"
             android:text="@string/check_update" />
