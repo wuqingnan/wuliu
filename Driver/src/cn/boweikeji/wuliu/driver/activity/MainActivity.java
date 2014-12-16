@@ -174,7 +174,6 @@ public class MainActivity extends BaseActivity {
 
 	private boolean mMapShowing;
 	private boolean mIsFirstLoc;
-	private boolean mHasDriver;
 	private boolean mHasCheckUpdate;
 
 	private FragmentManager mFragmentManager;
@@ -205,6 +204,7 @@ public class MainActivity extends BaseActivity {
 		mMapView.onResume();
 		mMapShowing = true;
 		updateMap();
+		checkUpdate();
 	}
 
 	@Override
@@ -274,7 +274,6 @@ public class MainActivity extends BaseActivity {
 		mFragmentManager = getSupportFragmentManager();
 		mHandler = new MainHandler(this);
 		mIsFirstLoc = true;
-		mHasDriver = false;
 		mHasCheckUpdate = false;
 		initView();
 		initMap();
@@ -374,9 +373,8 @@ public class MainActivity extends BaseActivity {
 			mBaiduMap.animateMapStatus(u);
 			showMyLocInfo();
 		}
-		if (!mHasDriver) {
-			requestDriver(location);
-		}
+		mBaiduMap.clear();
+		requestDriver(location);
 	}
 
 	private boolean changeFragment(int index) {
@@ -525,7 +523,6 @@ public class MainActivity extends BaseActivity {
 				if (res == 2) {// 成功
 					if (mMapShowing) {
 						addMarker(response.optJSONArray("info"));
-						mHasDriver = true;
 					}
 				}
 				return;

@@ -249,7 +249,6 @@ public class MainActivity extends BaseActivity {
 
 	private boolean mMapShowing;
 	private boolean mIsFirstLoc;
-	private boolean mHasDriver;
 	private boolean mHasCheckUpdate;
 
 	@Override
@@ -335,7 +334,6 @@ public class MainActivity extends BaseActivity {
 	private void init() {
 		ButterKnife.inject(this);
 		mIsFirstLoc = true;
-		mHasDriver = false;
 		mHasCheckUpdate = false;
 		initView();
 		initMenu();
@@ -428,9 +426,8 @@ public class MainActivity extends BaseActivity {
 			mBaiduMap.animateMapStatus(u);
 			showMyLocInfo();
 		}
-		if (!mHasDriver) {
-			requestDriver(location);
-		}
+		mBaiduMap.clear();
+		requestDriver(location);
 	}
 
 	private void checkUpdate() {
@@ -560,7 +557,6 @@ public class MainActivity extends BaseActivity {
 				if (res == 2) {// 成功
 					if (mMapShowing) {
 						addMarker(response.optJSONArray("info"));
-						mHasDriver = true;
 					}
 				}
 				return;
