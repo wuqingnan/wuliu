@@ -70,14 +70,14 @@ public class SendDetailActivity extends BaseActivity {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
-	@InjectView(R.id.send_from)
-	EditText mSendFrom;
-	@InjectView(R.id.send_from_phone)
-	EditText mSendFromPhone;
-	@InjectView(R.id.send_to)
-	EditText mSendTo;
-	@InjectView(R.id.send_to_phone)
-	EditText mSendToPhone;
+	@InjectView(R.id.from_name)
+	EditText mFromName;
+	@InjectView(R.id.from_phone)
+	EditText mFromPhone;
+	@InjectView(R.id.to_name)
+	EditText mToName;
+	@InjectView(R.id.to_phone)
+	EditText mToPhone;
 	@InjectView(R.id.message_free)
 	RadioGroup mMessageFree;
 	@InjectView(R.id.send_comment)
@@ -126,10 +126,10 @@ public class SendDetailActivity extends BaseActivity {
 	private void publish() {
 		if (checkValid()) {
 			showProgressDialog();
-			mOrder.setSupplyer_name(mSendFrom.getText().toString());
-			mOrder.setSupplyer_phone(mSendFromPhone.getText().toString());
-			mOrder.setReciver(mSendTo.getText().toString());
-			mOrder.setReciver_phone(mSendToPhone.getText().toString());
+			mOrder.setSupplyer_name(mFromName.getText().toString());
+			mOrder.setSupplyer_phone(mFromPhone.getText().toString());
+			mOrder.setReciver(mToName.getText().toString());
+			mOrder.setReciver_phone(mToPhone.getText().toString());
 			mOrder.setRemark(mSendComment.getText().toString());
 			mOrder.setMess_fee(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 2);
 			BaseParams params = mOrder.getPublishParams();
@@ -140,32 +140,13 @@ public class SendDetailActivity extends BaseActivity {
 	}
 
 	private boolean checkValid() {
-		String sendFrom = mSendFrom.getText().toString();
-		String sendFromPhone = mSendFromPhone.getText().toString();
-		String sendTo = mSendTo.getText().toString();
-		String sendToPhone = mSendToPhone.getText().toString();
-		
-		if (sendFrom == null || sendFrom.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.send_from_empty));
-			return false;
-		} else if (sendFromPhone == null || sendFromPhone.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.send_phone_empty));
-			return false;
-		} else if (sendTo == null || sendTo.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.send_to_empty));
-			return false;
-		} else if (sendToPhone == null || sendToPhone.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.send_phone_empty));
-			return false;
-		} else if (!Util.isPhoneNumber(sendFromPhone)) {
+		String fromPhone = mFromPhone.getText().toString();
+		String toPhone = mToPhone.getText().toString();
+		if (fromPhone != null && !Util.isPhoneNumber(fromPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;
-		} else if (!Util.isPhoneNumber(sendToPhone)) {
+		} else if (toPhone != null && !Util.isPhoneNumber(toPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;

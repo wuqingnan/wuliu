@@ -3,9 +3,13 @@
 
     <string name="app_name">物流生意宝</string>
     <string name="app_subtitle">覆盖全国的智能找货/找车软件</string>
+    <string name="copyright">©博为科技公司版权所有</string>
     <string name="enter_now">立即体验</string>
     
     <string name="lastest_version">当前已经是最新版本！</string>
+    
+    <string name="unknown">不详</string>
+    <string name="negotiable">面议</string>
     
     <string name="login">登录</string>
     <string name="auto_login">自动登录</string>
@@ -73,11 +77,12 @@
     <string name="label_goods_value">物品价值：</string>
     <string name="label_goods_weight">物品重量：</string>
     <string name="label_truck_type">交通工具：</string>
-    <string name="label_goods_pay">愿出金额：</string>
+    <string name="label_goods_pay">愿出运费：</string>
     <string name="label_goods_valid_time">有效时间：</string>
     <string name="label_send_from">发货人：</string>
     <string name="label_send_to">收货人：</string>
-    <string name="label_send_phone">手机号码：</string>
+    <string name="label_from_phone">发货人电话：</string>
+    <string name="label_to_phone">收货人电话：</string>
    	<string name="label_address_from">发货地：</string>
     <string name="label_address_to">收货地：</string>
     <string name="label_send_comment">重要说明：</string>
@@ -134,14 +139,10 @@
     
     <string name="pick_time_empty">取货时间不能为空</string>
     <string name="goods_name_empty">物品名称不能为空</string>
-    <string name="goods_value_empty">物品价值不能为空</string>
     <string name="goods_weight_empty">物品重量不能为空</string>
-    <string name="goods_pay_empty">愿出金额不能为空</string>
     <string name="address_from_empty">发货地不能为空</string>
     <string name="address_to_empty">收货地不能为空</string>
-    <string name="goods_value_error">物品价值格式错误</string>
     <string name="goods_weight_error">物品重量格式错误</string>
-    <string name="goods_pay_error">愿出金额格式错误</string>
     <string name="goods_type_error">请选择货物类型</string>
     <string name="trunk_type_error">请选择车辆类型</string>
     <string name="valid_time_error">请选择有效时间</string>

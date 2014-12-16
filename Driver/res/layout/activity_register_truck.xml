@@ -50,7 +50,7 @@
             android:layout_height="@dimen/edittext_height"
             android:drawableLeft="@drawable/ic_mark_truck_no"
             android:hint="@string/truck_no"
-            android:maxLength="10" />
+            android:maxLength="7" />
 
         <View
             android:layout_width="match_parent"

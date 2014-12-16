@@ -18,6 +18,7 @@ public class Const {
 	public static final String URL_RULES = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=28";
 	
 	public static final String URL_LOGIN = "bss/driverLoginCheck.action";
+	public static final String URL_LOGOUT = "bss/driverLogOut.action";
 	public static final String URL_REGISTER = "bss/registerDriver.action";
 	public static final String URL_ORDER_LIST = "bss/getMyRecords.action";
 	public static final String URL_ORDER_DETAIL = "bss/getCoDetails.action";

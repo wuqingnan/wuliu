@@ -58,9 +58,9 @@ public class SendActivity extends BaseActivity {
 				updateClearState();
 			} else if (view == mPickTime) {
 				showTimePicker();
-			} else if (view == mAddressFrom) {
+			} else if (view == mFromAddress) {
 				searchAddress(true);
-			} else if (view == mAddressTo) {
+			} else if (view == mToAddress) {
 				searchAddress(false);
 			}
 		}
@@ -105,10 +105,10 @@ public class SendActivity extends BaseActivity {
 	TextView mGoodsValidTime;
 	@InjectView(R.id.truck_type)
 	TextView mTruckType;
-	@InjectView(R.id.address_from)
-	TextView mAddressFrom;
-	@InjectView(R.id.address_to)
-	TextView mAddressTo;
+	@InjectView(R.id.from_address)
+	TextView mFromAddress;
+	@InjectView(R.id.to_address)
+	TextView mToAddress;
 	@InjectView(R.id.swap_address)
 	ImageView mSwapAddress;
 	@InjectView(R.id.next_step)
@@ -157,10 +157,10 @@ public class SendActivity extends BaseActivity {
 					}
 					if (mIsFrom) {
 						mFromInfos = infos;
-						mAddressFrom.setText(address);
+						mFromAddress.setText(address);
 					} else {
 						mToInfos = infos;
-						mAddressTo.setText(address);
+						mToAddress.setText(address);
 					}
 				}
 			}
@@ -180,8 +180,8 @@ public class SendActivity extends BaseActivity {
 		mNextStep.setOnClickListener(mOnClickListener);
 		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
-		mAddressFrom.setOnClickListener(mOnClickListener);
-		mAddressTo.setOnClickListener(mOnClickListener);
+		mFromAddress.setOnClickListener(mOnClickListener);
+		mToAddress.setOnClickListener(mOnClickListener);
 		if (mBespeak) {
 			mPickTimeLayout.setVisibility(View.VISIBLE);
 			mPickTime.setOnClickListener(mOnClickListener);
@@ -211,8 +211,8 @@ public class SendActivity extends BaseActivity {
 		if (client != null) {
 			BDLocation location = client.getLastKnownLocation();
 			if (location != null && location.hasAddr()) {
-				mAddressFrom.setText(location.getAddrStr());
-				mAddressTo.setText(location.getAddrStr());
+				mFromAddress.setText(location.getAddrStr());
+				mToAddress.setText(location.getAddrStr());
 				mFromInfos[0] = mToInfos[0] = location.getProvince();
 				mFromInfos[1] = mToInfos[1] = location.getCity();
 				mFromInfos[2] = mToInfos[2] = location.getDistrict();
@@ -243,13 +243,15 @@ public class SendActivity extends BaseActivity {
 			}
 			boolean tons = mGoodsWeightUnit.getCheckedRadioButtonId() == R.id.goods_weight_unit_tons;
 			float weight = Float.parseFloat(mGoodsWeight.getText().toString());
+			String value = mGoodsValue.getText().toString();
+			String pay = mGoodsPay.getText().toString();
 			order.setWeight((int)(weight * (tons ? 1000 : 1)));
-			order.setGoods_value(Integer.parseInt(mGoodsValue.getText().toString()));
-			order.setGoods_cost(Integer.parseInt(mGoodsPay.getText().toString()));
+			order.setGoods_value(value == null ? -9 : Integer.parseInt(value));
+			order.setGoods_cost(pay == null ? -9 : Integer.parseInt(pay));
 			order.setValid_type(mValidTimeIndex);
 			order.setTruck_type_code(mTruckTypeIndex);
-			order.setEnd_addr(mAddressTo.getText().toString());
-			order.setStart_addr(mAddressFrom.getText().toString());
+			order.setEnd_addr(mToAddress.getText().toString());
+			order.setStart_addr(mFromAddress.getText().toString());
 			LocationClient client = WLApplication.getLocationClient();
 			if (client != null) {
 				BDLocation location = client.getLastKnownLocation();
@@ -266,9 +268,9 @@ public class SendActivity extends BaseActivity {
 	}
 
 	private void swapAddress() {
-		CharSequence temp = mAddressFrom.getText();
-		mAddressFrom.setText(mAddressTo.getText());
-		mAddressTo.setText(temp);
+		CharSequence temp = mFromAddress.getText();
+		mFromAddress.setText(mToAddress.getText());
+		mToAddress.setText(temp);
 	}
 	
 	private void showTypeChooseDialog() {
@@ -347,35 +349,25 @@ public class SendActivity extends BaseActivity {
 		String pickTime = mPickTime.getText().toString();
 		String goodsName = mGoodsName.getText().toString();
 		String goodsWeight = mGoodsWeight.getText().toString();
-		String goodsValue = mGoodsValue.getText().toString();
-		String goodsPay = mGoodsPay.getText().toString();
-		String addressFrom = mAddressFrom.getText().toString();
-		String addressTo = mAddressTo.getText().toString();
-		if (mBespeak && (pickTime == null || pickTime.equals(""))) {
+		String fromAddress = mFromAddress.getText().toString();
+		String toAddress = mToAddress.getText().toString();
+		if (mBespeak && (TextUtils.isEmpty(pickTime))) {
 			Util.showTips(this, getResources().getString(
 					R.string.pick_time_empty));
 			return false;
-		} else if (goodsName == null || goodsName.equals("")) {
+		} else if (TextUtils.isEmpty(goodsName)) {
 			Util.showTips(this, getResources().getString(
 					R.string.goods_name_empty));
 			return false;
-		} else if (goodsWeight == null || goodsWeight.equals("")) {
+		} else if (TextUtils.isEmpty(goodsWeight)) {
 			Util.showTips(this, getResources().getString(
 					R.string.goods_weight_empty));
 			return false;
-		} else if (goodsValue == null || goodsValue.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.goods_value_empty));
-			return false;
-		} else if (goodsPay == null || goodsPay.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.goods_pay_empty));
-			return false;
-		} else if (addressFrom == null || addressFrom.equals("")) {
+		} else if (TextUtils.isEmpty(fromAddress)) {
 			Util.showTips(this, getResources().getString(
 					R.string.address_from_empty));
 			return false;
-		} else if (addressTo == null || addressTo.equals("")) {
+		} else if (TextUtils.isEmpty(toAddress)) {
 			Util.showTips(this, getResources().getString(
 					R.string.address_to_empty));
 			return false;
@@ -396,14 +388,6 @@ public class SendActivity extends BaseActivity {
 		if (!(Util.isInteger(goodsWeight) || Util.isDecimal(goodsWeight))) {
 			Util.showTips(this, getResources().getString(
 					R.string.goods_weight_error));
-			return false;
-		} else if (!Util.isInteger(goodsValue)) {
-			Util.showTips(this, getResources().getString(
-					R.string.goods_value_error));
-			return false;
-		} else if (!Util.isInteger(goodsPay)) {
-			Util.showTips(this, getResources().getString(
-					R.string.goods_value_error));
 			return false;
 		}
 		

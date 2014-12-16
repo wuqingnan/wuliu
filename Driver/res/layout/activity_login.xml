@@ -26,13 +26,12 @@
             android:textSize="30dp" />
 
         <TextView
+            style="@style/TextAppearance.Small.717171"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="@string/app_subtitle"
-            android:textColor="@color/color_717171"
-            android:textSize="@dimen/text_size_small" />
+            android:text="@string/app_subtitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,6 +105,14 @@
             android:layout_marginTop="@dimen/default_marginTop"
             android:background="@drawable/btn_default"
             android:text="@string/login" />
+        
+        <TextView
+            style="@style/TextAppearance.Micro.717171"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|bottom"
+            android:paddingBottom="10dp"
+            android:text="@string/copyright" />
     </LinearLayout>
 
 </LinearLayout>

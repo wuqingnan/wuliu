@@ -260,25 +260,25 @@ public class Order implements Serializable {
 		params.add("state", "" + state);
 		params.add("start_addr", start_addr);
 		params.add("end_addr", end_addr);
-		params.add("reciver", reciver);
-		params.add("reciver_phone", reciver_phone);
+		params.add("reciver", TextUtils.isEmpty(reciver) ? BaseParams.PARAM_DEFAULT : reciver);
+		params.add("reciver_phone", TextUtils.isEmpty(reciver_phone) ? BaseParams.PARAM_DEFAULT : reciver_phone);
 		params.add("remark", TextUtils.isEmpty(remark) ? BaseParams.PARAM_DEFAULT : remark);
 		params.add("pick_time", TextUtils.isEmpty(pick_time) ? BaseParams.PARAM_DEFAULT : pick_time);
 		params.add("valid_type", "" + valid_type);
-		params.add("supplyer_name", supplyer_name);
-		params.add("supplyer_phone", supplyer_phone);
+		params.add("supplyer_name", TextUtils.isEmpty(supplyer_name) ? BaseParams.PARAM_DEFAULT : supplyer_name);
+		params.add("supplyer_phone", TextUtils.isEmpty(supplyer_phone) ? BaseParams.PARAM_DEFAULT : supplyer_phone);
 		return params;
 	}
 	
 	public BaseParams getChangeParams() {
 		BaseParams params = new BaseParams();
 		params.add("goods_cd", goods_cd);
-		params.add("supplyer_name", supplyer_name);
-		params.add("supplyer_phone", supplyer_phone);
+		params.add("supplyer_name", TextUtils.isEmpty(supplyer_name) ? BaseParams.PARAM_DEFAULT : supplyer_name);
+		params.add("supplyer_phone", TextUtils.isEmpty(supplyer_phone) ? BaseParams.PARAM_DEFAULT : supplyer_phone);
 		params.add("start_addr", start_addr);
 		params.add("end_addr", end_addr);
-		params.add("reciver_name", reciver);
-		params.add("reciver_phone", reciver_phone);
+		params.add("reciver_name", TextUtils.isEmpty(reciver) ? BaseParams.PARAM_DEFAULT : reciver);
+		params.add("reciver_phone", TextUtils.isEmpty(reciver_phone) ? BaseParams.PARAM_DEFAULT : reciver_phone);
 		params.add("mess_fee", "" + mess_fee);
 		params.add("goods_cost", goods_cost >= 0 ? "" + goods_cost : BaseParams.PARAM_DEFAULT);
 		params.add("remark", TextUtils.isEmpty(remark) ? BaseParams.PARAM_DEFAULT : remark);

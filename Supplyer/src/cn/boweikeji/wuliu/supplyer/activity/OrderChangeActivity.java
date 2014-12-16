@@ -14,6 +14,8 @@ import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 
 
+
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import cn.boweikeji.wuliu.supplyer.R;
@@ -23,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -48,9 +51,9 @@ public class OrderChangeActivity extends BaseActivity {
 				swapAddress();
 			} else if (view == mPublish) {
 				publish();
-			} else if (view == mAddressFrom) {
+			} else if (view == mFromAddress) {
 				searchAddress(true);
-			} else if (view == mAddressTo) {
+			} else if (view == mToAddress) {
 				searchAddress(false);
 			}
 		}
@@ -75,24 +78,24 @@ public class OrderChangeActivity extends BaseActivity {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
-	@InjectView(R.id.send_from)
-	EditText mSendFrom;
-	@InjectView(R.id.send_from_phone)
-	EditText mSendFromPhone;
-	@InjectView(R.id.send_to)
-	EditText mSendTo;
-	@InjectView(R.id.send_to_phone)
-	EditText mSendToPhone;
+	@InjectView(R.id.from_name)
+	EditText mFromName;
+	@InjectView(R.id.from_phone)
+	EditText mFromPhone;
+	@InjectView(R.id.to_name)
+	EditText mToName;
+	@InjectView(R.id.to_phone)
+	EditText mToPhone;
 	@InjectView(R.id.message_free)
 	RadioGroup mMessageFree;
 	@InjectView(R.id.goods_pay)
 	EditText mGoodsPay;
 	@InjectView(R.id.send_comment)
 	EditText mSendComment;
-	@InjectView(R.id.address_from)
-	TextView mAddressFrom;
-	@InjectView(R.id.address_to)
-	TextView mAddressTo;
+	@InjectView(R.id.from_address)
+	TextView mFromAddress;
+	@InjectView(R.id.to_address)
+	TextView mToAddress;
 	@InjectView(R.id.swap_address)
 	ImageView mSwapAddress;
 	@InjectView(R.id.publish)
@@ -133,10 +136,10 @@ public class OrderChangeActivity extends BaseActivity {
 					}
 					if (mIsFrom) {
 						mFromInfos = infos;
-						mAddressFrom.setText(address);
+						mFromAddress.setText(address);
 					} else {
 						mToInfos = infos;
-						mAddressTo.setText(address);
+						mToAddress.setText(address);
 					}
 				}
 			}
@@ -153,16 +156,16 @@ public class OrderChangeActivity extends BaseActivity {
 		mPublish.setOnClickListener(mOnClickListener);
 		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
-		mAddressFrom.setOnClickListener(mOnClickListener);
-		mAddressTo.setOnClickListener(mOnClickListener);
+		mFromAddress.setOnClickListener(mOnClickListener);
+		mToAddress.setOnClickListener(mOnClickListener);
 		mTitle.setText(R.string.title_change_order);
 	}
 	
 	private void initData() {
 		if (mOrder != null) {
 			mGoodsPay.setText(mOrder.getGoods_cost() + "");
-			mAddressFrom.setText(mOrder.getStart_addr());
-			mAddressTo.setText(mOrder.getEnd_addr());
+			mFromAddress.setText(mOrder.getStart_addr());
+			mToAddress.setText(mOrder.getEnd_addr());
 			
 			int free = mOrder.getMess_fee();
 			if (free == 1) {
@@ -170,10 +173,10 @@ public class OrderChangeActivity extends BaseActivity {
 			} else {
 				mMessageFree.check(R.id.message_free_no);
 			}
-			mSendFrom.setText(mOrder.getSupplyer_name());
-			mSendFromPhone.setText(mOrder.getSupplyer_phone());
-			mSendTo.setText(mOrder.getReciver());
-			mSendToPhone.setText(mOrder.getReciver_phone());
+			mFromName.setText(mOrder.getSupplyer_name());
+			mFromPhone.setText(mOrder.getSupplyer_phone());
+			mToName.setText(mOrder.getReciver());
+			mToPhone.setText(mOrder.getReciver_phone());
 			String remarks = mOrder.getRemark();
 			if (remarks != null && !remarks.equals(BaseParams.PARAM_DEFAULT)) {
 				mSendComment.setText(remarks);
@@ -182,9 +185,9 @@ public class OrderChangeActivity extends BaseActivity {
 	}
 	
 	private void swapAddress() {
-		CharSequence temp = mAddressFrom.getText();
-		mAddressFrom.setText(mAddressTo.getText());
-		mAddressTo.setText(temp);
+		CharSequence temp = mFromAddress.getText();
+		mFromAddress.setText(mToAddress.getText());
+		mToAddress.setText(temp);
 	}
 
 	private void searchAddress(boolean isFrom) {
@@ -195,15 +198,16 @@ public class OrderChangeActivity extends BaseActivity {
 	private void publish() {
 		if (checkValid()) {
 			showProgressDialog();
-			mOrder.setSupplyer_name(mSendFrom.getText().toString());
-			mOrder.setSupplyer_phone(mSendFromPhone.getText().toString());
-			mOrder.setReciver(mSendTo.getText().toString());
-			mOrder.setReciver_phone(mSendToPhone.getText().toString());
+			String pay = mGoodsPay.getText().toString();
+			mOrder.setSupplyer_name(mFromName.getText().toString());
+			mOrder.setSupplyer_phone(mFromPhone.getText().toString());
+			mOrder.setReciver(mToName.getText().toString());
+			mOrder.setReciver_phone(mToPhone.getText().toString());
 			mOrder.setRemark(mSendComment.getText().toString());
 			mOrder.setMess_fee(mMessageFree.getCheckedRadioButtonId() == R.id.message_free_yes ? 1 : 2);
-			mOrder.setGoods_cost(Integer.parseInt(mGoodsPay.getText().toString()));
-			mOrder.setEnd_addr(mAddressTo.getText().toString());
-			mOrder.setStart_addr(mAddressFrom.getText().toString());
+			mOrder.setGoods_cost(pay == null ? -9 : Integer.parseInt(pay));
+			mOrder.setEnd_addr(mToAddress.getText().toString());
+			mOrder.setStart_addr(mFromAddress.getText().toString());
 			BaseParams params = mOrder.getChangeParams();
 			params.add("method", "changeCos");
 			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getSupplyer_cd());
@@ -212,46 +216,23 @@ public class OrderChangeActivity extends BaseActivity {
 	}
 	
 	private boolean checkValid() {
-		String sendFrom = mSendFrom.getText().toString();
-		String sendFromPhone = mSendFromPhone.getText().toString();
-		String sendTo = mSendTo.getText().toString();
-		String sendToPhone = mSendToPhone.getText().toString();
-		String goodsPay = mGoodsPay.getText().toString();
-		String addressFrom = mAddressFrom.getText().toString();
-		String addressTo = mAddressTo.getText().toString();
-		if (sendFrom == null || sendFrom.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.send_from_empty));
-			return false;
-		} else if (sendFromPhone == null || sendFromPhone.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.send_phone_empty));
-			return false;
-		} else if (sendTo == null || sendTo.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.send_to_empty));
-			return false;
-		} else if (sendToPhone == null || sendToPhone.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.send_phone_empty));
-			return false;
-		} else if (!Util.isPhoneNumber(sendFromPhone)) {
+		String fromPhone = mFromPhone.getText().toString();
+		String toPhone = mToPhone.getText().toString();
+		String fromAddress = mFromAddress.getText().toString();
+		String toAddress = mToAddress.getText().toString();
+		if (fromPhone != null && !Util.isPhoneNumber(fromPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;
-		} else if (!Util.isPhoneNumber(sendToPhone)) {
+		} else if (toPhone != null && !Util.isPhoneNumber(toPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;
-		} else if (goodsPay == null || goodsPay.equals("")) {
-			Util.showTips(this, getResources().getString(
-					R.string.goods_pay_empty));
-			return false;
-		} else if (addressFrom == null || addressFrom.equals("")) {
+		} else if (TextUtils.isEmpty(fromAddress)) {
 			Util.showTips(this, getResources().getString(
 					R.string.address_from_empty));
 			return false;
-		} else if (addressTo == null || addressTo.equals("")) {
+		} else if (TextUtils.isEmpty(toAddress)) {
 			Util.showTips(this, getResources().getString(
 					R.string.address_to_empty));
 			return false;

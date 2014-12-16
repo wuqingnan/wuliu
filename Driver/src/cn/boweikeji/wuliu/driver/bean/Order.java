@@ -16,6 +16,7 @@ public class Order implements Serializable {
 	private int goods_value;
 	private int goods_cost;
 	private int goods_type_code;
+	private int trunk_type_code;
 	private int weight;
 	private int mess_fee;
 	private int is_order;
@@ -89,6 +90,14 @@ public class Order implements Serializable {
 
 	public void setGoods_type_code(int goods_type_code) {
 		this.goods_type_code = goods_type_code;
+	}
+
+	public int getTrunk_type_code() {
+		return trunk_type_code;
+	}
+
+	public void setTrunk_type_code(int trunk_type_code) {
+		this.trunk_type_code = trunk_type_code;
 	}
 
 	public int getWeight() {

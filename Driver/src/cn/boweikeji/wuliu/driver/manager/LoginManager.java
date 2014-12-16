@@ -95,10 +95,25 @@ public class LoginManager {
 	}
 	
 	public void logout() {
-		clear();
+		logout(mUserInfo.getDriver_cd(), mUserInfo.getPasswd());
 		mHasLogin = false;
 		mUserInfo = null;
 		EventBus.getDefault().post(new LogoutEvent());
+		clear();
+	}
+	
+	private void logout(String driver_cd, String passwd) {
+		BaseParams params = new BaseParams();
+		params.add("method", "driverLogOut");
+		params.add("driver_cd", driver_cd);
+		params.add("passwd", passwd);
+		AsyncHttp.get(Const.URL_LOGOUT, params, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,
+					JSONObject response) {
+				super.onSuccess(statusCode, headers, response);
+			}
+		});
 	}
 	
 	public void setUserInfo(UserInfo info) {

@@ -469,9 +469,9 @@ public class OrderDetailActivity extends BaseActivity {
 			R.string.label_create_time,
 			R.string.label_send_comment,
 			R.string.label_send_from,
-			R.string.label_send_phone,
+			R.string.label_from_phone,
 			R.string.label_send_to,
-			R.string.label_send_phone,
+			R.string.label_to_phone,
 			R.string.label_address_from,
 			R.string.label_address_to,
 			R.string.label_driver_name,
@@ -570,7 +570,12 @@ public class OrderDetailActivity extends BaseActivity {
 				value = mStateName[getStateIndexByValue(mOrder.getState())];
 				break;
 			case R.string.label_goods_pay:
-				value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
+				int cost = mOrder.getGoods_cost();
+				if (cost == -9) {
+					value = mContext.getString(R.string.negotiable);
+				} else {
+					value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
+				}
 				break;
 			case R.string.label_message_free:
 				int free = mOrder.getMess_fee();
@@ -604,12 +609,11 @@ public class OrderDetailActivity extends BaseActivity {
 			case R.string.label_send_from:
 				value = mOrder.getSupplyer_name();
 				break;
-			case R.string.label_send_phone:
-				if (position == 3) {
-					value = mOrder.getSupplyer_phone();
-				} else {
-					value = mOrder.getReciver_phone();
-				}
+			case R.string.label_from_phone:
+				value = mOrder.getSupplyer_phone();
+				break;
+			case R.string.label_to_phone:
+				value = mOrder.getReciver_phone();
 				break;
 			case R.string.label_send_to:
 				value = mOrder.getReciver();

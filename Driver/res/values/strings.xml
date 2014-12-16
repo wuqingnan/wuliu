@@ -3,6 +3,7 @@
 
     <string name="app_name">物流生意宝</string>
     <string name="app_subtitle">覆盖全国的智能找货/找车软件</string>
+    <string name="copyright">©博为科技公司版权所有</string>
     <string name="enter_now">立即体验</string>
 
     <string name="lastest_version">当前已经是最新版本！</string>
@@ -18,6 +19,8 @@
     <string name="detail">详情</string>
     <string name="upgrade">升级</string>
     <string name="exit">退出</string>
+    <string name="unknown">不详</string>
+    <string name="negotiable">面议</string>
     
     <string name="quit_next_time">再按一次退出</string>
 
@@ -54,6 +57,7 @@
     
     <string name="value_yuan">%1$s 元</string>
     <string name="value_kg">%1$s 千克</string>
+    <string name="value_ton">%1$s 吨</string>
     
     <string name="requesting">正在请求，请等待…</string>
     <string name="request_failed">请求失败，请重试</string>
@@ -137,15 +141,17 @@
     <string name="label_goods_value">物品价值：</string>
     <string name="label_goods_weight">物品重量：</string>
     <string name="label_truck_type">车辆类型：</string>
-    <string name="label_goods_pay">愿出金额：</string>
+    <string name="label_need_truck">需要车型：</string>
+    <string name="label_goods_pay">愿出运费：</string>
     <string name="label_goods_valid_time">有效时间：</string>
     <string name="label_message_phone">信息发送人电话：</string>
     <string name="label_message_type">信息发送人类型：</string>
     <string name="label_send_from">发货人：</string>
     <string name="label_send_to">收货人：</string>
-    <string name="label_send_phone">手机号码：</string>
-    <string name="label_address_from">发货地：</string>
-    <string name="label_address_to">收货地：</string>
+    <string name="label_from_phone">发货人电话：</string>
+    <string name="label_to_phone">收货人电话：</string>
+    <string name="label_address_from">发货地址：</string>
+    <string name="label_address_to">收货地址：</string>
     <string name="label_send_comment">重要说明：</string>
     <string name="label_message_free">信息公开：</string>
     

@@ -235,6 +235,7 @@ public class OrderDetailActivity extends BaseActivity {
 		order.setPick_time(infos.optString("pick_time"));
 		order.setGoods_name(infos.optString("goods_name"));
 		order.setGoods_type_code(infos.optInt("goods_type_code"));
+		order.setTrunk_type_code(infos.optInt("trunk_type_code"));
 		order.setWeight(infos.optInt("weight"));
 		order.setGoods_value(infos.optInt("goods_value"));
 		order.setMess_fee(infos.optInt("mess_fee"));
@@ -314,6 +315,7 @@ public class OrderDetailActivity extends BaseActivity {
 			R.string.label_goods_weight,
 			R.string.label_goods_value,
 			R.string.label_goods_pay,
+			R.string.label_need_truck,
 			R.string.label_message_free,
 			R.string.label_pick_time,
 			R.string.label_create_time,
@@ -321,10 +323,10 @@ public class OrderDetailActivity extends BaseActivity {
 			R.string.label_message_phone,
 			R.string.label_message_type,
 			R.string.label_send_from,
-			R.string.label_send_phone,
+			R.string.label_from_phone,
 			R.string.label_address_from,
 			R.string.label_send_to,
-			R.string.label_send_phone,
+			R.string.label_to_phone,
 			R.string.label_address_to,
 		};
 		
@@ -335,6 +337,7 @@ public class OrderDetailActivity extends BaseActivity {
 		private String[] mGoodsTypes;
 		private String[] mStateName;
 		private String[] mUserTypes;
+		private String[] mTruckTypes;
 		private int[] mStateValue;
 		
 		public DetailAdapter(Context context) {
@@ -344,6 +347,7 @@ public class OrderDetailActivity extends BaseActivity {
 			mStateName = context.getResources().getStringArray(R.array.order_state_name);
 			mStateValue = context.getResources().getIntArray(R.array.order_state_value);
 			mUserTypes = context.getResources().getStringArray(R.array.user_types);
+			mTruckTypes = context.getResources().getStringArray(R.array.truck_type_list);
 		}
 		
 		@Override
@@ -386,7 +390,20 @@ public class OrderDetailActivity extends BaseActivity {
 				value = mStateName[getStateIndexByValue(mOrder.getState())];
 				break;
 			case R.string.label_goods_pay:
-				value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
+				int cost = mOrder.getGoods_cost();
+				if (cost == -9) {
+					value = mContext.getString(R.string.negotiable);
+				} else {
+					value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
+				}
+				break;
+			case R.string.label_need_truck:
+			{
+				int type = mOrder.getTrunk_type_code();
+				if (type >= 0 && type < mTruckTypes.length) {
+					value = mTruckTypes[type];
+				}
+			}
 				break;
 			case R.string.label_message_free:
 				if (mOrder.isFree()) {
@@ -411,16 +428,23 @@ public class OrderDetailActivity extends BaseActivity {
 				value = mOrder.getGoods_name();
 				break;
 			case R.string.label_goods_type:
+			{
 				int type = mOrder.getGoods_type_code();
 				if (type >= 0 && type < mGoodsTypes.length) {
 					value = mGoodsTypes[type];
 				}
+			}
 				break;
 			case R.string.label_goods_weight:
-				value = String.format(mContext.getString(R.string.value_kg), mOrder.getGoods_cost());
+				value = String.format(mContext.getString(R.string.value_ton), mOrder.getWeight());
 				break;
 			case R.string.label_goods_value:
-				value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
+				int goodsValue = mOrder.getGoods_value();
+				if (goodsValue == -9) {
+					value = mContext.getString(R.string.unknown);
+				} else {
+					value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_value());
+				}
 				break;
 			case R.string.label_message_phone:
 				value = mOrder.getPhone();
@@ -434,15 +458,14 @@ public class OrderDetailActivity extends BaseActivity {
 			case R.string.label_send_from:
 				value = mOrder.getSupplyer_name();
 				break;
-			case R.string.label_send_phone:
-				if (position == 3) {
-					value = mOrder.getSupplyer_phone();
-				} else {
-					value = mOrder.getReciver_phone();
-				}
+			case R.string.label_from_phone:
+				value = mOrder.getSupplyer_phone();
 				break;
 			case R.string.label_send_to:
 				value = mOrder.getReciver();
+				break;
+			case R.string.label_to_phone:
+				value = mOrder.getReciver_phone();
 				break;
 			case R.string.label_address_from:
 				value = mOrder.getStart_addr();

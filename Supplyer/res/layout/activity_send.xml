@@ -427,7 +427,7 @@
 		                    android:visibility="visible" />
 
                         <TextView
-                            android:id="@+id/address_from"
+                            android:id="@+id/from_address"
                             style="@style/Send_Item_Value"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -460,7 +460,7 @@
 		                    android:visibility="visible" />
                         
                         <TextView
-                            android:id="@+id/address_to"
+                            android:id="@+id/to_address"
                             style="@style/Send_Item_Value"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
