@@ -288,9 +288,10 @@ public class RegisterTruckActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
 				if (res == 2) {// 成功
 					registerSuccess(response.optJSONObject("infos"));
+				} else {
+					Util.showTips(this, msg);
 				}
 				return;
 			} catch (JSONException e) {
@@ -307,11 +308,11 @@ public class RegisterTruckActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
 				if (res == 2) {// 成功
 					mRegInfo.setCard_photo(response.optString("attachment_id"));
 					register();
 				} else {
+					Util.showTips(this, msg);
 					hideProgressDialog();
 				}
 				return;

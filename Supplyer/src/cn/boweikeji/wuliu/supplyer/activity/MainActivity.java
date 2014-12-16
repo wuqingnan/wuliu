@@ -552,7 +552,7 @@ public class MainActivity extends BaseActivity {
 
 	private void requestResult(JSONObject response) {
 		if (response != null && response.length() > 0) {
-			Log.d(TAG, "shizy---response123: " + response.toString());
+			Log.d(TAG, "shizy---response: " + response.toString());
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");

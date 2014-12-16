@@ -179,12 +179,13 @@ public class ChangePasswordActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
-				if (res == 2) {//�ɹ�
+				if (res == 2) {//成功
 					String newPass = EncryptUtil.encrypt(mNewPassword.getText().toString(), EncryptUtil.MD5);
 					UserInfo info = LoginManager.getInstance().getUserInfo();
 					info.setPasswd(newPass);
 					LoginManager.getInstance().setUserInfo(info);
+				} else {
+					Util.showTips(this, msg);
 				}
 				return;
 			} catch (JSONException e) {

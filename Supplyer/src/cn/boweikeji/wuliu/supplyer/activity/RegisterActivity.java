@@ -369,9 +369,10 @@ public class RegisterActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					registerSuccess(response.optJSONObject("supplyer"));
+				} else {
+					Util.showTips(this, msg);
 				}
 				return;
 			} catch (JSONException e) {

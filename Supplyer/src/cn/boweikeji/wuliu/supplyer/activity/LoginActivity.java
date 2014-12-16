@@ -226,7 +226,6 @@ public class LoginActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				showTips(msg);
 				if (res == 2) {//成功
 					LoginManager.getInstance().setLogin(true);
 					mUserInfo.update(response.optJSONObject("supplyer"));
@@ -234,6 +233,8 @@ public class LoginActivity extends BaseActivity {
 					EventBus.getDefault().post(new LoginEvent());
 					saveAutoLogin(mAutoLogin.isChecked());
 					finish();
+				} else {
+					showTips(msg);
 				}
 				return;
 			} catch (JSONException e) {

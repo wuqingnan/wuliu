@@ -247,7 +247,6 @@ public class OrderListFragment extends BaseFragment {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(getActivity(), msg);
 				if (res == 2) {// 成功
 					int pageCount = response.getInt("pagetotalnum");
 					if (pageCount <= 0) {
@@ -297,6 +296,8 @@ public class OrderListFragment extends BaseFragment {
 						}
 					}
 					mPage++;
+				} else {
+					Util.showTips(getActivity(), msg);
 				}
 				return;
 			} catch (JSONException e) {

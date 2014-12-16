@@ -196,9 +196,10 @@ public class OrderDetailActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					parseJson(response.optJSONObject("info"));
+				} else {
+					Util.showTips(this, msg);
 				}
 				return;
 			} catch (JSONException e) {
@@ -214,10 +215,11 @@ public class OrderDetailActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					refresh();
 					EventBus.getDefault().post(new OrderEvent(mGoodsCD));
+				} else {
+					Util.showTips(this, msg);
 				}
 				return;
 			} catch (JSONException e) {

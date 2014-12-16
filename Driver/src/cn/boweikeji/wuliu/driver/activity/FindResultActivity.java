@@ -193,7 +193,6 @@ public class FindResultActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					int pageCount = response.getInt("pagetotalnum");
 					if (pageCount <= 0) {
@@ -233,6 +232,8 @@ public class FindResultActivity extends BaseActivity {
 						}
 					}
 					mFilter.setPage_num(mFilter.getPage_num() + 1);
+				} else {
+					Util.showTips(this, msg);
 				}
 				return;
 			} catch (JSONException e) {

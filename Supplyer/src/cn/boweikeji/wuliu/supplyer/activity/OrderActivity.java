@@ -203,7 +203,6 @@ public class OrderActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
 				if (res == 2) {// 成功
 					int pageCount = response.getInt("pagetotalnum");
 					if (pageCount <= 0) {
@@ -256,6 +255,8 @@ public class OrderActivity extends BaseActivity {
 						}
 					}
 					mPage++;
+				} else {
+					Util.showTips(this, msg);
 				}
 				return;
 			} catch (JSONException e) {

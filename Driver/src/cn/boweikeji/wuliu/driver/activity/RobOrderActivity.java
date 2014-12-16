@@ -165,13 +165,14 @@ public class RobOrderActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
-				Util.showTips(this, msg);
 				if (res == 2) {// 成功
 					EventBus.getDefault().post(
 							new OrderEvent(mOrder.getGoods_cd()));
 					OrderDetailActivity.startOrderDetailActivity(this,
 							mOrder.getGoods_cd());
 					finish();
+				} else {
+					Util.showTips(this, msg);
 				}
 				return;
 			} catch (JSONException e) {
