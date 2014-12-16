@@ -222,8 +222,8 @@ public class ForgetPasswdActivity extends BaseActivity {
 		String phone = mPhone.getText().toString();
 		String password = EncryptUtil.encrypt(mPassword1.getText().toString(), EncryptUtil.MD5);
 		BaseParams params = new BaseParams();
-		params.add("method", "changedriverPwd");
-		params.add("driver_cd", phone);
+		params.add("method", "changeSupplyerPwd");
+		params.add("supplyer_cd", phone);
 		params.add("is_need", "0");
 		params.add("old_pwd", BaseParams.PARAM_DEFAULT);
 		params.add("new_pwd", password);

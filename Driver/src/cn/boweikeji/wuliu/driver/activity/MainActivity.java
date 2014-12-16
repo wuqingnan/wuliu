@@ -441,7 +441,7 @@ public class MainActivity extends BaseActivity {
 		}
 
 		BitmapDescriptor bitmap = BitmapDescriptorFactory
-				.fromResource(R.drawable.marker1);
+				.fromResource(R.drawable.ic_marker);
 
 		JSONObject info = null;
 		String[] truckTypes = getResources().getStringArray(
