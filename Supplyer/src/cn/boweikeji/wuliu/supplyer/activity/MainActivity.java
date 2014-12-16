@@ -492,8 +492,9 @@ public class MainActivity extends BaseActivity {
 						info.optDouble("gps_j"));
 				Bundle bundle = new Bundle();
 				bundle.putString("name", info.optString("driver_name"));
+				bundle.putString("phone", info.optString("phone"));
 				if (truck >= 0 && truck < truckTypes.length) {
-					bundle.putString("info", truckTypes[truck]);
+					bundle.putString("truck", truckTypes[truck]);
 				}
 				OverlayOptions option = new MarkerOptions().position(ll)
 						.icon(bitmap).extraInfo(bundle);
