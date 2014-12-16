@@ -344,7 +344,7 @@ public class FindResultActivity extends BaseActivity {
 				mOrderDate.setText(order.getCreate_date());
 				mBespeak.setImageResource(order.isOrder() ? R.drawable.ic_bespeak
 						: R.drawable.ic_actual);
-				mOrderInfo.setText(String.format("距离\n%d米", (int)order.getDistance()));
+				mOrderInfo.setText(String.format("距离%d公里", (int)order.getDistance()));
 			}
 		}
 

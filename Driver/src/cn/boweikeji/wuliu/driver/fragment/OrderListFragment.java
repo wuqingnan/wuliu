@@ -438,7 +438,7 @@ public class OrderListFragment extends BaseFragment {
 				mOrderInfo.setVisibility(View.VISIBLE);
 				mBespeak.setImageResource(order.isOrder() ? R.drawable.ic_bespeak
 						: R.drawable.ic_actual);
-				mOrderInfo.setText(String.format("距离%d米",
+				mOrderInfo.setText(String.format("距离%d公里",
 						(int) order.getDistance()));
 				break;
 			case TYPE_SELECTED:
