@@ -248,11 +248,11 @@ public class Order implements Serializable {
 	public BaseParams getPublishParams() {
 		BaseParams params = new BaseParams();
 		params.add("goods_name", TextUtils.isEmpty(goods_name) ? BaseParams.PARAM_DEFAULT : goods_name);
-		params.add("goods_value", goods_value >= 0 ? "" + goods_value : BaseParams.PARAM_DEFAULT);
+		params.add("goods_value", goods_value > 0 ? "" + goods_value : BaseParams.PARAM_DEFAULT);
 		params.add("goods_type_code", "" + goods_type_code);
 		params.add("weight", weight >= 0 ? "" + weight : BaseParams.PARAM_DEFAULT);
 		params.add("trunk_type_code", "" + truck_type_code);
-		params.add("goods_cost", goods_cost >= 0 ? "" + goods_cost : BaseParams.PARAM_DEFAULT);
+		params.add("goods_cost", goods_cost > 0 ? "" + goods_cost : BaseParams.PARAM_DEFAULT);
 		params.add("mess_fee", "" + mess_fee);
 		params.add("source_code", "" + source_code);
 		params.add("gps_addr_j", gps_addr_j > 0 ? "" + gps_addr_j : BaseParams.PARAM_DEFAULT);

@@ -36,7 +36,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_send_from" />
+                    android:text="@string/label_from_name" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -113,7 +113,7 @@
                     style="@style/Send_Item_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_send_to" />
+                    android:text="@string/label_to_name" />
 
                 <TextView
                     style="@style/Send_Item_Asterisk"
@@ -206,8 +206,7 @@
                     android:layout_weight="1.0"
                     android:background="@null"
                     android:inputType="number"
-                    android:maxLength="9"
-                    android:text="@string/zero" />
+                    android:maxLength="9" />
 
                 <TextView
                     style="@style/Send_Item_Unit"
@@ -344,7 +343,7 @@
                             style="@style/Send_Item_Name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/label_address_from" />
+                            android:text="@string/label_from_address" />
 
                         <TextView
                             style="@style/Send_Item_Asterisk"
@@ -377,7 +376,7 @@
                             style="@style/Send_Item_Name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/label_address_to" />
+                            android:text="@string/label_to_address" />
 
                         <TextView
                             style="@style/Send_Item_Asterisk"

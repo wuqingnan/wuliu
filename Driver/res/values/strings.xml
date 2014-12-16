@@ -146,12 +146,12 @@
     <string name="label_goods_valid_time">有效时间：</string>
     <string name="label_message_phone">信息发送人电话：</string>
     <string name="label_message_type">信息发送人类型：</string>
-    <string name="label_send_from">发货人：</string>
-    <string name="label_send_to">收货人：</string>
+    <string name="label_from_name">发货人：</string>
+    <string name="label_to_name">收货人：</string>
     <string name="label_from_phone">发货人电话：</string>
     <string name="label_to_phone">收货人电话：</string>
-    <string name="label_address_from">发货地址：</string>
-    <string name="label_address_to">收货地址：</string>
+    <string name="label_from_address">发货地址：</string>
+    <string name="label_to_address">收货地址：</string>
     <string name="label_send_comment">重要说明：</string>
     <string name="label_message_free">信息公开：</string>
     

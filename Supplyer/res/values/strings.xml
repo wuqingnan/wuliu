@@ -79,19 +79,18 @@
     <string name="label_truck_type">交通工具：</string>
     <string name="label_goods_pay">愿出运费：</string>
     <string name="label_goods_valid_time">有效时间：</string>
-    <string name="label_send_from">发货人：</string>
-    <string name="label_send_to">收货人：</string>
+    <string name="label_from_name">发货人：</string>
+    <string name="label_to_name">收货人：</string>
     <string name="label_from_phone">发货人电话：</string>
     <string name="label_to_phone">收货人电话：</string>
-   	<string name="label_address_from">发货地：</string>
-    <string name="label_address_to">收货地：</string>
+   	<string name="label_from_address">发货地址：</string>
+    <string name="label_to_address">收货地址：</string>
     <string name="label_send_comment">重要说明：</string>
     <string name="label_message_free">信息公开：</string>
     
     <string name="free_yes">免费公开</string>
     <string name="free_no">付费公开</string>
-    <string name="unit_kg">千克</string>
-    <string name="unit_tons">吨</string>
+    <string name="ton">吨</string>
     <string name="yuan">元</string>
     <string name="zero">0</string>
     

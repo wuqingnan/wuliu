@@ -183,29 +183,13 @@
                     android:layout_weight="1.0"
                     android:maxLength="4"
                     android:inputType="numberDecimal"
-                    android:text="@string/zero"
                     android:background="@null" />
 
-                <RadioGroup
-                    android:id="@+id/goods_weight_unit"
+                <TextView
+                    style="@style/Send_Item_Unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-                    
-                    <RadioButton
-                        android:id="@+id/goods_weight_unit_kg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_color_dark_gray"
-                        android:text="@string/unit_kg" />
-                    
-                    <RadioButton
-                        android:id="@+id/goods_weight_unit_tons"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_color_dark_gray"
-                        android:text="@string/unit_tons" />
-                </RadioGroup>
+                    android:text="@string/ton" />
             </LinearLayout>
 
             <View
@@ -245,7 +229,6 @@
                     android:layout_weight="1.0"
                     android:maxLength="9"
                     android:inputType="number"
-                    android:text="@string/zero"
                     android:background="@null" />
 
                 <TextView
@@ -292,7 +275,6 @@
                     android:layout_weight="1.0"
                     android:maxLength="9"
                     android:inputType="number"
-                    android:text="@string/zero"
                     android:background="@null" />
 
                 <TextView
@@ -417,7 +399,7 @@
                             style="@style/Send_Item_Name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/label_address_from" />
+                            android:text="@string/label_from_address" />
                         
 						<TextView
 		                    style="@style/Send_Item_Asterisk"
@@ -450,7 +432,7 @@
                             style="@style/Send_Item_Name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/label_address_to" />
+                            android:text="@string/label_to_address" />
 
                         <TextView
 		                    style="@style/Send_Item_Asterisk"

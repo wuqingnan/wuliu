@@ -42,7 +42,7 @@
             android:background="@drawable/bg_item"
             android:orientation="vertical" >
 
-            <cn.boweikeji.wuliu.driver.view.ClearEditText
+            <cn.boweikeji.wuliu.supplyer.view.ClearEditText
                 android:id="@+id/login_username"
                 style="@style/EditText"
                 android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:layout_height="@dimen/line_height"
                 android:background="@color/line_d6dae0" />
 
-            <cn.boweikeji.wuliu.driver.view.ClearEditText
+            <cn.boweikeji.wuliu.supplyer.view.ClearEditText
                 android:id="@+id/login_password"
                 style="@style/EditText"
                 android:layout_width="match_parent"

@@ -322,12 +322,12 @@ public class OrderDetailActivity extends BaseActivity {
 			R.string.label_send_comment,
 			R.string.label_message_phone,
 			R.string.label_message_type,
-			R.string.label_send_from,
+			R.string.label_from_name,
 			R.string.label_from_phone,
-			R.string.label_address_from,
-			R.string.label_send_to,
+			R.string.label_from_address,
+			R.string.label_to_name,
 			R.string.label_to_phone,
-			R.string.label_address_to,
+			R.string.label_to_address,
 		};
 		
 		private Context mContext;
@@ -391,7 +391,7 @@ public class OrderDetailActivity extends BaseActivity {
 				break;
 			case R.string.label_goods_pay:
 				int cost = mOrder.getGoods_cost();
-				if (cost == -9) {
+				if (cost <= 0) {
 					value = mContext.getString(R.string.negotiable);
 				} else {
 					value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
@@ -440,7 +440,7 @@ public class OrderDetailActivity extends BaseActivity {
 				break;
 			case R.string.label_goods_value:
 				int goodsValue = mOrder.getGoods_value();
-				if (goodsValue == -9) {
+				if (goodsValue <= 0) {
 					value = mContext.getString(R.string.unknown);
 				} else {
 					value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_value());
@@ -455,22 +455,34 @@ public class OrderDetailActivity extends BaseActivity {
 					value = mUserTypes[userType];
 				}
 				break;
-			case R.string.label_send_from:
+			case R.string.label_from_name:
 				value = mOrder.getSupplyer_name();
+				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+					value = mContext.getString(R.string.unknown);
+				}
 				break;
 			case R.string.label_from_phone:
 				value = mOrder.getSupplyer_phone();
+				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+					value = mContext.getString(R.string.unknown);
+				}
 				break;
-			case R.string.label_send_to:
+			case R.string.label_to_name:
 				value = mOrder.getReciver();
+				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+					value = mContext.getString(R.string.unknown);
+				}
 				break;
 			case R.string.label_to_phone:
 				value = mOrder.getReciver_phone();
+				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+					value = mContext.getString(R.string.unknown);
+				}
 				break;
-			case R.string.label_address_from:
+			case R.string.label_from_address:
 				value = mOrder.getStart_addr();
 				break;
-			case R.string.label_address_to:
+			case R.string.label_to_address:
 				value = mOrder.getEnd_addr();
 				break;
 			}

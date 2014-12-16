@@ -163,7 +163,7 @@ public class OrderChangeActivity extends BaseActivity {
 	
 	private void initData() {
 		if (mOrder != null) {
-			mGoodsPay.setText(mOrder.getGoods_cost() + "");
+			mGoodsPay.setText(mOrder.getGoods_cost() > 0 ? mOrder.getGoods_cost() + "" : "");
 			mFromAddress.setText(mOrder.getStart_addr());
 			mToAddress.setText(mOrder.getEnd_addr());
 			
@@ -173,10 +173,10 @@ public class OrderChangeActivity extends BaseActivity {
 			} else {
 				mMessageFree.check(R.id.message_free_no);
 			}
-			mFromName.setText(mOrder.getSupplyer_name());
-			mFromPhone.setText(mOrder.getSupplyer_phone());
-			mToName.setText(mOrder.getReciver());
-			mToPhone.setText(mOrder.getReciver_phone());
+			mFromName.setText(mOrder.getSupplyer_name().equals(Const.NULL) ? "" : mOrder.getSupplyer_name());
+			mFromPhone.setText(mOrder.getSupplyer_phone().equals(Const.NULL) ? "" : mOrder.getSupplyer_phone());
+			mToName.setText(mOrder.getReciver().equals(Const.NULL) ? "" : mOrder.getReciver());
+			mToPhone.setText(mOrder.getReciver_phone().equals(Const.NULL) ? "" : mOrder.getReciver_phone());
 			String remarks = mOrder.getRemark();
 			if (remarks != null && !remarks.equals(BaseParams.PARAM_DEFAULT)) {
 				mSendComment.setText(remarks);
@@ -220,11 +220,11 @@ public class OrderChangeActivity extends BaseActivity {
 		String toPhone = mToPhone.getText().toString();
 		String fromAddress = mFromAddress.getText().toString();
 		String toAddress = mToAddress.getText().toString();
-		if (fromPhone != null && !Util.isPhoneNumber(fromPhone)) {
+		if (!TextUtils.isEmpty(fromPhone) && !Util.isPhoneNumber(fromPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;
-		} else if (toPhone != null && !Util.isPhoneNumber(toPhone)) {
+		} else if (!TextUtils.isEmpty(toPhone) && !Util.isPhoneNumber(toPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;

@@ -14,6 +14,7 @@ import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import cn.boweikeji.wuliu.supplyer.utils.Util;
 
 
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import cn.boweikeji.wuliu.supplyer.R;
@@ -23,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -142,11 +144,11 @@ public class SendDetailActivity extends BaseActivity {
 	private boolean checkValid() {
 		String fromPhone = mFromPhone.getText().toString();
 		String toPhone = mToPhone.getText().toString();
-		if (fromPhone != null && !Util.isPhoneNumber(fromPhone)) {
+		if (!TextUtils.isEmpty(fromPhone) && !Util.isPhoneNumber(fromPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;
-		} else if (toPhone != null && !Util.isPhoneNumber(toPhone)) {
+		} else if (!TextUtils.isEmpty(toPhone) && !Util.isPhoneNumber(toPhone)) {
 			Util.showTips(this, getResources().getString(
 					R.string.send_phone_error));
 			return false;

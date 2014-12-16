@@ -95,8 +95,6 @@ public class SendActivity extends BaseActivity {
 	EditText mGoodsName;
 	@InjectView(R.id.goods_weight)
 	EditText mGoodsWeight;
-	@InjectView(R.id.goods_weight_unit)
-	RadioGroup mGoodsWeightUnit;
 	@InjectView(R.id.goods_value)
 	EditText mGoodsValue;
 	@InjectView(R.id.goods_pay)
@@ -203,7 +201,6 @@ public class SendActivity extends BaseActivity {
 		updateGoodsType();
 		updateTruckType();
 		updateValidTime();
-		mGoodsWeightUnit.check(R.id.goods_weight_unit_kg);
 	}
 	
 	private void initAddress() {
@@ -241,11 +238,10 @@ public class SendActivity extends BaseActivity {
 			if (mBespeak) {
 				order.setPick_time(mPickTime.getText().toString());
 			}
-			boolean tons = mGoodsWeightUnit.getCheckedRadioButtonId() == R.id.goods_weight_unit_tons;
-			float weight = Float.parseFloat(mGoodsWeight.getText().toString());
+			int weight = Integer.parseInt(mGoodsWeight.getText().toString());
 			String value = mGoodsValue.getText().toString();
 			String pay = mGoodsPay.getText().toString();
-			order.setWeight((int)(weight * (tons ? 1000 : 1)));
+			order.setWeight(weight);
 			order.setGoods_value(value == null ? -9 : Integer.parseInt(value));
 			order.setGoods_cost(pay == null ? -9 : Integer.parseInt(pay));
 			order.setValid_type(mValidTimeIndex);
