@@ -14,7 +14,7 @@ import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.bean.city.City;
 import cn.boweikeji.wuliu.driver.bean.city.ICityListItem;
 import cn.boweikeji.wuliu.driver.bean.city.Section;
-import cn.boweikeji.wuliu.driver.view.AlphabetView;
+import cn.boweikeji.wuliu.view.AlphabetView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import android.app.Activity;

@@ -2,7 +2,7 @@ package cn.boweikeji.wuliu.supplyer.bean;
 
 import org.json.JSONObject;
 
-import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
 
 public class UpdateInfo {
 

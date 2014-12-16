@@ -12,15 +12,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import cn.boweikeji.wuliu.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.LoginEvent;
 import cn.boweikeji.wuliu.supplyer.event.LogoutEvent;
-import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
-import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
-import cn.boweikeji.wuliu.supplyer.utils.FileUtils;
 
+
+import cn.boweikeji.wuliu.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.FileUtils;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;

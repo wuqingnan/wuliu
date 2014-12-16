@@ -43,7 +43,7 @@
             android:layout_height="@dimen/line_height"
             android:background="@color/line_d6dae0" />
 
-        <cn.boweikeji.wuliu.driver.view.ClearEditText
+        <cn.boweikeji.wuliu.view.ClearEditText
             android:id="@+id/register_truck_no"
             style="@style/EditText"
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:layout_height="@dimen/line_height"
             android:background="@color/line_d6dae0" />
 
-        <cn.boweikeji.wuliu.driver.view.ClearEditText
+        <cn.boweikeji.wuliu.view.ClearEditText
             android:id="@+id/register_truck_load"
             style="@style/EditText"
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
             android:layout_height="@dimen/line_height"
             android:background="@color/line_d6dae0" />
 
-        <cn.boweikeji.wuliu.driver.view.ClearEditText
+        <cn.boweikeji.wuliu.view.ClearEditText
             android:id="@+id/register_recommend_no"
             style="@style/EditText"
             android:layout_width="match_parent"
@@ -86,7 +86,7 @@
             android:layout_height="@dimen/line_height"
             android:background="@color/line_d6dae0" />
 
-        <cn.boweikeji.wuliu.driver.view.ClearEditText
+        <cn.boweikeji.wuliu.view.ClearEditText
             android:id="@+id/register_remark"
             style="@style/EditText"
             android:layout_width="match_parent"

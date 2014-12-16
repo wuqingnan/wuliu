@@ -22,7 +22,7 @@
             android:paddingBottom="@dimen/default_marginBottom"
             android:paddingTop="@dimen/default_marginTop" >
 
-            <cn.boweikeji.wuliu.driver.view.ClearEditText
+            <cn.boweikeji.wuliu.view.ClearEditText
                 android:id="@+id/register_phone"
                 style="@style/EditText"
                 android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp" >
 
-                <cn.boweikeji.wuliu.driver.view.ClearEditText
+                <cn.boweikeji.wuliu.view.ClearEditText
                     android:id="@+id/register_code"
                     style="@style/EditText"
                     android:layout_width="0dp"
@@ -84,7 +84,7 @@
                 android:background="@drawable/bg_item"
                 android:orientation="vertical" >
 
-                <cn.boweikeji.wuliu.driver.view.ClearEditText
+                <cn.boweikeji.wuliu.view.ClearEditText
                     android:id="@+id/register_name"
                     style="@style/EditText"
                     android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                     android:layout_height="@dimen/line_height"
                     android:background="@color/line_d6dae0" />
 
-                <cn.boweikeji.wuliu.driver.view.ClearEditText
+                <cn.boweikeji.wuliu.view.ClearEditText
                     android:id="@+id/register_password"
                     style="@style/EditText"
                     android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                         android:layout_height="@dimen/line_height"
                         android:background="@color/line_d6dae0" />
 
-                    <cn.boweikeji.wuliu.driver.view.ClearEditText
+                    <cn.boweikeji.wuliu.view.ClearEditText
                         android:id="@+id/register_company"
                         style="@style/EditText"
                         android:layout_width="match_parent"
@@ -189,7 +189,7 @@
                     android:layout_height="@dimen/line_height"
                     android:background="@color/line_d6dae0" />
 
-                <cn.boweikeji.wuliu.driver.view.ClearEditText
+                <cn.boweikeji.wuliu.view.ClearEditText
                     android:id="@+id/register_id"
                     style="@style/EditText"
                     android:layout_width="match_parent"

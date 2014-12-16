@@ -13,7 +13,7 @@ import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.db.DBHelper;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.manager.UpdateManager;
-import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import android.content.Context;

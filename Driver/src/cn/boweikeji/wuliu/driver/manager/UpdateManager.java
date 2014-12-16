@@ -20,9 +20,9 @@ import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.UpdateInfo;
-import cn.boweikeji.wuliu.driver.http.AsyncHttp;
-import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
-import cn.boweikeji.wuliu.driver.utils.FileUtils;
+import cn.boweikeji.wuliu.http.AsyncHttp;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.FileUtils;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 

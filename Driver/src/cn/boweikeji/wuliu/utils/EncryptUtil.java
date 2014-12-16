@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.supplyer.utils;
+package cn.boweikeji.wuliu.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

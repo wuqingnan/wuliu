@@ -26,7 +26,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <cn.boweikeji.wuliu.supplyer.view.MenuView
+    <cn.boweikeji.wuliu.view.MenuView
         android:id="@+id/menuview"
         android:layout_width="240dp"
         android:layout_height="match_parent"

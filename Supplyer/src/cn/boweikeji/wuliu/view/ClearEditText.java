@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.supplyer.view;
+package cn.boweikeji.wuliu.view;
 
 import cn.boweikeji.wuliu.supplyer.R;
 

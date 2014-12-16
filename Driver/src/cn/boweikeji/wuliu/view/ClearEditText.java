@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.driver.view;
+package cn.boweikeji.wuliu.view;
 
 import cn.boweikeji.wuliu.driver.R;
 import android.content.Context;

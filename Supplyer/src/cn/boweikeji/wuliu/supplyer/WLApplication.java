@@ -1,7 +1,7 @@
 package cn.boweikeji.wuliu.supplyer;
 
 import cn.boweikeji.wuliu.supplyer.db.DBHelper;
-import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
 
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;

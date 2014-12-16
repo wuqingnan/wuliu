@@ -1,13 +1,11 @@
-package cn.boweikeji.wuliu.supplyer.window;
+package cn.boweikeji.wuliu.window;
 
+import cn.boweikeji.wuliu.driver.R;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-
-import cn.boweikeji.wuliu.supplyer.R;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;

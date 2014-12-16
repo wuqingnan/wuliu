@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.driver.utils;
+package cn.boweikeji.wuliu.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;

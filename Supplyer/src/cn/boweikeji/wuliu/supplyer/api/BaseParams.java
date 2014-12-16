@@ -1,6 +1,6 @@
 package cn.boweikeji.wuliu.supplyer.api;
 
-import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
 
 import com.loopj.android.http.RequestParams;
 

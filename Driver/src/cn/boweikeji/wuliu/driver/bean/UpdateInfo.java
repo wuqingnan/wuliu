@@ -2,7 +2,7 @@ package cn.boweikeji.wuliu.driver.bean;
 
 import org.json.JSONObject;
 
-import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
 
 public class UpdateInfo {
 

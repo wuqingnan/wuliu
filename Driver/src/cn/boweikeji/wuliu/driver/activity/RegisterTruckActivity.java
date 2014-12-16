@@ -19,10 +19,11 @@ import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.RegisterInfo;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.LoginEvent;
-import cn.boweikeji.wuliu.driver.http.AsyncHttp;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
-import cn.boweikeji.wuliu.driver.utils.Util;
-import cn.boweikeji.wuliu.driver.view.ClearEditText;
+import cn.boweikeji.wuliu.http.AsyncHttp;
+import cn.boweikeji.wuliu.utils.Util;
+import cn.boweikeji.wuliu.view.ClearEditText;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import de.greenrobot.event.EventBus;

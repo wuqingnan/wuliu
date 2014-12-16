@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.driver.view;
+package cn.boweikeji.wuliu.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

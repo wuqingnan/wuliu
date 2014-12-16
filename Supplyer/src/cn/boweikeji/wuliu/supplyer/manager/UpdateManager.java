@@ -16,13 +16,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import cn.boweikeji.wuliu.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.R;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.UpdateInfo;
-import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
-import cn.boweikeji.wuliu.supplyer.utils.DeviceInfo;
-import cn.boweikeji.wuliu.supplyer.utils.FileUtils;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.FileUtils;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 

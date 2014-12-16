@@ -27,9 +27,9 @@ import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.LoginEvent;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
-import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
-import cn.boweikeji.wuliu.driver.utils.EncryptUtil;
-import cn.boweikeji.wuliu.driver.utils.Util;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.EncryptUtil;
+import cn.boweikeji.wuliu.utils.Util;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 

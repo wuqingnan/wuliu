@@ -1,8 +1,6 @@
-package cn.boweikeji.wuliu.supplyer.http;
+package cn.boweikeji.wuliu.http;
 
 import android.util.Log;
-
-
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;

@@ -6,12 +6,13 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.boweikeji.wuliu.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.Const;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.bean.Order;
-import cn.boweikeji.wuliu.supplyer.http.AsyncHttp;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
-import cn.boweikeji.wuliu.supplyer.utils.Util;
+
+
 
 
 
@@ -19,6 +20,7 @@ import cn.boweikeji.wuliu.supplyer.utils.Util;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import cn.boweikeji.wuliu.supplyer.R;
+import cn.boweikeji.wuliu.utils.Util;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;

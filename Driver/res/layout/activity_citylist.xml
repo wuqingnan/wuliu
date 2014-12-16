@@ -22,7 +22,7 @@
             android:scrollbars="none"
             android:scrollingCache="false" />
 
-        <cn.boweikeji.wuliu.driver.view.AlphabetView
+        <cn.boweikeji.wuliu.view.AlphabetView
             android:id="@+id/alphabetview"
             android:layout_width="22dp"
             android:layout_height="fill_parent"

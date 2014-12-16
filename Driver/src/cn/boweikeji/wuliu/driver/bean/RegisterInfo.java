@@ -5,7 +5,7 @@ import java.io.Serializable;
 import android.text.TextUtils;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
-import cn.boweikeji.wuliu.driver.utils.EncryptUtil;
+import cn.boweikeji.wuliu.utils.EncryptUtil;
 
 public class RegisterInfo implements Serializable {
 

@@ -7,12 +7,10 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.supplyer.WLApplication;
 import cn.boweikeji.wuliu.supplyer.bean.Area;
 import cn.boweikeji.wuliu.supplyer.db.DBHelper;
-import cn.boweikeji.wuliu.supplyer.window.AreaWheel;
-import cn.boweikeji.wuliu.supplyer.window.IWheel;
-import cn.boweikeji.wuliu.supplyer.window.WheelWindow;
-
 import cn.boweikeji.wuliu.supplyer.R;
-
+import cn.boweikeji.wuliu.window.AreaWheel;
+import cn.boweikeji.wuliu.window.IWheel;
+import cn.boweikeji.wuliu.window.WheelWindow;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

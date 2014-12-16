@@ -27,8 +27,8 @@ import cn.boweikeji.wuliu.supplyer.R;
 import cn.boweikeji.wuliu.supplyer.bean.UserInfo;
 import cn.boweikeji.wuliu.supplyer.event.LoginEvent;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
-import cn.boweikeji.wuliu.supplyer.utils.EncryptUtil;
-import cn.boweikeji.wuliu.supplyer.utils.Util;
+import cn.boweikeji.wuliu.utils.EncryptUtil;
+import cn.boweikeji.wuliu.utils.Util;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 

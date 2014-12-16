@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.supplyer.window;
+package cn.boweikeji.wuliu.window;
 
 import java.util.List;
 

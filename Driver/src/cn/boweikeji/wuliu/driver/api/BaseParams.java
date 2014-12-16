@@ -1,6 +1,6 @@
 package cn.boweikeji.wuliu.driver.api;
 
-import cn.boweikeji.wuliu.driver.utils.DeviceInfo;
+import cn.boweikeji.wuliu.utils.DeviceInfo;
 
 import com.loopj.android.http.RequestParams;
 
