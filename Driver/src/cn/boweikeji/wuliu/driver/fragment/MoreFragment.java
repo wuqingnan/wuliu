@@ -17,6 +17,7 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.activity.MainActivity;
+import cn.boweikeji.wuliu.driver.activity.SetActivity;
 import cn.boweikeji.wuliu.driver.activity.SuggestActivity;
 import cn.boweikeji.wuliu.driver.activity.WebViewActivity;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
@@ -44,19 +45,8 @@ public class MoreFragment extends BaseFragment {
 				suggest();
 				break;
 			case 4://设置
+				set();
 				break;
-			case 5://关于
-				about();
-				break;
-			}
-		}
-	};
-	
-	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-		@Override
-		public void onClick(View view) {
-			if (view == mLogout) {
-				logout();
 			}
 		}
 	};
@@ -69,8 +59,6 @@ public class MoreFragment extends BaseFragment {
 	TextView mTitle;
 	@InjectView(R.id.fragment_more_list)
 	ListView mListView;
-	
-	private Button mLogout;
 	
 	private MoreAdapter mAdapter;
 
@@ -112,7 +100,6 @@ public class MoreFragment extends BaseFragment {
 
 	private void initView() {
 		initHeader();
-		initFooter();
 		mListView.setOnItemClickListener(mOnItemClickListener);
 	}
 	
@@ -126,21 +113,13 @@ public class MoreFragment extends BaseFragment {
 		phone.setText(userInfo.getPhone());
 	}
 	
-	private void initFooter() {
-		View footer = LayoutInflater.from(getActivity()).inflate(R.layout.logout, null);
-		mListView.addFooterView(footer);
-		mLogout = (Button) footer.findViewById(R.id.logout);
-		mLogout.setOnClickListener(mOnClickListener);
-	}
-	
 	private void initData() {
 		mListNames = new String[]{
 				getString(R.string.driver_guide),
 				getString(R.string.invite_firend),
 				getString(R.string.share_firend),
 				getString(R.string.suggestion),
-				getString(R.string.setting),
-				getString(R.string.about)
+				getString(R.string.setting)
 		};
 		mListIcons = getResources().obtainTypedArray(R.array.more_list_icon);
 		mAdapter = new MoreAdapter();
@@ -155,13 +134,8 @@ public class MoreFragment extends BaseFragment {
 		getActivity().startActivity(new Intent(getActivity(), SuggestActivity.class));
 	}
 	
-	private void about() {
-		WebViewActivity.startWebViewActivity(getActivity(), getResources().getString(R.string.about), Const.URL_ABOUT);
-	}
-	
-	private void logout() {
-		LoginManager.getInstance().logout();
-		((MainActivity)getActivity()).goHome();
+	private void set() {
+		SetActivity.startSetActivity(getActivity());
 	}
 	
 	private class MoreAdapter extends BaseAdapter {

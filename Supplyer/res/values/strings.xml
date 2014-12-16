@@ -190,6 +190,7 @@
     <string name="about_app">关于汇流</string>
     <string name="check_update">检查更新</string>
     <string name="change_passwd">修改密码</string>
+    <string name="push_switch">推送开关</string>
     <string name="logout">退出登录</string>
     
     <string name="hint_old_password">旧密码</string>

@@ -46,6 +46,7 @@ import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UpdateInfo;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
+import cn.boweikeji.wuliu.driver.event.ExitEvent;
 import cn.boweikeji.wuliu.driver.fragment.BaseFragment;
 import cn.boweikeji.wuliu.driver.fragment.FindFragment;
 import cn.boweikeji.wuliu.driver.fragment.HomeFragment;
@@ -56,6 +57,7 @@ import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.manager.UpdateManager;
 import cn.boweikeji.wuliu.http.AsyncHttp;
 import cn.boweikeji.wuliu.utils.DeviceInfo;
+import de.greenrobot.event.EventBus;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -77,6 +79,8 @@ public class MainActivity extends BaseActivity {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
 
+	public static final String KEY_LOGOUT = "logout";
+	
 	private static final int MSG_PUSH = 1 << 0;
 
 	private static final int EXIT_TIME = 2000;
@@ -223,6 +227,7 @@ public class MainActivity extends BaseActivity {
 		mTimerTask.shutdownNow();
 		mBaiduMap.setMyLocationEnabled(false);
 		mMapView.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 
 	@Override
@@ -266,7 +271,11 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		pageJump(intent);
+		if (intent.getBooleanExtra(KEY_LOGOUT, false)) {
+			goHome();
+		} else {
+			pageJump(intent);
+		}
 	}
 
 	private void init() {
@@ -279,6 +288,7 @@ public class MainActivity extends BaseActivity {
 		initMap();
 		changeFragment(0);
 		initLocation();
+		EventBus.getDefault().register(this);
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300,
 				TimeUnit.SECONDS);
@@ -597,7 +607,10 @@ public class MainActivity extends BaseActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	public void onEventMainThread(ExitEvent event) {
+		exit();
 	}
 
 	private class PositionTask implements Runnable {
