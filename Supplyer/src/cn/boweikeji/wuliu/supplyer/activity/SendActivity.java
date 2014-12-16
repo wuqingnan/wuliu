@@ -145,21 +145,12 @@ public class SendActivity extends BaseActivity {
 			if (requestCode == REQUEST_CODE_SEARCH) {
 				if (data != null) {
 					String[] infos = data.getStringArrayExtra(SearchActivity.KEY_RESULT);
-					String address = "";
-					if (infos != null) {
-						for (int i = 0; i < infos.length; i++) {
-							if (infos[i] != null) {
-								address += infos[i] + " ";
-							}
-						}
-					}
 					if (mIsFrom) {
 						mFromInfos = infos;
-						mFromAddress.setText(address);
 					} else {
 						mToInfos = infos;
-						mToAddress.setText(address);
 					}
+					updateAddress();
 				}
 			}
 		}
@@ -264,9 +255,15 @@ public class SendActivity extends BaseActivity {
 	}
 
 	private void swapAddress() {
-		CharSequence temp = mFromAddress.getText();
-		mFromAddress.setText(mToAddress.getText());
-		mToAddress.setText(temp);
+		String[] infos = mFromInfos;
+		mFromInfos = mToInfos;
+		mToInfos = infos;
+		updateAddress();
+	}
+	
+	private void updateAddress() {
+		mFromAddress.setText(arrayToString(mFromInfos));
+		mToAddress.setText(arrayToString(mToInfos));
 	}
 	
 	private void showTypeChooseDialog() {
@@ -388,6 +385,21 @@ public class SendActivity extends BaseActivity {
 		}
 		
 		return true;
+	}
+	
+	private String arrayToString(String[] array) {
+		if (array == null) {
+			return null;
+		}
+        int iMax = array.length - 1;
+        if (iMax == -1) {
+        	return null;
+        }
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < array.length; i++) {
+    		b.append(String.valueOf(array[i]));
+        }
+        return b.toString();
 	}
 	
 	/**

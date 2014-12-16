@@ -47,39 +47,6 @@ public class SearchActivity extends BaseActivity {
 		}
 	};
 	
-//	private OnGetPoiSearchResultListener mPoiListener = new OnGetPoiSearchResultListener(){  
-//		@Override
-//		public void onGetPoiDetailResult(PoiDetailResult arg0) {
-//			
-//		}
-//		@Override
-//		public void onGetPoiResult(PoiResult result) {
-//			if (result != null) {
-//				mPoiList = result.getAllPoi();
-//				mAdapter.notifyDataSetChanged();
-//			}
-//		}  
-//	};
-	
-//	private TextWatcher mWatcher = new TextWatcher() {
-//		@Override
-//		public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-//			
-//		}
-//		
-//		@Override
-//		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-//				int arg3) {
-//			
-//		}
-//		
-//		@Override
-//		public void afterTextChanged(Editable arg0) {
-//			updateClearState();
-//			search();
-//		}
-//	};
-	
 	private WheelWindow.OnConfirmListener mConfirmListener = new WheelWindow.OnConfirmListener() {
 
 		@Override
@@ -113,12 +80,6 @@ public class SearchActivity extends BaseActivity {
 	
 	private WheelWindow mWheelWindow;
 	
-//	private SearchListAdapter mAdapter;
-	
-//	private PoiSearch mPoiSearch;
-	
-//	private List<PoiInfo> mPoiList;
-	
 	//0:省、1:市、2:区县、3:街道
 	private String[] mSearchInfos;
 	
@@ -130,16 +91,9 @@ public class SearchActivity extends BaseActivity {
 		setContentView(R.layout.activity_search);
 		handleIntent();
 		initView();
-//		initSearch();
 		initData();
 	}
 	
-//	@Override
-//	protected void onDestroy() {
-//		super.onDestroy();
-//		mPoiSearch.destroy();
-//	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -167,20 +121,16 @@ public class SearchActivity extends BaseActivity {
 		mSearchArea.setOnClickListener(mOnClickListener);
 		mSearchClear.setOnClickListener(mOnClickListener);
 		mSearchConfirm.setOnClickListener(mOnClickListener);
-//		mSearchInput.addTextChangedListener(mWatcher);
 		mTitle.setText(R.string.title_search);
-//		mAdapter = new SearchListAdapter();
-//		mSearchList.setAdapter(mAdapter);
 	}
-	
-//	private void initSearch() {
-//		mPoiSearch = PoiSearch.newInstance();
-//		mPoiSearch.setOnGetPoiSearchResultListener(mPoiListener);
-//	}
 	
 	private void initData() {
 		if (mSearchInfos != null) {
-			mSearchArea.setText(mSearchInfos[2]);
+			if (!TextUtils.isEmpty(mSearchInfos[2]) && !mSearchInfos[2].equals("请选择")) {
+				mSearchArea.setText(mSearchInfos[2]);
+			} else {
+				mSearchArea.setText(mSearchInfos[1]);
+			}
 			mSearchInput.setText(mSearchInfos[3]);
 		}
 		updateClearState();
@@ -193,6 +143,9 @@ public class SearchActivity extends BaseActivity {
 	private void confirm() {
 		Intent intent = new Intent();
 		mSearchInfos[3] = mSearchInput.getText().toString();
+		if (mSearchInfos[2].equals("请选择")) {
+			mSearchInfos[2] = "";
+		}
 		intent.putExtra(KEY_RESULT, mSearchInfos);
 		setResult(RESULT_OK, intent);
 		finish();
@@ -213,20 +166,6 @@ public class SearchActivity extends BaseActivity {
 		mWheelWindow.updateByInfo(mSearchInfos);
 	}
 	
-//	private void search() {
-//		String keyword = mSearchInput.getText().toString();
-//		if (TextUtils.isEmpty(keyword)) {
-//			
-//		}
-//		else {
-//			Log.d(TAG, "shizy---keyword: " + keyword);
-//			mPoiSearch.searchInCity((new PoiCitySearchOption())
-//					.city("北京")  
-//					.keyword(keyword)  
-//					.pageNum(0));
-//		}
-//	}
-	
 	private void updateClearState() {
 		mSearchClear.setVisibility(TextUtils.isEmpty(mSearchInput.getText()) ? View.GONE : View.VISIBLE);
 	}
@@ -237,31 +176,4 @@ public class SearchActivity extends BaseActivity {
 		activity.startActivityForResult(intent, requestCode);
 	}
 	
-//	private class SearchListAdapter extends BaseAdapter {
-//
-//		@Override
-//		public int getCount() {
-//			return mPoiList == null ? 0 : mPoiList.size();
-//		}
-//
-//		@Override
-//		public Object getItem(int arg0) {
-//			return mPoiList.get(arg0);
-//		}
-//
-//		@Override
-//		public long getItemId(int arg0) {
-//			return arg0;
-//		}
-//
-//		@Override
-//		public View getView(int position, View convertView, ViewGroup viewGroup) {
-//			if (convertView == null) {
-//				convertView = new TextView(SearchActivity.this);
-//			}
-//			((TextView)convertView).setText(mPoiList.get(position).address);
-//			return convertView;
-//		}
-//		
-//	}
 }

@@ -277,7 +277,9 @@ public class FindFragment extends BaseFragment {
         }
         StringBuilder b = new StringBuilder();
         for (int i = 0; i < array.length; i++) {
-            b.append(String.valueOf(array[i]));
+        	if (!array[i].equals("请选择")) {
+        		b.append(String.valueOf(array[i]));
+        	}
         }
         return b.toString();
 	}
