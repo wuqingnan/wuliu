@@ -366,7 +366,7 @@ public class MainActivity extends BaseActivity {
 
 	private void initTitle() {
 		mTitle.setText(R.string.app_name);
-		mMenuBtn.setImageResource(R.drawable.btn_title_menu);
+		mMenuBtn.setImageResource(R.drawable.ic_navi_menu);
 		mMenuBtn.setOnClickListener(mOnClickListener);
 	}
 

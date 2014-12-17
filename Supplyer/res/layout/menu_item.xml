@@ -13,10 +13,10 @@
 
     <TextView
         android:id="@+id/item_title"
-        style="@style/TextAppearance.Small.White"
+        style="@style/TextAppearance.Micro.dddddd"
         android:layout_width="0dp"
         android:layout_height="@dimen/menu_item_height"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:layout_weight="1.0" />
     
@@ -25,5 +25,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        android:src="@drawable/arrow_right" />
+        android:src="@drawable/ic_menu_right" />
 </LinearLayout>
