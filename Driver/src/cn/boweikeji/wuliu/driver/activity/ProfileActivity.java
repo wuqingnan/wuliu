@@ -96,13 +96,13 @@ public class ProfileActivity extends BaseActivity {
 		private Context mContext;
 		private LayoutInflater mInflater;
 		
-		private String[] mUserTypes;
+		private String[] mDriverTypes;
 		private String[] mTruckTypes;
 
 		public ProfileAdapter(Context context) {
 			mContext = context;
 			mInflater = LayoutInflater.from(context);
-			mUserTypes = context.getResources().getStringArray(R.array.user_types);
+			mDriverTypes = context.getResources().getStringArray(R.array.driver_types);
 			mTruckTypes = context.getResources().getStringArray(R.array.truck_type_list);
 		}
 
@@ -146,8 +146,8 @@ public class ProfileActivity extends BaseActivity {
 			case R.string.label_user_type:
 			{
 				int type = LoginManager.getInstance().getUserInfo().getDriver_type();
-				if (type >= 0 && type < mUserTypes.length) {
-					value = mUserTypes[type];
+				if (type >= 0 && type < mDriverTypes.length) {
+					value = mDriverTypes[type];
 				}
 			}
 				break;
