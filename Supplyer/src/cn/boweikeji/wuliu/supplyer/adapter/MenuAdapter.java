@@ -59,9 +59,9 @@ public class MenuAdapter extends BaseAdapter {
 	}
 
 	static class ViewHolder {
-		@InjectView(R.id.menu_item_icon)
+		@InjectView(R.id.item_icon)
 		ImageView mIconView;
-		@InjectView(R.id.menu_item_title)
+		@InjectView(R.id.item_title)
 		TextView mTitleView;
 
 		public ViewHolder(View view) {

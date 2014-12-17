@@ -15,7 +15,7 @@
         android:id="@+id/item_title"
         style="@style/TextAppearance.Small.White"
         android:layout_width="0dp"
-        android:layout_height="@dimen/fragment_more_item_height"
+        android:layout_height="@dimen/menu_item_height"
         android:layout_marginLeft="20dp"
         android:gravity="center_vertical"
         android:layout_weight="1.0" />

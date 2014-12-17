@@ -111,6 +111,7 @@
     <string name="agree_and_accept">同意并接受</string>
     <string name="platform_rule">《平台服务使用规则》</string>
     <string name="send">发货</string>
+    <string name="book">预约</string>
     
     <string name="area_hint">地区</string>
     <string name="search_hint">街道 门牌号</string>

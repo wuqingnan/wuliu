@@ -18,15 +18,6 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="SendButton">
-        <item name="android:text">@string/send</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/text_size_middle</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/btn_send</item>
-    </style>
-
     <style name="EditText">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/color_bababa</item>

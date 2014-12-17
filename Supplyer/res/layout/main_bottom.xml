@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:background="@color/bg_back"
     android:clickable="true"
-    android:gravity="center"
-    android:orientation="horizontal" >
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:paddingBottom="25dp" >
 
-    <Button
+    <LinearLayout
         android:id="@+id/main_send"
-        style="@style/SendButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.0"
-        android:layout_marginLeft="6.666dp"
-        android:layout_marginRight="6.666dp" />
+        android:layout_marginLeft="40dp"
+        android:layout_weight="2.0"
+        android:background="@drawable/btn_send"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
-    <Button
+        <TextView
+            style="@style/TextAppearance.Small.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_send"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:text="@string/send" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/main_book"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="6.666dp"
-        android:background="@drawable/btn_book" />
+        android:layout_marginRight="40dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_book"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/TextAppearance.Small.3c8cd8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_book"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:text="@string/book" />
+    </LinearLayout>
 
 </LinearLayout>

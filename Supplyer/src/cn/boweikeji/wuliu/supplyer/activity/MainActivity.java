@@ -66,8 +66,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 public class MainActivity extends BaseActivity {
 
@@ -194,7 +196,7 @@ public class MainActivity extends BaseActivity {
 				case MenuView.MENU_ORDER:
 					OrderActivity.startOrderActivity(MainActivity.this);
 					break;
-				case MenuView.MENU_MESSAGE:
+				case MenuView.MENU_ACTIVITY:
 					WebViewActivity.startWebViewActivity(MainActivity.this,
 							getString(R.string.title_system_msg),
 							Const.getMsgUrl());
@@ -225,9 +227,9 @@ public class MainActivity extends BaseActivity {
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.main_send)
-	Button mMainSend;
+	LinearLayout mMainSend;
 	@InjectView(R.id.main_book)
-	Button mMainBook;
+	LinearLayout mMainBook;
 
 	private BaiduMap mBaiduMap;
 	private UiSettings mUiSettings;
@@ -401,6 +403,14 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap.setMyLocationEnabled(true);
 		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
 				LocationMode.NORMAL, true, null));
+		
+		//隐藏放大缩小
+		for (int i = 0; i < mMapView.getChildCount(); i++) {
+			if (mMapView.getChildAt(i) instanceof ZoomControls) {
+				mMapView.getChildAt(i).setVisibility(View.GONE);
+				break;
+			}
+		}
 	}
 
 	private void updateMap() {

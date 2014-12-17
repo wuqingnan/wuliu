@@ -17,40 +17,40 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MenuView extends RelativeLayout {
-	
+
 	private static final String TAG = MenuView.class.getSimpleName();
-	
+
 	public static final int MENU_PROFILE = -1;
 	public static final int MENU_ORDER = 0;
-	public static final int MENU_MESSAGE = 1;
+	public static final int MENU_ACTIVITY = 1;
 	public static final int MENU_INVITE = 2;
 	public static final int MENU_SHARE = 3;
 	public static final int MENU_SETTING = 4;
-	
-	private static final int[] ICONS = new int[] { R.drawable.icon_order,
-			R.drawable.icon_account, R.drawable.icon_share,
-			R.drawable.icon_share, R.drawable.icon_setting };
+
+	private static final int[] ICONS = new int[] { R.drawable.ic_order,
+			R.drawable.ic_activity, R.drawable.ic_invite, R.drawable.ic_share,
+			R.drawable.ic_setting };
 
 	public static interface OnMenuClickListener {
-		
+
 		public void onMenuClick(int menu);
-		
+
 	}
-	
+
 	private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			if (mOnMenuClickListener != null) {
-				mOnMenuClickListener.onMenuClick((int)id);
+				mOnMenuClickListener.onMenuClick((int) id);
 			}
 		}
 	};
-	
+
 	private TextView mMenuPhone;
 	private ListView mListView;
 	private MenuAdapter mMenuAdapter;
-	
+
 	private OnMenuClickListener mOnMenuClickListener;
 
 	public MenuView(Context context) {
@@ -102,7 +102,7 @@ public class MenuView extends RelativeLayout {
 			mMenuPhone.setText(null);
 		}
 	}
-	
+
 	public OnMenuClickListener getOnMenuClickListener() {
 		return mOnMenuClickListener;
 	}
@@ -113,14 +113,16 @@ public class MenuView extends RelativeLayout {
 
 	/**
 	 * 处理登陆消息
+	 * 
 	 * @param event
 	 */
 	public void onEventMainThread(LoginEvent event) {
 		updateInfo();
 	}
-	
+
 	/**
 	 * 处理注销消息
+	 * 
 	 * @param event
 	 */
 	public void onEventMainThread(LogoutEvent event) {

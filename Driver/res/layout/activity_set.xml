@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_more_item_height"
+        android:layout_height="@dimen/menu_item_height"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center_vertical"
@@ -43,7 +43,7 @@
     <LinearLayout
         android:id="@+id/update"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_more_item_height"
+        android:layout_height="@dimen/menu_item_height"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal" >
@@ -76,7 +76,7 @@
         android:id="@+id/about"
         style="@style/TextAppearance.Small.White"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/fragment_more_item_height"
+        android:layout_height="@dimen/menu_item_height"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:drawableLeft="@drawable/ic_about"
