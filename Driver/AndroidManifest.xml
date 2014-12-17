@@ -132,6 +132,11 @@
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
+        <activity
+            android:name="cn.boweikeji.wuliu.driver.activity.ProfileActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
+        </activity>
 
         <!-- 微信分享回调 -->
         <activity

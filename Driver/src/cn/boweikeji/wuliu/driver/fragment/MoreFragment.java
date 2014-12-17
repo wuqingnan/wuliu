@@ -17,6 +17,7 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.activity.MainActivity;
+import cn.boweikeji.wuliu.driver.activity.ProfileActivity;
 import cn.boweikeji.wuliu.driver.activity.SetActivity;
 import cn.boweikeji.wuliu.driver.activity.SuggestActivity;
 import cn.boweikeji.wuliu.driver.activity.WebViewActivity;
@@ -33,6 +34,7 @@ public class MoreFragment extends BaseFragment {
 				long id) {
 			switch ((int)id) {
 			case -1://我的资料
+				profile();
 				break;
 			case 0://承运指南
 				guide();
@@ -124,6 +126,10 @@ public class MoreFragment extends BaseFragment {
 		mListIcons = getResources().obtainTypedArray(R.array.more_list_icon);
 		mAdapter = new MoreAdapter();
 		mListView.setAdapter(mAdapter);
+	}
+	
+	private void profile() {
+		ProfileActivity.startProfileActivity(getActivity());
 	}
 
 	private void guide() {

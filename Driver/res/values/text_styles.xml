@@ -74,6 +74,14 @@
         <item name="android:textColor">@color/color_717171</item>
     </style>
     
+    <style name="TextAppearance.Small.333333">
+        <item name="android:textColor">@color/color_333333</item>
+    </style>
+    
+    <style name="TextAppearance.Small.666666">
+        <item name="android:textColor">@color/color_666666</item>
+    </style>
+    
     <style name="TextAppearance.Middle.LightGray">
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>

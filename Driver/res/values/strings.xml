@@ -95,9 +95,6 @@
     <string name="recommend_no">推荐码</string>
     <string name="remark">个人说明</string>
     
-    <string name="label_user_type">用户类型：</string>
-    <string name="label_area_code">所属城市：</string>
-    
     <string name="all">全部</string>
     <string name="free_yes">免费公开</string>
     <string name="free_no">付费公开</string>
@@ -159,6 +156,16 @@
     <string name="label_to_address">收货地址：</string>
     <string name="label_send_comment">重要说明：</string>
     <string name="label_message_free">信息公开：</string>
+    
+    <string name="label_user_name">用户姓名：</string>
+    <string name="label_user_level">用户等级：</string>
+    <string name="label_phone_no">手机号码：</string>
+    <string name="label_id_no">身份证号码：</string>
+    <string name="label_user_type">用户类型：</string>
+    <string name="label_user_company">所属公司：</string>
+    <string name="label_area_code">所属城市：</string>
+    <string name="label_truck_no">车牌号：</string>
+    <string name="label_truck_load">载重吨位：</string>
     
     <string name="format_phone">电话：</string>
     <string name="format_truck_type">车辆类型：</string>

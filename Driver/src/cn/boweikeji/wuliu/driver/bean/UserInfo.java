@@ -11,15 +11,15 @@ public class UserInfo implements Serializable {
 	
 	private String driver_cd;
 	private String driver_name;
-	private String driver_type;
+	private int driver_type;
 	private String comp_name;
 	private String attract_no;
-	private String state;
+	private int state;
 	private String card_id;
 	private String credit_level;
 	private String phone;
 	private String passwd;
-	private String truck_type_code;
+	private int truck_type_code;
 	
 	public UserInfo () {
 		
@@ -33,14 +33,14 @@ public class UserInfo implements Serializable {
 		if (object != null) {
 			setDriver_cd(object.optString("driver_cd"));
 			setDriver_name(object.optString("driver_name"));
-			setDriver_type(object.optString("driver_type"));
+			setDriver_type(object.optInt("driver_type"));
 			setComp_name(object.optString("comp_name"));
 			setAttract_no(object.optString("attract_no"));
-			setState(object.optString("state"));
+			setState(object.optInt("state"));
 			setCard_id(object.optString("card_id"));
 			setCredit_level(object.optString("credit_level"));
 			setPhone(object.optString("phone"));
-			setTruck_type_code(object.optString("trunk_type_code"));
+			setTruck_type_code(object.optInt("trunk_type_code"));
 			if (object.has("passwd")) {
 				setPasswd(object.optString("passwd"));
 			}
@@ -63,11 +63,11 @@ public class UserInfo implements Serializable {
 		this.driver_name = driver_name;
 	}
 
-	public String getDriver_type() {
+	public int getDriver_type() {
 		return driver_type;
 	}
 
-	public void setDriver_type(String driver_type) {
+	public void setDriver_type(int driver_type) {
 		this.driver_type = driver_type;
 	}
 
@@ -87,11 +87,11 @@ public class UserInfo implements Serializable {
 		this.attract_no = attract_no;
 	}
 
-	public String getState() {
+	public int getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(int state) {
 		this.state = state;
 	}
 
@@ -127,11 +127,11 @@ public class UserInfo implements Serializable {
 		this.passwd = passwd;
 	}
 
-	public String getTruck_type_code() {
+	public int getTruck_type_code() {
 		return truck_type_code;
 	}
 
-	public void setTruck_type_code(String truck_type_code) {
+	public void setTruck_type_code(int truck_type_code) {
 		this.truck_type_code = truck_type_code;
 	}
 

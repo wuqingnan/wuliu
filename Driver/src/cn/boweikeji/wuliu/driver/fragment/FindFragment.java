@@ -155,7 +155,7 @@ public class FindFragment extends BaseFragment {
 	}
 
 	private void initData() {
-		mTruckTypeIndex = Integer.parseInt(LoginManager.getInstance().getUserInfo().getTruck_type_code());
+		mTruckTypeIndex = LoginManager.getInstance().getUserInfo().getTruck_type_code();
 		mTruckTypes = getResources().getStringArray(R.array.truck_type_list);
 		updateTruckType();
 
