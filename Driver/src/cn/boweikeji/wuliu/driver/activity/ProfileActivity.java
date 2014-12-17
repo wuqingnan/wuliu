@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class ProfileActivity extends BaseActivity {
@@ -51,7 +52,6 @@ public class ProfileActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		initView();
-		initData();
 	}
 
 	private void initView() {
@@ -67,19 +67,15 @@ public class ProfileActivity extends BaseActivity {
 				null);
 		mName = (TextView) mHeader.findViewById(R.id.name);
 		mPhone = (TextView) mHeader.findViewById(R.id.phone);
+		mName.setVisibility(View.GONE);
 		mPhone.setVisibility(View.GONE);
 		mHeader.setBackgroundColor(getResources().getColor(R.color.bg_back));
-		mName.setTextColor(getResources().getColor(R.color.color_333333));
 	}
 
 	private void initList() {
 		mListView.addHeaderView(mHeader);
 		mAdapter = new ProfileAdapter(this);
 		mListView.setAdapter(mAdapter);
-	}
-
-	private void initData() {
-		mName.setText("独孤伊人");
 	}
 
 	public static class ProfileAdapter extends BaseAdapter {
@@ -141,8 +137,6 @@ public class ProfileActivity extends BaseActivity {
 			case R.string.label_user_name:
 				value = LoginManager.getInstance().getUserInfo().getDriver_name();
 				break;
-			case R.string.label_user_level:
-				break;
 			case R.string.label_phone_no:
 				value = LoginManager.getInstance().getUserInfo().getPhone();
 				break;
@@ -172,7 +166,12 @@ public class ProfileActivity extends BaseActivity {
 			case R.string.label_truck_load:
 				break;
 			}
-			holder.refresh(name, value);
+			if (name == R.string.label_user_level) {
+				int level = LoginManager.getInstance().getUserInfo().getCredit_level();
+				holder.refresh(name, level);
+			} else {
+				holder.refresh(name, value);
+			}
 			return convertView;
 		}
 
@@ -184,6 +183,8 @@ public class ProfileActivity extends BaseActivity {
 		TextView mName;
 		@InjectView(R.id.item_value)
 		TextView mValue;
+		@InjectView(R.id.item_level)
+		RatingBar mLevel;
 		
 		public ViewHolder(View parent) {
 			ButterKnife.inject(this, parent);
@@ -192,6 +193,15 @@ public class ProfileActivity extends BaseActivity {
 		public void refresh(int name, String value) {
 			mName.setText(name);
 			mValue.setText(value);
+			mValue.setVisibility(View.VISIBLE);
+			mLevel.setVisibility(View.GONE);
+		}
+		
+		public void refresh(int name, int level) {
+			mName.setText(name);
+			mLevel.setRating(level >= 0 ? level : 0);
+			mValue.setVisibility(View.GONE);
+			mLevel.setVisibility(View.VISIBLE);
 		}
 		
 	}

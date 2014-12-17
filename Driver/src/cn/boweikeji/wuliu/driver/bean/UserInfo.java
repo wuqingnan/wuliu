@@ -16,7 +16,7 @@ public class UserInfo implements Serializable {
 	private String attract_no;
 	private int state;
 	private String card_id;
-	private String credit_level;
+	private int credit_level;
 	private String phone;
 	private String passwd;
 	private int truck_type_code;
@@ -38,7 +38,7 @@ public class UserInfo implements Serializable {
 			setAttract_no(object.optString("attract_no"));
 			setState(object.optInt("state"));
 			setCard_id(object.optString("card_id"));
-			setCredit_level(object.optString("credit_level"));
+			setCredit_level(object.optInt("credit_level"));
 			setPhone(object.optString("phone"));
 			setTruck_type_code(object.optInt("trunk_type_code"));
 			if (object.has("passwd")) {
@@ -103,11 +103,11 @@ public class UserInfo implements Serializable {
 		this.card_id = card_id;
 	}
 
-	public String getCredit_level() {
+	public int getCredit_level() {
 		return credit_level;
 	}
 
-	public void setCredit_level(String credit_level) {
+	public void setCredit_level(int credit_level) {
 		this.credit_level = credit_level;
 	}
 
