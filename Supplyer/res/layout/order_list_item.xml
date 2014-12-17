@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp" >
-
-    <TextView
-        android:id="@+id/item_info"
-        style="@style/TextAppearance.Middle.DarkGray"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:gravity="right" />
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="14dp" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/item_info"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:orientation="vertical" >
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp" >
 
         <TextView
             android:id="@+id/item_name"
-            style="@style/TextAppearance.Big.Black"
+            style="@style/TextAppearance.Small.474747"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true" />
-
-        <TextView
-            android:id="@+id/item_code"
-            style="@style/TextAppearance.Small.LightGray"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:singleLine="true" />
 
         <TextView
             android:id="@+id/item_date"
-            style="@style/TextAppearance.Small.LightGray"
+            style="@style/TextAppearance.Micro.9a9a9a"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/item_code"
+            style="@style/TextAppearance.Micro.474747"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:singleLine="true" />
     </LinearLayout>
-</RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_info"
+        style="@style/TextAppearance.Micro.f28f00"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:drawableRight="@drawable/arrow_right"
+        android:gravity="center_vertical"
+        android:paddingBottom="8dp" />
+
+</LinearLayout>

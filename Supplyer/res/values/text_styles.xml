@@ -46,6 +46,10 @@
         <item name="android:textColor">@color/color_dddddd</item>
     </style>
     
+    <style name="TextAppearance.Micro.f28f00">
+        <item name="android:textColor">@color/color_f28f00</item>
+    </style>
+    
     <style name="TextAppearance.Micro.LightGray">
         <item name="android:textColor">@color/text_color_light_gray</item>
     </style>
@@ -80,6 +84,10 @@
     
     <style name="TextAppearance.Small.3c8cd8">
         <item name="android:textColor">@color/color_3c8cd8</item>
+    </style>
+    
+    <style name="TextAppearance.Small.9a9a9a">
+        <item name="android:textColor">@color/color_9a9a9a</item>
     </style>
     
     <style name="TextAppearance.Middle.LightGray">

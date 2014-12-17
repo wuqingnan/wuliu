@@ -9,8 +9,10 @@
 
     <TextView
         android:id="@+id/order_count"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        style="@style/TextAppearance.Small.9a9a9a"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/bg_back"
         android:gravity="center"
         android:visibility="gone" />
 
