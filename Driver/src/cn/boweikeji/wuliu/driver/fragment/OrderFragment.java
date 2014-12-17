@@ -24,6 +24,8 @@ public class OrderFragment extends BaseFragment {
 
 	private static final String TAG = OrderFragment.class.getSimpleName();
 
+	private static final String[] TAB_NAMES = { "待选", "已抢到", "已完成", "取消" };
+
 	private View mRootView;
 
 	@InjectView(R.id.titlebar_leftBtn)
@@ -65,20 +67,26 @@ public class OrderFragment extends BaseFragment {
 		Log.d(TAG, "shizy---OrderFragment.initView");
 		mTabHost.setup();
 		mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
-		mTabsAdapter.addTab(mTabHost.newTabSpec("select")
-				.setIndicator("待选"),
+		LayoutInflater inflater = LayoutInflater.from(getActivity());
+		View[] indicators = new View[4];
+		for (int i = 0; i < indicators.length; i++) {
+			indicators[i] = inflater.inflate(R.layout.tab_indicator, null);
+			((TextView) (indicators[i].findViewById(R.id.title)))
+					.setText(TAB_NAMES[i]);
+		}
+		mTabsAdapter.addTab(
+				mTabHost.newTabSpec("select").setIndicator(indicators[0]),
 				OrderListFragment.class, OrderListFragment.TYPE_SELECT);
 		mTabsAdapter.addTab(
-				mTabHost.newTabSpec("selected")
-				.setIndicator("已抢到"),
+				mTabHost.newTabSpec("selected").setIndicator(indicators[1]),
 				OrderListFragment.class, OrderListFragment.TYPE_SELECTED);
-		mTabsAdapter.addTab(mTabHost.newTabSpec("completed")
-				.setIndicator("已完成"),
+		mTabsAdapter.addTab(
+				mTabHost.newTabSpec("completed").setIndicator(indicators[2]),
 				OrderListFragment.class, OrderListFragment.TYPE_COMPLETED);
 		mTabsAdapter.addTab(
-				mTabHost.newTabSpec("cancel")
-				.setIndicator("取消"),
+				mTabHost.newTabSpec("cancel").setIndicator(indicators[3]),
 				OrderListFragment.class, OrderListFragment.TYPE_CANCEL);
+		indicators = null;
 	}
 
 	public static class TabsAdapter extends FragmentPagerAdapter implements
@@ -88,8 +96,7 @@ public class OrderFragment extends BaseFragment {
 		private final ViewPager mViewPager;
 		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-		public TabsAdapter(Fragment fragment, TabHost tabHost,
-				ViewPager pager) {
+		public TabsAdapter(Fragment fragment, TabHost tabHost, ViewPager pager) {
 			super(fragment.getChildFragmentManager());
 			mContext = fragment.getActivity();
 			mTabHost = tabHost;
@@ -163,7 +170,7 @@ public class OrderFragment extends BaseFragment {
 				args = _args;
 			}
 		}
-		
+
 		static class DummyTabFactory implements TabHost.TabContentFactory {
 			private final Context mContext;
 
