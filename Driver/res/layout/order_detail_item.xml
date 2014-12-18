@@ -2,20 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:orientation="horizontal" >
-    
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp" >
+
     <TextView
         android:id="@+id/item_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        style="@style/TextAppearance.Small.666666"
+        android:layout_width="@dimen/order_detail_label_width"
+        android:layout_height="@dimen/order_detail_item_height"
+        android:gravity="center_vertical" />
 
     <TextView
         android:id="@+id/item_value"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:singleLine="true"
-        android:layout_marginLeft="10dp" />
-    
+        style="@style/TextAppearance.Small.9a9a9a"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/order_detail_item_height"
+        android:singleLine="true" />
+
 </LinearLayout>

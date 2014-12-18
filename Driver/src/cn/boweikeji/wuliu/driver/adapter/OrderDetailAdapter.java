@@ -1,5 +1,9 @@
-package cn.boweikeji.wuliu.supplyer.adapter;
+package cn.boweikeji.wuliu.driver.adapter;
 
+import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.api.BaseParams;
+import cn.boweikeji.wuliu.driver.bean.Order;
+import cn.boweikeji.wuliu.view.OrderDetailItem;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import cn.boweikeji.wuliu.supplyer.R;
-import cn.boweikeji.wuliu.supplyer.api.BaseParams;
-import cn.boweikeji.wuliu.supplyer.bean.Driver;
-import cn.boweikeji.wuliu.supplyer.bean.Order;
-import cn.boweikeji.wuliu.view.OrderDetailItem;
 
 public class OrderDetailAdapter extends BaseAdapter {
 
@@ -21,31 +20,26 @@ public class OrderDetailAdapter extends BaseAdapter {
 	private final int TYPE_TWOCOLS = 2;
 
 	private static final int[] NAMES = { R.string.label_order_code,
-			R.string.label_pick_time, R.string.label_create_time,
-			R.string.label_divider_line, R.string.label_goods_name,
-			R.string.label_goods_type, R.string.label_goods_weight,
-			R.string.label_goods_value, R.string.label_goods_pay,
-			R.string.label_divider_line, R.string.label_message_free,
-			R.string.label_creater_phone, R.string.label_creater_type,
-			R.string.label_send_comment, R.string.label_from_address,
-			R.string.label_to_address, R.string.label_divider_line,
-			R.string.label_from_name, R.string.label_from_phone,
-			R.string.label_divider_line, R.string.label_to_name,
-			R.string.label_to_phone, R.string.label_divider_line,
-			R.string.label_driver_name, R.string.label_driver_phone,
-			R.string.label_divider_line, R.string.label_truck_type,
-			R.string.label_truck_no, R.string.label_truck_load };
+			R.string.label_order_type, R.string.label_pick_time,
+			R.string.label_create_time, R.string.label_divider_line,
+			R.string.label_goods_name, R.string.label_goods_type,
+			R.string.label_goods_weight, R.string.label_goods_value,
+			R.string.label_goods_pay, R.string.label_divider_line,
+			R.string.label_message_free, R.string.label_creater_phone,
+			R.string.label_creater_type, R.string.label_send_comment,
+			R.string.label_from_address, R.string.label_to_address,
+			R.string.label_divider_line, R.string.label_from_name,
+			R.string.label_from_phone, R.string.label_divider_line,
+			R.string.label_to_name, R.string.label_to_phone };
 
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private Order mOrder;
-	private Driver mDriver;
 
 	private String[] mGoodsTypes;
+	private String[] mUserTypes;
 	private String[] mStateName;
 	private int[] mStateValue;
-	private String[] mUserTypes;
-	private String[] mTruckTypes;
 
 	public OrderDetailAdapter(Context context) {
 		mContext = context;
@@ -57,8 +51,6 @@ public class OrderDetailAdapter extends BaseAdapter {
 		mStateValue = context.getResources().getIntArray(
 				R.array.order_state_value);
 		mUserTypes = context.getResources().getStringArray(R.array.user_types);
-		mTruckTypes = context.getResources().getStringArray(
-				R.array.truck_type_list);
 	}
 
 	@Override
@@ -66,10 +58,7 @@ public class OrderDetailAdapter extends BaseAdapter {
 		if (mOrder == null) {
 			return 0;
 		}
-		if (mDriver != null) {
-			return 29;
-		}
-		return 23;
+		return NAMES.length;
 	}
 
 	@Override
@@ -82,18 +71,9 @@ public class OrderDetailAdapter extends BaseAdapter {
 		return arg0;
 	}
 
-	public void setData(Order order, Driver driver) {
+	public void setData(Order order) {
 		mOrder = order;
-		mDriver = driver;
 		notifyDataSetChanged();
-	}
-
-	public Order getOrder() {
-		return mOrder;
-	}
-
-	public Driver getDriver() {
-		return mDriver;
 	}
 
 	@Override
@@ -162,6 +142,11 @@ public class OrderDetailAdapter extends BaseAdapter {
 		int name = NAMES[position];
 		String value = null;
 		switch (name) {
+		case R.string.label_order_type:
+			value = mContext
+					.getString(mOrder.isOrder() ? R.string.order_bespeak
+							: R.string.order_realtime);
+			break;
 		case R.string.label_pick_time:
 			value = mOrder.getPick_time();
 			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
@@ -271,25 +256,6 @@ public class OrderDetailAdapter extends BaseAdapter {
 			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
-			break;
-		case R.string.label_driver_name:
-			value = mDriver.getDriver_name();
-			break;
-		case R.string.label_driver_phone:
-			value = mDriver.getPhone();
-			break;
-		case R.string.label_truck_type: {
-			int type = mDriver.getTruck_type_code();
-			if (type >= 0 && type < mTruckTypes.length) {
-				value = mTruckTypes[type];
-			}
-		}
-			break;
-		case R.string.label_truck_no:
-			value = "临时";
-			break;
-		case R.string.label_truck_load:
-			value = "临时";
 			break;
 		}
 		holder.refresh(name, value);

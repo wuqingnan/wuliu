@@ -268,28 +268,8 @@ public class OrderDetailActivity extends BaseActivity {
 	}
 
 	private void parseJson(JSONObject infos) {
-		Order order = new Order();
 		Driver driver = null;
-		order.setGoods_cd(infos.optString("goods_cd"));
-		order.setGoods_name(infos.optString("goods_name"));
-		order.setGoods_type_code(infos.optInt("goods_type_code"));
-
-		order.setSupplyer_name(infos.optString("supplyer_name"));
-		order.setSupplyer_phone(infos.optString("supplyer_phone"));
-		order.setStart_addr(infos.optString("start_addr"));
-		order.setReciver(infos.optString("reciver"));
-		order.setReciver_phone(infos.optString("reciver_phone"));
-		order.setEnd_addr(infos.optString("end_addr"));
-
-		order.setCredit(infos.optInt("credit"));
-		order.setStars(infos.optInt("stars"));
-		order.setMess_fee(infos.optInt("mess_fee"));
-		order.setGoods_cost(infos.optInt("goods_cost"));
-		order.setState(infos.optInt("state"));
-		order.setPick_time(infos.optString("pick_time"));
-		order.setCreate_date(infos.optString("create_date"));
-		order.setRemark(infos.optString("remark"));
-
+		Order order = Order.parseOrderDetailJson(infos);
 		String driverCD = infos.optString("driver_cd");
 		if (driverCD != null && driverCD.length() > 0
 				&& !driverCD.equals(BaseParams.PARAM_DEFAULT)) {

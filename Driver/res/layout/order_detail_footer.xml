@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/order_detail_footer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="92dp"
+    android:background="#a4a4a4"
+    android:gravity="center"
     android:orientation="horizontal"
-    android:padding="10dp" >
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp" >
 
     <Button
         android:id="@+id/rob_order"
+        style="@style/TextAppearance.Small.White"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_weight="1.0"
-        android:text="@string/rob_order"
-        android:visibility="visible" />
+        android:background="@drawable/btn_confirm"
+        android:text="@string/rob_order" />
 
     <Button
         android:id="@+id/drop_order"
+        style="@style/TextAppearance.Small.666666"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_weight="1.0"
-        android:text="@string/drop_order"
-        android:visibility="visible" />
+        android:background="@drawable/btn_cancel"
+        android:text="@string/drop_order" />
 
 </LinearLayout>

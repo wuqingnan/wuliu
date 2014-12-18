@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/btn_confirm" />
+        android:src="@drawable/btn_ok" />
     
     <LinearLayout
         android:layout_width="match_parent"

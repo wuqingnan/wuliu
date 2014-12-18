@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.adapter.OrderDetailAdapter;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
@@ -92,16 +93,18 @@ public class OrderDetailActivity extends BaseActivity {
 	TextView mTitle;
 	@InjectView(R.id.order_detail)
 	ListView mListView;
-	
-	private View mFooter;
-	private Button mRobBtn;
-	private Button mDropBtn;
+	@InjectView(R.id.order_detail_footer)
+	View mFooter;
+	@InjectView(R.id.rob_order)
+	Button mRobBtn;
+	@InjectView(R.id.drop_order)
+	Button mDropBtn;
 	
 	private ProgressDialog mProgressDialog;
 	
 	private String mGoodsCD;
 	
-	private DetailAdapter mAdapter;
+	private OrderDetailAdapter mAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,18 +123,13 @@ public class OrderDetailActivity extends BaseActivity {
 	}
 	
 	private void initFooter() {
-		mFooter = getLayoutInflater().inflate(R.layout.order_detail_footer, null);
-		mRobBtn = (Button) mFooter.findViewById(R.id.rob_order);
-		mDropBtn = (Button) mFooter.findViewById(R.id.drop_order);
 		mRobBtn.setOnClickListener(mOnClickListener);
 		mDropBtn.setOnClickListener(mOnClickListener);
 	}
 	
 	private void initList() {
-		mListView.addFooterView(mFooter);
-		mAdapter = new DetailAdapter(this);
+		mAdapter = new OrderDetailAdapter(this);
 		mListView.setAdapter(mAdapter);
-		mListView.removeFooterView(mFooter);
 		mListView.setFooterDividersEnabled(false);
 	}
 	
@@ -231,29 +229,7 @@ public class OrderDetailActivity extends BaseActivity {
 	}
 	
 	private void parseJson(JSONObject infos) {
-		Order order = new Order();
-		order.setGoods_cd(infos.optString("goods_cd"));
-		order.setState(infos.optInt("state"));
-		order.setCreate_date(infos.optString("create_date"));
-		order.setPick_time(infos.optString("pick_time"));
-		order.setGoods_name(infos.optString("goods_name"));
-		order.setGoods_type_code(infos.optInt("goods_type_code"));
-		order.setTrunk_type_code(infos.optInt("trunk_type_code"));
-		order.setWeight(infos.optInt("weight"));
-		order.setGoods_value(infos.optInt("goods_value"));
-		order.setMess_fee(infos.optInt("mess_fee"));
-		order.setGoods_cost(infos.optInt("goods_cost"));
-		order.setRemark(infos.optString("remark"));
-		
-		order.setPhone(infos.optString("phone"));
-		order.setSupplyer_type(infos.optInt("supplyer_type"));
-		order.setSupplyer_name(infos.optString("supplyer_name"));
-		order.setSupplyer_phone(infos.optString("supplyer_phone"));
-		order.setStart_addr(infos.optString("start_addr"));
-		order.setReciver(infos.optString("reciver"));
-		order.setReciver_phone(infos.optString("reciver_phone"));
-		order.setEnd_addr(infos.optString("end_addr"));
-		
+		Order order = Order.parseOrderDetailJson(infos);
 		updateFooter(order);
 		mAdapter.setData(order);
 	}
@@ -306,229 +282,5 @@ public class OrderDetailActivity extends BaseActivity {
 		Intent intent = new Intent(context, OrderDetailActivity.class);
 		intent.putExtra(KEY_GOODS_CD, goods_cd);
 		context.startActivity(intent);
-	}
-	
-	public static class DetailAdapter extends BaseAdapter {
-
-		private static final int[] NAMES = {
-			R.string.label_order_code,
-			R.string.label_order_state,
-			R.string.label_goods_name,
-			R.string.label_goods_type,
-			R.string.label_goods_weight,
-			R.string.label_goods_value,
-			R.string.label_goods_pay,
-			R.string.label_need_truck,
-			R.string.label_message_free,
-			R.string.label_pick_time,
-			R.string.label_create_time,
-			R.string.label_send_comment,
-			R.string.label_message_phone,
-			R.string.label_message_type,
-			R.string.label_from_name,
-			R.string.label_from_phone,
-			R.string.label_from_address,
-			R.string.label_to_name,
-			R.string.label_to_phone,
-			R.string.label_to_address,
-		};
-		
-		private Context mContext;
-		private LayoutInflater mInflater;
-		private Order mOrder;
-		
-		private String[] mGoodsTypes;
-		private String[] mStateName;
-		private String[] mUserTypes;
-		private String[] mTruckTypes;
-		private int[] mStateValue;
-		
-		public DetailAdapter(Context context) {
-			mContext = context;
-			mInflater = LayoutInflater.from(context);
-			mGoodsTypes = context.getResources().getStringArray(R.array.goods_type_list);
-			mStateName = context.getResources().getStringArray(R.array.order_state_name);
-			mStateValue = context.getResources().getIntArray(R.array.order_state_value);
-			mUserTypes = context.getResources().getStringArray(R.array.user_types);
-			mTruckTypes = context.getResources().getStringArray(R.array.truck_type_list);
-		}
-		
-		@Override
-		public int getCount() {
-			return mOrder == null ? 0 : NAMES.length;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return null;
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		public void setData(Order order) {
-			mOrder = order;
-			notifyDataSetChanged();
-		}
-		
-		@Override
-		public View getView(int position, View convertView, ViewGroup viewGroup) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.order_detail_item, null);
-				holder = new ViewHolder(convertView);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			int name = NAMES[position];
-			String value = null;
-			switch (name) {
-			case R.string.label_order_code:
-				value = mOrder.getGoods_cd();
-				break;
-			case R.string.label_order_state:
-				value = mStateName[getStateIndexByValue(mOrder.getState())];
-				break;
-			case R.string.label_goods_pay:
-				int cost = mOrder.getGoods_cost();
-				if (cost <= 0) {
-					value = mContext.getString(R.string.negotiable);
-				} else {
-					value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_cost());
-				}
-				break;
-			case R.string.label_need_truck:
-			{
-				int type = mOrder.getTrunk_type_code();
-				if (type >= 0 && type < mTruckTypes.length) {
-					value = mTruckTypes[type];
-				}
-			}
-				break;
-			case R.string.label_message_free:
-				if (mOrder.isFree()) {
-					value = mContext.getString(R.string.free_yes);
-				} else {
-					value = mContext.getString(R.string.free_no);
-				}
-				break;
-			case R.string.label_pick_time:
-				value = mOrder.getPick_time();
-				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
-					value = mContext.getString(R.string.unknown);
-				}
-				break;
-			case R.string.label_create_time:
-				value = mOrder.getCreate_date();
-				break;
-			case R.string.label_send_comment:
-				value = mOrder.getRemark();
-				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
-					value = null;
-				}
-				break;
-			case R.string.label_goods_name:
-				value = mOrder.getGoods_name();
-				break;
-			case R.string.label_goods_type:
-			{
-				int type = mOrder.getGoods_type_code();
-				if (type >= 0 && type < mGoodsTypes.length) {
-					value = mGoodsTypes[type];
-				}
-			}
-				break;
-			case R.string.label_goods_weight:
-				value = String.format(mContext.getString(R.string.value_ton), mOrder.getWeight());
-				break;
-			case R.string.label_goods_value:
-				int goodsValue = mOrder.getGoods_value();
-				if (goodsValue <= 0) {
-					value = mContext.getString(R.string.unknown);
-				} else {
-					value = String.format(mContext.getString(R.string.value_yuan), mOrder.getGoods_value());
-				}
-				break;
-			case R.string.label_message_phone:
-				value = mOrder.getPhone();
-				break;
-			case R.string.label_message_type:
-				int userType = mOrder.getSupplyer_type();
-				if (userType >= 0 && userType < mUserTypes.length) {
-					value = mUserTypes[userType];
-				}
-				break;
-			case R.string.label_from_name:
-				value = mOrder.getSupplyer_name();
-				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
-					value = mContext.getString(R.string.unknown);
-				}
-				break;
-			case R.string.label_from_phone:
-				value = mOrder.getSupplyer_phone();
-				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
-					value = mContext.getString(R.string.unknown);
-				}
-				break;
-			case R.string.label_to_name:
-				value = mOrder.getReciver();
-				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
-					value = mContext.getString(R.string.unknown);
-				}
-				break;
-			case R.string.label_to_phone:
-				value = mOrder.getReciver_phone();
-				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
-					value = mContext.getString(R.string.unknown);
-				}
-				break;
-			case R.string.label_from_address:
-				value = mOrder.getStart_addr();
-				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
-					value = mContext.getString(R.string.unknown);
-				}
-				break;
-			case R.string.label_to_address:
-				value = mOrder.getEnd_addr();
-				if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
-					value = mContext.getString(R.string.unknown);
-				}
-				break;
-			}
-			holder.refresh(name, value);
-			return convertView;
-		}
-		
-		private int getStateIndexByValue(int value) {
-			int index = 0;
-			for (int i = 0; i < mStateValue.length; i++) {
-				if (mStateValue[i] == value) {
-					index = i;
-					break;
-				}
-			}
-			return index;
-		}
-	}
-	
-	public static class ViewHolder {
-		
-		@InjectView(R.id.item_name)
-		TextView mName;
-		@InjectView(R.id.item_value)
-		TextView mValue;
-		
-		public ViewHolder(View parent) {
-			ButterKnife.inject(this, parent);
-		}
-		
-		public void refresh(int name, String value) {
-			mName.setText(name);
-			mValue.setText(value);
-		}
-		
 	}
 }

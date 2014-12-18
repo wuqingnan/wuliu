@@ -15,6 +15,7 @@
         android:divider="@color/line_light"
         android:dividerHeight="@dimen/line_height" />
 
-    <include layout="@layout/order_detail_footer" />
+    <include layout="@layout/order_detail_footer"
+        android:visibility="gone" />
 
 </LinearLayout>

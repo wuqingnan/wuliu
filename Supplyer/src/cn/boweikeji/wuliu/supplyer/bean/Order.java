@@ -2,6 +2,8 @@ package cn.boweikeji.wuliu.supplyer.bean;
 
 import java.io.Serializable;
 
+import org.json.JSONObject;
+
 import android.text.TextUtils;
 import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 
@@ -11,11 +13,11 @@ public class Order implements Serializable {
 	 * 序列化
 	 */
 	private static final long serialVersionUID = -5479381025006216331L;
-	
+
 	private static final int SOURCE_IPHONE = 0;
 	private static final int SOURCE_ANDROID = 1;
 	private static final int SOURCE_BROWSER = 2;
-	
+
 	private String goods_cd;
 	private String goods_name;
 	private int goods_value;
@@ -25,29 +27,33 @@ public class Order implements Serializable {
 	private int goods_cost;
 	private int mess_fee;
 	private int source_code;
-	
+
 	private double gps_addr_j;
 	private double gps_addr_w;
-	
+
 	private int state;
 	private int credit;
 	private int stars;
-	
+
+	// 信息发送人电话
+	private String phone;
+	// 信息发送人类型
+	private int supplyer_type;
 	private String supplyer_name;
 	private String supplyer_phone;
 	private String start_addr;
-	
+
 	private String reciver;
 	private String reciver_phone;
 	private String end_addr;
-	
+
 	private String pick_time;
 	private int valid_type;
-	
+
 	private String remark;
-	
+
 	private String create_date;
-	
+
 	public Order() {
 		source_code = SOURCE_ANDROID;
 		state = 0;
@@ -72,11 +78,11 @@ public class Order implements Serializable {
 	public int getGoods_value() {
 		return goods_value;
 	}
-	
+
 	public void setGoods_value(int goods_value) {
 		this.goods_value = goods_value;
 	}
-	
+
 	public int getGoods_type_code() {
 		return goods_type_code;
 	}
@@ -104,7 +110,7 @@ public class Order implements Serializable {
 	public int getGoods_cost() {
 		return goods_cost;
 	}
-	
+
 	public void setGoods_cost(int goods_cost) {
 		this.goods_cost = goods_cost;
 	}
@@ -163,6 +169,22 @@ public class Order implements Serializable {
 
 	public void setStars(int stars) {
 		this.stars = stars;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public int getSupplyer_type() {
+		return supplyer_type;
+	}
+
+	public void setSupplyer_type(int supplyer_type) {
+		this.supplyer_type = supplyer_type;
 	}
 
 	public String getSupplyer_name() {
@@ -228,15 +250,15 @@ public class Order implements Serializable {
 	public void setValid_type(int valid_type) {
 		this.valid_type = valid_type;
 	}
-	
+
 	public String getRemark() {
 		return remark;
 	}
-	
+
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+
 	public String getCreate_date() {
 		return create_date;
 	}
@@ -247,41 +269,95 @@ public class Order implements Serializable {
 
 	public BaseParams getPublishParams() {
 		BaseParams params = new BaseParams();
-		params.add("goods_name", TextUtils.isEmpty(goods_name) ? BaseParams.PARAM_DEFAULT : goods_name);
-		params.add("goods_value", goods_value > 0 ? "" + goods_value : BaseParams.PARAM_DEFAULT);
+		params.add("goods_name",
+				TextUtils.isEmpty(goods_name) ? BaseParams.PARAM_DEFAULT
+						: goods_name);
+		params.add("goods_value", goods_value > 0 ? "" + goods_value
+				: BaseParams.PARAM_DEFAULT);
 		params.add("goods_type_code", "" + goods_type_code);
-		params.add("weight", weight >= 0 ? "" + weight : BaseParams.PARAM_DEFAULT);
+		params.add("weight", weight >= 0 ? "" + weight
+				: BaseParams.PARAM_DEFAULT);
 		params.add("trunk_type_code", "" + truck_type_code);
-		params.add("goods_cost", goods_cost > 0 ? "" + goods_cost : BaseParams.PARAM_DEFAULT);
+		params.add("goods_cost", goods_cost > 0 ? "" + goods_cost
+				: BaseParams.PARAM_DEFAULT);
 		params.add("mess_fee", "" + mess_fee);
 		params.add("source_code", "" + source_code);
-		params.add("gps_addr_j", gps_addr_j > 0 ? "" + gps_addr_j : BaseParams.PARAM_DEFAULT);
-		params.add("gps_addr_w", gps_addr_w > 0 ? "" + gps_addr_w : BaseParams.PARAM_DEFAULT);
+		params.add("gps_addr_j", gps_addr_j > 0 ? "" + gps_addr_j
+				: BaseParams.PARAM_DEFAULT);
+		params.add("gps_addr_w", gps_addr_w > 0 ? "" + gps_addr_w
+				: BaseParams.PARAM_DEFAULT);
 		params.add("state", "" + state);
 		params.add("start_addr", start_addr);
 		params.add("end_addr", end_addr);
-		params.add("reciver", TextUtils.isEmpty(reciver) ? BaseParams.PARAM_DEFAULT : reciver);
-		params.add("reciver_phone", TextUtils.isEmpty(reciver_phone) ? BaseParams.PARAM_DEFAULT : reciver_phone);
-		params.add("remark", TextUtils.isEmpty(remark) ? BaseParams.PARAM_DEFAULT : remark);
-		params.add("pick_time", TextUtils.isEmpty(pick_time) ? BaseParams.PARAM_DEFAULT : pick_time);
+		params.add("reciver",
+				TextUtils.isEmpty(reciver) ? BaseParams.PARAM_DEFAULT : reciver);
+		params.add("reciver_phone",
+				TextUtils.isEmpty(reciver_phone) ? BaseParams.PARAM_DEFAULT
+						: reciver_phone);
+		params.add("remark",
+				TextUtils.isEmpty(remark) ? BaseParams.PARAM_DEFAULT : remark);
+		params.add("pick_time",
+				TextUtils.isEmpty(pick_time) ? BaseParams.PARAM_DEFAULT
+						: pick_time);
 		params.add("valid_type", "" + valid_type);
-		params.add("supplyer_name", TextUtils.isEmpty(supplyer_name) ? BaseParams.PARAM_DEFAULT : supplyer_name);
-		params.add("supplyer_phone", TextUtils.isEmpty(supplyer_phone) ? BaseParams.PARAM_DEFAULT : supplyer_phone);
+		params.add("supplyer_name",
+				TextUtils.isEmpty(supplyer_name) ? BaseParams.PARAM_DEFAULT
+						: supplyer_name);
+		params.add("supplyer_phone",
+				TextUtils.isEmpty(supplyer_phone) ? BaseParams.PARAM_DEFAULT
+						: supplyer_phone);
 		return params;
 	}
-	
+
 	public BaseParams getChangeParams() {
 		BaseParams params = new BaseParams();
 		params.add("goods_cd", goods_cd);
-		params.add("supplyer_name", TextUtils.isEmpty(supplyer_name) ? BaseParams.PARAM_DEFAULT : supplyer_name);
-		params.add("supplyer_phone", TextUtils.isEmpty(supplyer_phone) ? BaseParams.PARAM_DEFAULT : supplyer_phone);
+		params.add("supplyer_name",
+				TextUtils.isEmpty(supplyer_name) ? BaseParams.PARAM_DEFAULT
+						: supplyer_name);
+		params.add("supplyer_phone",
+				TextUtils.isEmpty(supplyer_phone) ? BaseParams.PARAM_DEFAULT
+						: supplyer_phone);
 		params.add("start_addr", start_addr);
 		params.add("end_addr", end_addr);
-		params.add("reciver_name", TextUtils.isEmpty(reciver) ? BaseParams.PARAM_DEFAULT : reciver);
-		params.add("reciver_phone", TextUtils.isEmpty(reciver_phone) ? BaseParams.PARAM_DEFAULT : reciver_phone);
+		params.add("reciver_name",
+				TextUtils.isEmpty(reciver) ? BaseParams.PARAM_DEFAULT : reciver);
+		params.add("reciver_phone",
+				TextUtils.isEmpty(reciver_phone) ? BaseParams.PARAM_DEFAULT
+						: reciver_phone);
 		params.add("mess_fee", "" + mess_fee);
-		params.add("goods_cost", goods_cost >= 0 ? "" + goods_cost : BaseParams.PARAM_DEFAULT);
-		params.add("remark", TextUtils.isEmpty(remark) ? BaseParams.PARAM_DEFAULT : remark);
+		params.add("goods_cost", goods_cost >= 0 ? "" + goods_cost
+				: BaseParams.PARAM_DEFAULT);
+		params.add("remark",
+				TextUtils.isEmpty(remark) ? BaseParams.PARAM_DEFAULT : remark);
 		return params;
+	}
+
+	public static Order parseOrderDetailJson(JSONObject infos) {
+		Order order = new Order();
+		order.setGoods_cd(infos.optString("goods_cd"));
+		order.setState(infos.optInt("state"));
+		order.setPick_time(infos.optString("pick_time"));
+		order.setCreate_date(infos.optString("create_date"));
+		order.setGoods_name(infos.optString("goods_name"));
+		order.setGoods_type_code(infos.optInt("goods_type_code"));
+		order.setWeight(infos.optInt("weight"));
+		order.setGoods_value(infos.optInt("goods_value"));
+		order.setMess_fee(infos.optInt("mess_fee"));
+		order.setGoods_cost(infos.optInt("goods_cost"));
+		order.setRemark(infos.optString("remark"));
+
+		order.setPhone(infos.optString("phone"));
+		order.setSupplyer_type(infos.optInt("supplyer_type"));
+		order.setSupplyer_name(infos.optString("supplyer_name"));
+		order.setSupplyer_phone(infos.optString("supplyer_phone"));
+		order.setStart_addr(infos.optString("start_addr"));
+		order.setReciver(infos.optString("reciver"));
+		order.setReciver_phone(infos.optString("reciver_phone"));
+		order.setEnd_addr(infos.optString("end_addr"));
+
+		order.setCredit(infos.optInt("credit"));
+		order.setStars(infos.optInt("stars"));
+		return order;
 	}
 }
