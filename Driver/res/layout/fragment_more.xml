@@ -11,6 +11,7 @@
         android:id="@+id/fragment_more_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:listSelector="@drawable/more_list_selector"
         android:divider="@color/color_cccccc"
         android:dividerHeight="@dimen/line_height"
         android:headerDividersEnabled="true" />
