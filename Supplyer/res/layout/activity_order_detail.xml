@@ -2,14 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/bg_back"
     android:orientation="vertical" >
-    
-    <include layout="@layout/titlebar"/>
-    
-	<ListView
-	    android:id="@+id/order_detail"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent" />
-    
+
+    <include layout="@layout/titlebar" />
+
+    <ListView
+        android:id="@+id/order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:divider="@color/line_light"
+        android:dividerHeight="@dimen/line_height" />
+
+    <include layout="@layout/order_detail_footer" />
+
 </LinearLayout>

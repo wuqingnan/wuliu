@@ -75,7 +75,7 @@
     <string name="label_goods_type">物品类型：</string>
     <string name="label_goods_value">物品价值：</string>
     <string name="label_goods_weight">物品重量：</string>
-    <string name="label_truck_type">交通工具：</string>
+    <string name="label_truck_type">车俩类型：</string>
     <string name="label_goods_pay">愿出运费：</string>
     <string name="label_goods_valid_time">有效时间：</string>
     <string name="label_from_name">发货人：</string>
@@ -86,18 +86,21 @@
     <string name="label_to_address">收货地址：</string>
     <string name="label_send_comment">重要说明：</string>
     <string name="label_message_free">信息公开：</string>
+    <string name="label_creater_type">信息发送人类型：</string>
+    <string name="label_creater_phone">信息发送人电话：</string>
+    <string name="label_driver_name">司机姓名：</string>
+    <string name="label_driver_phone">司机电话：</string>
+    <string name="label_truck_no">车牌号：</string>
+    <string name="label_truck_load">载重吨位：</string>
+    <string name="label_divider_line">分隔行：</string>
     
     <string name="free_yes">免费公开</string>
     <string name="free_no">付费公开</string>
     <string name="ton">吨</string>
     <string name="yuan">元</string>
     <string name="zero">0</string>
-    
-    <string name="label_driver_name">司机姓名：</string>
-    <string name="label_driver_phone">司机电话：</string>
-    <string name="label_driver_truck">车俩类型：</string>
-    <string name="label_driver_level">司机等级：</string>
-    <string name="label_driver_score">打分分值：</string>
+    <string name="format_ton">%1$d吨</string>
+    <string name="format_yuan">%1$d元</string>
     
     <string name="next_step">下一步</string>
     <string name="publish">立即发布</string>
@@ -177,8 +180,6 @@
     
     <string name="grade">评分</string>
     <string name="comment">评论</string>
-    
-    <string name="value_yuan">%1$s 元</string>
     
     <string name="requesting">正在请求，请等待…</string>
     

@@ -1,55 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/order_detail_footer"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="92dp"
+    android:background="#a4a4a4"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp" >
 
-    <LinearLayout
-        android:id="@+id/order_detail_footer"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/order_detail_change"
+        style="@style/TextAppearance.Small.White"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+        android:layout_margin="10dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_confirm"
+        android:text="@string/order_change"
+        android:visibility="gone" />
 
-        <Button
-            android:id="@+id/order_detail_cancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:text="@string/order_cancel"
-            android:visibility="gone" />
+    <Button
+        android:id="@+id/order_detail_confirm"
+        style="@style/TextAppearance.Small.White"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_confirm"
+        android:text="@string/order_confirm"
+        android:visibility="gone" />
 
-        <Button
-            android:id="@+id/order_detail_change"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:text="@string/order_change"
-            android:visibility="gone" />
+    <Button
+        android:id="@+id/order_detail_comment"
+        style="@style/TextAppearance.Small.White"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_confirm"
+        android:text="@string/order_comment"
+        android:visibility="gone" />
 
-        <Button
-            android:id="@+id/order_detail_consult"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:text="@string/order_consult"
-            android:visibility="gone" />
+    <Button
+        android:id="@+id/order_detail_cancel"
+        style="@style/TextAppearance.Small.666666"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_cancel"
+        android:text="@string/order_cancel"
+        android:visibility="gone" />
 
-        <Button
-            android:id="@+id/order_detail_confirm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:text="@string/order_confirm"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/order_detail_comment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:text="@string/order_comment"
-            android:visibility="gone" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/order_detail_consult"
+        style="@style/TextAppearance.Small.666666"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/btn_cancel"
+        android:text="@string/order_consult"
+        android:visibility="gone" />
 
 </LinearLayout>

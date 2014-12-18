@@ -3,5 +3,5 @@
     android:id="@+id/menu_list"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:listSelector="@drawable/menu_item_selector"
+    android:listSelector="@drawable/menu_list_selector"
     android:divider="@drawable/menu_divider" />
