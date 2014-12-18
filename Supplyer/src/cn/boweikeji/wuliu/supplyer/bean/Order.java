@@ -341,6 +341,7 @@ public class Order implements Serializable {
 		order.setCreate_date(infos.optString("create_date"));
 		order.setGoods_name(infos.optString("goods_name"));
 		order.setGoods_type_code(infos.optInt("goods_type_code"));
+		order.setTruck_type_code(infos.optInt("need_trunk_type"));
 		order.setWeight(infos.optInt("weight"));
 		order.setGoods_value(infos.optInt("goods_value"));
 		order.setMess_fee(infos.optInt("mess_fee"));

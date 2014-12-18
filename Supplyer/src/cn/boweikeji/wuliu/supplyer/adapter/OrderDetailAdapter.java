@@ -207,7 +207,7 @@ public class OrderDetailAdapter extends BaseAdapter {
 				value = mContext.getString(R.string.negotiable);
 			} else {
 				value = String.format(mContext.getString(R.string.format_yuan),
-						mOrder.getGoods_cost());
+						cost);
 			}
 		}
 			break;
@@ -286,10 +286,11 @@ public class OrderDetailAdapter extends BaseAdapter {
 		}
 			break;
 		case R.string.label_truck_no:
-			value = "临时";
+			value = mDriver.getTruck_no();
 			break;
 		case R.string.label_truck_load:
-			value = "临时";
+			value = String.format(mContext.getString(R.string.format_ton),
+					mDriver.getLoad_weight());
 			break;
 		}
 		holder.refresh(name, value);

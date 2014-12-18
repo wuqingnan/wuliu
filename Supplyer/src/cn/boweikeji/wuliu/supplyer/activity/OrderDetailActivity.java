@@ -279,6 +279,8 @@ public class OrderDetailActivity extends BaseActivity {
 			driver.setPhone(infos.optString("phone"));
 			driver.setCredit_level(infos.optString("credit_level"));
 			driver.setTruck_type_code(infos.optInt("trunk_type_code"));
+			driver.setTruck_no(infos.optString("trunk_no"));
+			driver.setLoad_weight(infos.optInt("load_weight"));
 		}
 		updateFooter(order);
 		mAdapter.setData(order, driver);
