@@ -52,7 +52,7 @@ public class UpdateManager {
 	public static void checkUpdate(JsonHttpResponseHandler handler) {
 		BaseParams params = new BaseParams();
 		params.add("method", "updateAPP");
-		params.add("app_name", "ANDSUP");
+		params.add("app_name", "ANDDRV");
 		params.add("now_version", "" + DeviceInfo.getVersionCode());
 		AsyncHttp.get(Const.URL_UPDATE, params, handler);
 	}
