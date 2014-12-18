@@ -123,6 +123,7 @@ public class OrderDetailActivity extends BaseActivity {
 	}
 	
 	private void initFooter() {
+		mFooter.setVisibility(View.GONE);
 		mRobBtn.setOnClickListener(mOnClickListener);
 		mDropBtn.setOnClickListener(mOnClickListener);
 	}
@@ -138,17 +139,13 @@ public class OrderDetailActivity extends BaseActivity {
 		if (state == 0 || state == 7 || state == 21 || state == 22) {
 			mRobBtn.setVisibility(View.VISIBLE);
 			mDropBtn.setVisibility(View.GONE);
-			if (mListView.getFooterViewsCount() <= 0) {
-				mListView.addFooterView(mFooter);
-			}
+			mFooter.setVisibility(View.VISIBLE);
 		} else if (state == 1) {
 			mRobBtn.setVisibility(View.GONE);
 			mDropBtn.setVisibility(View.VISIBLE);
-			if (mListView.getFooterViewsCount() <= 0) {
-				mListView.addFooterView(mFooter);
-			}
+			mFooter.setVisibility(View.VISIBLE);
 		} else {
-			mListView.removeFooterView(mFooter);
+			mFooter.setVisibility(View.GONE);
 		}
 	}
 
