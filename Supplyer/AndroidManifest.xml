@@ -39,11 +39,11 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="getui.permission.GetuiService" />
+    <uses-permission android:name="getui.permission.GetuiService.cn.boweikeji.wuliu.supplyer" />
 
     <!-- 自定义权限 -->
     <permission
-        android:name="getui.permission.GetuiService"
+        android:name="getui.permission.GetuiService.cn.boweikeji.wuliu.supplyer"
         android:protectionLevel="normal" >
     </permission>
 
