@@ -2,22 +2,6 @@
 
     <style name="WuLiu" />
 
-    <style name="WuLiu.Menu" />
-
-    <style name="WuLiu.Menu.Item" />
-
-    <style name="WuLiu.Menu.Phone">
-        <item name="android:drawableLeft">@drawable/people</item>
-        <item name="android:textColor">@color/text_color_dark_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <style name="WuLiu.Menu.Item.Title">
-        <item name="android:textColor">@color/text_color_dark_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
     <style name="EditText">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/color_bababa</item>
@@ -64,31 +48,6 @@
 
     <style name="ClearEditText.Dark">
         <item name="android:background">@drawable/edit_text_holo_dark</item>
-    </style>
-
-    <style name="WuLiu.Label">
-        <item name="android:textColor">@color/text_color_dark_gray</item>
-        <item name="android:textSize">@dimen/text_size_middle</item>
-    </style>
-
-    <style name="Send_Item_Name">
-        <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
-    <style name="Send_Item_Value">
-        <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
-    <style name="Send_Item_Unit">
-        <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
-    </style>
-
-    <style name="Send_Item_Asterisk">
-        <item name="android:textColor">@color/text_color_light_gray</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
     </style>
         
     <style name="RatingBar" parent="@android:style/Widget.RatingBar" >
