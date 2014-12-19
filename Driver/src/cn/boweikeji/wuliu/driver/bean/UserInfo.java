@@ -20,6 +20,10 @@ public class UserInfo implements Serializable {
 	private String phone;
 	private String passwd;
 	private int truck_type_code;
+	private int load_weight;
+	private String truck_no;
+	private String city_code;
+	private String city_name;
 	
 	public UserInfo () {
 		
@@ -41,6 +45,10 @@ public class UserInfo implements Serializable {
 			setCredit_level(object.optInt("credit_level"));
 			setPhone(object.optString("phone"));
 			setTruck_type_code(object.optInt("trunk_type_code"));
+			setLoad_weight(object.optInt("load_weight"));
+			setTruck_no(object.optString("trunk_no"));
+			setCity_code(object.optString("city_code"));
+			setCity_name(object.optString("city_name"));
 			if (object.has("passwd")) {
 				setPasswd(object.optString("passwd"));
 			}
@@ -135,6 +143,38 @@ public class UserInfo implements Serializable {
 		this.truck_type_code = truck_type_code;
 	}
 
+	public int getLoad_weight() {
+		return load_weight;
+	}
+
+	public void setLoad_weight(int load_weight) {
+		this.load_weight = load_weight;
+	}
+
+	public String getTruck_no() {
+		return truck_no;
+	}
+
+	public void setTruck_no(String truck_no) {
+		this.truck_no = truck_no;
+	}
+
+	public String getCity_code() {
+		return city_code;
+	}
+
+	public void setCity_code(String city_code) {
+		this.city_code = city_code;
+	}
+
+	public String getCity_name() {
+		return city_name;
+	}
+
+	public void setCity_name(String city_name) {
+		this.city_name = city_name;
+	}
+
 	@Override
 	public String toString() {
 		try {
@@ -150,6 +190,10 @@ public class UserInfo implements Serializable {
 			obj.put("trunk_type_code", truck_type_code);
 			obj.put("phone", phone);
 			obj.put("passwd", passwd);
+			obj.put("load_weight", load_weight);
+			obj.put("truck_no", truck_no);
+			obj.put("city_code", city_code);
+			obj.put("city_name", city_name);
 			return obj.toString();
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -2,126 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <include layout="@layout/titlebar" />
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:text="@string/label_portrait" />
-            <ImageView
-                android:id="@+id/profile_portrait"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/portrait_default" />
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_name" />
-            
-            <TextView
-                android:id="@+id/profile_name"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right" />
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_phone" />
-            
-            <TextView
-                android:id="@+id/profile_phone"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right" />
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:text="@string/label_credit" />
-            
-            <RatingBar
-                android:id="@+id/profile_credit_level"
-		   		style="?android:attr/ratingBarStyleIndicator"
-		   		android:layout_width="wrap_content"
-		   		android:layout_height="wrap_content"
-		   		android:numStars="5"
-		   		android:rating="1" />
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            
-            <TextView
-                android:id="@+id/profile_id_number"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right" />
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_register_time" />
-            
-            <TextView
-                android:id="@+id/profile_register_time"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right" />
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:listSelector="@android:color/transparent"
+        android:dividerHeight="@dimen/line_height"
+        android:divider="@color/line_light" />
 
 </LinearLayout>

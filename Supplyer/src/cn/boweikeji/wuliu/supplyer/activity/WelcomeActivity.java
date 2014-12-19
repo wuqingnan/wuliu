@@ -59,9 +59,8 @@ public class WelcomeActivity extends BaseActivity {
 		setContentView(R.layout.activity_welcome);
 		initView();
 		mHandler = new WelcomeHandler(this);
+		initialize();
 		new Thread(new InitTask()).start();
-		autoLogin();
-		UpdateManager.checkUpdate();
 	}
 	
 	@Override
@@ -78,6 +77,8 @@ public class WelcomeActivity extends BaseActivity {
 		// 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
 		SDKInitializer.initialize(getApplicationContext());
 		PushManager.getInstance().initialize(getApplicationContext());
+		autoLogin();
+		UpdateManager.checkUpdate();
 	}
 	
 	private void initView() {
@@ -144,7 +145,6 @@ public class WelcomeActivity extends BaseActivity {
 		public void run() {
 			try {
 				long start = System.currentTimeMillis();
-				initialize();
 				checkInit();
 				if (mNeedInit) {
 					initDB();

@@ -65,6 +65,12 @@
         <item>代理</item>
         <item>其他</item>
     </string-array>
+
+    <string-array name="user_states">
+        <item>正常</item>
+        <item>主动注销</item>
+        <item>后台停用</item>
+    </string-array>
     
     <string-array name="order_state_name">
         <item>已发货</item>

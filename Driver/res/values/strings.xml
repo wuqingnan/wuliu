@@ -30,6 +30,7 @@
     <string name="title_choose_city">选择城市</string>
     <string name="title_find_result">结果列表</string>
     <string name="title_order_detail">订单详情</string>
+    <string name="title_profile">个人中心</string>
     <string name="title_rule">平台服务使用规则</string>
     
   	<string name="driver_guide">承运指南</string>
@@ -159,6 +160,7 @@
     
     <string name="label_user_name">用户姓名：</string>
     <string name="label_user_level">用户等级：</string>
+    <string name="label_user_state">用户状态：</string>
     <string name="label_phone_no">手机号码：</string>
     <string name="label_id_no">身份证号码：</string>
     <string name="label_user_type">用户类型：</string>

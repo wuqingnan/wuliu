@@ -8,39 +8,37 @@ import org.json.JSONObject;
 public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = -3150201271050256513L;
-	
+
 	private String supplyer_cd;
 	private String supplyer_name;
-	private String supplyer_type;
-	private String state;
-	private String card_id;
-	private String credit_level;
+	private int supplyer_type;
+	private int state;
+	private int credit_level;
 	private String phone;
 	private String passwd;
-	
-	public UserInfo () {
-		
+
+	public UserInfo() {
+
 	}
-	
-	public UserInfo (JSONObject object) {
+
+	public UserInfo(JSONObject object) {
 		update(object);
 	}
-	
+
 	public void update(JSONObject object) {
 		if (object != null) {
 			setSupplyer_cd(object.optString("supplyer_cd"));
 			setSupplyer_name(object.optString("supplyer_name"));
-			setSupplyer_type(object.optString("supplyer_type"));
-			setState(object.optString("state"));
-			setCard_id(object.optString("card_id"));
-			setCredit_level(object.optString("credit_level"));
+			setSupplyer_type(object.optInt("supplyer_type"));
+			setState(object.optInt("state"));
+			setCredit_level(object.optInt("credit_level"));
 			setPhone(object.optString("phone"));
 			if (object.has("passwd")) {
 				setPasswd(object.optString("passwd"));
 			}
-		} 
+		}
 	}
-	
+
 	public String getSupplyer_cd() {
 		return supplyer_cd;
 	}
@@ -57,35 +55,27 @@ public class UserInfo implements Serializable {
 		this.supplyer_name = supplyer_name;
 	}
 
-	public String getSupplyer_type() {
+	public int getSupplyer_type() {
 		return supplyer_type;
 	}
 
-	public void setSupplyer_type(String supplyer_type) {
+	public void setSupplyer_type(int supplyer_type) {
 		this.supplyer_type = supplyer_type;
 	}
 
-	public String getState() {
+	public int getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(int state) {
 		this.state = state;
 	}
 
-	public String getCard_id() {
-		return card_id;
-	}
-
-	public void setCard_id(String card_id) {
-		this.card_id = card_id;
-	}
-
-	public String getCredit_level() {
+	public int getCredit_level() {
 		return credit_level;
 	}
 
-	public void setCredit_level(String credit_level) {
+	public void setCredit_level(int credit_level) {
 		this.credit_level = credit_level;
 	}
 
@@ -113,7 +103,6 @@ public class UserInfo implements Serializable {
 			obj.put("supplyer_name", supplyer_name);
 			obj.put("supplyer_type", supplyer_type);
 			obj.put("state", state);
-			obj.put("card_id", card_id);
 			obj.put("credit_level", credit_level);
 			obj.put("phone", phone);
 			obj.put("passwd", passwd);
