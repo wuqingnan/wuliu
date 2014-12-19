@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/bg_back"
     android:orientation="vertical" >
 
     <include layout="@layout/titlebar" />
@@ -10,17 +10,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp" >
+        android:background="@color/white" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_height"
-                android:background="@color/line_light" />
 
             <LinearLayout
                 android:id="@+id/pick_time_layout"
@@ -29,433 +24,92 @@
                 android:orientation="vertical"
                 android:visibility="gone" >
 
-                <LinearLayout
+                <cn.boweikeji.wuliu.view.SendArrowItem
+                    android:id="@+id/pick_time"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        style="@style/Send_Item_Name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/label_pick_time" />
-
-                    <TextView
-                        style="@style/Send_Item_Asterisk"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/asterisk" />
-
-                    <TextView
-                        android:id="@+id/pick_time"
-                        style="@style/Send_Item_Value"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:hint="@string/pick_time_hint" />
-                    <ImageView
-                        android:id="@+id/clear_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/clear"
-                        android:visibility="gone" />
-                </LinearLayout>
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/line_height"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:background="@color/line_light" />
             </LinearLayout>
 
-            <LinearLayout
+            <cn.boweikeji.wuliu.view.SendArrowItem
+                android:id="@+id/goods_type"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
-
-                <TextView
-                    style="@style/Send_Item_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_goods_type" />
-
-                <TextView
-                    style="@style/Send_Item_Asterisk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/asterisk"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/goods_type"
-                    style="@style/Send_Item_Value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:drawableRight="@drawable/arrow_right" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_height"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/line_light" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
-
-                <TextView
-                    style="@style/Send_Item_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_goods_name" />
-
-                <TextView
-                    style="@style/Send_Item_Asterisk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/asterisk" />
-
-                <EditText
-                    android:id="@+id/goods_name"
-                    style="@style/Send_Item_Value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:maxLength="16"
-                    android:background="@null" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_height"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/line_light" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
-
-                <TextView
-                    style="@style/Send_Item_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_goods_weight" />
-
-                <TextView
-                    style="@style/Send_Item_Asterisk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/asterisk"
-                    android:visibility="invisible" />
-
-                <EditText
-                    android:id="@+id/goods_weight"
-                    style="@style/Send_Item_Value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:maxLength="4"
-                    android:inputType="numberDecimal"
-                    android:background="@null" />
-
-                <TextView
-                    style="@style/Send_Item_Unit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ton" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_height"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/line_light" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
-
-                <TextView
-                    style="@style/Send_Item_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_goods_value" />
-
-                <TextView
-                    style="@style/Send_Item_Asterisk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/asterisk" />
-
-                <EditText
-                    android:id="@+id/goods_value"
-                    style="@style/Send_Item_Value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:maxLength="9"
-                    android:inputType="number"
-                    android:background="@null" />
-
-                <TextView
-                    style="@style/Send_Item_Unit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/yuan" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_height"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/line_light" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
-
-                <TextView
-                    style="@style/Send_Item_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_goods_pay" />
-
-                <TextView
-                    style="@style/Send_Item_Asterisk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/asterisk" />
-
-                <EditText
-                    android:id="@+id/goods_pay"
-                    style="@style/Send_Item_Value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:maxLength="9"
-                    android:inputType="number"
-                    android:background="@null" />
-
-                <TextView
-                    style="@style/Send_Item_Unit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/yuan" />
-            </LinearLayout>
-            
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_height"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/line_light" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
-
-                <TextView
-                    style="@style/Send_Item_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_goods_valid_time" />
-
-                <TextView
-                    style="@style/Send_Item_Asterisk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/asterisk"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/goods_valid_time"
-                    style="@style/Send_Item_Value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:drawableRight="@drawable/arrow_right" />
-            </LinearLayout>
-            
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_height"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/line_light" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp" >
-
-                <TextView
-                    style="@style/Send_Item_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_truck_type" />
-
-                <TextView
-                    style="@style/Send_Item_Asterisk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/asterisk"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/truck_type"
-                    style="@style/Send_Item_Value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:drawableRight="@drawable/arrow_right" />
-            </LinearLayout>
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/line_height"
                 android:background="@color/line_light" />
 
+            <cn.boweikeji.wuliu.view.SendInputItem
+                android:id="@+id/goods_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/line_height"
-                android:layout_marginTop="20dp"
                 android:background="@color/line_light" />
 
-            <LinearLayout
+            <cn.boweikeji.wuliu.view.SendInputItem
+                android:id="@+id/goods_weight"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:layout_height="wrap_content" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:orientation="vertical" >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/line_light" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp" >
+            <cn.boweikeji.wuliu.view.SendInputItem
+                android:id="@+id/goods_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                        <TextView
-                            style="@style/Send_Item_Name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/label_from_address" />
-                        
-						<TextView
-		                    style="@style/Send_Item_Asterisk"
-		                    android:layout_width="wrap_content"
-		                    android:layout_height="wrap_content"
-		                    android:text="@string/asterisk"
-		                    android:visibility="visible" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/line_light" />
 
-                        <TextView
-                            android:id="@+id/from_address"
-                            style="@style/Send_Item_Value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
+            <cn.boweikeji.wuliu.view.SendInputItem
+                android:id="@+id/goods_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/line_height"
-                        android:background="@color/line_light" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/line_light" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp" >
+            <cn.boweikeji.wuliu.view.SendArrowItem
+                android:id="@+id/valid_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                        <TextView
-                            style="@style/Send_Item_Name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/label_to_address" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/line_light" />
 
-                        <TextView
-		                    style="@style/Send_Item_Asterisk"
-		                    android:layout_width="wrap_content"
-		                    android:layout_height="wrap_content"
-		                    android:text="@string/asterisk"
-		                    android:visibility="visible" />
-                        
-                        <TextView
-                            android:id="@+id/to_address"
-                            style="@style/Send_Item_Value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </LinearLayout>
+            <cn.boweikeji.wuliu.view.SendArrowItem
+                android:id="@+id/truck_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <ImageView
-                    android:id="@+id/swap_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/btn_swap" />
-            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/line_light" />
+
+			<cn.boweikeji.wuliu.view.SendAddressItem
+			    android:id="@+id/address"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -466,10 +120,8 @@
                 android:id="@+id/next_step"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_default_height"
+                android:layout_margin="20dp"
                 android:background="@drawable/btn_default"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
                 android:text="@string/next_step" />
         </LinearLayout>
     </ScrollView>

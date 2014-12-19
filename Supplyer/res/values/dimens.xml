@@ -31,6 +31,9 @@
     <dimen name="profile_item_height">48dp</dimen>
     <dimen name="profile_label_width">115dp</dimen>
     
+    <dimen name="send_item_height">48dp</dimen>
+    <dimen name="send_label_width">115dp</dimen>
+    
     <dimen name="order_detail_item_height">55dp</dimen>
     <dimen name="order_detail_label_width">125dp</dimen>
 </resources>

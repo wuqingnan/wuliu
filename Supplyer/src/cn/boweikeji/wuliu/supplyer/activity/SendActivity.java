@@ -13,6 +13,9 @@ import com.baidu.location.LocationClient;
 
 import cn.boweikeji.wuliu.supplyer.R;
 import cn.boweikeji.wuliu.utils.Util;
+import cn.boweikeji.wuliu.view.SendAddressItem;
+import cn.boweikeji.wuliu.view.SendArrowItem;
+import cn.boweikeji.wuliu.view.SendInputItem;
 import cn.boweikeji.wuliu.window.TimeWheel;
 import cn.boweikeji.wuliu.window.WheelWindow;
 import android.app.AlertDialog;
@@ -20,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -45,22 +49,19 @@ public class SendActivity extends BaseActivity {
 				finish();
 			} else if (view == mGoodsType) {
 				showTypeChooseDialog();
-			} else if (view == mGoodsValidTime) {
+			} else if (view == mValidTime) {
 				showValidTimeChooseDialog();
 			} else if (view == mTruckType) {
 				truckType();
-			} else if (view == mSwapAddress) {
-				swapAddress();
 			} else if (view == mNextStep) {
 				sendDetail();
-			} else if (view == mClearTime) {
-				mPickTime.setText(null);
-				updateClearState();
 			} else if (view == mPickTime) {
 				showTimePicker();
-			} else if (view == mFromAddress) {
+			} else if (view == mAddress.getSwapView()) {
+				swapAddress();
+			} else if (view == mAddress.getFromView()) {
 				searchAddress(true);
-			} else if (view == mToAddress) {
+			} else if (view == mAddress.getToView()) {
 				searchAddress(false);
 			}
 		}
@@ -72,8 +73,7 @@ public class SendActivity extends BaseActivity {
 		public void onConfirm(String result) {
 			mBespeakTime = Long.parseLong(result);
 			SimpleDateFormat format = new SimpleDateFormat(getString(R.string.bespeak_time_format));
-			mPickTime.setText(format.format(new Date(mBespeakTime)));
-			updateClearState();
+			mPickTime.setValue(format.format(new Date(mBespeakTime)));
 			mWheelWindow = null;
 		}
 		
@@ -86,29 +86,23 @@ public class SendActivity extends BaseActivity {
 	@InjectView(R.id.pick_time_layout)
 	LinearLayout mPickTimeLayout;
 	@InjectView(R.id.pick_time)
-	TextView mPickTime;
-	@InjectView(R.id.clear_time)
-	ImageView mClearTime;
+	SendArrowItem mPickTime;
 	@InjectView(R.id.goods_type)
-	TextView mGoodsType;
+	SendArrowItem mGoodsType;
 	@InjectView(R.id.goods_name)
-	EditText mGoodsName;
+	SendInputItem mGoodsName;
 	@InjectView(R.id.goods_weight)
-	EditText mGoodsWeight;
+	SendInputItem mGoodsWeight;
 	@InjectView(R.id.goods_value)
-	EditText mGoodsValue;
+	SendInputItem mGoodsValue;
 	@InjectView(R.id.goods_pay)
-	EditText mGoodsPay;
-	@InjectView(R.id.goods_valid_time)
-	TextView mGoodsValidTime;
+	SendInputItem mGoodsPay;
+	@InjectView(R.id.valid_time)
+	SendArrowItem mValidTime;
 	@InjectView(R.id.truck_type)
-	TextView mTruckType;
-	@InjectView(R.id.from_address)
-	TextView mFromAddress;
-	@InjectView(R.id.to_address)
-	TextView mToAddress;
-	@InjectView(R.id.swap_address)
-	ImageView mSwapAddress;
+	SendArrowItem mTruckType;
+	@InjectView(R.id.address)
+	SendAddressItem mAddress;
 	@InjectView(R.id.next_step)
 	Button mNextStep;
 
@@ -163,20 +157,47 @@ public class SendActivity extends BaseActivity {
 	private void initView() {
 		ButterKnife.inject(this);
 		mGoodsType.setOnClickListener(mOnClickListener);
-		mGoodsValidTime.setOnClickListener(mOnClickListener);
+		mValidTime.setOnClickListener(mOnClickListener);
 		mTruckType.setOnClickListener(mOnClickListener);
-		mSwapAddress.setOnClickListener(mOnClickListener);
 		mNextStep.setOnClickListener(mOnClickListener);
 		mMenuBtn.setImageResource(R.drawable.ic_navi_back);
 		mMenuBtn.setOnClickListener(mOnClickListener);
-		mFromAddress.setOnClickListener(mOnClickListener);
-		mToAddress.setOnClickListener(mOnClickListener);
+		mAddress.setOnClickListener(mOnClickListener);
 		if (mBespeak) {
 			mPickTimeLayout.setVisibility(View.VISIBLE);
 			mPickTime.setOnClickListener(mOnClickListener);
-			mClearTime.setOnClickListener(mOnClickListener);
 		}
 		mTitle.setText(mBespeak ? R.string.title_bespeak : R.string.title_send);
+		initLabel();
+		initUnit();
+		initInput();
+	}
+	
+	private void initLabel() {
+		mPickTime.setName(R.string.label_pick_time);
+		mGoodsType.setName(R.string.label_goods_type);
+		mGoodsName.setName(R.string.label_goods_name);
+		mGoodsWeight.setName(R.string.label_goods_weight);
+		mGoodsValue.setName(R.string.label_goods_value);
+		mGoodsPay.setName(R.string.label_goods_pay);
+		mValidTime.setName(R.string.label_goods_valid_time);
+		mTruckType.setName(R.string.label_truck_type);
+	}
+	
+	private void initUnit() {
+		mGoodsWeight.setUnit(R.string.ton);
+		mGoodsValue.setUnit(R.string.yuan);
+		mGoodsPay.setUnit(R.string.yuan);
+	}
+	
+	private void initInput() {
+		mGoodsName.setMaxLength(16);
+		mGoodsWeight.setMaxLength(4);
+		mGoodsValue.setMaxLength(9);
+		mGoodsPay.setMaxLength(9);
+		mGoodsWeight.setInputType(InputType.TYPE_CLASS_NUMBER);
+		mGoodsValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+		mGoodsPay.setInputType(InputType.TYPE_CLASS_NUMBER);
 	}
 
 	private void initData() {
@@ -199,46 +220,45 @@ public class SendActivity extends BaseActivity {
 		if (client != null) {
 			BDLocation location = client.getLastKnownLocation();
 			if (location != null && location.hasAddr()) {
-				mFromAddress.setText(location.getAddrStr());
-				mToAddress.setText(location.getAddrStr());
 				mFromInfos[0] = mToInfos[0] = location.getProvince();
 				mFromInfos[1] = mToInfos[1] = location.getCity();
 				mFromInfos[2] = mToInfos[2] = location.getDistrict();
 				mFromInfos[3] = mToInfos[3] = location.getStreet();
+				updateAddress();
 			}
 		}
 	}
 
 	private void updateGoodsType() {
-		mGoodsType.setText(mGoodsTypes[mGoodsTypeIndex]);
+		mGoodsType.setValue(mGoodsTypes[mGoodsTypeIndex]);
 	}
 
 	private void updateValidTime() {
-		mGoodsValidTime.setText(mValidTimes[mValidTimeIndex]);
+		mValidTime.setValue(mValidTimes[mValidTimeIndex]);
 	}
 	
 	private void updateTruckType() {
-		mTruckType.setText(mTruckTypes[mTruckTypeIndex]);
+		mTruckType.setValue(mTruckTypes[mTruckTypeIndex]);
 	}
 	
 	private void sendDetail() {
 		if (checkValid()) {
 			Order order = new Order();
 			order.setGoods_type_code(mGoodsTypeIndex);
-			order.setGoods_name(mGoodsName.getText().toString());
+			order.setGoods_name(mGoodsName.getValue());
 			if (mBespeak) {
-				order.setPick_time(mPickTime.getText().toString());
+				order.setPick_time(mPickTime.getValue());
 			}
-			int weight = Integer.parseInt(mGoodsWeight.getText().toString());
-			String value = mGoodsValue.getText().toString();
-			String pay = mGoodsPay.getText().toString();
+			int weight = Integer.parseInt(mGoodsWeight.getValue());
+			String value = mGoodsValue.getValue();
+			String pay = mGoodsPay.getValue();
 			order.setWeight(weight);
 			order.setGoods_value(TextUtils.isEmpty(value) ? -9 : Integer.parseInt(value));
 			order.setGoods_cost(TextUtils.isEmpty(pay) ? -9 : Integer.parseInt(pay));
 			order.setValid_type(mValidTimeIndex);
 			order.setTruck_type_code(mTruckTypeIndex);
-			order.setEnd_addr(mToAddress.getText().toString());
-			order.setStart_addr(mFromAddress.getText().toString());
+			order.setEnd_addr(mAddress.getToAddress());
+			order.setStart_addr(mAddress.getFromAddress());
 			LocationClient client = WLApplication.getLocationClient();
 			if (client != null) {
 				BDLocation location = client.getLastKnownLocation();
@@ -262,8 +282,8 @@ public class SendActivity extends BaseActivity {
 	}
 	
 	private void updateAddress() {
-		mFromAddress.setText(arrayToString(mFromInfos));
-		mToAddress.setText(arrayToString(mToInfos));
+		mAddress.setFromAddress(arrayToString(mFromInfos));
+		mAddress.setToAddress(arrayToString(mToInfos));
 	}
 	
 	private void showTypeChooseDialog() {
@@ -322,10 +342,6 @@ public class SendActivity extends BaseActivity {
 		mWheelWindow.show();
 	}
 	
-	private void updateClearState() {
-		mClearTime.setVisibility(TextUtils.isEmpty(mPickTime.getText()) ? View.GONE : View.VISIBLE);
-	}
-	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -339,10 +355,10 @@ public class SendActivity extends BaseActivity {
 	}
 
 	private boolean checkValid() {
-		String pickTime = mPickTime.getText().toString();
-		String goodsName = mGoodsName.getText().toString();
-		String goodsWeight = mGoodsWeight.getText().toString();
-		String fromAddress = mFromAddress.getText().toString();
+		String pickTime = mPickTime.getValue();
+		String goodsName = mGoodsName.getValue();
+		String goodsWeight = mGoodsWeight.getValue();
+		String fromAddress = mAddress.getFromAddress();
 		if (mBespeak && (TextUtils.isEmpty(pickTime))) {
 			Util.showTips(this, getResources().getString(
 					R.string.pick_time_empty));
@@ -378,7 +394,6 @@ public class SendActivity extends BaseActivity {
 					R.string.goods_weight_error));
 			return false;
 		}
-		
 		return true;
 	}
 	
