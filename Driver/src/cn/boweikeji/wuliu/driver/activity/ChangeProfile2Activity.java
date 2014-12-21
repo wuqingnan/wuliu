@@ -242,7 +242,7 @@ public class ChangeProfile2Activity extends BaseActivity {
 
 		mRegInfo.setTrunk_no(tNumber);
 		mRegInfo.setLoad_weight(Float.parseFloat(tLoad));
-		mRegInfo.setTrunk_type_code(mTruckTypeIndex);
+		mRegInfo.setTruck_type_code(mTruckTypeIndex);
 		mRegInfo.setRemark(remark);
 
 		return true;

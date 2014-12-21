@@ -94,11 +94,11 @@ public class RegisterInfo implements Serializable {
 		this.area_code = area_code;
 	}
 
-	public int getTrunk_type_code() {
+	public int getTruck_type_code() {
 		return truck_type_code;
 	}
 
-	public void setTrunk_type_code(int truck_type_code) {
+	public void setTruck_type_code(int truck_type_code) {
 		this.truck_type_code = truck_type_code;
 	}
 
@@ -160,7 +160,7 @@ public class RegisterInfo implements Serializable {
 		params.add("card_photo", getCard_photo());
 		params.add("trunk_no", getTrunk_no());
 		params.add("area_code", getArea_code());
-		params.add("trunk_type_code", "" + getTrunk_type_code());
+		params.add("trunk_type_code", "" + getTruck_type_code());
 		params.add("load_weight", "" + getLoad_weight());
 		params.add("remark", TextUtils.isEmpty(getRemark()) ? BaseParams.PARAM_DEFAULT : getRemark());
 		params.add("passwd", getMD5Passwd());
@@ -179,7 +179,7 @@ public class RegisterInfo implements Serializable {
 		params.add("card_photo", TextUtils.isEmpty(getCard_photo()) ? BaseParams.PARAM_DEFAULT : getCard_photo());
 		params.add("trunk_no", getTrunk_no());
 		params.add("area_code", getArea_code());
-		params.add("trunk_type_code", "" + getTrunk_type_code());
+		params.add("trunk_type_code", "" + getTruck_type_code());
 		params.add("load_weight", "" + getLoad_weight());
 		params.add("remark", TextUtils.isEmpty(getRemark()) ? BaseParams.PARAM_DEFAULT : getRemark());
 		params.add("passwd", getMD5Passwd());

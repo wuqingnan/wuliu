@@ -237,6 +237,7 @@ public class Register2Activity extends BaseActivity {
 		mRegInfo.setTrunk_no(tNumber);
 		mRegInfo.setLoad_weight(Float.parseFloat(tLoad));
 		mRegInfo.setAttract_no(rNumber);
+		mRegInfo.setTruck_type_code(mTruckTypeIndex);
 		mRegInfo.setRemark(remark);
 
 		return true;
