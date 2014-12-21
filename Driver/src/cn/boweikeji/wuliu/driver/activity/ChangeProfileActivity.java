@@ -43,9 +43,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class RegisterTruckActivity extends BaseActivity {
+public class ChangeProfileActivity extends BaseActivity {
 
-	private static final String TAG = RegisterTruckActivity.class
+	private static final String TAG = ChangeProfileActivity.class
 			.getSimpleName();
 
 	private static final String KEY_INFO = "info";
@@ -325,10 +325,8 @@ public class RegisterTruckActivity extends BaseActivity {
 		Util.showTips(this, getString(R.string.upload_id_image_fail));
 	}
 
-	public static void startRegisterInfoActivity(Context context,
-			RegisterInfo info) {
-		Intent intent = new Intent(context, RegisterTruckActivity.class);
-		intent.putExtra(KEY_INFO, info);
+	public static void startChangeProfileActivity(Context context) {
+		Intent intent = new Intent(context, ChangeProfileActivity.class);
 		context.startActivity(intent);
 	}
 
@@ -337,11 +335,11 @@ public class RegisterTruckActivity extends BaseActivity {
 		private static final int WIDTH = 960;
 		private static final int HEIGHT = 640;
 
-		private WeakReference<RegisterTruckActivity> mReference;
+		private WeakReference<ChangeProfileActivity> mReference;
 		private String mPath;
 
-		public ImageTask(RegisterTruckActivity activity, String path) {
-			mReference = new WeakReference<RegisterTruckActivity>(activity);
+		public ImageTask(ChangeProfileActivity activity, String path) {
+			mReference = new WeakReference<ChangeProfileActivity>(activity);
 			mPath = path;
 		}
 
@@ -369,7 +367,7 @@ public class RegisterTruckActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			RegisterTruckActivity activity = mReference.get();
+			ChangeProfileActivity activity = mReference.get();
 			if (activity != null) {
 				activity.uploadImage(result);
 			}

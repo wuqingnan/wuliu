@@ -35,9 +35,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class RegisterProfileActivity extends BaseActivity {
+public class Register1Activity extends BaseActivity {
 
-	private static final String TAG = RegisterProfileActivity.class
+	private static final String TAG = Register1Activity.class
 			.getSimpleName();
 
 	private static final String COUNTRY_CODE = "86";
@@ -242,7 +242,7 @@ public class RegisterProfileActivity extends BaseActivity {
 	}
 
 	private void next() {
-		RegisterTruckActivity.startRegisterInfoActivity(this, mRegInfo);
+		Register2Activity.startRegister2Activity(this, mRegInfo);
 	}
 
 	private boolean validCheck() {
@@ -522,19 +522,19 @@ public class RegisterProfileActivity extends BaseActivity {
 		}
 	}
 
-	public static void startRegisterPhoneActivity(Context context) {
-		context.startActivity(new Intent(context, RegisterProfileActivity.class));
+	public static void startRegister1Activity(Context context) {
+		context.startActivity(new Intent(context, Register1Activity.class));
 	}
 
 	private static class RegisterHandler extends
-			WeakHandler<RegisterProfileActivity> {
+			WeakHandler<Register1Activity> {
 
-		public RegisterHandler(RegisterProfileActivity reference) {
+		public RegisterHandler(Register1Activity reference) {
 			super(reference);
 		}
 
 		@Override
-		public void handleMessage(RegisterProfileActivity t, Message msg) {
+		public void handleMessage(Register1Activity t, Message msg) {
 			switch (msg.what) {
 			case MSG_GET_VERIFICATION_CODE_ERROR:
 				Util.showTips(t, "获取失败");

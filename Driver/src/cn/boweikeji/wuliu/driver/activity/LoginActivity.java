@@ -47,7 +47,7 @@ public class LoginActivity extends BaseActivity {
 			if (view == mBack) {
 				finish();
 			} else if (view == mRegister) {
-				RegisterProfileActivity.startRegisterPhoneActivity(LoginActivity.this);
+				Register1Activity.startRegister1Activity(LoginActivity.this);
 			} else if (view == mForgetPass) {
 				ForgetPasswdActivity.startForgetPasswdActivity(LoginActivity.this);
 			} else if (view == mLoginSubmit) {

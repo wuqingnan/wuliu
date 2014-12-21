@@ -21,6 +21,7 @@
     <string name="exit">退出</string>
     <string name="unknown">不详</string>
     <string name="negotiable">面议</string>
+    <string name="change">修改</string>
     
     <string name="quit_next_time">再按一次退出</string>
 

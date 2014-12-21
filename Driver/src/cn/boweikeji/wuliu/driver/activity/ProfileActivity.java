@@ -40,6 +40,8 @@ public class ProfileActivity extends BaseActivity {
 		public void onClick(View view) {
 			if (view == mBack) {
 				finish();
+			} else if (view == mChange) {
+				changeProfile();
 			}
 		}
 	};
@@ -61,6 +63,8 @@ public class ProfileActivity extends BaseActivity {
 
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
+	@InjectView(R.id.titlebar_rightTxt)
+	TextView mChange;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.profile)
@@ -83,7 +87,10 @@ public class ProfileActivity extends BaseActivity {
 	private void initView() {
 		ButterKnife.inject(this);
 		mTitle.setText(R.string.title_profile);
+		mChange.setText(R.string.change);
+		mChange.setVisibility(View.VISIBLE);
 		mBack.setOnClickListener(mOnClickListener);
+		mChange.setOnClickListener(mOnClickListener);
 		initHeader();
 		initList();
 	}
@@ -133,6 +140,10 @@ public class ProfileActivity extends BaseActivity {
 			}
 		}
 		Util.showTips(this, getString(R.string.request_failed));
+	}
+	
+	private void changeProfile() {
+		ChangeProfileActivity.startChangeProfileActivity(this);
 	}
 	
 	public static void startProfileActivity(Context context) {
