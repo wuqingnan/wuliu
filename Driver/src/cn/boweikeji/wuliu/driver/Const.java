@@ -11,6 +11,7 @@ public class Const {
 	public static final String PREFERENCE_NAME = "preference";
 	public static final String KEY_VERSION_NAME = "version_name";
 	public static final String KEY_AUTO_LOGIN = "auto_login";
+	public static final String KEY_PUSH_TURNEDON = "push_turnedon";
 	
 	private static final String URL_SYSTEM_MSG = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=24&user_cd=%1$s&user_type=DRIVER";
 	public static final String URL_ABOUT = "http://www.boweikeji.cn/index.php?m=content&c=index&a=lists&catid=2";

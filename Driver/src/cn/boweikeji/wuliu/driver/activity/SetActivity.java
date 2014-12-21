@@ -4,6 +4,7 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.igexin.sdk.PushManager;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import butterknife.ButterKnife;
@@ -11,6 +12,8 @@ import butterknife.InjectView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
@@ -18,10 +21,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.bean.UpdateInfo;
@@ -63,13 +68,24 @@ public class SetActivity extends BaseActivity {
 			requestResult(null);
 		};
 	};
+	
+	private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			if (isChecked) {
+				turnOnPush();
+			} else {
+				turnOffPush();
+			}
+		}
+	};
 
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
 	@InjectView(R.id.push_switch)
-	Button mUserName;
+	ToggleButton mPushSwitch;
 	@InjectView(R.id.update)
 	LinearLayout mUpdate;
 	@InjectView(R.id.version)
@@ -103,6 +119,8 @@ public class SetActivity extends BaseActivity {
 		mUpdate.setOnClickListener(mOnClickListener);
 		mAbout.setOnClickListener(mOnClickListener);
 		mLogout.setOnClickListener(mOnClickListener);
+		mPushSwitch.setChecked(isPushTurnedOn());
+		mPushSwitch.setOnCheckedChangeListener(mOnCheckedChangeListener);
 	}
 
 	private void about() {
@@ -119,6 +137,28 @@ public class SetActivity extends BaseActivity {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtra(MainActivity.KEY_LOGOUT, true);
 		startActivity(intent);
+	}
+	
+	private void turnOnPush() {
+		setPush(true);
+		PushManager.getInstance().turnOnPush(SetActivity.this);
+	}
+	
+	private void turnOffPush() {
+		setPush(false);
+		PushManager.getInstance().turnOffPush(SetActivity.this);
+	}
+	
+	private void setPush(boolean turnedOn) {
+		SharedPreferences preference = getSharedPreferences(Const.PREFERENCE_NAME, MODE_MULTI_PROCESS);
+		Editor editor = preference.edit();
+		editor.putBoolean(Const.KEY_PUSH_TURNEDON, turnedOn);
+		editor.commit();
+	}
+	
+	private boolean isPushTurnedOn() {
+		SharedPreferences preference = getSharedPreferences(Const.PREFERENCE_NAME, MODE_MULTI_PROCESS);
+		return preference.getBoolean(Const.KEY_PUSH_TURNEDON, true);
 	}
 	
 	private void requestResult(JSONObject response) {
