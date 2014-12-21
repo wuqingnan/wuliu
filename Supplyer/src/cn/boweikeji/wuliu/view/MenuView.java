@@ -47,7 +47,6 @@ public class MenuView extends RelativeLayout {
 		}
 	};
 
-	private TextView mName;
 	private TextView mPhone;
 	private ListView mListView;
 	private MenuAdapter mMenuAdapter;
@@ -85,7 +84,6 @@ public class MenuView extends RelativeLayout {
 	private void initHeader() {
 		View view = LayoutInflater.from(getContext()).inflate(
 				R.layout.menu_header, null);
-		mName = (TextView) view.findViewById(R.id.name);
 		mPhone = (TextView) view.findViewById(R.id.phone);
 		mListView.addHeaderView(view);
 	}
@@ -98,11 +96,9 @@ public class MenuView extends RelativeLayout {
 
 	private void updateInfo() {
 		if (LoginManager.getInstance().hasLogin()) {
-			mName.setText("独孤伊人");
 			mPhone.setText(LoginManager.getInstance().getUserInfo()
 					.getPhone());
 		} else {
-			mName.setText(null);
 			mPhone.setText(null);
 		}
 	}

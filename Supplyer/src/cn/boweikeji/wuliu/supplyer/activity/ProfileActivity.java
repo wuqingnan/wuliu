@@ -33,7 +33,6 @@ public class ProfileActivity extends BaseActivity {
 	ListView mListView;
 
 	private View mHeader;
-	private TextView mName;
 	private TextView mPhone;
 
 	private ProfileAdapter mAdapter;
@@ -56,9 +55,7 @@ public class ProfileActivity extends BaseActivity {
 	private void initHeader() {
 		mHeader = getLayoutInflater().inflate(R.layout.menu_header,
 				null);
-		mName = (TextView) mHeader.findViewById(R.id.name);
 		mPhone = (TextView) mHeader.findViewById(R.id.phone);
-		mName.setVisibility(View.GONE);
 		mPhone.setVisibility(View.GONE);
 		mHeader.setBackgroundColor(getResources().getColor(R.color.bg_back));
 	}

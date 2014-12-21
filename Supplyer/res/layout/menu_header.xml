@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:gravity="center_horizontal" >
-    
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp" >
+
     <ImageView
         android:id="@+id/portrait"
         android:layout_width="wrap_content"
@@ -14,17 +14,10 @@
         android:src="@drawable/portrait_default" />
 
     <TextView
-        android:id="@+id/name"
-        style="@style/TextAppearance.Micro.White"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp" />
-    
-    <TextView
         android:id="@+id/phone"
         style="@style/TextAppearance.Micro.9a9a9a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp" />
-    
+
 </LinearLayout>
