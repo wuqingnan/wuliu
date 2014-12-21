@@ -277,7 +277,7 @@ public class OrderDetailActivity extends BaseActivity {
 			driver.setDriver_cd(driverCD);
 			driver.setDriver_name(infos.optString("driver_name"));
 			driver.setPhone(infos.optString("phone"));
-			driver.setCredit_level(infos.optString("credit_level"));
+			driver.setCredit_level(infos.optInt("credit_level"));
 			driver.setTruck_type_code(infos.optInt("trunk_type_code"));
 			driver.setTruck_no(infos.optString("trunk_no"));
 			driver.setLoad_weight(infos.optInt("load_weight"));

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingLeft="10dp" >
 
@@ -20,5 +21,15 @@
         android:layout_height="@dimen/order_detail_item_height"
         android:gravity="center_vertical"
         android:maxLines="2" />
+
+    <RatingBar
+        android:id="@+id/item_level"
+        style="@style/RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="1"
+        android:visibility="gone" />
 
 </LinearLayout>

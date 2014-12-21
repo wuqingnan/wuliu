@@ -5,7 +5,7 @@ public class Driver {
 	private String driver_cd;
 	private String driver_name;
 	private String phone;
-	private String credit_level;
+	private int credit_level;
 	private int stars;
 	private int truck_type_code;
 	private String truck_no;
@@ -43,11 +43,11 @@ public class Driver {
 		this.phone = phone;
 	}
 
-	public String getCredit_level() {
+	public int getCredit_level() {
 		return credit_level;
 	}
 
-	public void setCredit_level(String credit_level) {
+	public void setCredit_level(int credit_level) {
 		this.credit_level = credit_level;
 	}
 

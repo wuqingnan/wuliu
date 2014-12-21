@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -34,8 +35,9 @@ public class OrderDetailAdapter extends BaseAdapter {
 			R.string.label_divider_line, R.string.label_to_name,
 			R.string.label_to_phone, R.string.label_divider_line,
 			R.string.label_driver_name, R.string.label_driver_phone,
-			R.string.label_divider_line, R.string.label_truck_type,
-			R.string.label_truck_no, R.string.label_truck_load };
+			R.string.label_driver_level, R.string.label_divider_line,
+			R.string.label_truck_type, R.string.label_truck_no,
+			R.string.label_truck_load };
 
 	private Context mContext;
 	private LayoutInflater mInflater;
@@ -68,7 +70,7 @@ public class OrderDetailAdapter extends BaseAdapter {
 			return 0;
 		}
 		if (mDriver != null) {
-			return 31;
+			return 32;
 		}
 		return 25;
 	}
@@ -131,20 +133,20 @@ public class OrderDetailAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-//	private View getTwoColsView(int position, View convertView) {
-//		TwoColsHolder holder = null;
-//		if (convertView == null) {
-//			convertView = mInflater.inflate(R.layout.order_detail_item_two,
-//					null);
-//			holder = new TwoColsHolder(convertView);
-//			convertView.setTag(holder);
-//		} else {
-//			holder = (TwoColsHolder) convertView.getTag();
-//		}
-//		holder.refresh(mOrder,
-//				mStateName[getStateIndexByValue(mOrder.getState())]);
-//		return convertView;
-//	}
+	// private View getTwoColsView(int position, View convertView) {
+	// TwoColsHolder holder = null;
+	// if (convertView == null) {
+	// convertView = mInflater.inflate(R.layout.order_detail_item_two,
+	// null);
+	// holder = new TwoColsHolder(convertView);
+	// convertView.setTag(holder);
+	// } else {
+	// holder = (TwoColsHolder) convertView.getTag();
+	// }
+	// holder.refresh(mOrder,
+	// mStateName[getStateIndexByValue(mOrder.getState())]);
+	// return convertView;
+	// }
 
 	private View getSingleView(int position, View convertView) {
 		SingleHolder holder = null;
@@ -161,13 +163,14 @@ public class OrderDetailAdapter extends BaseAdapter {
 		case R.string.label_order_code:
 			value = mOrder.getGoods_cd();
 			break;
-		case R.string.label_order_state:{
+		case R.string.label_order_state: {
 			value = mStateName[getStateIndexByValue(mOrder.getState())];
 		}
 			break;
 		case R.string.label_pick_time:
 			value = mOrder.getPick_time();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
@@ -242,43 +245,50 @@ public class OrderDetailAdapter extends BaseAdapter {
 			break;
 		case R.string.label_send_comment:
 			value = mOrder.getRemark();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = null;
 			}
 			break;
 		case R.string.label_from_address:
 			value = mOrder.getStart_addr();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_to_address:
 			value = mOrder.getEnd_addr();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_from_name:
 			value = mOrder.getSupplyer_name();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_from_phone:
 			value = mOrder.getSupplyer_phone();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_to_name:
 			value = mOrder.getReciver();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_to_phone:
 			value = mOrder.getReciver_phone();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
@@ -303,7 +313,12 @@ public class OrderDetailAdapter extends BaseAdapter {
 					mDriver.getLoad_weight());
 			break;
 		}
-		holder.refresh(name, value);
+		if (name == R.string.label_driver_level) {
+			int level = mDriver.getCredit_level();
+			holder.refresh(name, level);
+		} else {
+			holder.refresh(name, value);
+		}
 		return convertView;
 	}
 
@@ -318,25 +333,25 @@ public class OrderDetailAdapter extends BaseAdapter {
 		return index;
 	}
 
-//	public static class TwoColsHolder {
-//
-//		@InjectView(R.id.item_left)
-//		OrderDetailItem mLeftItem;
-//		@InjectView(R.id.item_right)
-//		OrderDetailItem mRightItem;
-//
-//		public TwoColsHolder(View parent) {
-//			ButterKnife.inject(this, parent);
-//		}
-//
-//		public void refresh(Order order, String state) {
-//			mLeftItem.setName(R.string.label_order_code);
-//			mLeftItem.setValue(order.getGoods_cd());
-//			mRightItem.setName(R.string.label_order_state);
-//			mRightItem.setValue(state);
-//		}
-//
-//	}
+	// public static class TwoColsHolder {
+	//
+	// @InjectView(R.id.item_left)
+	// OrderDetailItem mLeftItem;
+	// @InjectView(R.id.item_right)
+	// OrderDetailItem mRightItem;
+	//
+	// public TwoColsHolder(View parent) {
+	// ButterKnife.inject(this, parent);
+	// }
+	//
+	// public void refresh(Order order, String state) {
+	// mLeftItem.setName(R.string.label_order_code);
+	// mLeftItem.setValue(order.getGoods_cd());
+	// mRightItem.setName(R.string.label_order_state);
+	// mRightItem.setValue(state);
+	// }
+	//
+	// }
 
 	public static class SingleHolder {
 
@@ -344,6 +359,8 @@ public class OrderDetailAdapter extends BaseAdapter {
 		TextView mName;
 		@InjectView(R.id.item_value)
 		TextView mValue;
+		@InjectView(R.id.item_level)
+		RatingBar mLevel;
 
 		public SingleHolder(View parent) {
 			ButterKnife.inject(this, parent);
@@ -352,7 +369,20 @@ public class OrderDetailAdapter extends BaseAdapter {
 		public void refresh(int name, String value) {
 			mName.setText(name);
 			mValue.setText(value);
+			mValue.setVisibility(View.VISIBLE);
+			mLevel.setVisibility(View.GONE);
 		}
 
+		public void refresh(int name, int level) {
+			mName.setText(name);
+			if (level < 0) {
+				level = 0;
+			} else if (level > 4) {
+				level = 4;
+			}
+			mLevel.setRating(level + 1);
+			mValue.setVisibility(View.GONE);
+			mLevel.setVisibility(View.VISIBLE);
+		}
 	}
 }

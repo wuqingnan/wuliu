@@ -86,6 +86,7 @@
     <string name="label_creater_phone">信息发送人电话：</string>
     <string name="label_driver_name">司机姓名：</string>
     <string name="label_driver_phone">司机电话：</string>
+    <string name="label_driver_level">司机等级：</string>
     <string name="label_truck_no">车牌号：</string>
     <string name="label_truck_load">载重吨位：</string>
     <string name="label_divider_line">分隔行：</string>
