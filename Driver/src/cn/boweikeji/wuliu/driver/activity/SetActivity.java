@@ -123,6 +123,7 @@ public class SetActivity extends BaseActivity {
 		mUpdate.setOnClickListener(mOnClickListener);
 		mAbout.setOnClickListener(mOnClickListener);
 		mLogout.setOnClickListener(mOnClickListener);
+		mChangePasswd.setOnClickListener(mOnClickListener);
 		mPushSwitch.setChecked(isPushTurnedOn());
 		mPushSwitch.setOnCheckedChangeListener(mOnCheckedChangeListener);
 	}

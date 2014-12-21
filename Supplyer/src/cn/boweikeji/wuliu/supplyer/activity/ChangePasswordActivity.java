@@ -97,9 +97,6 @@ public class ChangePasswordActivity extends BaseActivity {
 		mSubmit.setOnClickListener(mOnClickListener);
 	}
 	
-	/**
-	 * �ύ
-	 */
 	private void submit() {
 		if (validCheck()) {
 			showProgressDialog();
@@ -115,11 +112,6 @@ public class ChangePasswordActivity extends BaseActivity {
 		}
 	}
 	
-	/**
-	 * �����Ϣ�Ϸ���
-	 * 
-	 * @return
-	 */
 	private boolean validCheck() {
 		boolean bRes = true;
 		String oldPass = mOldPassword.getText().toString();
@@ -183,13 +175,15 @@ public class ChangePasswordActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
+				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					String newPass = EncryptUtil.encrypt(mNewPassword.getText().toString(), EncryptUtil.MD5);
 					UserInfo info = LoginManager.getInstance().getUserInfo();
 					info.setPasswd(newPass);
 					LoginManager.getInstance().setUserInfo(info);
-				} else {
-					Util.showTips(this, msg);
+					mOldPassword.setText(null);
+					mNewPassword.setText(null);
+					mRepeatPassword.setText(null);
 				}
 				return;
 			} catch (JSONException e) {

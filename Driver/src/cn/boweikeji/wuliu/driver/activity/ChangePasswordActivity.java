@@ -99,8 +99,8 @@ public class ChangePasswordActivity extends BaseActivity {
 			String oldPass = EncryptUtil.encrypt(mOldPassword.getText().toString(), EncryptUtil.MD5);
 			String newPass = EncryptUtil.encrypt(mNewPassword.getText().toString(), EncryptUtil.MD5);
 			BaseParams params = new BaseParams();
-			params.add("method", "changeSupplyerPwd");
-			params.add("supplyer_cd", LoginManager.getInstance().getUserInfo().getDriver_cd());
+			params.add("method", "changeDriverPwd");
+			params.add("driver_cd", LoginManager.getInstance().getUserInfo().getDriver_cd());
 			params.add("is_need", "1");
 			params.add("old_pwd", oldPass);
 			params.add("new_pwd", newPass);
@@ -171,13 +171,15 @@ public class ChangePasswordActivity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
+				Util.showTips(this, msg);
 				if (res == 2) {//成功
 					String newPass = EncryptUtil.encrypt(mNewPassword.getText().toString(), EncryptUtil.MD5);
 					UserInfo info = LoginManager.getInstance().getUserInfo();
 					info.setPasswd(newPass);
 					LoginManager.getInstance().setUserInfo(info);
-				} else {
-					Util.showTips(this, msg);
+					mOldPassword.setText(null);
+					mNewPassword.setText(null);
+					mRepeatPassword.setText(null);
 				}
 				return;
 			} catch (JSONException e) {

@@ -42,6 +42,18 @@
     <string name="check_update">检查更新</string>
     <string name="logout">退出登录</string>
     
+    <string name="hint_old_password">旧密码</string>
+    <string name="hint_new_password">新密码</string>
+    <string name="hint_repeat_password">重复新密码</string>
+    <string name="old_password_empty">旧密码为空</string>
+    <string name="new_password_empty">新密码为空</string>
+    <string name="repeat_password_empty">重复新密码为空</string>
+    <string name="old_password_invalid">旧密码格式错误</string>
+    <string name="new_password_invalid">新密码格式错误</string>
+    <string name="repeat_password_invalid">重复新密码格式错误</string>
+    <string name="new_password_same">新密码与旧密码相同</string>
+    <string name="repeat_diff_new">新密码两次输入不一致</string>
+    
     <string name="agree_and_accept">同意并接受</string>
     <string name="platform_rule">《平台服务使用规则》</string>
     <string name="accept_rules">请同意并接受《平台服务使用规则》</string>
