@@ -32,6 +32,7 @@ public class Const {
 	public static final String URL_NEAR_DRIVER = "bss/getNearDriversByDrv.action";
 	public static final String URL_UPLOAD_IMAGE = "bss/doUpload.action";
 	public static final String URL_FIND = "bss/qrySupplyRecords.action";
+	public static final String URL_PROFILE = "bss/getDriverInfos.action";
 	
 	public static final int PUSH_TYPE_DETAIL = 1;
 	public static final int PUSH_TYPE_MSG = 2;

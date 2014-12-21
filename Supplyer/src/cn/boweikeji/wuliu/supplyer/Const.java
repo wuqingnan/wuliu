@@ -32,6 +32,7 @@ public class Const {
 	public static final String URL_SUGGEST = "bss/supplyerSuggest.action";
 	public static final String URL_UPDATE = "bss/updateAPP.action";
 	public static final String URL_NEAR_DRIVER = "bss/getNearDrivers.action";
+	public static final String URL_PROFILE = "bss/getSupplyInfos.action";
 	
 	public static String clientid = NULL;
 	

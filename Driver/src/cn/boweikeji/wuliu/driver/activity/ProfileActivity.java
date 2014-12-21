@@ -1,14 +1,27 @@
 package cn.boweikeji.wuliu.driver.activity;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.adapter.ProfileAdapter;
+import cn.boweikeji.wuliu.driver.api.BaseParams;
+import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
+import cn.boweikeji.wuliu.http.AsyncHttp;
+import cn.boweikeji.wuliu.utils.Util;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +43,21 @@ public class ProfileActivity extends BaseActivity {
 			}
 		}
 	};
+	
+	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
+		
+		public void onFinish() {
+			
+		};
+		
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+			requestResult(response);
+		};
+		
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+			requestResult(null);
+		};
+	};
 
 	@InjectView(R.id.titlebar_leftBtn)
 	ImageView mBack;
@@ -43,12 +71,13 @@ public class ProfileActivity extends BaseActivity {
 	private TextView mPhone;
 
 	private ProfileAdapter mAdapter;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		initView();
+		initData();
 	}
 
 	private void initView() {
@@ -74,7 +103,38 @@ public class ProfileActivity extends BaseActivity {
 		mAdapter = new ProfileAdapter(this);
 		mListView.setAdapter(mAdapter);
 	}
-
+	
+	private void initData() {
+		UserInfo info = LoginManager.getInstance().getUserInfo();
+		BaseParams params = new BaseParams();
+		params.add("method", "getDriverInfos");
+		params.add("driver_cd", info.getDriver_cd());
+		params.add("passwd", info.getPasswd());
+		AsyncHttp.get(Const.URL_PROFILE, params, mRequestHandler);
+	}
+	
+	private void requestResult(JSONObject response) {
+		if (response != null && response.length() > 0) {
+			Log.d(TAG, "shizy---response: " + response.toString());
+			try {
+				int res = response.getInt("res");
+				String msg = response.getString("msg");
+				if (res == 2) {//成功
+					UserInfo userInfo = LoginManager.getInstance().getUserInfo();
+					userInfo.update(response.optJSONObject("infos"));
+					LoginManager.getInstance().setUserInfo(userInfo);
+					mAdapter.notifyDataSetChanged();
+				} else {
+					Util.showTips(this, msg);
+				}
+				return;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		Util.showTips(this, getString(R.string.request_failed));
+	}
+	
 	public static void startProfileActivity(Context context) {
 		context.startActivity(new Intent(context, ProfileActivity.class));
 	}
