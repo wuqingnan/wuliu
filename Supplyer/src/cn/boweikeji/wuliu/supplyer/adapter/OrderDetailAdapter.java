@@ -1,6 +1,7 @@
 package cn.boweikeji.wuliu.supplyer.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,7 +167,7 @@ public class OrderDetailAdapter extends BaseAdapter {
 			break;
 		case R.string.label_pick_time:
 			value = mOrder.getPick_time();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
@@ -241,43 +242,43 @@ public class OrderDetailAdapter extends BaseAdapter {
 			break;
 		case R.string.label_send_comment:
 			value = mOrder.getRemark();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = null;
 			}
 			break;
 		case R.string.label_from_address:
 			value = mOrder.getStart_addr();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_to_address:
 			value = mOrder.getEnd_addr();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_from_name:
 			value = mOrder.getSupplyer_name();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_from_phone:
 			value = mOrder.getSupplyer_phone();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_to_name:
 			value = mOrder.getReciver();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_to_phone:
 			value = mOrder.getReciver_phone();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;

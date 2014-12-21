@@ -5,6 +5,7 @@ import java.io.Serializable;
 import android.text.TextUtils;
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
+import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.utils.EncryptUtil;
 
 public class RegisterInfo implements Serializable {
@@ -22,7 +23,7 @@ public class RegisterInfo implements Serializable {
 	private String card_photo;
 	private String trunk_no;
 	private String area_code;
-	private int trunk_type_code;
+	private int truck_type_code;
 	private float load_weight;
 	private String remark;
 	private String passwd;
@@ -94,11 +95,11 @@ public class RegisterInfo implements Serializable {
 	}
 
 	public int getTrunk_type_code() {
-		return trunk_type_code;
+		return truck_type_code;
 	}
 
-	public void setTrunk_type_code(int trunk_type_code) {
-		this.trunk_type_code = trunk_type_code;
+	public void setTrunk_type_code(int truck_type_code) {
+		this.truck_type_code = truck_type_code;
 	}
 
 	public float getLoad_weight() {
@@ -164,6 +165,24 @@ public class RegisterInfo implements Serializable {
 		params.add("remark", TextUtils.isEmpty(getRemark()) ? BaseParams.PARAM_DEFAULT : getRemark());
 		params.add("passwd", getMD5Passwd());
 		params.add("attract_no", TextUtils.isEmpty(getAttract_no()) ? BaseParams.PARAM_DEFAULT : getAttract_no());
+		return params;
+	}
+	
+	public BaseParams getChangeProfileParams() {
+		BaseParams params = new BaseParams();
+		params.add("method", "changeDriver");
+		params.add("driver_cd", LoginManager.getInstance().getUserInfo().getDriver_cd());
+		params.add("driver_name", getDriver_name());
+		params.add("driver_type", "" + getDriver_type());
+		params.add("comp_name", getDriver_type() == 1 ? getComp_name() : BaseParams.PARAM_DEFAULT);
+		params.add("card_id", getCard_id());
+		params.add("card_photo", TextUtils.isEmpty(getCard_photo()) ? BaseParams.PARAM_DEFAULT : getCard_photo());
+		params.add("trunk_no", getTrunk_no());
+		params.add("area_code", getArea_code());
+		params.add("trunk_type_code", "" + getTrunk_type_code());
+		params.add("load_weight", "" + getLoad_weight());
+		params.add("remark", TextUtils.isEmpty(getRemark()) ? BaseParams.PARAM_DEFAULT : getRemark());
+		params.add("passwd", getMD5Passwd());
 		return params;
 	}
 

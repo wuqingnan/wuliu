@@ -2,6 +2,7 @@ package cn.boweikeji.wuliu.driver.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 
 public class ProfileAdapter extends BaseAdapter {
@@ -112,6 +115,12 @@ public class ProfileAdapter extends BaseAdapter {
 			value = String
 					.format(mContext.getString(R.string.format_ton), load);
 		}
+			break;
+		case R.string.label_user_company:
+			value = LoginManager.getInstance().getUserInfo().getComp_name();
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+				value = null;
+			}
 			break;
 		}
 		if (name == R.string.label_user_level) {

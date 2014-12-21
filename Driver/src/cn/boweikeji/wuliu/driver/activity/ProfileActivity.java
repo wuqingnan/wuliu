@@ -84,6 +84,12 @@ public class ProfileActivity extends BaseActivity {
 		initData();
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		refresh();
+	}
+	
 	private void initView() {
 		ButterKnife.inject(this);
 		mTitle.setText(R.string.title_profile);
@@ -112,6 +118,10 @@ public class ProfileActivity extends BaseActivity {
 	}
 	
 	private void initData() {
+		refresh();
+	}
+	
+	private void refresh() {
 		UserInfo info = LoginManager.getInstance().getUserInfo();
 		BaseParams params = new BaseParams();
 		params.add("method", "getDriverInfos");

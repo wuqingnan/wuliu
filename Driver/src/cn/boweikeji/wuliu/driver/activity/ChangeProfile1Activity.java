@@ -2,18 +2,15 @@ package cn.boweikeji.wuliu.driver.activity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
-import cn.boweikeji.wuliu.driver.WeakHandler;
 import cn.boweikeji.wuliu.driver.bean.RegisterInfo;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.bean.city.City;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.utils.Util;
 import cn.boweikeji.wuliu.view.ClearEditText;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,12 +21,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Message;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -122,9 +115,18 @@ public class ChangeProfile1Activity extends BaseActivity {
 
 	private void initData() {
 		mDriverTypes = getResources().getStringArray(R.array.driver_types);
-		
 		UserInfo userInfo = LoginManager.getInstance().getUserInfo();
-		mDriverTypeIndex = userInfo.getTruck_type_code();
+		mDriverTypeIndex = userInfo.getDriver_type();
+		mCity = new City();
+		mCity.setCode(userInfo.getCity_code());
+		mCity.setName(userInfo.getCity_name());
+		mName.setText(userInfo.getDriver_name());
+		String company = userInfo.getComp_name();
+		if (!TextUtils.isEmpty(company) && !company.equals(Const.NULL)) {
+			mCompany.setText(userInfo.getComp_name());
+		}
+		mIDNumber.setText(userInfo.getCard_id());
+		updateCity();
 		updateDriverType();
 	}
 

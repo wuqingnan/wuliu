@@ -36,6 +36,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -154,8 +155,12 @@ public class ChangeProfile2Activity extends BaseActivity {
 		Intent intent = getIntent();
 		mRegInfo = (RegisterInfo) intent.getSerializableExtra(KEY_INFO);
 
-		mTruckTypeIndex = 0;
 		mTruckTypes = getResources().getStringArray(R.array.truck_type_list);
+
+		UserInfo userInfo = LoginManager.getInstance().getUserInfo();
+		mTruckTypeIndex = userInfo.getTruck_type_code();
+		mTruckNumber.setText(userInfo.getTruck_no());
+		mTruckLoad.setText("" + userInfo.getLoad_weight());
 		updateTruckType();
 	}
 
@@ -171,7 +176,11 @@ public class ChangeProfile2Activity extends BaseActivity {
 	private void submit() {
 		if (validCheck()) {
 			showProgressDialog();
-			new ImageTask(this, mRegInfo.getIDImagePath()).execute();
+			if (!TextUtils.isEmpty(mRegInfo.getIDImagePath())) {
+				new ImageTask(this, mRegInfo.getIDImagePath()).execute();
+			} else {
+				changeProfile();
+			}
 		}
 	}
 
@@ -194,11 +203,11 @@ public class ChangeProfile2Activity extends BaseActivity {
 	}
 
 	/**
-	 * 提交注册信息
+	 * 提交信息
 	 */
-	private void register() {
-		BaseParams params = mRegInfo.getRegisterParams();
-		AsyncHttp.get(Const.URL_REGISTER, params, mRequestHandler);
+	private void changeProfile() {
+		BaseParams params = mRegInfo.getChangeProfileParams();
+		AsyncHttp.get(Const.URL_CHANGE_PROFILE, params, mRequestHandler);
 	}
 
 	private boolean validCheck() {
@@ -233,6 +242,7 @@ public class ChangeProfile2Activity extends BaseActivity {
 
 		mRegInfo.setTrunk_no(tNumber);
 		mRegInfo.setLoad_weight(Float.parseFloat(tLoad));
+		mRegInfo.setTrunk_type_code(mTruckTypeIndex);
 		mRegInfo.setRemark(remark);
 
 		return true;
@@ -270,13 +280,11 @@ public class ChangeProfile2Activity extends BaseActivity {
 		mProgressDialog = null;
 	}
 
-	private void registerSuccess(JSONObject infos) {
-		LoginManager.getInstance().setLogin(true);
-		UserInfo userInfo = new UserInfo(infos);
-		userInfo.setPasswd(mRegInfo.getMD5Passwd());
-		LoginManager.getInstance().setUserInfo(userInfo);
-		EventBus.getDefault().post(new LoginEvent());
-		startActivity(new Intent(this, MainActivity.class));
+	private void changeSuccess() {
+		Intent intent = new Intent(this, ProfileActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		startActivity(intent);
 	}
 
 	private void requestResult(JSONObject response) {
@@ -285,10 +293,9 @@ public class ChangeProfile2Activity extends BaseActivity {
 			try {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
+				Util.showTips(this, msg);
 				if (res == 2) {// 成功
-					registerSuccess(response.optJSONObject("infos"));
-				} else {
-					Util.showTips(this, msg);
+					changeSuccess();
 				}
 				return;
 			} catch (JSONException e) {
@@ -307,7 +314,7 @@ public class ChangeProfile2Activity extends BaseActivity {
 				String msg = response.getString("msg");
 				if (res == 2) {// 成功
 					mRegInfo.setCard_photo(response.optString("attachment_id"));
-					register();
+					changeProfile();
 				} else {
 					Util.showTips(this, msg);
 					hideProgressDialog();

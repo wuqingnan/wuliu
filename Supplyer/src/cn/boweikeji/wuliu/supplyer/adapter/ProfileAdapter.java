@@ -5,6 +5,7 @@ import cn.boweikeji.wuliu.supplyer.api.BaseParams;
 import cn.boweikeji.wuliu.supplyer.manager.LoginManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,7 @@ public class ProfileAdapter extends BaseAdapter {
 		switch (name) {
 		case R.string.label_user_name:
 			value = LoginManager.getInstance().getUserInfo().getSupplyer_name();
-			if (value != null && value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = null;
 			}
 			break;
