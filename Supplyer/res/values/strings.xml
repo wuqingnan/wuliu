@@ -72,6 +72,7 @@
     <string name="label_goods_weight">物品重量：</string>
     <string name="label_truck_type">车俩类型：</string>
     <string name="label_goods_pay">愿出运费：</string>
+    <string name="label_need_truck">需要车型：</string>
     <string name="label_goods_valid_time">有效时间：</string>
     <string name="label_from_name">发货人：</string>
     <string name="label_to_name">收货人：</string>

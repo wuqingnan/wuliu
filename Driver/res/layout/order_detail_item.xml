@@ -18,6 +18,7 @@
         style="@style/TextAppearance.Small.9a9a9a"
         android:layout_width="match_parent"
         android:layout_height="@dimen/order_detail_item_height"
-        android:singleLine="true" />
+        android:gravity="center_vertical"
+        android:maxLines="2" />
 
 </LinearLayout>

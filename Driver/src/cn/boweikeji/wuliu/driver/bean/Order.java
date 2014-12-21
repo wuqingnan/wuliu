@@ -18,7 +18,7 @@ public class Order implements Serializable {
 	private int goods_value;
 	private int goods_cost;
 	private int goods_type_code;
-	private int trunk_type_code;
+	private int truck_type_code;
 	private int weight;
 	private int mess_fee;
 	private int is_order;
@@ -94,12 +94,12 @@ public class Order implements Serializable {
 		this.goods_type_code = goods_type_code;
 	}
 
-	public int getTrunk_type_code() {
-		return trunk_type_code;
+	public int getTruck_type_code() {
+		return truck_type_code;
 	}
 
-	public void setTrunk_type_code(int trunk_type_code) {
-		this.trunk_type_code = trunk_type_code;
+	public void setTruck_type_code(int truck_type_code) {
+		this.truck_type_code = truck_type_code;
 	}
 
 	public int getWeight() {
@@ -257,7 +257,7 @@ public class Order implements Serializable {
 		order.setCreate_date(infos.optString("create_date"));
 		order.setGoods_name(infos.optString("goods_name"));
 		order.setGoods_type_code(infos.optInt("goods_type_code"));
-		order.setTrunk_type_code(infos.optInt("trunk_type_code"));
+		order.setTruck_type_code(infos.optInt("trunk_type_code"));
 		order.setWeight(infos.optInt("weight"));
 		order.setGoods_value(infos.optInt("goods_value"));
 		order.setMess_fee(infos.optInt("mess_fee"));

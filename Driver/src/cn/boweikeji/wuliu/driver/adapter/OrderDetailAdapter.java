@@ -17,14 +17,14 @@ public class OrderDetailAdapter extends BaseAdapter {
 
 	private final int TYPE_DIVIDER = 0;
 	private final int TYPE_SINGLE = 1;
-	private final int TYPE_TWOCOLS = 2;
 
 	private static final int[] NAMES = { R.string.label_order_code,
-			R.string.label_order_type, R.string.label_pick_time,
-			R.string.label_create_time, R.string.label_divider_line,
-			R.string.label_goods_name, R.string.label_goods_type,
-			R.string.label_goods_weight, R.string.label_goods_value,
-			R.string.label_goods_pay, R.string.label_divider_line,
+			R.string.label_order_state, R.string.label_order_type,
+			R.string.label_pick_time, R.string.label_create_time,
+			R.string.label_divider_line, R.string.label_goods_name,
+			R.string.label_goods_type, R.string.label_goods_weight,
+			R.string.label_goods_value, R.string.label_goods_pay,
+			R.string.label_need_truck, R.string.label_divider_line,
 			R.string.label_message_free, R.string.label_creater_phone,
 			R.string.label_creater_type, R.string.label_send_comment,
 			R.string.label_from_address, R.string.label_to_address,
@@ -40,6 +40,7 @@ public class OrderDetailAdapter extends BaseAdapter {
 	private String[] mUserTypes;
 	private String[] mStateName;
 	private int[] mStateValue;
+	private String[] mTruckTypes;
 
 	public OrderDetailAdapter(Context context) {
 		mContext = context;
@@ -51,6 +52,8 @@ public class OrderDetailAdapter extends BaseAdapter {
 		mStateValue = context.getResources().getIntArray(
 				R.array.order_state_value);
 		mUserTypes = context.getResources().getStringArray(R.array.user_types);
+		mTruckTypes = context.getResources().getStringArray(
+				R.array.truck_type_list);
 	}
 
 	@Override
@@ -78,14 +81,12 @@ public class OrderDetailAdapter extends BaseAdapter {
 
 	@Override
 	public int getViewTypeCount() {
-		return 3;
+		return 2;
 	}
 
 	@Override
 	public int getItemViewType(int position) {
-		if (position == 0) {
-			return TYPE_TWOCOLS;
-		} else if (NAMES[position] == R.string.label_divider_line) {
+		if (NAMES[position] == R.string.label_divider_line) {
 			return TYPE_DIVIDER;
 		}
 		return TYPE_SINGLE;
@@ -100,9 +101,6 @@ public class OrderDetailAdapter extends BaseAdapter {
 		case TYPE_SINGLE:
 			convertView = getSingleView(position, convertView);
 			break;
-		case TYPE_TWOCOLS:
-			convertView = getTwoColsView(position, convertView);
-			break;
 		}
 		return convertView;
 	}
@@ -115,20 +113,20 @@ public class OrderDetailAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	private View getTwoColsView(int position, View convertView) {
-		TwoColsHolder holder = null;
-		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.order_detail_item_two,
-					null);
-			holder = new TwoColsHolder(convertView);
-			convertView.setTag(holder);
-		} else {
-			holder = (TwoColsHolder) convertView.getTag();
-		}
-		holder.refresh(mOrder,
-				mStateName[getStateIndexByValue(mOrder.getState())]);
-		return convertView;
-	}
+//	private View getTwoColsView(int position, View convertView) {
+//		TwoColsHolder holder = null;
+//		if (convertView == null) {
+//			convertView = mInflater.inflate(R.layout.order_detail_item_two,
+//					null);
+//			holder = new TwoColsHolder(convertView);
+//			convertView.setTag(holder);
+//		} else {
+//			holder = (TwoColsHolder) convertView.getTag();
+//		}
+//		holder.refresh(mOrder,
+//				mStateName[getStateIndexByValue(mOrder.getState())]);
+//		return convertView;
+//	}
 
 	private View getSingleView(int position, View convertView) {
 		SingleHolder holder = null;
@@ -142,6 +140,13 @@ public class OrderDetailAdapter extends BaseAdapter {
 		int name = NAMES[position];
 		String value = null;
 		switch (name) {
+		case R.string.label_order_code:
+			value = mOrder.getGoods_cd();
+			break;
+		case R.string.label_order_state:{
+			value = mStateName[getStateIndexByValue(mOrder.getState())];
+		}
+			break;
 		case R.string.label_order_type:
 			value = mContext
 					.getString(mOrder.isOrder() ? R.string.order_bespeak
@@ -193,6 +198,13 @@ public class OrderDetailAdapter extends BaseAdapter {
 			} else {
 				value = String.format(mContext.getString(R.string.format_yuan),
 						mOrder.getGoods_cost());
+			}
+		}
+			break;
+		case R.string.label_need_truck: {
+			int type = mOrder.getTruck_type_code();
+			if (type >= 0 && type < mTruckTypes.length) {
+				value = mTruckTypes[type];
 			}
 		}
 			break;
@@ -273,25 +285,25 @@ public class OrderDetailAdapter extends BaseAdapter {
 		return index;
 	}
 
-	public static class TwoColsHolder {
-
-		@InjectView(R.id.item_left)
-		OrderDetailItem mLeftItem;
-		@InjectView(R.id.item_right)
-		OrderDetailItem mRightItem;
-
-		public TwoColsHolder(View parent) {
-			ButterKnife.inject(this, parent);
-		}
-
-		public void refresh(Order order, String state) {
-			mLeftItem.setName(R.string.label_order_code);
-			mLeftItem.setValue(order.getGoods_cd());
-			mRightItem.setName(R.string.label_order_state);
-			mRightItem.setValue(state);
-		}
-
-	}
+//	public static class TwoColsHolder {
+//
+//		@InjectView(R.id.item_left)
+//		OrderDetailItem mLeftItem;
+//		@InjectView(R.id.item_right)
+//		OrderDetailItem mRightItem;
+//
+//		public TwoColsHolder(View parent) {
+//			ButterKnife.inject(this, parent);
+//		}
+//
+//		public void refresh(Order order, String state) {
+//			mLeftItem.setName(R.string.label_order_code);
+//			mLeftItem.setValue(order.getGoods_cd());
+//			mRightItem.setName(R.string.label_order_state);
+//			mRightItem.setValue(state);
+//		}
+//
+//	}
 
 	public static class SingleHolder {
 
