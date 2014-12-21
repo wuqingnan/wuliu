@@ -50,6 +50,8 @@ public class SetActivity extends BaseActivity {
 				logout();
 			} else if (view == mUpdate) {
 				update();
+			} else if (view == mChangePasswd) {
+				changePasswd();
 			} else if (view == mAbout) {
 				about();
 			}
@@ -90,6 +92,8 @@ public class SetActivity extends BaseActivity {
 	LinearLayout mUpdate;
 	@InjectView(R.id.version)
 	TextView mVersion;
+	@InjectView(R.id.change_passwd)
+	TextView mChangePasswd;
 	@InjectView(R.id.about)
 	TextView mAbout;
 	@InjectView(R.id.logout)
@@ -130,6 +134,10 @@ public class SetActivity extends BaseActivity {
 	
 	private void update() {
 		UpdateManager.checkUpdate(mResponseHandler);
+	}
+	
+	private void changePasswd() {
+		startActivity(new Intent(this, ChangePasswordActivity.class));
 	}
 
 	private void logout() {

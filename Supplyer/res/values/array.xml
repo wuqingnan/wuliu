@@ -4,8 +4,10 @@
     <string-array name="menu_names">
         <item>我的订单</item>
         <item>活动</item>
+        <item>发货指南</item>
         <item>邀请好友</item>
         <item>分享好友</item>
+        <item>反馈与建议</item>
         <item>系统设置</item>
     </string-array>
 

@@ -30,9 +30,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 public class SetActivity extends BaseActivity {
 
@@ -43,10 +42,6 @@ public class SetActivity extends BaseActivity {
 		public void onClick(View view) {
 			if (view == mMenuBtn) {
 				finish();
-			} else if (view == mGuide) {
-				guide();
-			} else if (view == mSuggest) {
-				suggest();
 			} else if (view == mAbout) {
 				about();
 			} else if (view == mUpdate) {
@@ -84,21 +79,15 @@ public class SetActivity extends BaseActivity {
 	ImageView mMenuBtn;
 	@InjectView(R.id.titlebar_title)
 	TextView mTitle;
-	@InjectView(R.id.set_voice)
-	ToggleButton mVoice;
-	@InjectView(R.id.set_guide)
-	TextView mGuide;
-	@InjectView(R.id.set_suggest)
-	TextView mSuggest;
-	@InjectView(R.id.set_about)
-	TextView mAbout;
-	@InjectView(R.id.set_update)
-	RelativeLayout mUpdate;
-	@InjectView(R.id.set_version)
+	@InjectView(R.id.update)
+	LinearLayout mUpdate;
+	@InjectView(R.id.version)
 	TextView mVersion;
-	@InjectView(R.id.set_change_passwd)
+	@InjectView(R.id.change_passwd)
 	TextView mChangePasswd;
-	@InjectView(R.id.set_logout)
+	@InjectView(R.id.about)
+	TextView mAbout;
+	@InjectView(R.id.logout)
 	Button mLogout;
 
 	@Override
@@ -131,23 +120,10 @@ public class SetActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		mVoice.setOnCheckedChangeListener(mOnCheckedChangeListener);
-		mGuide.setOnClickListener(mOnClickListener);
-		mSuggest.setOnClickListener(mOnClickListener);
 		mAbout.setOnClickListener(mOnClickListener);
 		mUpdate.setOnClickListener(mOnClickListener);
 		mChangePasswd.setOnClickListener(mOnClickListener);
 		mLogout.setOnClickListener(mOnClickListener);
-	}
-
-	private void guide() {
-		WebViewActivity.startWebViewActivity(this,
-				getResources().getString(R.string.title_send_guide),
-				Const.URL_GUIDE);
-	}
-
-	private void suggest() {
-		startActivity(new Intent(this, SuggestActivity.class));
 	}
 
 	private void about() {

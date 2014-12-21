@@ -53,8 +53,8 @@
     <string name="title_send_guide">发货指南</string>
     <string name="title_about">关于</string>
     <string name="title_change_password">修改密码</string>
-    <string name="title_suggest">意见反馈</string>
-    <string name="title_system_msg">系统消息</string>    
+    <string name="title_suggest">反馈与建议</string>
+    <string name="title_activity">活动</string>    
     <string name="title_rule">平台服务使用规则</string>
     
     <string name="quit_next_time">再按一次退出</string>
@@ -185,8 +185,7 @@
 
     <string name="voice">音效开关</string>
     <string name="send_guide">发货指南</string>
-    <string name="suggest">意见反馈</string>
-    <string name="about_app">关于汇流</string>
+    <string name="about">关于</string>
     <string name="check_update">检查更新</string>
     <string name="change_passwd">修改密码</string>
     <string name="push_switch">推送开关</string>

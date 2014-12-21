@@ -134,6 +134,12 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
         </activity>
         <activity
+            android:name="cn.boweikeji.wuliu.driver.activity.ChangePasswordActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
+        </activity>
+        <activity
             android:name="cn.boweikeji.wuliu.driver.activity.SuggestActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

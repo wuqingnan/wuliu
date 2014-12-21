@@ -23,12 +23,15 @@ public class MenuView extends RelativeLayout {
 	public static final int MENU_PROFILE = -1;
 	public static final int MENU_ORDER = 0;
 	public static final int MENU_ACTIVITY = 1;
-	public static final int MENU_INVITE = 2;
-	public static final int MENU_SHARE = 3;
-	public static final int MENU_SETTING = 4;
+	public static final int MENU_GUIDE = 2;
+	public static final int MENU_INVITE = 3;
+	public static final int MENU_SHARE = 4;
+	public static final int MENU_SUGGEST = 5;
+	public static final int MENU_SETTING = 6;
 
 	private static final int[] ICONS = new int[] { R.drawable.ic_order,
-			R.drawable.ic_activity, R.drawable.ic_invite, R.drawable.ic_share,
+			R.drawable.ic_activity, R.drawable.ic_activity,
+			R.drawable.ic_invite, R.drawable.ic_share, R.drawable.ic_activity,
 			R.drawable.ic_setting };
 
 	public static interface OnMenuClickListener {
@@ -96,8 +99,7 @@ public class MenuView extends RelativeLayout {
 
 	private void updateInfo() {
 		if (LoginManager.getInstance().hasLogin()) {
-			mPhone.setText(LoginManager.getInstance().getUserInfo()
-					.getPhone());
+			mPhone.setText(LoginManager.getInstance().getUserInfo().getPhone());
 		} else {
 			mPhone.setText(null);
 		}

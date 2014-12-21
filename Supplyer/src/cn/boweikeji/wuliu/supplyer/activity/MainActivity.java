@@ -198,8 +198,13 @@ public class MainActivity extends BaseActivity {
 					break;
 				case MenuView.MENU_ACTIVITY:
 					WebViewActivity.startWebViewActivity(MainActivity.this,
-							getString(R.string.title_system_msg),
+							getString(R.string.title_activity),
 							Const.getMsgUrl());
+					break;
+				case MenuView.MENU_GUIDE:
+					WebViewActivity.startWebViewActivity(MainActivity.this,
+							getResources().getString(R.string.title_send_guide),
+							Const.URL_GUIDE);
 					break;
 				case MenuView.MENU_INVITE:
 					Util.sendMessage(MainActivity.this, null, getResources()
@@ -207,6 +212,9 @@ public class MainActivity extends BaseActivity {
 					break;
 				case MenuView.MENU_SHARE:
 					Util.showShare(MainActivity.this);
+					break;
+				case MenuView.MENU_SUGGEST:
+					startActivity(new Intent(MainActivity.this, SuggestActivity.class));
 					break;
 				case MenuView.MENU_SETTING:
 					SetActivity.startSetActivity(MainActivity.this);
