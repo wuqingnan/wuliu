@@ -28,6 +28,8 @@
     <string name="title_home">@string/app_name</string>
     <string name="title_register1">注册（1/2）</string>
     <string name="title_register2">注册（2/2）</string>
+    <string name="title_change_profile1">修改资料（1/2）</string>
+    <string name="title_change_profile2">修改资料（2/2）</string>
     <string name="title_choose_city">选择城市</string>
     <string name="title_find_result">结果列表</string>
     <string name="title_order_detail">订单详情</string>

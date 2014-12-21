@@ -191,7 +191,7 @@ public class Register1Activity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register_profile);
+		setContentView(R.layout.activity_register1);
 		initView();
 		initData();
 		mHandler = new RegisterHandler(this);

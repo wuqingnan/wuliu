@@ -133,7 +133,7 @@ public class Register2Activity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register_truck);
+		setContentView(R.layout.activity_register2);
 		initView();
 		initData();
 	}

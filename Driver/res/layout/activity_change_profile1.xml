@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_back"
+    android:orientation="vertical" >
+
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_marginLeft"
+            android:layout_marginRight="@dimen/default_marginRight"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/default_marginBottom"
+            android:paddingTop="@dimen/default_marginTop" >
+
+            <cn.boweikeji.wuliu.view.ClearEditText
+                android:id="@+id/register_name"
+                style="@style/EditText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:background="@drawable/bg_item"
+                android:drawableLeft="@drawable/ic_mark_name"
+                android:hint="@string/name"
+                android:maxLength="8" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/bg_item"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ItemLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/ic_mark_type"
+                        android:text="@string/label_user_type" />
+
+                    <TextView
+                        android:id="@+id/register_driver_type"
+                        style="@style/ItemValueWithArrow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/register_company_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_height"
+                        android:background="@color/line_d6dae0" />
+
+                    <cn.boweikeji.wuliu.view.ClearEditText
+                        android:id="@+id/register_company"
+                        style="@style/EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edittext_height"
+                        android:drawableLeft="@drawable/ic_mark_company"
+                        android:hint="@string/company"
+                        android:maxLength="20" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:background="@color/line_d6dae0" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/bg_item"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ItemLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/ic_mark_city"
+                        android:text="@string/label_area_code" />
+
+                    <TextView
+                        android:id="@+id/register_area_code"
+                        style="@style/ItemValueWithArrow"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/choose_city" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line_height"
+                    android:background="@color/line_d6dae0" />
+
+                <cn.boweikeji.wuliu.view.ClearEditText
+                    android:id="@+id/register_id"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:drawableLeft="@drawable/ic_mark_id"
+                    android:hint="@string/id_number"
+                    android:maxLength="18" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="112dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/bg_item"
+                    android:orientation="vertical"
+                    android:padding="10dp" >
+
+                    <TextView
+                        style="@style/TextAppearance.Big"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:drawableLeft="@drawable/ic_warn"
+                        android:drawablePadding="3dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/prompt"
+                        android:textColor="#555555" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line_height"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#3c8cd8" />
+
+                    <TextView
+                        style="@style/TextAppearance.Micro.LightGray"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/choose_register_image" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/register_id_front"
+                    android:layout_width="0dp"
+                    android:layout_height="112dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/register_img"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/next_step"
+                style="@style/TextAppearance.Big.White"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/btn_default_height"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_default"
+                android:text="@string/next_step" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

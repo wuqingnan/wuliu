@@ -73,20 +73,6 @@
             android:background="@color/line_d6dae0" />
 
         <cn.boweikeji.wuliu.view.ClearEditText
-            android:id="@+id/register_recommend_no"
-            style="@style/EditText"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edittext_height"
-            android:drawableLeft="@drawable/ic_mark_recommend"
-            android:hint="@string/recommend_no"
-            android:maxLength="10" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_height"
-            android:background="@color/line_d6dae0" />
-
-        <cn.boweikeji.wuliu.view.ClearEditText
             android:id="@+id/register_remark"
             style="@style/EditText"
             android:layout_width="match_parent"
@@ -102,7 +88,7 @@
         android:layout_marginLeft="@dimen/default_marginLeft"
         android:layout_marginRight="@dimen/default_marginRight"
         android:layout_marginTop="@dimen/default_marginTop"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="horizontal" >
 
         <CheckBox
@@ -134,6 +120,6 @@
         android:layout_marginRight="@dimen/default_marginRight"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_default"
-        android:text="@string/register" />
+        android:text="@string/change" />
 
 </LinearLayout>

@@ -43,9 +43,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ChangeProfileActivity extends BaseActivity {
+public class ChangeProfile2Activity extends BaseActivity {
 
-	private static final String TAG = ChangeProfileActivity.class
+	private static final String TAG = ChangeProfile2Activity.class
 			.getSimpleName();
 
 	private static final String KEY_INFO = "info";
@@ -112,8 +112,6 @@ public class ChangeProfileActivity extends BaseActivity {
 	ClearEditText mTruckNumber;
 	@InjectView(R.id.register_truck_load)
 	ClearEditText mTruckLoad;
-	@InjectView(R.id.register_recommend_no)
-	ClearEditText mRecommendNumber;
 	@InjectView(R.id.register_remark)
 	ClearEditText mRemark;
 	@InjectView(R.id.register_accept)
@@ -133,7 +131,7 @@ public class ChangeProfileActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_register_truck);
+		setContentView(R.layout.activity_change_profile2);
 		initView();
 		initData();
 	}
@@ -145,7 +143,7 @@ public class ChangeProfileActivity extends BaseActivity {
 
 	private void initView() {
 		ButterKnife.inject(this);
-		mTitle.setText(R.string.title_register2);
+		mTitle.setText(R.string.title_change_profile2);
 		mBack.setOnClickListener(mOnClickListener);
 		mTruckType.setOnClickListener(mOnClickListener);
 		mRule.setOnClickListener(mOnClickListener);
@@ -206,7 +204,6 @@ public class ChangeProfileActivity extends BaseActivity {
 	private boolean validCheck() {
 		String tNumber = mTruckNumber.getText().toString();
 		String tLoad = mTruckLoad.getText().toString();
-		String rNumber = mRecommendNumber.getText().toString();
 		String remark = mRemark.getText().toString();
 
 		if (mTruckTypeIndex == 0) {
@@ -236,7 +233,6 @@ public class ChangeProfileActivity extends BaseActivity {
 
 		mRegInfo.setTrunk_no(tNumber);
 		mRegInfo.setLoad_weight(Float.parseFloat(tLoad));
-		mRegInfo.setAttract_no(rNumber);
 		mRegInfo.setRemark(remark);
 
 		return true;
@@ -325,8 +321,10 @@ public class ChangeProfileActivity extends BaseActivity {
 		Util.showTips(this, getString(R.string.upload_id_image_fail));
 	}
 
-	public static void startChangeProfileActivity(Context context) {
-		Intent intent = new Intent(context, ChangeProfileActivity.class);
+	public static void startChangeProfile2Activity(Context context,
+			RegisterInfo info) {
+		Intent intent = new Intent(context, ChangeProfile2Activity.class);
+		intent.putExtra(KEY_INFO, info);
 		context.startActivity(intent);
 	}
 
@@ -335,11 +333,11 @@ public class ChangeProfileActivity extends BaseActivity {
 		private static final int WIDTH = 960;
 		private static final int HEIGHT = 640;
 
-		private WeakReference<ChangeProfileActivity> mReference;
+		private WeakReference<ChangeProfile2Activity> mReference;
 		private String mPath;
 
-		public ImageTask(ChangeProfileActivity activity, String path) {
-			mReference = new WeakReference<ChangeProfileActivity>(activity);
+		public ImageTask(ChangeProfile2Activity activity, String path) {
+			mReference = new WeakReference<ChangeProfile2Activity>(activity);
 			mPath = path;
 		}
 
@@ -367,7 +365,7 @@ public class ChangeProfileActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			ChangeProfileActivity activity = mReference.get();
+			ChangeProfile2Activity activity = mReference.get();
 			if (activity != null) {
 				activity.uploadImage(result);
 			}

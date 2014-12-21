@@ -143,7 +143,7 @@ public class ProfileActivity extends BaseActivity {
 	}
 	
 	private void changeProfile() {
-		ChangeProfileActivity.startChangeProfileActivity(this);
+		ChangeProfile1Activity.startChangeProfile1Activity(this);
 	}
 	
 	public static void startProfileActivity(Context context) {
