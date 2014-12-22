@@ -30,9 +30,8 @@ public class MenuView extends RelativeLayout {
 	public static final int MENU_SETTING = 6;
 
 	private static final int[] ICONS = new int[] { R.drawable.ic_order,
-			R.drawable.ic_activity, R.drawable.ic_activity,
-			R.drawable.ic_invite, R.drawable.ic_share, R.drawable.ic_activity,
-			R.drawable.ic_setting };
+			R.drawable.ic_activity, R.drawable.ic_guide, R.drawable.ic_invite,
+			R.drawable.ic_share, R.drawable.ic_suggest, R.drawable.ic_setting };
 
 	public static interface OnMenuClickListener {
 

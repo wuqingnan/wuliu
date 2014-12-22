@@ -3,21 +3,35 @@ package cn.boweikeji.wuliu.driver.adapter;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
+import cn.boweikeji.wuliu.utils.Util;
 import cn.boweikeji.wuliu.view.OrderDetailItem;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class OrderDetailAdapter extends BaseAdapter {
+	
+	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + v.getTag()));
+            mContext.startActivity(intent);
+		}
+	};
 
 	private final int TYPE_DIVIDER = 0;
 	private final int TYPE_SINGLE = 1;
+	private final int TYPE_CALL = 2;
 
 	private static final int[] NAMES = { R.string.label_order_code,
 			R.string.label_order_state, R.string.label_order_type,
@@ -82,13 +96,24 @@ public class OrderDetailAdapter extends BaseAdapter {
 
 	@Override
 	public int getViewTypeCount() {
-		return 2;
+		return 3;
+	}
+
+	private boolean callable(int resid) {
+		if (resid == R.string.label_creater_phone
+				|| resid == R.string.label_from_phone
+				|| resid == R.string.label_to_phone) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public int getItemViewType(int position) {
 		if (NAMES[position] == R.string.label_divider_line) {
 			return TYPE_DIVIDER;
+		} else if (callable(NAMES[position])) {
+			return TYPE_CALL;
 		}
 		return TYPE_SINGLE;
 	}
@@ -102,6 +127,9 @@ public class OrderDetailAdapter extends BaseAdapter {
 		case TYPE_SINGLE:
 			convertView = getSingleView(position, convertView);
 			break;
+		case TYPE_CALL:
+			convertView = getCallView(position, convertView);
+			break;
 		}
 		return convertView;
 	}
@@ -113,21 +141,6 @@ public class OrderDetailAdapter extends BaseAdapter {
 		}
 		return convertView;
 	}
-
-//	private View getTwoColsView(int position, View convertView) {
-//		TwoColsHolder holder = null;
-//		if (convertView == null) {
-//			convertView = mInflater.inflate(R.layout.order_detail_item_two,
-//					null);
-//			holder = new TwoColsHolder(convertView);
-//			convertView.setTag(holder);
-//		} else {
-//			holder = (TwoColsHolder) convertView.getTag();
-//		}
-//		holder.refresh(mOrder,
-//				mStateName[getStateIndexByValue(mOrder.getState())]);
-//		return convertView;
-//	}
 
 	private View getSingleView(int position, View convertView) {
 		SingleHolder holder = null;
@@ -144,7 +157,7 @@ public class OrderDetailAdapter extends BaseAdapter {
 		case R.string.label_order_code:
 			value = mOrder.getGoods_cd();
 			break;
-		case R.string.label_order_state:{
+		case R.string.label_order_state: {
 			value = mStateName[getStateIndexByValue(mOrder.getState())];
 		}
 			break;
@@ -155,7 +168,8 @@ public class OrderDetailAdapter extends BaseAdapter {
 			break;
 		case R.string.label_pick_time:
 			value = mOrder.getPick_time();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
@@ -218,9 +232,6 @@ public class OrderDetailAdapter extends BaseAdapter {
 			}
 		}
 			break;
-		case R.string.label_creater_phone:
-			value = mOrder.getPhone();
-			break;
 		case R.string.label_creater_type: {
 			int type = mOrder.getSupplyer_type();
 			if (type >= 0 && type < mUserTypes.length) {
@@ -230,48 +241,75 @@ public class OrderDetailAdapter extends BaseAdapter {
 			break;
 		case R.string.label_send_comment:
 			value = mOrder.getRemark();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = null;
 			}
 			break;
 		case R.string.label_from_address:
 			value = mOrder.getStart_addr();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_to_address:
 			value = mOrder.getEnd_addr();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_from_name:
 			value = mOrder.getSupplyer_name();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
-				value = mContext.getString(R.string.unknown);
-			}
-			break;
-		case R.string.label_from_phone:
-			value = mOrder.getSupplyer_phone();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		case R.string.label_to_name:
 			value = mOrder.getReciver();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
-				value = mContext.getString(R.string.unknown);
-			}
-			break;
-		case R.string.label_to_phone:
-			value = mOrder.getReciver_phone();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = mContext.getString(R.string.unknown);
 			}
 			break;
 		}
 		holder.refresh(name, value);
+		return convertView;
+	}
+	
+	private View getCallView(int position, View convertView) {
+		CallHolder holder = null;
+		if (convertView == null) {
+			convertView = mInflater.inflate(R.layout.order_detail_item_call, null);
+			holder = new CallHolder(convertView);
+			convertView.setTag(holder);
+		} else {
+			holder = (CallHolder) convertView.getTag();
+		}
+		int name = NAMES[position];
+		String value = null;
+		switch (name) {
+		case R.string.label_creater_phone:
+			value = mOrder.getPhone();
+			break;
+		case R.string.label_from_phone:
+			value = mOrder.getSupplyer_phone();
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
+				value = mContext.getString(R.string.unknown);
+			}
+			break;
+		case R.string.label_to_phone:
+			value = mOrder.getReciver_phone();
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
+				value = mContext.getString(R.string.unknown);
+			}
+			break;
+		}
+		holder.refresh(name, value, mOnClickListener);
 		return convertView;
 	}
 
@@ -285,26 +323,6 @@ public class OrderDetailAdapter extends BaseAdapter {
 		}
 		return index;
 	}
-
-//	public static class TwoColsHolder {
-//
-//		@InjectView(R.id.item_left)
-//		OrderDetailItem mLeftItem;
-//		@InjectView(R.id.item_right)
-//		OrderDetailItem mRightItem;
-//
-//		public TwoColsHolder(View parent) {
-//			ButterKnife.inject(this, parent);
-//		}
-//
-//		public void refresh(Order order, String state) {
-//			mLeftItem.setName(R.string.label_order_code);
-//			mLeftItem.setValue(order.getGoods_cd());
-//			mRightItem.setName(R.string.label_order_state);
-//			mRightItem.setValue(state);
-//		}
-//
-//	}
 
 	public static class SingleHolder {
 
@@ -322,5 +340,31 @@ public class OrderDetailAdapter extends BaseAdapter {
 			mValue.setText(value);
 		}
 
+	}
+	
+	public static class CallHolder {
+		
+		@InjectView(R.id.item_name)
+		TextView mName;
+		@InjectView(R.id.item_value)
+		TextView mValue;
+		@InjectView(R.id.item_call)
+		ImageView mCall;
+		
+		public CallHolder(View parent) {
+			ButterKnife.inject(this, parent);
+		}
+		
+		public void refresh(int name, String value, OnClickListener listener) {
+			mName.setText(name);
+			mValue.setText(value);
+			mCall.setTag(value);
+			mCall.setOnClickListener(listener);
+			if (Util.isPhoneNumber(value)) {
+				mCall.setVisibility(View.VISIBLE);
+			} else {
+				mCall.setVisibility(View.GONE);
+			}
+		}
 	}
 }

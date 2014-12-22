@@ -48,7 +48,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:background="@drawable/set_selector"
-        android:drawableLeft="@drawable/ic_about"
+        android:drawableLeft="@drawable/ic_change_passwd"
         android:drawablePadding="20dp"
         android:drawableRight="@drawable/arrow_right"
         android:gravity="center_vertical"

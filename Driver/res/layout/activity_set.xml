@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/menu_item_height"
         android:background="@drawable/more_list_selector"
-        android:drawableLeft="@drawable/ic_about"
+        android:drawableLeft="@drawable/ic_change_passwd"
         android:drawablePadding="20dp"
         android:drawableRight="@drawable/arrow_right"
         android:gravity="center_vertical"

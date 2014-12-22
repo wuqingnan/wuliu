@@ -12,22 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/login_titlebar"
-        android:layout_marginTop="@dimen/default_marginTop"
         android:layout_marginLeft="@dimen/default_marginLeft"
         android:layout_marginRight="@dimen/default_marginRight"
+        android:layout_marginTop="@dimen/default_marginTop"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical" >
-        
+
         <EditText
             android:id="@+id/suggestion"
+            style="@style/TextAppearance.Small.DarkGray"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_marginTop="5dp"
+            android:background="@drawable/bg_item"
             android:gravity="top"
             android:hint="@string/suggestion"
-            android:inputType="text"
-            android:maxLength="140" />
+            android:inputType="text|textMultiLine"
+            android:maxLength="140"
+            android:padding="3dp"
+            android:singleLine="false" />
 
         <Button
             android:id="@+id/submit"
