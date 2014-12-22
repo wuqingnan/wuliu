@@ -136,16 +136,6 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnMyLocationClickListener mLocClickListener = new OnMyLocationClickListener() {
-		@Override
-		public boolean onMyLocationClick() {
-			Log.d(TAG, "shizy---onMyLocationClick");
-			showMyLocInfo();
-			return false;
-		}
-
-	};
-
 	private OnMapClickListener mOnMapClickListener = new OnMapClickListener() {
 		@Override
 		public boolean onMapPoiClick(MapPoi poi) {
@@ -168,9 +158,6 @@ public class MainActivity extends BaseActivity {
 	private BaiduMap mBaiduMap;
 	private UiSettings mUiSettings;
 
-	private View mMyLocLayout;
-	private TextView mMyLocTitle;
-	private TextView mMyLocInfo;
 	private View mDriverLayout;
 	private TextView mDriverName;
 	private TextView mDriverPhone;
@@ -330,10 +317,6 @@ public class MainActivity extends BaseActivity {
 
 	private void initView() {
 		mTabGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
-		mMyLocLayout = getLayoutInflater().inflate(R.layout.popup_myloc, null);
-		mMyLocTitle = (TextView) mMyLocLayout.findViewById(R.id.myloc_title);
-		mMyLocInfo = (TextView) mMyLocLayout.findViewById(R.id.myloc_info);
-
 		mDriverLayout = getLayoutInflater()
 				.inflate(R.layout.popup_driver, null);
 		mDriverName = (TextView) mDriverLayout.findViewById(R.id.driver_name);
@@ -345,7 +328,6 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap = mMapView.getMap();
 		mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
 		mBaiduMap.setOnMapClickListener(mOnMapClickListener);
-		mBaiduMap.setOnMyLocationClickListener(mLocClickListener);
 		mBaiduMap.setOnMarkerClickListener(mOnMarkerClickListener);
 
 		mUiSettings = mBaiduMap.getUiSettings();
@@ -381,7 +363,6 @@ public class MainActivity extends BaseActivity {
 					location.getLongitude());
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 			mBaiduMap.animateMapStatus(u);
-			showMyLocInfo();
 		}
 		mBaiduMap.clear();
 		requestDriver(location);
@@ -475,26 +456,6 @@ public class MainActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void showMyLocInfo() {
-		BDLocation loc = WLApplication.getLocationClient()
-				.getLastKnownLocation();
-		if (loc == null || loc.getAddrStr() == null) {
-			return;
-		}
-		mMyLocTitle.setText(String.format(getString(R.string.myloc),
-				loc.getStreet()));
-		mMyLocInfo.setText(loc.getCity() + " " + loc.getDistrict());
-		MyLocationData data = mBaiduMap.getLocationData();
-		LatLng ll = new LatLng(data.latitude, data.longitude);
-		InfoWindow infoWindow = new InfoWindow(mMyLocLayout, ll,
-				new OnInfoWindowClickListener() {
-					public void onInfoWindowClick() {
-						mBaiduMap.hideInfoWindow();
-					}
-				});
-		mBaiduMap.showInfoWindow(infoWindow);
 	}
 
 	private void showMarkerInfo(final Marker marker) {

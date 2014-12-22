@@ -58,6 +58,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
@@ -76,6 +77,8 @@ public class MainActivity extends BaseActivity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 
 	private static final int EXIT_TIME = 2000;
+	
+	private final int DELAY_MILLIS = 1000 * 10;
 
 	public static final String KEY_REDIRECT = "redirect";
 	public static final String KEY_REDIRECT_TO = "redirect_to";
@@ -146,16 +149,6 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnMyLocationClickListener mLocClickListener = new OnMyLocationClickListener() {
-		@Override
-		public boolean onMyLocationClick() {
-			Log.d(TAG, "shizy---onMyLocationClick");
-			showMyLocInfo();
-			return false;
-		}
-
-	};
-
 	private OnMapClickListener mOnMapClickListener = new OnMapClickListener() {
 		@Override
 		public boolean onMapPoiClick(MapPoi poi) {
@@ -223,6 +216,13 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 	};
+	
+	private Runnable mMyPosRunnable = new Runnable() {
+		@Override
+		public void run() {
+			updateMyInfo();
+		}
+	};
 
 	@InjectView(R.id.drawer_layout)
 	DrawerLayout mDrawerLayout;
@@ -238,13 +238,12 @@ public class MainActivity extends BaseActivity {
 	LinearLayout mMainSend;
 	@InjectView(R.id.main_book)
 	LinearLayout mMainBook;
-
+	@InjectView(R.id.my_pos_info)
+	TextView mMyPosInfo;
+	
 	private BaiduMap mBaiduMap;
 	private UiSettings mUiSettings;
 
-	private View mMyLocLayout;
-	private TextView mMyLocTitle;
-	private TextView mMyLocInfo;
 	private View mDriverLayout;
 	private TextView mDriverName;
 	private TextView mDriverPhone;
@@ -261,6 +260,8 @@ public class MainActivity extends BaseActivity {
 	private boolean mIsFirstLoc;
 	private boolean mHasCheckUpdate;
 
+	private Handler mHandler;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -294,6 +295,8 @@ public class MainActivity extends BaseActivity {
 		mTimerTask.shutdownNow();
 		mBaiduMap.setMyLocationEnabled(false);
 		mMapView.onDestroy();
+		mHandler.removeCallbacks(mMyPosRunnable);
+		mHandler = null;
 		EventBus.getDefault().unregister(this);
 		EventBus.getDefault().unregister(mMenuView);
 	}
@@ -343,6 +346,7 @@ public class MainActivity extends BaseActivity {
 
 	private void init() {
 		ButterKnife.inject(this);
+		mHandler = new Handler();
 		mIsFirstLoc = true;
 		mHasCheckUpdate = false;
 		initView();
@@ -353,6 +357,7 @@ public class MainActivity extends BaseActivity {
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300,
 				TimeUnit.SECONDS);
+		mHandler.postDelayed(mMyPosRunnable, 1000);
 	}
 
 	private void initMenu() {
@@ -384,10 +389,6 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void initPopup() {
-		mMyLocLayout = getLayoutInflater().inflate(R.layout.popup_myloc, null);
-		mMyLocTitle = (TextView) mMyLocLayout.findViewById(R.id.myloc_title);
-		mMyLocInfo = (TextView) mMyLocLayout.findViewById(R.id.myloc_info);
-
 		mDriverLayout = getLayoutInflater()
 				.inflate(R.layout.popup_driver, null);
 		mDriverName = (TextView) mDriverLayout.findViewById(R.id.driver_name);
@@ -399,7 +400,6 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap = mMapView.getMap();
 		mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
 		mBaiduMap.setOnMapClickListener(mOnMapClickListener);
-		mBaiduMap.setOnMyLocationClickListener(mLocClickListener);
 		mBaiduMap.setOnMarkerClickListener(mOnMarkerClickListener);
 		mUiSettings = mBaiduMap.getUiSettings();
 		mUiSettings.setCompassEnabled(false);
@@ -419,6 +419,16 @@ public class MainActivity extends BaseActivity {
 				break;
 			}
 		}
+	}
+	
+	public void updateMyInfo() {
+		BDLocation loc = WLApplication.getLocationClient()
+				.getLastKnownLocation();
+		if (loc != null && loc.getAddrStr() != null) {
+			mMyPosInfo.setText(loc.getAddrStr());
+			mMyPosInfo.setVisibility(View.VISIBLE);
+		}
+		mHandler.postDelayed(mMyPosRunnable, DELAY_MILLIS);
 	}
 
 	private void updateMap() {
@@ -442,7 +452,6 @@ public class MainActivity extends BaseActivity {
 					location.getLongitude());
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 			mBaiduMap.animateMapStatus(u);
-			showMyLocInfo();
 		}
 		mBaiduMap.clear();
 		requestDriver(location);
@@ -518,26 +527,6 @@ public class MainActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void showMyLocInfo() {
-		BDLocation loc = WLApplication.getLocationClient()
-				.getLastKnownLocation();
-		if (loc == null || loc.getAddrStr() == null) {
-			return;
-		}
-		mMyLocTitle.setText(String.format(
-				getResources().getString(R.string.myloc), loc.getStreet()));
-		mMyLocInfo.setText(loc.getCity() + " " + loc.getDistrict());
-		MyLocationData data = mBaiduMap.getLocationData();
-		LatLng ll = new LatLng(data.latitude, data.longitude);
-		InfoWindow infoWindow = new InfoWindow(mMyLocLayout, ll,
-				new OnInfoWindowClickListener() {
-					public void onInfoWindowClick() {
-						mBaiduMap.hideInfoWindow();
-					}
-				});
-		mBaiduMap.showInfoWindow(infoWindow);
 	}
 
 	private void showMarkerInfo(final Marker marker) {

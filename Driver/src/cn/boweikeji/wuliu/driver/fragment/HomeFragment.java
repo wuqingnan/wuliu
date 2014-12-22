@@ -1,14 +1,19 @@
 package cn.boweikeji.wuliu.driver.fragment;
 
+import com.baidu.location.BDLocation;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.activity.LoginActivity;
 import cn.boweikeji.wuliu.driver.event.LoginEvent;
 import cn.boweikeji.wuliu.driver.event.LogoutEvent;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import de.greenrobot.event.EventBus;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +25,21 @@ public class HomeFragment extends BaseFragment {
 
 	private static final String TAG = HomeFragment.class.getSimpleName();
 	
+	private final int DELAY_MILLIS = 1000 * 10;
+	
 	private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {
 			if (view == mLogin) {
 				LoginActivity.startLoginActivity(getActivity());
 			}
+		}
+	};
+	
+	private Runnable mMyPosRunnable = new Runnable() {
+		@Override
+		public void run() {
+			updateMyInfo();
 		}
 	};
 	
@@ -37,6 +51,10 @@ public class HomeFragment extends BaseFragment {
 	TextView mTitle;
 	@InjectView(R.id.titlebar_rightTxt)
 	TextView mLogin;
+	@InjectView(R.id.my_pos_info)
+	TextView mMyPosInfo;
+	
+	private Handler mHandler;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +66,8 @@ public class HomeFragment extends BaseFragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
+		mHandler.removeCallbacks(mMyPosRunnable);
+		mHandler = null;
 		EventBus.getDefault().unregister(this);
 	}
 	
@@ -59,7 +79,9 @@ public class HomeFragment extends BaseFragment {
 
 	private void init() {
 		ButterKnife.inject(this, mRootView);
+		mHandler = new Handler();
 		initTitle();
+		mHandler.postDelayed(mMyPosRunnable, 1000);
 		EventBus.getDefault().register(this);
 	}
 	
@@ -76,6 +98,16 @@ public class HomeFragment extends BaseFragment {
 		if (LoginManager.getInstance().hasLogin()) {
 			mLogin.setVisibility(View.GONE);
 		}
+	}
+	
+	public void updateMyInfo() {
+		BDLocation loc = WLApplication.getLocationClient()
+				.getLastKnownLocation();
+		if (loc != null && loc.getAddrStr() != null) {
+			mMyPosInfo.setText(loc.getAddrStr());
+			mMyPosInfo.setVisibility(View.VISIBLE);
+		}
+		mHandler.postDelayed(mMyPosRunnable, DELAY_MILLIS);
 	}
 	
 	public void onEventMainThread(LoginEvent event) {
