@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 
 	private static final int EXIT_TIME = 2000;
-	
+
 	private final int DELAY_MILLIS = 1000 * 10;
 
 	public static final String KEY_REDIRECT = "redirect";
@@ -195,9 +195,12 @@ public class MainActivity extends BaseActivity {
 							Const.getMsgUrl());
 					break;
 				case MenuView.MENU_GUIDE:
-					WebViewActivity.startWebViewActivity(MainActivity.this,
-							getResources().getString(R.string.title_send_guide),
-							Const.URL_GUIDE);
+					WebViewActivity
+							.startWebViewActivity(
+									MainActivity.this,
+									getResources().getString(
+											R.string.title_send_guide),
+									Const.URL_GUIDE);
 					break;
 				case MenuView.MENU_INVITE:
 					Util.sendMessage(MainActivity.this, null, getResources()
@@ -207,7 +210,8 @@ public class MainActivity extends BaseActivity {
 					Util.showShare(MainActivity.this);
 					break;
 				case MenuView.MENU_SUGGEST:
-					startActivity(new Intent(MainActivity.this, SuggestActivity.class));
+					startActivity(new Intent(MainActivity.this,
+							SuggestActivity.class));
 					break;
 				case MenuView.MENU_SETTING:
 					SetActivity.startSetActivity(MainActivity.this);
@@ -216,7 +220,7 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 	};
-	
+
 	private Runnable mMyPosRunnable = new Runnable() {
 		@Override
 		public void run() {
@@ -240,14 +244,15 @@ public class MainActivity extends BaseActivity {
 	LinearLayout mMainBook;
 	@InjectView(R.id.my_pos_info)
 	TextView mMyPosInfo;
-	
+
 	private BaiduMap mBaiduMap;
 	private UiSettings mUiSettings;
 
 	private View mDriverLayout;
 	private TextView mDriverName;
 	private TextView mDriverPhone;
-	private TextView mDriverTruck;
+	private TextView mDriverTruckNo;
+	private TextView mDriverTruckType;
 
 	private LocationClient mLocClient;
 
@@ -261,7 +266,7 @@ public class MainActivity extends BaseActivity {
 	private boolean mHasCheckUpdate;
 
 	private Handler mHandler;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -393,7 +398,10 @@ public class MainActivity extends BaseActivity {
 				.inflate(R.layout.popup_driver, null);
 		mDriverName = (TextView) mDriverLayout.findViewById(R.id.driver_name);
 		mDriverPhone = (TextView) mDriverLayout.findViewById(R.id.driver_phone);
-		mDriverTruck = (TextView) mDriverLayout.findViewById(R.id.driver_truck);
+		mDriverTruckNo = (TextView) mDriverLayout
+				.findViewById(R.id.driver_truck_no);
+		mDriverTruckType = (TextView) mDriverLayout
+				.findViewById(R.id.driver_truck_type);
 	}
 
 	private void initMap() {
@@ -411,8 +419,8 @@ public class MainActivity extends BaseActivity {
 		mBaiduMap.setMyLocationEnabled(true);
 		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
 				LocationMode.NORMAL, true, null));
-		
-		//隐藏放大缩小
+
+		// 隐藏放大缩小
 		for (int i = 0; i < mMapView.getChildCount(); i++) {
 			if (mMapView.getChildAt(i) instanceof ZoomControls) {
 				mMapView.getChildAt(i).setVisibility(View.GONE);
@@ -420,7 +428,7 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 	}
-	
+
 	public void updateMyInfo() {
 		BDLocation loc = WLApplication.getLocationClient()
 				.getLastKnownLocation();
@@ -517,8 +525,9 @@ public class MainActivity extends BaseActivity {
 				Bundle bundle = new Bundle();
 				bundle.putString("name", info.optString("driver_name"));
 				bundle.putString("phone", info.optString("phone"));
+				bundle.putString("truck_no", info.optString("trunk_no"));
 				if (truck >= 0 && truck < truckTypes.length) {
-					bundle.putString("truck", truckTypes[truck]);
+					bundle.putString("truck_type", truckTypes[truck]);
 				}
 				OverlayOptions option = new MarkerOptions().position(ll)
 						.icon(bitmap).extraInfo(bundle);
@@ -533,8 +542,15 @@ public class MainActivity extends BaseActivity {
 		Bundle bundle = marker.getExtraInfo();
 		if (bundle != null) {
 			mDriverName.setText(bundle.getString("name"));
-			mDriverPhone.setText(bundle.getString("phone"));
-			mDriverTruck.setText(bundle.getString("truck"));
+			mDriverPhone
+					.setText(String.format(getString(R.string.format_phone),
+							bundle.getString("phone")));
+			mDriverTruckNo.setText(String.format(
+					getString(R.string.format_truck_no),
+					bundle.getString("truck_no")));
+			mDriverTruckType.setText(String.format(
+					getString(R.string.format_truck_type),
+					bundle.getString("truck_type")));
 		}
 		LatLng ll = marker.getPosition();
 		InfoWindow infoWindow = new InfoWindow(mDriverLayout, ll,
@@ -593,7 +609,7 @@ public class MainActivity extends BaseActivity {
 					}
 				});
 	}
-	
+
 	public void onEventMainThread(ExitEvent event) {
 		exit();
 	}

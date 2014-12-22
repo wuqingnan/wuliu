@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 
 	public static final String KEY_LOGOUT = "logout";
-	
+
 	private static final int MSG_PUSH = 1 << 0;
 
 	private static final int EXIT_TIME = 2000;
@@ -161,7 +161,8 @@ public class MainActivity extends BaseActivity {
 	private View mDriverLayout;
 	private TextView mDriverName;
 	private TextView mDriverPhone;
-	private TextView mDriverTruck;
+	private TextView mDriverTruckNo;
+	private TextView mDriverTruckType;
 
 	private boolean mMapShowing;
 	private boolean mIsFirstLoc;
@@ -321,7 +322,10 @@ public class MainActivity extends BaseActivity {
 				.inflate(R.layout.popup_driver, null);
 		mDriverName = (TextView) mDriverLayout.findViewById(R.id.driver_name);
 		mDriverPhone = (TextView) mDriverLayout.findViewById(R.id.driver_phone);
-		mDriverTruck = (TextView) mDriverLayout.findViewById(R.id.driver_truck);
+		mDriverTruckNo = (TextView) mDriverLayout
+				.findViewById(R.id.driver_truck_no);
+		mDriverTruckType = (TextView) mDriverLayout
+				.findViewById(R.id.driver_truck_type);
 	}
 
 	private void initMap() {
@@ -410,7 +414,7 @@ public class MainActivity extends BaseActivity {
 			showUpdateDialog(updateInfo);
 		}
 	}
-	
+
 	private void initLocation() {
 		mLocClient = new LocationClient(getApplicationContext());
 		WLApplication.setLocationClient(mLocClient);
@@ -446,8 +450,9 @@ public class MainActivity extends BaseActivity {
 				Bundle bundle = new Bundle();
 				bundle.putString("name", info.optString("driver_name"));
 				bundle.putString("phone", info.optString("phone"));
+				bundle.putString("truck_no", info.optString("trunk_no"));
 				if (truck >= 0 && truck < truckTypes.length) {
-					bundle.putString("truck", truckTypes[truck]);
+					bundle.putString("truck_type", truckTypes[truck]);
 				}
 				OverlayOptions option = new MarkerOptions().position(ll)
 						.icon(bitmap).extraInfo(bundle);
@@ -463,8 +468,15 @@ public class MainActivity extends BaseActivity {
 		Bundle bundle = marker.getExtraInfo();
 		if (bundle != null) {
 			mDriverName.setText(bundle.getString("name"));
-			mDriverPhone.setText(bundle.getString("phone"));
-			mDriverTruck.setText(bundle.getString("truck"));
+			mDriverPhone
+					.setText(String.format(getString(R.string.format_phone),
+							bundle.getString("phone")));
+			mDriverTruckNo.setText(String.format(
+					getString(R.string.format_truck_no),
+					bundle.getString("truck_no")));
+			mDriverTruckType.setText(String.format(
+					getString(R.string.format_truck_type),
+					bundle.getString("truck_type")));
 		}
 		LatLng ll = marker.getPosition();
 		InfoWindow infoWindow = new InfoWindow(mDriverLayout, ll,
@@ -502,7 +514,7 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 	}
-	
+
 	public void showUpdateDialog(final UpdateInfo info) {
 		UpdateManager.showUpdateDialog(this, info,
 				new DialogInterface.OnClickListener() {
@@ -569,7 +581,7 @@ public class MainActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void onEventMainThread(ExitEvent event) {
 		exit();
 	}

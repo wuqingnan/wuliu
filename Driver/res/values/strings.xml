@@ -77,6 +77,10 @@
     <string name="format_ton">%1$d吨</string>
     <string name="format_yuan">%1$d元</string>
     
+    <string name="format_phone">电话：%1$s</string>
+    <string name="format_truck_no">车牌号：%1$s</string>
+    <string name="format_truck_type">车辆类型：%1$s</string>
+    
     <string name="requesting">正在请求，请等待…</string>
     <string name="request_failed">请求失败，请重试</string>
     

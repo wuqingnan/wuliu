@@ -10,23 +10,32 @@
         android:id="@+id/driver_name"
         style="@style/TextAppearance.Small.DarkGray"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_height"
         android:background="@color/line_d6dae0" />
-    
-    <TextView
+    <TextView
         android:id="@+id/driver_phone"
-        style="@style/TextAppearance.Micro.LightGray"
+        style="@style/TextAppearance.Micro.9a9a9a"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" />
 
     <TextView
-        android:id="@+id/driver_truck"
-        style="@style/TextAppearance.Micro.LightGray"
+        android:id="@+id/driver_truck_no"
+        style="@style/TextAppearance.Micro.9a9a9a"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" />
+
+    <TextView
+        android:id="@+id/driver_truck_type"
+        style="@style/TextAppearance.Micro.9a9a9a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp" />
 
 </LinearLayout>
