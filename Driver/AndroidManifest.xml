@@ -56,8 +56,8 @@
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.WelcomeActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,71 +75,71 @@
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.LoginActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.ForgetPasswdActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.Register1Activity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.Register2Activity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.ChangeProfile1Activity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.ChangeProfile2Activity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.CityListActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.FindResultActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.OrderDetailActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
             android:name="cn.boweikeji.wuliu.driver.activity.RobOrderActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
         </activity>
         <activity
@@ -171,6 +171,21 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <!-- 微信分享回调 -->
