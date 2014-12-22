@@ -200,12 +200,9 @@
             android:taskAffinity="android.task.myServicetask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!-- 公司：WR8SXhGtLnYUswxBN35L8cI1 -->
-        <!-- 家里：HSTRY1vKn6MRKdmnTMZSPT5N -->
-        <!-- 签名：T67sFbH90n6dvbQDu5IIZAgN -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="T67sFbH90n6dvbQDu5IIZAgN" />
+            android:value="koZRKs7rzF7i0Oxl0G5j7XNR" />
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置第三方应用参数属性 -->
