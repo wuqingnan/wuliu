@@ -276,7 +276,7 @@
         <!-- 有盟统计 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="548af96bfd98c5e1b100092a" />
+            android:value="5497be6ffd98c56b6d001101" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Official" />
