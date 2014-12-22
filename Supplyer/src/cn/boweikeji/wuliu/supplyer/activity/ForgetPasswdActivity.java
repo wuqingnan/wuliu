@@ -178,7 +178,7 @@ public class ForgetPasswdActivity extends BaseActivity {
 		setContentView(R.layout.activity_forget_passwd);
 		initView();
 		mHandler = new ForgetPasswdHandler(this);
-		SMSSDK.initSDK(this, "2efbb3982f2a", "5fadc7e323623a695f5fe6b26d5ed79f");
+		SMSSDK.initSDK(this, "42cd06649040", "9ef64fe6c462bbc706332c59f38ebad5");
 		SMSSDK.registerEventHandler(mEventHandler);
 	}
 	
