@@ -3,12 +3,13 @@
     android:layout_width="0dip"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:minWidth="70dp" >
+    android:minWidth="70dp"
+    android:minHeight="43dp" >
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
+        android:layout_height="match_parent"
         android:background="@drawable/tab_indicator"
         android:gravity="center"
         android:textColor="@drawable/tab_indicator_text"

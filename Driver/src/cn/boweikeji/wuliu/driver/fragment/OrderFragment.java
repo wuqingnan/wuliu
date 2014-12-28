@@ -87,6 +87,7 @@ public class OrderFragment extends BaseFragment {
 				mTabHost.newTabSpec("cancel").setIndicator(indicators[3]),
 				OrderListFragment.class, OrderListFragment.TYPE_CANCEL);
 		indicators = null;
+		mTabHost.getTabWidget().setDividerDrawable(R.color.white);
 	}
 
 	public static class TabsAdapter extends FragmentPagerAdapter implements
