@@ -36,7 +36,7 @@ public class Order implements Serializable {
 	private int stars;
 
 	// 信息发送人电话
-	private String phone;
+	private String sender_phone;
 	// 信息发送人类型
 	private int supplyer_type;
 	private String supplyer_name;
@@ -171,12 +171,12 @@ public class Order implements Serializable {
 		this.stars = stars;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getSender_phone() {
+		return sender_phone;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setSender_phone(String phone) {
+		this.sender_phone = phone;
 	}
 
 	public int getSupplyer_type() {
@@ -348,7 +348,7 @@ public class Order implements Serializable {
 		order.setGoods_cost(infos.optInt("goods_cost"));
 		order.setRemark(infos.optString("remark"));
 
-		order.setPhone(infos.optString("phone"));
+		order.setSender_phone(infos.optString("sender_phone"));
 		order.setSupplyer_type(infos.optInt("supplyer_type"));
 		order.setSupplyer_name(infos.optString("supplyer_name"));
 		order.setSupplyer_phone(infos.optString("supplyer_phone"));

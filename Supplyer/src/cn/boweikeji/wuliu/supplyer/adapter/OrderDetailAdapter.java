@@ -330,7 +330,7 @@ public class OrderDetailAdapter extends BaseAdapter {
 		String value = null;
 		switch (name) {
 		case R.string.label_creater_phone:
-			value = mOrder.getPhone();
+			value = mOrder.getSender_phone();
 			break;
 		case R.string.label_from_phone:
 			value = mOrder.getSupplyer_phone();
