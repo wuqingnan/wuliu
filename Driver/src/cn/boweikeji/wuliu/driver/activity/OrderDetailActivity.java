@@ -50,7 +50,7 @@ public class OrderDetailActivity extends BaseActivity {
 			if (view == mMenuBtn) {
 				finish();
 			} else if (view == mRobBtn) {
-				robOrder();
+				showRobDialog();
 			} else if (view == mDropBtn) {
 				showDropDialog();
 			}
@@ -251,6 +251,28 @@ public class OrderDetailActivity extends BaseActivity {
 		params.add("passwd", info.getPasswd());
 		params.add("goods_cd", "" + mGoodsCD);
 		AsyncHttp.get(Const.URL_DROP_ORDER, params, mOperateHandler);
+	}
+	
+	private void showRobDialog() {
+		AlertDialog dialog = new AlertDialog.Builder(this)
+		.setTitle(R.string.rob_order)
+		.setMessage(R.string.order_rob_message)
+		.setCancelable(true)
+		.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				robOrder();
+			}
+		})
+		.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		})
+		.create();
+		dialog.show();
 	}
 	
 	private void showDropDialog() {

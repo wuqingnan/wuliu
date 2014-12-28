@@ -3,13 +3,17 @@ package cn.boweikeji.wuliu.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 public class Util {
@@ -25,9 +29,10 @@ public class Util {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 判断是否为正整数或0
+	 * 
 	 * @param number
 	 * @return
 	 */
@@ -42,9 +47,10 @@ public class Util {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 判断是否为正小数
+	 * 
 	 * @param number
 	 * @return
 	 */
@@ -59,7 +65,7 @@ public class Util {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 验证密码合法性
 	 * 
@@ -75,7 +81,7 @@ public class Util {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 验证用户名合法性
 	 * 
@@ -91,7 +97,7 @@ public class Util {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 验证效验码合法性
 	 * 
@@ -106,7 +112,7 @@ public class Util {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 验证身份证号码合法性
 	 * 
@@ -121,7 +127,7 @@ public class Util {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 显示提示
 	 * 
@@ -130,9 +136,10 @@ public class Util {
 	public static void showTips(Context context, String tips) {
 		Toast.makeText(context, tips, Toast.LENGTH_SHORT).show();
 	}
-	
+
 	/**
 	 * 发送短信
+	 * 
 	 * @param context
 	 * @param phone
 	 * @param msg
@@ -149,37 +156,40 @@ public class Util {
 		intent.putExtra("sms_body", msg);
 		context.startActivity(intent);
 	}
-	
+
 	/**
 	 * 显示分享框
+	 * 
 	 * @param activity
 	 */
 	public static void showShare(Activity activity) {
-        ShareSDK.initSDK(activity);
-        OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
-        oks.disableSSOWhenAuthorize();
-        
-        // 分享时Notification的图标和文字
-        oks.setNotification(R.drawable.icon, activity.getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle(activity.getString(R.string.share));
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://sharesdk.cn");
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImagePath("/sdcard/test.jpg");
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl("http://sharesdk.cn");
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("我是测试评论文本");
-        // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite(activity.getString(R.string.app_name));
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://sharesdk.cn");
+		ShareSDK.initSDK(activity);
+		OnekeyShare oks = new OnekeyShare();
+		// 关闭sso授权
+		oks.disableSSOWhenAuthorize();
 
-        // 启动分享GUI
-        oks.show(activity);
-   }
+		// 分享时Notification的图标和文字
+		oks.setNotification(R.drawable.icon,
+				activity.getString(R.string.app_name));
+		// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+		oks.setTitle("物流生意宝，是一款覆盖全国的智能找货，找车手机软件");
+		// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+		oks.setTitleUrl("http://boweikeji.cn/");
+		// text是分享文本，所有平台都需要这个字段
+		oks.setText("物流生意宝，这是一款覆盖全国的智能找货，找车手机软件。可以随时随地准确撮合成物流生意，让发货人不再难找到合适的货车，不再让车俩在为空车奔波为犯愁。是博为科技有限责任公司荣誉推出的一款基于移动互联网的手机客户端产品。欢迎大家使用手机扫描下载，注册使用。");
+		// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+		oks.setImageUrl("http://interface.boweikeji.cn/bss/uploadfiles/allCode.png");
+		// url仅在微信（包括好友和朋友圈）中使用
+		oks.setUrl("http://boweikeji.cn/");
+		// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+		oks.setComment("");
+		// site是分享此内容的网站名称，仅在QQ空间使用
+		oks.setSite(activity.getString(R.string.app_name));
+		// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+		oks.setSiteUrl("http://boweikeji.cn/");
+
+		// 启动分享GUI
+		oks.show(activity);
+	}
+
 }
