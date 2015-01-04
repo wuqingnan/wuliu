@@ -183,20 +183,6 @@
                         android:layout_height="match_parent"
                         android:text="@string/choose_city" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/line_height"
-                    android:background="@color/line_d6dae0" />
-
-                <cn.boweikeji.wuliu.view.ClearEditText
-                    android:id="@+id/register_id"
-                    style="@style/EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edittext_height"
-                    android:drawableLeft="@drawable/ic_mark_id"
-                    android:hint="@string/id_number"
-                    android:maxLength="18" />
             </LinearLayout>
 
             <LinearLayout

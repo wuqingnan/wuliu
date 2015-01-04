@@ -70,8 +70,6 @@ public class ChangeProfile1Activity extends BaseActivity {
 	ClearEditText mCompany;
 	@InjectView(R.id.register_area_code)
 	TextView mAreaCode;
-	@InjectView(R.id.register_id)
-	ClearEditText mIDNumber;
 	@InjectView(R.id.register_id_front)
 	ImageView mIDImage;
 	@InjectView(R.id.next_step)
@@ -125,7 +123,6 @@ public class ChangeProfile1Activity extends BaseActivity {
 		if (!TextUtils.isEmpty(company) && !company.equals(Const.NULL)) {
 			mCompany.setText(userInfo.getComp_name());
 		}
-		mIDNumber.setText(userInfo.getCard_id());
 		updateCity();
 		updateDriverType();
 	}
@@ -139,7 +136,6 @@ public class ChangeProfile1Activity extends BaseActivity {
 	private boolean validCheck() {
 		String name = mName.getText().toString();
 		String company = mCompany.getText().toString();
-		String idNumber = mIDNumber.getText().toString();
 
 		if (name == null || name.equals("")) {
 			Util.showTips(this, getResources().getString(R.string.name_empty));
@@ -152,14 +148,6 @@ public class ChangeProfile1Activity extends BaseActivity {
 		} else if (mCity == null) {
 			Util.showTips(this, getResources().getString(R.string.choose_city));
 			return false;
-		} else if (idNumber == null || idNumber.equals("")) {
-			Util.showTips(this,
-					getResources().getString(R.string.id_number_empty));
-			return false;
-		} else if (!Util.isIDNumberValid(idNumber)) {
-			Util.showTips(this,
-					getResources().getString(R.string.id_number_invalid));
-			return false;
 		}
 
 		if (mRegInfo == null) {
@@ -168,7 +156,6 @@ public class ChangeProfile1Activity extends BaseActivity {
 			mRegInfo.setDriver_type(mDriverTypeIndex);
 			mRegInfo.setComp_name(company);
 			mRegInfo.setArea_code(mCity.getCode());
-			mRegInfo.setCard_id(idNumber);
 			mRegInfo.setIDImagePath(mPhotoPath);
 		}
 

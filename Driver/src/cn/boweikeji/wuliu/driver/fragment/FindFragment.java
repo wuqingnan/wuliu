@@ -155,8 +155,9 @@ public class FindFragment extends BaseFragment {
 	}
 
 	private void initData() {
-		mTruckTypeIndex = LoginManager.getInstance().getUserInfo().getTruck_type_code();
+		mTruckTypeIndex = 0;
 		mTruckTypes = getResources().getStringArray(R.array.truck_type_list);
+		mTruckTypes[0] = "全部";
 		updateTruckType();
 
 		mGoodsTypeIndex = 0;
@@ -211,9 +212,6 @@ public class FindFragment extends BaseFragment {
 	private boolean validCheck() {
 		if (mStartInfos == null && mEndInfos == null) {
 			Util.showTips(getActivity(), getResources().getString(R.string.must_have_one_address));
-			return false;
-		} else if (mTruckTypeIndex == 0) {
-			Util.showTips(getActivity(), getResources().getString(R.string.choose_truck_type));
 			return false;
 		}
 		return true;

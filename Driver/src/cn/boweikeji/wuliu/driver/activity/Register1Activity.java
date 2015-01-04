@@ -163,8 +163,6 @@ public class Register1Activity extends BaseActivity {
 	ClearEditText mCompany;
 	@InjectView(R.id.register_area_code)
 	TextView mAreaCode;
-	@InjectView(R.id.register_id)
-	ClearEditText mIDNumber;
 	@InjectView(R.id.register_id_front)
 	ImageView mIDImage;
 	@InjectView(R.id.next_step)
@@ -251,7 +249,6 @@ public class Register1Activity extends BaseActivity {
 		String passwd = mPasswd.getText().toString();
 		String name = mName.getText().toString();
 		String company = mCompany.getText().toString();
-		String idNumber = mIDNumber.getText().toString();
 
 		if (phone == null || phone.equals("")) {
 			Util.showTips(this,
@@ -277,10 +274,6 @@ public class Register1Activity extends BaseActivity {
 			Util.showTips(this,
 					getResources().getString(R.string.choose_city));
 			return false;
-		} else if (idNumber == null || idNumber.equals("")) {
-			Util.showTips(this,
-					getResources().getString(R.string.id_number_empty));
-			return false;
 		} else if (mPhotoPath == null || mPhotoPath.equals("")) {
 			Util.showTips(this,
 					getResources().getString(R.string.choose_register_image));
@@ -297,10 +290,6 @@ public class Register1Activity extends BaseActivity {
 			Util.showTips(this,
 					getResources().getString(R.string.password_invalid));
 			return false;
-		} else if (!Util.isIDNumberValid(idNumber)) {
-			Util.showTips(this,
-					getResources().getString(R.string.id_number_invalid));
-			return false;
 		}
 		
 		if (mRegInfo == null) {
@@ -311,7 +300,6 @@ public class Register1Activity extends BaseActivity {
 			mRegInfo.setDriver_type(mDriverTypeIndex);
 			mRegInfo.setComp_name(company);
 			mRegInfo.setArea_code(mCity.getCode());
-			mRegInfo.setCard_id(idNumber);
 			mRegInfo.setIDImagePath(mPhotoPath);
 		}
 		

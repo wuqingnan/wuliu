@@ -156,7 +156,7 @@ public class RegisterInfo implements Serializable {
 		params.add("driver_type", "" + getDriver_type());
 		params.add("comp_name", getDriver_type() == 1 ? getComp_name() : BaseParams.PARAM_DEFAULT);
 		params.add("phone", getPhone());
-		params.add("card_id", getCard_id());
+		params.add("card_id", BaseParams.PARAM_DEFAULT);
 		params.add("card_photo", getCard_photo());
 		params.add("trunk_no", getTrunk_no());
 		params.add("area_code", getArea_code());
@@ -175,7 +175,7 @@ public class RegisterInfo implements Serializable {
 		params.add("driver_name", getDriver_name());
 		params.add("driver_type", "" + getDriver_type());
 		params.add("comp_name", getDriver_type() == 1 ? getComp_name() : BaseParams.PARAM_DEFAULT);
-		params.add("card_id", getCard_id());
+		params.add("card_id", BaseParams.PARAM_DEFAULT);
 		params.add("card_photo", TextUtils.isEmpty(getCard_photo()) ? BaseParams.PARAM_DEFAULT : getCard_photo());
 		params.add("trunk_no", getTrunk_no());
 		params.add("area_code", getArea_code());

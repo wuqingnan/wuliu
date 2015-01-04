@@ -40,7 +40,7 @@
         <item>棉被车</item>
         <item>危险品车</item>
         <item>轿车（可运小件）</item>
-        <item>其他</item>
+        <item>半挂车</item>
     </string-array>
    	   
     <string-array name="goods_valid_time_list">

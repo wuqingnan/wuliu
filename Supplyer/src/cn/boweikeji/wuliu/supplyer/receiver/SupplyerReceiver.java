@@ -75,6 +75,7 @@ public class SupplyerReceiver extends BroadcastReceiver {
 				.setTicker(title)
 				.setAutoCancel(true)
 				.setWhen(System.currentTimeMillis())
+				.setDefaults(Notification.DEFAULT_SOUND)
 				.setSmallIcon(R.drawable.icon)
 				.setLargeIcon(
 						BitmapFactory.decodeResource(context.getResources(),

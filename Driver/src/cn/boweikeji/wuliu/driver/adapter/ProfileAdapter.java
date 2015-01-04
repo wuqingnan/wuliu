@@ -20,10 +20,10 @@ public class ProfileAdapter extends BaseAdapter {
 
 	private static final int[] NAMES = { R.string.label_user_name,
 			R.string.label_user_state, R.string.label_user_level,
-			R.string.label_phone_no, R.string.label_id_no,
-			R.string.label_user_type, R.string.label_area_code,
-			R.string.label_truck_type, R.string.label_truck_no,
-			R.string.label_truck_load, R.string.label_user_company };
+			R.string.label_phone_no, R.string.label_user_type,
+			R.string.label_area_code, R.string.label_truck_type,
+			R.string.label_truck_no, R.string.label_truck_load,
+			R.string.label_user_company };
 
 	private Context mContext;
 	private LayoutInflater mInflater;
@@ -118,7 +118,8 @@ public class ProfileAdapter extends BaseAdapter {
 			break;
 		case R.string.label_user_company:
 			value = LoginManager.getInstance().getUserInfo().getComp_name();
-			if (TextUtils.isEmpty(value) || value.equals(BaseParams.PARAM_DEFAULT)) {
+			if (TextUtils.isEmpty(value)
+					|| value.equals(BaseParams.PARAM_DEFAULT)) {
 				value = null;
 			}
 			break;

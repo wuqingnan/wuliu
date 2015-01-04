@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_height"
             android:drawableLeft="@drawable/ic_mark_remark"
-            android:hint="@string/remark"
+            android:hint="@string/common_route"
             android:maxLength="18" />
     </LinearLayout>
 
