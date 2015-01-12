@@ -195,7 +195,6 @@ public class MainActivity extends BaseActivity {
 		super.onResume();
 		mMapView.onResume();
 		mMapShowing = true;
-		updateMap();
 		checkUpdate();
 	}
 
@@ -346,7 +345,7 @@ public class MainActivity extends BaseActivity {
 				LocationMode.NORMAL, true, null));
 	}
 
-	private void updateMap() {
+	public void updateMap() {
 		BDLocation location = WLApplication.getLocationClient()
 				.getLastKnownLocation();
 		if (location == null || mMapView == null) {

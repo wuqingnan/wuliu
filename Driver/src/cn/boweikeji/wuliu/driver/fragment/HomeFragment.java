@@ -7,6 +7,7 @@ import butterknife.InjectView;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.activity.LoginActivity;
+import cn.boweikeji.wuliu.driver.activity.MainActivity;
 import cn.boweikeji.wuliu.driver.event.LoginEvent;
 import cn.boweikeji.wuliu.driver.event.LogoutEvent;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
@@ -75,6 +76,13 @@ public class HomeFragment extends BaseFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		init();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.d(TAG, "shizy---onResume");
+		((MainActivity)getActivity()).updateMap();
 	}
 
 	private void init() {
