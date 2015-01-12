@@ -614,7 +614,13 @@ public class MainActivity extends BaseActivity {
 			}
 
 			BDLocation location = client.getLastKnownLocation();
-
+			if (location == null) {
+				return;
+			}
+			if (location.getLatitude() == 0 || location.getLongitude() == 0) {
+				return;
+			}
+			
 			BaseParams params = new BaseParams();
 			params.add("method", "collectDriverInfos");
 			params.add("driver_cd", info.getDriver_cd());

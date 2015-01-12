@@ -113,7 +113,7 @@
     <string name="id_number">身份证号码</string>
     <string name="truck_no">车牌号</string>
     <string name="truck_load">载重吨位</string>
-    <string name="recommend_no">推荐码</string>
+    <string name="recommend_no">推荐人电话</string>
     <string name="remark">个人说明</string>
     <string name="common_route">常用路线</string>
     
