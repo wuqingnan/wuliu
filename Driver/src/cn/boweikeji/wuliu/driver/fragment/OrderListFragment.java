@@ -118,6 +118,7 @@ public class OrderListFragment extends BaseFragment {
 
 	private boolean mMore = true;
 	private boolean mLoading = false;
+	private boolean mNeedInit = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -173,10 +174,20 @@ public class OrderListFragment extends BaseFragment {
 	private void initData() {
 		mMore = true;
 		mLoading = false;
-		refresh();
+		if (mNeedInit) {
+			refresh();
+		}
 	}
 
-	private void refresh() {
+	public int getType() {
+		return mType;
+	}
+	
+	public void setNeedInit(boolean needInit) {
+		mNeedInit = needInit;
+	}
+	
+	public void refresh() {
 		if (mLoading) {
 			return;
 		}
@@ -282,6 +293,7 @@ public class OrderListFragment extends BaseFragment {
 						}
 						if (mPage == 1) {
 							mAdapter.setData(data);
+							mListView.setSelection(0);
 						} else {
 							mAdapter.addData(data);
 						}

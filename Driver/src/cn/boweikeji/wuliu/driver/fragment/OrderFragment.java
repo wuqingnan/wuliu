@@ -1,11 +1,13 @@
 package cn.boweikeji.wuliu.driver.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -88,6 +90,7 @@ public class OrderFragment extends BaseFragment {
 				OrderListFragment.class, OrderListFragment.TYPE_CANCEL);
 		indicators = null;
 		mTabHost.getTabWidget().setDividerDrawable(R.color.white);
+		mTabHost.setCurrentTab(0);
 	}
 
 	public static class TabsAdapter extends FragmentPagerAdapter implements
@@ -95,10 +98,14 @@ public class OrderFragment extends BaseFragment {
 		private final Context mContext;
 		private final TabHost mTabHost;
 		private final ViewPager mViewPager;
+		private final FragmentManager mFM;
 		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
+		private boolean mNeedInit = true;
+		
 		public TabsAdapter(Fragment fragment, TabHost tabHost, ViewPager pager) {
 			super(fragment.getChildFragmentManager());
+			mFM = fragment.getChildFragmentManager();
 			mContext = fragment.getActivity();
 			mTabHost = tabHost;
 			mViewPager = pager;
@@ -123,6 +130,16 @@ public class OrderFragment extends BaseFragment {
 		public int getCount() {
 			return mTabs.size();
 		}
+		
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+			Object object = super.instantiateItem(container, position);
+			((OrderListFragment)object).setNeedInit(mNeedInit);
+			if (mNeedInit) {
+				mNeedInit = false;
+			}
+			return object;
+		}
 
 		@Override
 		public Fragment getItem(int position) {
@@ -135,6 +152,10 @@ public class OrderFragment extends BaseFragment {
 		public void onTabChanged(String tabId) {
 			int position = mTabHost.getCurrentTab();
 			mViewPager.setCurrentItem(position);
+			OrderListFragment fragment = getFragmentByPosition(position);
+			if (fragment != null) {
+				fragment.refresh();
+			}
 		}
 
 		@Override
@@ -160,6 +181,21 @@ public class OrderFragment extends BaseFragment {
 		public void onPageScrollStateChanged(int state) {
 		}
 
+		private OrderListFragment getFragmentByPosition(int position) {
+			List<Fragment> fragments = mFM.getFragments();
+			if (fragments == null || fragments.size() == 0) {
+				return null;
+			}
+			for (Fragment fragment : fragments) {
+				if (fragment instanceof OrderListFragment) {
+					if (((OrderListFragment)fragment).getType() == position) {
+						return (OrderListFragment)fragment;
+					}
+				}
+			}
+			return null;
+		}
+		
 		static final class TabInfo {
 			private final String tag;
 			private final Class<?> clss;
