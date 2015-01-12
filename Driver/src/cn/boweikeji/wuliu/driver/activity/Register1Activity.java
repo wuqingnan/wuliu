@@ -369,21 +369,27 @@ public class Register1Activity extends BaseActivity {
 	 * 选择图片
 	 */
 	private void pickImage() {
-		Intent intent = new Intent(Intent.ACTION_PICK);
-		intent.setType("image/*");
-		startActivityForResult(intent, REQUESTCODE_PICK);
+		try {
+			Intent intent = new Intent(Intent.ACTION_PICK);
+			intent.setType("image/*");
+			startActivityForResult(intent, REQUESTCODE_PICK);
+		} catch (Exception e) {
+			Util.showTips(this, "无法打开相册功能！");
+		}
 	}
 	
 	/**
 	 * 开启照相机
 	 */
 	private void startCamera() {
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		try {
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     		mPhotoUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
     		intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mPhotoUri);
-    	} catch (Exception e) {}
-		startActivityForResult(intent, REQUESTCODE_CAPTURE);
+    		startActivityForResult(intent, REQUESTCODE_CAPTURE);
+    	} catch (Exception e) {
+    		Util.showTips(this, "无法打开拍照功能！");
+    	}
 	}
 	
 	private void showCountDown() {

@@ -143,7 +143,7 @@ public class SearchActivity extends BaseActivity {
 	private void confirm() {
 		Intent intent = new Intent();
 		mSearchInfos[3] = mSearchInput.getText().toString();
-		if (mSearchInfos[2].equals("请选择")) {
+		if (mSearchInfos[2] == null || mSearchInfos[2].equals("请选择")) {
 			mSearchInfos[2] = "";
 		}
 		intent.putExtra(KEY_RESULT, mSearchInfos);
