@@ -22,6 +22,8 @@ import com.loopj.android.http.SyncHttpClient;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -70,7 +72,7 @@ public class ReportService extends Service {
 		DeviceInfo.init(this);
 		initLocation();
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
-		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 60,
+		mTimerTask.scheduleAtFixedRate(new PositionTask(), 5, 300,
 				TimeUnit.SECONDS);
 	}
 
@@ -109,6 +111,21 @@ public class ReportService extends Service {
 		mLocClient.requestLocation();
 	}
 
+	private boolean isNetworkAvailable() {
+		ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		if (manager != null) {
+			NetworkInfo[] infos = manager.getAllNetworkInfo();
+			if (infos != null) {
+				for (int i = 0; i < infos.length; i++) {
+					if (infos[i].getState() == NetworkInfo.State.CONNECTED) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
 	public class ReportBinder extends IReportService.Stub {
 
 		@Override
@@ -159,6 +176,9 @@ public class ReportService extends Service {
 
 		@Override
 		public void run() {
+			if (!isNetworkAvailable()) {
+				return;
+			}
 			BDLocation location = mLocClient.getLastKnownLocation();
 			if (location == null) {
 				return;

@@ -13,6 +13,8 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
@@ -61,9 +63,11 @@ public class WLApplication extends Application {
 	}
 	
 	public void startReportService() {
-        Log.d(LOG_TAG, "shizy---startRemoteService");
-        Intent intent = new Intent(this, ReportService.class);
-        startService(intent);
+        if (!isReportServiceRunning()) {
+        	Log.d(LOG_TAG, "shizy---startRemoteService");
+        	Intent intent = new Intent(this, ReportService.class);
+        	startService(intent);
+        }
     }
 	
 	public void bindReportService() {
@@ -85,6 +89,19 @@ public class WLApplication extends Application {
         }
     }
 
+    private boolean isReportServiceRunning() {
+    	ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+    	List<RunningServiceInfo> list = manager.getRunningServices(Integer.MAX_VALUE);
+    	if (list != null) {
+    		for (RunningServiceInfo info : list) {
+    			if (info.service.getClassName().equals(ReportService.class.getName())) {
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
     public void addLocationListener(ILocationListener listener) {
     	if (listener == null) {
     		return;
