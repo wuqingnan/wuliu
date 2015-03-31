@@ -201,8 +201,7 @@ public class OrderListFragment extends BaseFragment {
 
 	private void loadData() {
 		mLoading = true;
-		BDLocation location = WLApplication.getLocationClient()
-				.getLastKnownLocation();
+		BDLocation location = WLApplication.getLastKnownLocation();
 		BaseParams params = new BaseParams();
 		params.add("method", "getMyRecords");
 		params.add("page_num", "" + mPage);

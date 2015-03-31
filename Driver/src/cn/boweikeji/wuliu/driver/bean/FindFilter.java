@@ -93,7 +93,7 @@ public class FindFilter implements Serializable  {
 		params.add("mess_fee", "" + getMess_fee());
 		params.add("page_num", "" + getPage_num());
 		params.add("goods_type_code", "" + getGoods_type_code());
-		BDLocation location = WLApplication.getLocationClient().getLastKnownLocation();
+		BDLocation location = WLApplication.getLastKnownLocation();
 		if (location == null) {
 			params.add("gps_j", BaseParams.PARAM_DEFAULT);
 			params.add("gps_w", BaseParams.PARAM_DEFAULT);

@@ -234,6 +234,10 @@
             android:value="" />
 
         <service
+            android:name="cn.boweikeji.wuliu.driver.service.ReportService"
+            android:process=":report" />
+        
+        <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />

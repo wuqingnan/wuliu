@@ -222,10 +222,9 @@ public class LoginActivity extends BaseActivity {
 				int res = response.getInt("res");
 				String msg = response.getString("msg");
 				if (res == 2) {//成功
-					LoginManager.getInstance().setLogin(true);
 					mUserInfo.update(response.optJSONObject("infos"));
 					LoginManager.getInstance().setUserInfo(mUserInfo);
-					EventBus.getDefault().post(new LoginEvent());
+					LoginManager.getInstance().loginSuccess();
 					if (getCallingActivity() != null) {
 						setResult(RESULT_OK, mIntent);
 					}

@@ -109,8 +109,7 @@ public class HomeFragment extends BaseFragment {
 	}
 	
 	public void updateMyInfo() {
-		BDLocation loc = WLApplication.getLocationClient()
-				.getLastKnownLocation();
+		BDLocation loc = WLApplication.getLastKnownLocation();
 		if (loc != null && loc.getAddrStr() != null) {
 			mMyPosInfo.setText(loc.getAddrStr());
 			mMyPosInfo.setVisibility(View.VISIBLE);

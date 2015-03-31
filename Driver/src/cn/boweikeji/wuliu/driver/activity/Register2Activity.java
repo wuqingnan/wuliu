@@ -276,11 +276,10 @@ public class Register2Activity extends BaseActivity {
 	}
 
 	private void registerSuccess(JSONObject infos) {
-		LoginManager.getInstance().setLogin(true);
 		UserInfo userInfo = new UserInfo(infos);
 		userInfo.setPasswd(mRegInfo.getMD5Passwd());
 		LoginManager.getInstance().setUserInfo(userInfo);
-		EventBus.getDefault().post(new LoginEvent());
+		LoginManager.getInstance().loginSuccess();
 		startActivity(new Intent(this, MainActivity.class));
 	}
 

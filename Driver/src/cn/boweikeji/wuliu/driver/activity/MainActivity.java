@@ -1,17 +1,11 @@
 package cn.boweikeji.wuliu.driver.activity;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -33,7 +27,6 @@ import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.SyncHttpClient;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
@@ -42,6 +35,8 @@ import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
 import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.WeakHandler;
+import cn.boweikeji.wuliu.driver.aidl.ILocationListener;
+import cn.boweikeji.wuliu.driver.aidl.IReportService;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.Order;
 import cn.boweikeji.wuliu.driver.bean.UpdateInfo;
@@ -56,19 +51,17 @@ import cn.boweikeji.wuliu.driver.fragment.OrderFragment;
 import cn.boweikeji.wuliu.driver.manager.LoginManager;
 import cn.boweikeji.wuliu.driver.manager.UpdateManager;
 import cn.boweikeji.wuliu.http.AsyncHttp;
-import cn.boweikeji.wuliu.utils.DeviceInfo;
 import de.greenrobot.event.EventBus;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.Fragment;
+import android.os.RemoteException;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -103,18 +96,20 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private BDLocationListener mBDLocListener = new BDLocationListener() {
+	private ILocationListener mLocationListener = new ILocationListener.Stub() {
 		@Override
-		public void onReceivePoi(BDLocation poiLocation) {
-
-		}
-
-		@Override
-		public void onReceiveLocation(BDLocation location) {
+		public void onReceiveLocation() throws RemoteException {
 			updateMap();
 		}
 	};
-
+	
+	private Runnable mUpdateMap = new Runnable() {
+		@Override
+		public void run() {
+			updateMap();
+		}
+	};
+	
 	private JsonHttpResponseHandler mRequestHandler = new JsonHttpResponseHandler() {
 		public void onSuccess(int statusCode, Header[] headers,
 				JSONObject response) {
@@ -175,10 +170,6 @@ public class MainActivity extends BaseActivity {
 
 	private int mTabIndex;
 
-	private LocationClient mLocClient;
-
-	private ScheduledThreadPoolExecutor mTimerTask;
-
 	private MainHandler mHandler;
 
 	@Override
@@ -208,10 +199,8 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		mLocClient.unRegisterLocationListener(mBDLocListener);
-		mLocClient.stop();
-		mTimerTask.shutdown();
-		mTimerTask.shutdownNow();
+		((WLApplication)getApplication()).removeLocationListener(mLocationListener);
+		((WLApplication)getApplication()).unbindReportService();
 		mBaiduMap.setMyLocationEnabled(false);
 		mMapView.onDestroy();
 		EventBus.getDefault().unregister(this);
@@ -274,11 +263,9 @@ public class MainActivity extends BaseActivity {
 		initView();
 		initMap();
 		changeFragment(0);
-		initLocation();
 		EventBus.getDefault().register(this);
-		mTimerTask = new ScheduledThreadPoolExecutor(1);
-		mTimerTask.scheduleAtFixedRate(new PositionTask(), 30, 300,
-				TimeUnit.SECONDS);
+		((WLApplication)getApplication()).bindReportService();
+		((WLApplication)getApplication()).addLocationListener(mLocationListener);
 	}
 
 	private void pageJump(Intent intent) {
@@ -346,12 +333,19 @@ public class MainActivity extends BaseActivity {
 	}
 
 	public void updateMap() {
-		BDLocation location = WLApplication.getLocationClient()
-				.getLastKnownLocation();
+		BDLocation location = WLApplication.getLastKnownLocation();
 		if (location == null || mMapView == null) {
+			if (mIsFirstLoc) {
+				//未定到位置，每移主动刷新
+				mHandler.postDelayed(mUpdateMap, 1000);
+			}
 			return;
 		}
 		if (!mMapShowing) {
+			if (mIsFirstLoc) {
+				//未定到位置，每移主动刷新
+				mHandler.postDelayed(mUpdateMap, 1000);
+			}
 			return;
 		}
 		MyLocationData locData = new MyLocationData.Builder()
@@ -412,21 +406,6 @@ public class MainActivity extends BaseActivity {
 		if (updateInfo != null && updateInfo.isNeedUpdate()) {
 			showUpdateDialog(updateInfo);
 		}
-	}
-
-	private void initLocation() {
-		mLocClient = new LocationClient(getApplicationContext());
-		WLApplication.setLocationClient(mLocClient);
-		mLocClient.registerLocationListener(mBDLocListener);
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);
-		option.setCoorType("bd09ll");
-		option.setScanSpan(60 * 1000);
-		option.setIsNeedAddress(true);
-		option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-		mLocClient.setLocOption(option);
-		mLocClient.start();
-		mLocClient.requestLocation();
 	}
 
 	private void addMarker(JSONArray markers) {
@@ -584,59 +563,7 @@ public class MainActivity extends BaseActivity {
 	public void onEventMainThread(ExitEvent event) {
 		exit();
 	}
-
-	private class PositionTask implements Runnable {
-
-		private JsonHttpResponseHandler mHandler = new JsonHttpResponseHandler() {
-			public void onFinish() {
-				Log.d(TAG, "shizy---PositionTask.onFinish()");
-			};
-		};
-
-		private SyncHttpClient mHttpClient;
-
-		public PositionTask() {
-			mHttpClient = new SyncHttpClient();
-			mHttpClient.setURLEncodingEnabled(true);
-		}
-
-		@Override
-		public void run() {
-			UserInfo info = LoginManager.getInstance().getUserInfo();
-			if (info == null) {
-				return;
-			}
-
-			LocationClient client = WLApplication.getLocationClient();
-			if (client == null) {
-				return;
-			}
-
-			BDLocation location = client.getLastKnownLocation();
-			if (location == null) {
-				return;
-			}
-			if (location.getLatitude() == 0 || location.getLongitude() == 0) {
-				return;
-			}
-			
-			BaseParams params = new BaseParams();
-			params.add("method", "collectDriverInfos");
-			params.add("driver_cd", info.getDriver_cd());
-			params.add("gps_j", "" + location.getLongitude());
-			params.add("gps_w", "" + location.getLatitude());
-			params.add("speed", "" + location.getSpeed());
-			params.add("phone_type", "" + DeviceInfo.getModel());
-			params.add("operate_system", "" + DeviceInfo.getOSName());
-			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
-			params.add("app_version", "" + DeviceInfo.getVersionName());
-			params.add("clientid", "" + Const.clientid);
-			mHttpClient.get(
-					AsyncHttp.getAbsoluteUrl(Const.URL_POSITION_UPLOAD),
-					params, mHandler);
-		}
-	}
-
+	
 	public static class MainHandler extends WeakHandler<MainActivity> {
 
 		public MainHandler(MainActivity reference) {
@@ -654,4 +581,6 @@ public class MainActivity extends BaseActivity {
 		}
 
 	}
+	
+	
 }

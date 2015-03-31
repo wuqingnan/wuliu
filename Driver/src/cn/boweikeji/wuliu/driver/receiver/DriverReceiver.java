@@ -5,7 +5,9 @@ import org.json.JSONObject;
 
 import cn.boweikeji.wuliu.driver.Const;
 import cn.boweikeji.wuliu.driver.R;
+import cn.boweikeji.wuliu.driver.WLApplication;
 import cn.boweikeji.wuliu.driver.activity.MainActivity;
+import cn.boweikeji.wuliu.driver.aidl.IReportService;
 
 import com.igexin.sdk.PushConsts;
 
@@ -17,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -39,6 +42,7 @@ public class DriverReceiver extends BroadcastReceiver {
 			break;
 		case PushConsts.GET_CLIENTID:
 			Const.clientid = bundle.getString("clientid");
+			WLApplication.setClientId(Const.clientid);
 		default:
 			break;
 		}

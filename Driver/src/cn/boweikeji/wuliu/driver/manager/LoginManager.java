@@ -11,8 +11,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.RemoteException;
 import android.util.Log;
 import cn.boweikeji.wuliu.driver.Const;
+import cn.boweikeji.wuliu.driver.WLApplication;
+import cn.boweikeji.wuliu.driver.aidl.IReportService;
 import cn.boweikeji.wuliu.driver.api.BaseParams;
 import cn.boweikeji.wuliu.driver.bean.UserInfo;
 import cn.boweikeji.wuliu.driver.event.LoginEvent;
@@ -42,10 +45,9 @@ public class LoginManager {
 				try {
 					int res = response.getInt("res");
 					if (res == 2) {
-						setLogin(true);
 						mUserInfo.update(response.optJSONObject("infos"));
 						setUserInfo(mUserInfo);
-						EventBus.getDefault().post(new LoginEvent());
+						loginSuccess();
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -74,16 +76,19 @@ public class LoginManager {
 		return mHasLogin;
 	}
 	
-	public void setLogin(boolean hasLogin) {
-		mHasLogin = hasLogin;
-	}
-	
 	public void login(String driver_cd, String passwd, AsyncHttpResponseHandler handler) {
 		BaseParams params = new BaseParams();
 		params.add("method", "driverLoginCheck");
 		params.add("driver_cd", driver_cd);
 		params.add("passwd", passwd);
 		AsyncHttp.get(Const.URL_LOGIN, params, handler);
+	}
+	
+	public void loginSuccess() {
+		mHasLogin = true;
+		WLApplication.setUserCd(mUserInfo.getDriver_cd());
+		WLApplication.reportLocation();
+		EventBus.getDefault().post(new LoginEvent());
 	}
 	
 	public void autoLogin() {
@@ -99,6 +104,7 @@ public class LoginManager {
 		logout(mUserInfo.getDriver_cd(), mUserInfo.getPasswd());
 		mHasLogin = false;
 		mUserInfo = null;
+		WLApplication.setUserCd(null);
 		EventBus.getDefault().post(new LogoutEvent());
 		clear();
 	}
