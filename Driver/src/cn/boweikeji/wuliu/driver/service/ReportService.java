@@ -32,6 +32,9 @@ public class ReportService extends Service {
 
 	private static final String LOG_TAG = ReportService.class.getSimpleName();
 
+	private static final String KEY_USERCD = "report_usercd";
+	private static final String KEY_CLIENTID = "report_clientid";
+	
 	private BDLocationListener mBDLocListener = new BDLocationListener() {
 		@Override
 		public void onReceivePoi(BDLocation poiLocation) {
@@ -71,6 +74,10 @@ public class ReportService extends Service {
 		Log.d(LOG_TAG, "shizy---ReportService.onCreate");
 		DeviceInfo.init(this);
 		initLocation();
+		mUserCd = readPreferenceInfo(KEY_USERCD);
+		mClientId = readPreferenceInfo(KEY_CLIENTID);
+		Log.d(LOG_TAG, "shizy---ReportService.onCreate mUserCd-->" + mUserCd);
+		Log.d(LOG_TAG, "shizy---ReportService.onCreate mClientId-->" + mClientId);
 		mTimerTask = new ScheduledThreadPoolExecutor(1);
 		mTimerTask.scheduleAtFixedRate(new PositionTask(), 5, 300,
 				TimeUnit.SECONDS);
@@ -126,6 +133,30 @@ public class ReportService extends Service {
 		return false;
 	}
 	
+	private void savePreferenceInfo(String key, String value) {
+		if (key == null) {
+			return;
+		}
+		SharedPreferences sp = getSharedPreferences("report", MODE_PRIVATE);
+		SharedPreferences.Editor editor = sp.edit();
+		if (value == null) {
+			editor.remove(key);
+		} else {
+			editor.putString(key, value);
+		}
+		editor.commit();
+		editor = null;
+		sp = null;
+	}
+	
+	private String readPreferenceInfo(String key) {
+		if (key == null) {
+			return null;
+		}
+		SharedPreferences sp = getSharedPreferences("report", MODE_PRIVATE);
+		return sp.getString(key, null);
+	}
+	
 	public class ReportBinder extends IReportService.Stub {
 
 		@Override
@@ -141,11 +172,13 @@ public class ReportService extends Service {
 		@Override
 		public void setUserCd(String userCd) throws RemoteException {
 			mUserCd = userCd;
+			savePreferenceInfo(KEY_USERCD, userCd);
 		}
 
 		@Override
 		public void setClientId(String clientId) throws RemoteException {
 			mClientId = clientId;
+			savePreferenceInfo(KEY_CLIENTID, clientId);
 		}
 
 		@Override
@@ -179,6 +212,9 @@ public class ReportService extends Service {
 			if (!isNetworkAvailable()) {
 				return;
 			}
+			if (mUserCd == null || mClientId == null) {
+				return;
+			}
 			BDLocation location = mLocClient.getLastKnownLocation();
 			if (location == null) {
 				return;
@@ -188,7 +224,7 @@ public class ReportService extends Service {
 			}
 			BaseParams params = new BaseParams();
 			params.add("method", "collectDriverInfos");
-			params.add("driver_cd", (mUserCd == null ? Const.NULL : mUserCd));
+			params.add("driver_cd", mUserCd);
 			params.add("gps_j", "" + location.getLongitude());
 			params.add("gps_w", "" + location.getLatitude());
 			params.add("speed", "" + location.getSpeed());
@@ -196,7 +232,7 @@ public class ReportService extends Service {
 			params.add("operate_system", "" + DeviceInfo.getOSName());
 			params.add("sys_edtion", "" + DeviceInfo.getOSVersion());
 			params.add("app_version", "" + DeviceInfo.getVersionName());
-			params.add("clientid", "" + (mClientId == null ? Const.NULL : mClientId));
+			params.add("clientid", "" + mClientId);
 			mHttpClient.get(
 					AsyncHttp.getAbsoluteUrl(Const.URL_POSITION_UPLOAD),
 					params, mHandler);
